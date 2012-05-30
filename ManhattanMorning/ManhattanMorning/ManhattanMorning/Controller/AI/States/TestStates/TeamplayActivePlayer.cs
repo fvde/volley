@@ -37,7 +37,7 @@ namespace ManhattanMorning.Controller.AI.States.TestStates
             // (Maybe there is another one because of the powerup -> must be handled by KI somehow)
             observedBall = ballList[0];
 
-            
+            //testcomment for hg
 
             handleMovement();
             handleHand();
