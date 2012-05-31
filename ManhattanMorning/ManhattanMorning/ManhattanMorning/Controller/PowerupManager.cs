@@ -202,7 +202,7 @@ namespace ManhattanMorning.Controller
             }
         }
 
-        private String getPowerUpName(PowerUpType type)
+        public String getPowerUpName(PowerUpType type)
         {
             return "Powerup_" + type.ToString();
         }
