@@ -741,41 +741,39 @@ namespace ManhattanMorning.Controller
                     handleDirectPointBonus(1);
                 }
 
-                // reset ball position
-                if (ball.Name == "OriginalBall")
+                //remove Lights from Ball in forest level
+                if (Graphics.Instance.IsNight)
                 {
-                    //remove Lights from Ball in forest level
-                    if (Graphics.Instance.IsNight)
-                    {
-                        Graphics.Instance.removeLightFromObject(ball);
-                    }
-                    // remove it and create a physic task to spawn the original ball again
-                    SuperController.Instance.removeGameObjectFromGameInstance(ball);
-                    // delete corresponding  ballIndicator
-                    SuperController.Instance.removeGameObjectFromGameInstance(ball.BallIndicator);
+                    Graphics.Instance.removeLightFromObject(ball);
+                }
+                // remove the ball
+                SuperController.Instance.removeGameObjectFromGameInstance(ball);
+                // delete corresponding  ballIndicator
+                SuperController.Instance.removeGameObjectFromGameInstance(ball.BallIndicator);
 
+                // If there is no more ball and no task to spawn a ball, spawn a new one
+                bool spawnBall = true;
+                if (SuperController.Instance.getAllBalls().Count > 0)
+                    spawnBall = false;
+
+                if (spawnBall)
+                    foreach (GraphicsTask task in TaskManager.Instance.GraphicTasks)
+                        if (task.Task == GraphicTask.CreateBall)
+                            spawnBall = false;
+
+                // Create ball if necessary
+                if (spawnBall)
+                {
                     // Creating a new random ballResetPosition 
                     ballResetPosition = Physics.Instance.getRandomPositionAtTheTop();
-                    
+
                     // Showing a Ball-Texture at the releasing point for a short Period
                     GraphicsTask g = new GraphicsTask(500, GraphicTask.CreateBall, 4);
                     g.Position = ballResetPosition;
                     TaskManager.Instance.addTask(g);
                     TaskManager.Instance.addTask(new GraphicsTask(1500, GraphicTask.CreateBall, 5));
                     // Creating the new ball afterwards
-                    TaskManager.Instance.addTask(new PhysicsTask(1500, PhysicsTask.PhysicTaskType.CreateNewOriginalBall, ballResetPosition));                    
-                }
-                else
-                {
-                    //remove Lights from Ball in forest level
-                    if (Graphics.Instance.IsNight)
-                    {
-                        Graphics.Instance.removeLightFromObject(ball);
-                    }
-                    // remove it and create a physic task to spawn the original ball again
-                    SuperController.Instance.removeGameObjectFromGameInstance(ball);
-                    // delete corresponding  ballIndicator
-                    SuperController.Instance.removeGameObjectFromGameInstance(ball.BallIndicator);
+                    TaskManager.Instance.addTask(new PhysicsTask(1500, PhysicsTask.PhysicTaskType.CreateNewOriginalBall, ballResetPosition));
                 }
 
                 //reset bonus counter
