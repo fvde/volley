@@ -83,7 +83,8 @@ namespace ManhattanMorning.Misc
         /// <param name="gameTime">the current game time</param>
         public void updatePosition(GameTime gameTime)
         {
-            if (elapsedTime > animationDuration) if (Looping) elapsedTime = 0f; else return;
+            if (elapsedTime > animationDuration) if (Looping) elapsedTime = 0f; 
+            else return;
 
             elapsedTime += (float)(gameTime.ElapsedGameTime.TotalMilliseconds);
             float t =  elapsedTime / animationDuration;
@@ -98,7 +99,11 @@ namespace ManhattanMorning.Misc
                 correspondingObject.Rotation = (dir.Y > neutral.Y ? 1f : -1f) * (float)Math.Acos(Vector2.Dot(dir, neutral));
             }
 
-            if(t >= 1 && !Looping) elapsedTime = 0;
+            if (t >= 1 && !Looping)
+            {
+                elapsedTime = 0;
+                Active = false;
+            }
         }
 
         /// <summary>
