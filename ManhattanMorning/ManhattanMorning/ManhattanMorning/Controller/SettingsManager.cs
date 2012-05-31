@@ -91,7 +91,7 @@ namespace ManhattanMorning.Controller
             settings.Add("screenResolution", new object[] { new Vector2(640, 480), new Vector2(1280, 720), new Vector2(1920, 1080) });
 
             //Show Bounding Boxes
-            settings.Add("showBoundingBoxes", new object[] { false, true, true });
+            settings.Add("showBoundingBoxes", new object[] { false, false, true });
 
             //Show Grid
             settings.Add("showGrid", new object[] { false, false, true });
