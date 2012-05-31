@@ -853,17 +853,16 @@ namespace ManhattanMorning.Controller
             HUD anchor = SuperController.Instance.getHUDElementByName("Scoreboard");
 
             if (p.PowerUpType == PowerUpType.Wind)
-            {
-                Queue<HUD> q;
-                if (p.Owner.Team == 1)
-                    q = powerupDisplay_t2;
-                else
-                    q = powerupDisplay_t1;
-                
-                foreach (HUD h in q)
+            {                
+                foreach (HUD h in powerupDisplay_t1)
                 {
-                    if (h.Name == PowerUpManager.Instance.getPowerUpName(PowerUpType.Wind))
-                        h.Visible = false;
+                    if (h.Name == "Powerup_WindRight")
+                        h.FadingAnimation.DurationBeforeReverse = 1;
+                }
+                foreach (HUD h in powerupDisplay_t2)
+                {
+                    if (h.Name == "Powerup_WindLeft")
+                        h.FadingAnimation.DurationBeforeReverse = 1;
                 }
             }
 
@@ -911,7 +910,7 @@ namespace ManhattanMorning.Controller
                     curve.addPoint(1f, position);
                     
                     PathAnimation anim = new PathAnimation(curve, 600);
-                    anim.Looping = true;
+                    //anim.Looping = true;
 
                     //new object
                     tempObject = new HUD(p.Name, true, tex, null, new Vector2(0.07f, 16f / 9 * 0.07f), position, 70, MeasurementUnit.PercentOfScreen);
@@ -947,7 +946,7 @@ namespace ManhattanMorning.Controller
                     curve.addPoint(1f, position);
 
                     PathAnimation anim = new PathAnimation(curve, 600);
-                    anim.Looping = true;
+                    //anim.Looping = true;
 
                     //new object
                     tempObject = new HUD(p.Name, true, tex, null, new Vector2(0.07f, 16f / 9 * 0.07f), position, 70, MeasurementUnit.PercentOfScreen);                    
@@ -989,10 +988,11 @@ namespace ManhattanMorning.Controller
             //move all other objects down
             foreach (HUD p in list)
             {
-                if (p.PathAnimation == null) return;
+                if (p.PathAnimation == null || p.Visible == false) continue;
 
                 //change curve points of the text
                 Curve2D c = (Curve2D)p.PathAnimation.Path;
+                p.PathAnimation.Active = true;
                 if((c.evaluate(p.PathAnimation.ElapsedTime) - c.getPoints()[1]).Length() <= 0.05f) c.changeCurvePoint(0, c.getPoints()[1]);
                 c.changeCurvePoint(1, c.getPoints()[1] + new Vector2( (team == 1) ? 0.09f : -0.09f, 0));
 
