@@ -852,6 +852,21 @@ namespace ManhattanMorning.Controller
             HUD tempObject;
             HUD anchor = SuperController.Instance.getHUDElementByName("Scoreboard");
 
+            if (p.PowerUpType == PowerUpType.Wind)
+            {
+                Queue<HUD> q;
+                if (p.Owner.Team == 1)
+                    q = powerupDisplay_t2;
+                else
+                    q = powerupDisplay_t1;
+                
+                foreach (HUD h in q)
+                {
+                    if (h.Name == PowerUpManager.Instance.getPowerUpName(PowerUpType.Wind))
+                        h.Visible = false;
+                }
+            }
+
             //neutral powerUps
             if (p.PowerUpVersion == PowerUpVersion.Neutral)
             {
@@ -899,7 +914,7 @@ namespace ManhattanMorning.Controller
                     anim.Looping = true;
 
                     //new object
-                    tempObject = new HUD("", true, tex, null, new Vector2(0.07f, 16f / 9 * 0.07f), position, 70, MeasurementUnit.PercentOfScreen);
+                    tempObject = new HUD(p.Name, true, tex, null, new Vector2(0.07f, 16f / 9 * 0.07f), position, 70, MeasurementUnit.PercentOfScreen);
                     tempObject.PathAnimation = anim;
                     tempObject.Position -= tempObject.Size / 2;
                     //tempObject.setFading(2, 3f, FadeValue.Quadratic);
@@ -935,7 +950,7 @@ namespace ManhattanMorning.Controller
                     anim.Looping = true;
 
                     //new object
-                    tempObject = new HUD("", true, tex, null, new Vector2(0.07f, 16f / 9 * 0.07f), position, 70, MeasurementUnit.PercentOfScreen);                    
+                    tempObject = new HUD(p.Name, true, tex, null, new Vector2(0.07f, 16f / 9 * 0.07f), position, 70, MeasurementUnit.PercentOfScreen);                    
                     tempObject.PathAnimation = anim;
                     tempObject.Position -= tempObject.Size / 2;
                     //tempObject.setFading(2, 3f, FadeValue.Quadratic);
