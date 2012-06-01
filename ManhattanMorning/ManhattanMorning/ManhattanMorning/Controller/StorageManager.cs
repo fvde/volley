@@ -128,10 +128,10 @@ namespace ManhattanMorning.Controller
 
             #region Players
 
-            Texture2D player1Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player1");
-            Texture2D player2Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player2");
-            Texture2D player3Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player3");
-            Texture2D player4Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player4"); 
+            Texture2D player1Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_blue");
+            Texture2D player2Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_red");
+            Texture2D player3Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_green");
+            Texture2D player4Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_yellow"); 
             Vector2 playerSize = new Vector2((float)SettingsManager.Instance.get("playerSize"), (float)SettingsManager.Instance.get("playerSize"));
 
             // Create all left team player 
@@ -481,18 +481,6 @@ namespace ManhattanMorning.Controller
             // clear Dictionary
             textures.Clear();
 
-            #region MainMenu
-
-            Texture2D texture_TeamMenu_Gamepad = game1.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad");
-            Texture2D texture_TeamMenu_Keyboard = game1.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Keyboard");
-            Texture2D texture_TeamMenu_KI = game1.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_KI");
-
-            saveTextureByName(texture_TeamMenu_Gamepad, "texture_TeamMenu_Gamepad");
-            saveTextureByName(texture_TeamMenu_Keyboard, "texture_TeamMenu_Keyboard");
-            saveTextureByName(texture_TeamMenu_KI, "texture_TeamMenu_KI");
-
-            #endregion
-
             #region Ingame HUD
 
             Texture2D texture_countdown_1 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_1");
@@ -792,11 +780,14 @@ namespace ManhattanMorning.Controller
 
             Texture2D Texture_TeamMenu_Background2_1vs1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_1vs1");
             Texture2D Texture_TeamMenu_Background2_2vs2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_2vs2");
-            Texture2D Texture_TeamMenu_Player1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Player1");
-            Texture2D Texture_TeamMenu_Player2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Player2");
-            Texture2D Texture_TeamMenu_Player3 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Player3");
-            Texture2D Texture_TeamMenu_Player4 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Player4");
-            Texture2D Texture_TeamMenu_Gamepad = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad");
+            Texture2D Texture_TeamMenu_Gamepad1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_1");
+            Texture2D Texture_TeamMenu_Gamepad2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_2");
+            Texture2D Texture_TeamMenu_Gamepad3 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_3");
+            Texture2D Texture_TeamMenu_Gamepad4 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_4");
+            Texture2D Texture_TeamMenu_Keyboard1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Keyboard1");
+            Texture2D Texture_TeamMenu_Keyboard2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Keyboard2");
+            Texture2D Texture_TeamMenu_KI = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_KI");
+            Texture2D Texture_TeamMenu_Gamepad_Deactivated = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_Deactivated");
 
             Texture2D Texture_Help_Box1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_Box1");
             Texture2D Texture_Help_Box2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_Box2");
@@ -901,35 +892,55 @@ namespace ManhattanMorning.Controller
                 Texture_TeamMenu_Background2_2vs2, null, new Vector2(1f, 1f), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_TeamMenu_Background2_2vs2);
 
-            MenuObject Passive_MainMenu_TeamMenu_Player1_Title = new MenuObject("TeamMenu_Player1_Title", false,
-                Texture_TeamMenu_Player1, null, new Vector2(0.1f, 0.08f), new Vector2(0.45f, 0.35f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player1_Title);
-            MenuObject Passive_MainMenu_TeamMenu_Player1_Picture = new MenuObject("TeamMenu_Player1_Picture", false,
-                Texture_TeamMenu_Gamepad, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player1_Picture);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad1 = new MenuObject("TeamMenu_Gamepad1", false,
+                Texture_TeamMenu_Gamepad1, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad1);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad2 = new MenuObject("TeamMenu_Gamepad2", false,
+                Texture_TeamMenu_Gamepad2, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.37f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad2);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad3 = new MenuObject("TeamMenu_Gamepad3", false,
+                Texture_TeamMenu_Gamepad3, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.55f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad3);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad4 = new MenuObject("TeamMenu_Gamepad4", false,
+                Texture_TeamMenu_Gamepad4, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.73f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad4);
 
-            MenuObject Passive_MainMenu_TeamMenu_Player2_Title = new MenuObject("TeamMenu_Player2_Title", false,
-                Texture_TeamMenu_Player2, null, new Vector2(0.1f, 0.08f), new Vector2(0.45f, 0.48f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player2_Title);
-            MenuObject Passive_MainMenu_TeamMenu_Player2_Picture = new MenuObject("TeamMenu_Player2_Picture", false,
-                Texture_TeamMenu_Gamepad, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.37f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player2_Picture);
+            MenuObject Passive_MainMenu_TeamMenu_Keyboard1 = new MenuObject("TeamMenu_Keyboard1", false,
+                Texture_TeamMenu_Keyboard1, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.73f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Keyboard1);
+            MenuObject Passive_MainMenu_TeamMenu_Keyboard2 = new MenuObject("TeamMenu_Keyboard2", false,
+                Texture_TeamMenu_Keyboard2, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.73f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Keyboard2);
 
-            MenuObject Passive_MainMenu_TeamMenu_Player3_Title = new MenuObject("TeamMenu_Player3_Title", false,
-                Texture_TeamMenu_Player3, null, new Vector2(0.1f, 0.08f), new Vector2(0.45f, 0.66f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player3_Title);
-            MenuObject Passive_MainMenu_TeamMenu_Player3_Picture = new MenuObject("TeamMenu_Player3_Picture", false,
-                Texture_TeamMenu_Gamepad, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.55f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player3_Picture);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad_Deactivated1 = new MenuObject("TeamMenu_Gamepad_Deactivated1", false,
+                Texture_TeamMenu_Gamepad_Deactivated, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad_Deactivated1);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad_Deactivated2 = new MenuObject("TeamMenu_Gamepad_Deactivated2", false,
+                Texture_TeamMenu_Gamepad_Deactivated, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad_Deactivated2);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad_Deactivated3 = new MenuObject("TeamMenu_Gamepad_Deactivated3", false,
+                Texture_TeamMenu_Gamepad_Deactivated, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad_Deactivated3);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad_Deactivated4 = new MenuObject("TeamMenu_Gamepad_Deactivated4", false,
+                Texture_TeamMenu_Gamepad_Deactivated, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad_Deactivated4);
 
-            MenuObject Passive_MainMenu_TeamMenu_Player4_Title = new MenuObject("TeamMenu_Player4_Title", false,
-                Texture_TeamMenu_Player4, null, new Vector2(0.1f, 0.08f), new Vector2(0.45f, 0.84f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player4_Title);
-            MenuObject Passive_MainMenu_TeamMenu_Player4_Picture = new MenuObject("TeamMenu_Player4_Picture", false,
-                Texture_TeamMenu_Gamepad, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.73f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player4_Picture);
-
-
+            MenuObject Passive_MainMenu_TeamMenu_KI1 = new MenuObject("TeamMenu_KI1", false,
+                Texture_TeamMenu_KI, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            Passive_MainMenu_TeamMenu_KI1.Alpha = 0.5f;
+            objectList.Add(Passive_MainMenu_TeamMenu_KI1);
+            MenuObject Passive_MainMenu_TeamMenu_KI2 = new MenuObject("TeamMenu_KI2", false,
+                Texture_TeamMenu_KI, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            Passive_MainMenu_TeamMenu_KI2.Alpha = 0.5f;
+            objectList.Add(Passive_MainMenu_TeamMenu_KI2);
+            MenuObject Passive_MainMenu_TeamMenu_KI3 = new MenuObject("TeamMenu_KI3", false,
+                Texture_TeamMenu_KI, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            Passive_MainMenu_TeamMenu_KI3.Alpha = 0.5f;
+            objectList.Add(Passive_MainMenu_TeamMenu_KI3);
+            MenuObject Passive_MainMenu_TeamMenu_KI4 = new MenuObject("TeamMenu_KI4", false,
+                Texture_TeamMenu_KI, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            Passive_MainMenu_TeamMenu_KI4.Alpha = 0.5f;
+            objectList.Add(Passive_MainMenu_TeamMenu_KI4);
             // Help
 
             MenuObject Passive_MainMenu_Help_Box1 = new MenuObject("Help_Box1", false,
