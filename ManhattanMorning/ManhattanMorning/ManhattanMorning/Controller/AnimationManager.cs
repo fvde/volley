@@ -114,7 +114,7 @@ namespace ManhattanMorning.Controller
                 {
                     updateAlpha(drawableObject, gameTime);
                 }
-                if (drawableObject.PathAnimation != null && elapsedTime >= 15)
+                if (drawableObject.PathAnimation != null && elapsedTime >= 15 && drawableObject.PathAnimation.Active)
                 {
                     updateWaypointsAndPosition(gameTime, drawableObject.PathAnimation);
                 }

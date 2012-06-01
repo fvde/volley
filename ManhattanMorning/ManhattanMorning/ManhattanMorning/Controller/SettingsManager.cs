@@ -191,7 +191,7 @@ namespace ManhattanMorning.Controller
             settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 30000, 60000 });
 
             // Defines how fast the specialbar fills if you perform a positive action
-            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 1.0f, 10.0f });
+            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 10.0f, 10.0f });
 
             #region Jumpheight
 
