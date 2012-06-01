@@ -68,12 +68,12 @@ namespace ManhattanMorning.Misc.Levels
             #region Define powerups
 
             // Set allowed powerups
-            /*
+            
             AllowedPowerUps.Add(PowerUpType.BallRain);
             AllowedPowerUps.Add(PowerUpType.SuperBomb);
             AllowedPowerUps.Add(PowerUpType.DoubleBall);
             AllowedPowerUps.Add(PowerUpType.InvertedControl);
-            AllowedPowerUps.Add(PowerUpType.Jumpheight);*/
+            AllowedPowerUps.Add(PowerUpType.Jumpheight);
             AllowedPowerUps.Add(PowerUpType.Wind);
 
             AllowedPowerUps.Add(PowerUpType.Volcano);
