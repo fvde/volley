@@ -134,6 +134,11 @@ namespace ManhattanMorning.Controller
             Texture2D player4Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_yellow"); 
             Vector2 playerSize = new Vector2((float)SettingsManager.Instance.get("playerSize"), (float)SettingsManager.Instance.get("playerSize"));
 
+            // Check if it's a 2vs2 game (necessary for spawn positions)
+            float offset = 0;
+            if (playerLeftTeam.Count > 1)
+                offset = playerSize.X;
+
             // Create all left team player 
             for (int i = 0; i < 2; i++)
             {
@@ -202,6 +207,7 @@ namespace ManhattanMorning.Controller
                     gameInstance.GameObjects.GetPlayer(playerRightTeam[1].PlayerIndex).Body);
                 Physics.Instance.disableCollisionBetweenBodies(gameInstance.GameObjects.GetPlayer(playerRightTeam[0].PlayerIndex).Body,
                     gameInstance.GameObjects.GetPlayer(playerRightTeam[1].PlayerIndex).HandBody);
+
             }
             
             #endregion
@@ -386,8 +392,8 @@ namespace ManhattanMorning.Controller
             float borderHeight = 4.0f;
             float magicNumber = 0.2f;
 
-            Border rightSideHandDistanceBorder = new Border("rightSideHandDistanceBorder", true, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 + new Vector2(allowedHandDistance, 0), 50, Model.MeasurementUnit.Meter);
-            Border leftSideHandDistanceBorder = new Border("leftSideHandDistanceBorder", true, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 - new Vector2(allowedHandDistance + magicNumber, 0), 50, Model.MeasurementUnit.Meter);
+            Border rightSideHandDistanceBorder = new Border("rightSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 + new Vector2(allowedHandDistance, 0), 50, Model.MeasurementUnit.Meter);
+            Border leftSideHandDistanceBorder = new Border("leftSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 - new Vector2(allowedHandDistance + magicNumber, 0), 50, Model.MeasurementUnit.Meter);
 
             SuperController.Instance.addGameObjectToGameInstance(leftBorder);
             SuperController.Instance.addGameObjectToGameInstance(rightBorder);

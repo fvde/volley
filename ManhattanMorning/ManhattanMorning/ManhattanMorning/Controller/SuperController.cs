@@ -323,6 +323,8 @@ namespace ManhattanMorning.Controller
                     // Missing video!
                 }
             }
+
+
         }
 
         /// <summary>
@@ -451,6 +453,27 @@ namespace ManhattanMorning.Controller
             g.Position = gameInstance.BallResetPosition;
             TaskManager.Instance.addTask(g);
             TaskManager.Instance.addTask(new GraphicsTask(2000, GraphicTask.CreateBall, 5));
+
+            // Create a label above each player that is shown in the first settings so that everbody knows which his player is
+            foreach (Player player in getAllPlayers())
+            {
+                // Define the position in relation to the player
+                Vector2 offset = new Vector2(0, - 0.8f * player.Size.Y);
+
+                // Create the label
+                PassiveObject playerLabel = new PassiveObject("PlayerLabel", true, gameInstance.getPlayerRepresentation(player.PlayerIndex).PlayerPicture.Texture, null, null,
+                    new Vector2(0.5f * player.Size.X, 0.5f * player.Size.Y), Vector2.Zero, 60, MeasurementUnit.Meter);
+
+                playerLabel.Offset = offset;
+
+                // Add a fading animation
+                playerLabel.FadingAnimation = new FadingAnimation(false, true, 2000, true, 500);
+
+                // Attach the label to the player and add it to the gameObjects
+                player.attachObject(playerLabel);
+                addGameObjectToGameInstance(playerLabel);
+
+            }
 
             TaskManager.Instance.addTask(new SoundTask(2000, SoundIndicator.startWhistle, (int)Sound.StartWhistle));
 
