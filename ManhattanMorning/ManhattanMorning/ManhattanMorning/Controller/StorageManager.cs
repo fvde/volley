@@ -483,16 +483,16 @@ namespace ManhattanMorning.Controller
 
             #region Ingame HUD
 
-            Texture2D texture_countdown_1 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_1");
-            Texture2D texture_countdown_2 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_2");
-            Texture2D texture_countdown_3 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_3");
-            Texture2D texture_countdown_4 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_4");
-            Texture2D texture_countdown_5 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_5");
-            Texture2D texture_countdown_6 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_1");
-            Texture2D texture_countdown_7 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_2");
-            Texture2D texture_countdown_8 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_3");
-            Texture2D texture_countdown_9 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_4");
-            Texture2D texture_countdown_10 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_5");
+            Texture2D texture_countdown_1 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_01");
+            Texture2D texture_countdown_2 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_02");
+            Texture2D texture_countdown_3 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_03");
+            Texture2D texture_countdown_4 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_04");
+            Texture2D texture_countdown_5 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_05");
+            Texture2D texture_countdown_6 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_06");
+            Texture2D texture_countdown_7 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_07");
+            Texture2D texture_countdown_8 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_08");
+            Texture2D texture_countdown_9 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_09");
+            Texture2D texture_countdown_10 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_10");
 
             saveTextureByName(texture_countdown_1, "texture_countdown_1");
             saveTextureByName(texture_countdown_2, "texture_countdown_2");
