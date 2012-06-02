@@ -101,7 +101,7 @@ namespace ManhattanMorning.Controller
             gameInstance.IntroVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
             gameInstance.BeachVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
             gameInstance.ForestVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
-            gameInstance.MayaVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
+            gameInstance.MayaVideo = Game1.Instance.Content.Load<Video>(@"Videos\maya");
         }
 
 

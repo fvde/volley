@@ -97,12 +97,10 @@ namespace ManhattanMorning.Misc.Levels
             levelObjectsList.Add(new PassiveObject("Front", "front", levelSize, Vector2.Zero, 60));
 
             // add stone objects. they don't have any collision, this functionality is added by active stoneBlockers
-            levelObjectsList.Add(new PassiveObject("stone0", new Vector2(0.45f, 0.2f), new Vector2(0.34f, 1.4f), 0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
-            levelObjectsList.Add(new PassiveObject("stone1", new Vector2(0.49f, 0.21f), new Vector2(2.125f, 1.425f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
-            levelObjectsList.Add(new PassiveObject("stone2", new Vector2(0.42f, 0.18f), new Vector2(3.85f, 1.8f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
-            levelObjectsList.Add(new PassiveObject("stone3", new Vector2(0.42f, 0.18f), new Vector2(7.85f, 1.5f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
-            levelObjectsList.Add(new PassiveObject("stone4", new Vector2(0.42f, 0.18f), new Vector2(9.85f, 1.48f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
-            levelObjectsList.Add(new PassiveObject("stone5", new Vector2(0.42f, 0.18f), new Vector2(12.1f, 1.48f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
+            levelObjectsList.Add(new PassiveObject("stone0", new Vector2(0.95f, 0.95f), new Vector2(1.2f, 1.45f), 0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
+            levelObjectsList.Add(new PassiveObject("stone1", new Vector2(1.35f, 0.9f), new Vector2(3.05f, 1.425f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
+            levelObjectsList.Add(new PassiveObject("stone2", new Vector2(1.35f, 0.9f), new Vector2(6.25f, 1.425f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
+            levelObjectsList.Add(new PassiveObject("stone3", new Vector2(0.95f, 0.95f), new Vector2(8.55f, 1.55f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
 
             #endregion
 
