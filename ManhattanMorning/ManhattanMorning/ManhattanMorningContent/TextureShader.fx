@@ -36,8 +36,8 @@ const float2 c[9] = {
 
 Texture xTexture;
 Texture yTexture;
-sampler TextureSampler = sampler_state { texture = <xTexture>; magfilter = LINEAR; minfilter = LINEAR; mipfilter=LINEAR; AddressU = Clamp; AddressV = Clamp;};
-sampler TextureSamplerY : register(s1) = sampler_state { texture = <yTexture>; magfilter = LINEAR; minfilter = LINEAR; mipfilter=LINEAR; AddressU = Clamp; AddressV = Clamp;};
+sampler TextureSampler = sampler_state { texture = <xTexture>; magfilter = LINEAR; minfilter = LINEAR; mipfilter=LINEAR; AddressU = Wrap; AddressV = Wrap;};
+sampler TextureSamplerY : register(s1) = sampler_state { texture = <yTexture>; magfilter = LINEAR; minfilter = LINEAR; mipfilter=LINEAR; AddressU = Wrap; AddressV = Wrap;};
 float4 tintingColor;
 
 //------- Technique: Textured --------
@@ -92,6 +92,24 @@ float4 LightPS(float2 tex: TEXCOORD0, float4 col:COLOR0) : COLOR0
 	return col*(color+light);
 }
 
+//------- Technique: Water--------
+
+
+
+float4 FadeOutWaterPS(float2 tex: TEXCOORD0, float4 col:COLOR0) : COLOR0
+{	
+	float2 mappedTex;
+	mappedTex.x = tex.x *50/40.0f;
+	mappedTex.y = tex.y* 640/50.0f ; // Magic Number DAFUQ???
+	float4 color = tex2D(TextureSamplerY,mappedTex);
+	float4 light = tex2D(TextureSampler, tex);
+
+
+	return light*color.a;
+
+}
+
+
 //------- Technique: Shadow --------
 float4 ShadowPS(VertexToPixel PSIn) : COLOR0
 {	
@@ -133,5 +151,13 @@ technique Light
 	pass Pass0
 	{
 		PixelShader  = compile ps_2_0 LightPS();
+	}
+}
+
+technique WaterFadeOut
+{
+	pass Pass0
+	{
+		PixelShader  = compile ps_2_0 FadeOutWaterPS();
 	}
 }
