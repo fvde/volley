@@ -134,6 +134,9 @@ namespace ManhattanMorning.Controller
             Texture2D player4Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_yellow"); 
             Vector2 playerSize = new Vector2((float)SettingsManager.Instance.get("playerSize"), (float)SettingsManager.Instance.get("playerSize"));
 
+
+            
+
             // Create all left team player 
             for (int i = 0; i < 2; i++)
             {
@@ -239,9 +242,15 @@ namespace ManhattanMorning.Controller
             Net tempNet = null;
 
             // Take each level object and check which type it is, then create the right game object
-            foreach (DrawableObject drawObj in level.LevelObjectsList)
+            foreach (LayerInterface drawObj in level.LevelObjectsList)
             {
-                if (drawObj is PassiveObject && !(drawObj is Light))
+
+                if (drawObj is Waterfall)
+                {
+                    SuperController.Instance.addGameObjectToGameInstance(drawObj);
+
+                }
+                if (drawObj is DrawableObject && drawObj is PassiveObject && !(drawObj is Light))
                 {
                     #region PassiveObjects
 
@@ -252,13 +261,13 @@ namespace ManhattanMorning.Controller
                     {
                         // Load the texture
                         tempObject.Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\" + levelName + "\\" + tempObject.TextureName);
-                        drawObj.Visible = true;
+                        ((DrawableObject)drawObj).Visible = true;
                     }
                     if(tempObject.Animation != null)
                     {
                         // Create the animation
                         tempObject.Animation.SpriteStrip = game1.Content.Load<Texture2D>(@"Textures\Levels\" + levelName + "\\" + tempObject.Animation.TextureName);
-                        drawObj.Visible = true;
+                        ((DrawableObject)drawObj).Visible = true;
                     }
                     tempObject.Position *= resizeFactorLevelSize;
                     tempObject.Size *= resizeFactorLevelSize;
@@ -280,6 +289,7 @@ namespace ManhattanMorning.Controller
 
                     #endregion
                 }
+
                 else if (drawObj is Net)
                 {
                     #region Net
@@ -288,7 +298,7 @@ namespace ManhattanMorning.Controller
 
                     // Load the texture
                     tempObject.Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\" + levelName + "\\" + tempObject.TextureName);
-                    drawObj.Visible = true;
+                   ((DrawableObject)drawObj).Visible = true;
 
                     // Create the object
                     tempObject.Size *= resizeFactorLevelSize;
@@ -332,7 +342,7 @@ namespace ManhattanMorning.Controller
                         // Save texture for later powerup creation
                         saveTextureByName(objectTexture, "Border");
                         tempObject.Texture = objectTexture;
-                        drawObj.Visible = true;
+                        ((DrawableObject)drawObj).Visible = true;
                     }
                     tempObject.Position *= resizeFactorLevelSize;
                     tempObject.Size *= resizeFactorLevelSize;
@@ -345,12 +355,14 @@ namespace ManhattanMorning.Controller
                 {
                     Light tempObject = drawObj as Light;
                     tempObject.Texture = game1.Content.Load<Texture2D>(@"Textures\Light\" + tempObject.TextureName);
-                    drawObj.Visible = true;
+                    ((DrawableObject)drawObj).Visible = true;
                     tempObject.Position *= resizeFactorLevelSize;
                     tempObject.Size *= resizeFactorLevelSize;
 
                     SuperController.Instance.addGameObjectToGameInstance(tempObject);
                 }
+               
+                
             }
 
             #region Borders
