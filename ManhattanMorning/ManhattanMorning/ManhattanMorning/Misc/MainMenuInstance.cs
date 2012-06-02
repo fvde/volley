@@ -1010,7 +1010,9 @@ namespace ManhattanMorning.Misc
                 if (((bool)SettingsManager.Instance.get("AllowKIOnlyGame") == false) &&
                     (getNumberOfTeamMembers(1) == 0) && (getNumberOfTeamMembers(2) == 0))
                 {
-                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = null;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).Visible = false;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
                     SoundManager.Instance.playSoundEffect((int)Sound.menu_warning);
                     return;
                 }
@@ -1408,8 +1410,10 @@ namespace ManhattanMorning.Misc
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("SelectLevel_Overlay");
                     break;
             }
-            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning_Overlay")).FadingAnimation = null;
-            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning_Overlay")).Visible = false;
+            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = null;
+            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).Visible = false;
+            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = null;
+            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).Visible = false;
 
             animateTransition(menuState, newState);
 
@@ -1651,7 +1655,9 @@ namespace ManhattanMorning.Misc
                 }
                 else
                 {
-                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = null;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).Visible = false;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
                     SoundManager.Instance.playSoundEffect((int)Sound.menu_warning);
                 }
             }
@@ -1684,7 +1690,9 @@ namespace ManhattanMorning.Misc
                 }
                 else
                 {
-                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = null;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).Visible = false;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
                     SoundManager.Instance.playSoundEffect((int)Sound.menu_warning);
                 }
             }
