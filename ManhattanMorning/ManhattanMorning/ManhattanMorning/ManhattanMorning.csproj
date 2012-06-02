@@ -284,6 +284,7 @@
     <Compile Include="Model\GameObject\PowerUpObjects\Bomb.cs" />
     <Compile Include="Model\GameObject\PowerUpObjects\Lava.cs" />
     <Compile Include="Model\GameObject\PowerUpObjects\PowerUpObject.cs" />
+    <Compile Include="Model\GameObject\Waterfall.cs" />
     <Compile Include="Model\HUD\Specialbar.cs" />
     <Compile Include="Model\LayerInterface.cs" />
     <Compile Include="Model\Menu\MenuButtonObject.cs" />
