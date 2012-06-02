@@ -30,7 +30,7 @@ namespace ManhattanMorning.Misc.Levels
         /// <summary>
         /// List with all level objects
         /// </summary>
-        public List<DrawableObject> LevelObjectsList { get { return levelObjectsList; } }
+        public List<LayerInterface> LevelObjectsList { get { return levelObjectsList; } }
 
         /// <summary>
         /// Dictionary with all the static properties like levelname or levelsize
@@ -50,7 +50,7 @@ namespace ManhattanMorning.Misc.Levels
         /// <summary>
         /// List with all level objects
         /// </summary>
-        protected List<DrawableObject> levelObjectsList;
+        protected List<LayerInterface> levelObjectsList;
 
         /// <summary>
         /// List with all level objects
@@ -68,7 +68,7 @@ namespace ManhattanMorning.Misc.Levels
         public Level()
         {
 
-            levelObjectsList = new List<DrawableObject>();
+            levelObjectsList = new List<LayerInterface>();
             levelProperties = new Dictionary<string, object>();
             allowedPowerups = new List<PowerUpType>();
         }
