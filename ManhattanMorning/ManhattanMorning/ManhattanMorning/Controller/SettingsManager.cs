@@ -52,7 +52,7 @@ namespace ManhattanMorning.Controller
             /// <summary>
             /// Play level video?
             /// </summary>
-            settings.Add("LevelVideo", new object[] { false, true, true });
+            settings.Add("LevelVideo", new object[] { false, false, true });
 
             /// <summary>
             /// True if a game between KI players should be allowed
@@ -197,7 +197,7 @@ namespace ManhattanMorning.Controller
 
             // Increased jumpheight factor
             // Used in GameLogic
-            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.17f, 3.0f });
+            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.5f, 3.0f });
 
             #endregion
 

@@ -1229,8 +1229,9 @@ namespace ManhattanMorning.Controller
 
             for (int i = 0; i <= 1; i++)
             {
-                //get new stone position
-                int stone = random.Next(0 + 3 * i, 3 + 3 * i);
+                //get new stone position. Pick one on each side.
+                int stone = random.Next(0 + 2 * i, 2 + 2 * i);
+                int safetyCounter = 10;
                 PassiveObject newStone = SuperController.Instance.getObjectByName("stone" + stone) as PassiveObject;
 
 
@@ -1240,7 +1241,18 @@ namespace ManhattanMorning.Controller
                 {
                     stone = random.Next(0 + 2* i , 2 + 2*i);
                     newStone = SuperController.Instance.getObjectByName("stone" + stone) as PassiveObject;
-                }                
+
+                    safetyCounter--;
+                    if (safetyCounter < 0)
+                    {
+                        break;
+                    }
+                }
+
+                if (safetyCounter < 0)
+                {
+                    break;
+                }
 
                 if (!init)
                 {
