@@ -424,7 +424,9 @@ namespace ManhattanMorning.Controller
             StorageManager.Instance.loadLevelObjects(levels.ImplementedLevels()[levelName], gameInstance, leftTeam, rightTeam, resizeFactor);
             Physics.Instance.SetBorders((Border)SuperController.Instance.getObjectByName("middleBorder"),
                                         (Border)SuperController.Instance.getObjectByName("leftSideNetHandBorder"),
-                                        (Border)SuperController.Instance.getObjectByName("rightSideNetHandBorder"));
+                                        (Border)SuperController.Instance.getObjectByName("rightSideNetHandBorder"),
+                                        (Border)SuperController.Instance.getObjectByName("rightSideHandDistanceBorder"),
+                                        (Border)SuperController.Instance.getObjectByName("leftSideHandDistanceBorder"));
 
             // load HUD
             StorageManager.Instance.LoadScoreboard(winCondition);

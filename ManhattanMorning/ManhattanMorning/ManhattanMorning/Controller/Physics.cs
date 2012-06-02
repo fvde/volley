@@ -98,6 +98,16 @@ namespace ManhattanMorning.Controller
         private Border rightHandBlockBorder;
 
         /// <summary>
+        /// Middle border of the level
+        /// </summary>
+        private Border leftSideHandDistanceBorder;
+
+        /// <summary>
+        /// Middle border of the level
+        /// </summary>
+        private Border rightSideHandDistanceBorder;
+
+        /// <summary>
         /// The current SuperBomb.
         /// </summary>
         private List<Bomb> superBombList;
@@ -194,7 +204,7 @@ namespace ManhattanMorning.Controller
                         if (!player.HandAmplitude.Equals(Vector2.Zero) && !player.Flags.Contains(PlayerFlag.HandStunned))
                         {
 
-                            Vector2 handImpulse = (float)settingsManager.get("handImpulseScalar") * new Vector2(player.HandAmplitude.X, player.HandAmplitude.Y);
+                            Vector2 handImpulse = (float)settingsManager.get("handImpulseScalar") * player.HandAmplitude;
                             player.HandBody.ApplyLinearImpulse(handImpulse);
                             // Contrary force
                             player.Body.ApplyLinearImpulse(-handImpulse);
@@ -368,7 +378,7 @@ namespace ManhattanMorning.Controller
             // but it doesnt behave the same way in all directions.
             float jointFrequency = 3.0f;
             float jointDampingRatio = 0.5f;
-            float PlayerAnchorOffset = Size.X / 2;
+            float PlayerAnchorOffset = Size.X * 0.5f;
             float maxDistanceBetweenPlayerAndHand = 0.6f;
 
             DistanceJoint[] bodyHandDistanceJoints = new DistanceJoint[4];
@@ -495,6 +505,8 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenBodies(powerupBody, middleBorder.Body);
             disableCollisionBetweenBodies(powerupBody, rightHandBlockBorder.Body);
             disableCollisionBetweenBodies(powerupBody, leftHandBlockBorder.Body);
+            disableCollisionBetweenBodies(powerupBody, leftSideHandDistanceBorder.Body);
+            disableCollisionBetweenBodies(powerupBody, rightSideHandDistanceBorder.Body);
 
 
             return powerupBody;
@@ -610,7 +622,7 @@ namespace ManhattanMorning.Controller
             {
                 Player p = fixtureA.Body.LinkedActiveObject as Player;
                 p.Flags.Add(PlayerFlag.HandStunned);
-                TaskManager.Instance.addTask(new PhysicsTask(150, p, PhysicsTask.PhysicTaskType.RemoveHandStun));
+                TaskManager.Instance.addTask(new PhysicsTask(350, p, PhysicsTask.PhysicTaskType.RemoveHandStun));
             }
             return true;
         }
@@ -1009,10 +1021,13 @@ namespace ManhattanMorning.Controller
         /// <param name="middle"></param>
         /// <param name="leftHandBlock"></param>
         /// <param name="rightHandBlock"></param>
-        public void SetBorders(Border middle, Border leftHandBlock, Border rightHandBlock){
+        public void SetBorders(Border middle, Border leftHandBlock, Border rightHandBlock, Border rightSideHandDistance, Border leftSideHandDistance)
+        {
             this.middleBorder = middle;
             this.leftHandBlockBorder = leftHandBlock;
             this.rightHandBlockBorder = rightHandBlock;
+            this.rightSideHandDistanceBorder = rightSideHandDistance;
+            this.leftSideHandDistanceBorder = leftSideHandDistance;
         }
 
 
@@ -1119,6 +1134,8 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenActiveObjects(newBall, middleBorder);
             disableCollisionBetweenActiveObjects(newBall, rightHandBlockBorder);
             disableCollisionBetweenActiveObjects(newBall, leftHandBlockBorder);
+            disableCollisionBetweenActiveObjects(newBall, leftSideHandDistanceBorder);
+            disableCollisionBetweenActiveObjects(newBall, rightSideHandDistanceBorder);
 
             // Add Light if necessary
             Graphics.Instance.addLightToObject(newBall);
@@ -1145,6 +1162,8 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenActiveObjects(newBall, middleBorder);
             disableCollisionBetweenActiveObjects(newBall, rightHandBlockBorder);
             disableCollisionBetweenActiveObjects(newBall, leftHandBlockBorder);
+            disableCollisionBetweenActiveObjects(newBall, leftSideHandDistanceBorder);
+            disableCollisionBetweenActiveObjects(newBall, rightSideHandDistanceBorder);
 
             // Add Light if necessary
             Graphics.Instance.addLightToObject(newBall);
@@ -1175,6 +1194,8 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenActiveObjects(lava, middleBorder);
             disableCollisionBetweenActiveObjects(lava, rightHandBlockBorder);
             disableCollisionBetweenActiveObjects(lava, leftHandBlockBorder);
+            disableCollisionBetweenActiveObjects(lava, leftSideHandDistanceBorder);
+            disableCollisionBetweenActiveObjects(lava, rightSideHandDistanceBorder);
         }
 
         /// <summary>
@@ -1209,6 +1230,8 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenActiveObjects(bomb, middleBorder);
             disableCollisionBetweenActiveObjects(bomb, rightHandBlockBorder);
             disableCollisionBetweenActiveObjects(bomb, leftHandBlockBorder);
+            disableCollisionBetweenActiveObjects(bomb, leftSideHandDistanceBorder);
+            disableCollisionBetweenActiveObjects(bomb, rightSideHandDistanceBorder);
         }
 
         /// <summary>

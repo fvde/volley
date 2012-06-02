@@ -377,26 +377,17 @@ namespace ManhattanMorning.Controller
             
             Texture2D test = game1.Content.Load<Texture2D>(@"Textures\HUD\BallIndicator");
             
-            // Through the rotation of the border, it gets "smaller
-            // sinus(45°) & cosinus(45°)  = 0.707106
-
-            //Border leftPlayerBorder = new Border("leftPlayerBorder", true, test, null, null, new Vector2(tempNetSize.X, tempNetSize.Y),
-            //    new Vector2(gameInstance.LevelSize.X / 2.0f - (0.5f * tempNetSize.X) + 0.707106f * 0.5f * tempNetSize.Y, gameInstance.LevelSize.Y - 2 * tempNetSize.Y + (0.5f * tempNetSize.Y * (1 - 0.707106f))), 50, Model.MeasurementUnit.Meter);
-
-            //float lengthAfterRotation = (0.1736482f * tempNetSize.Y + 0.98480775f * tempNetSize.X);
-            //float widthAfterRotation = 0.98480775f * tempNetSize.X + 0.1736482f * tempNetSize.Y;
-
-            //Border leftPlayerBorder = new Border("leftPlayerBorder", true, test, null, null, new Vector2(tempNetSize.X, tempNetSize.Y),
-            //   new Vector2(gameInstance.LevelSize.X / 2.0f - (0.5f * tempNetSize.X) + (0.98480775f * tempNetSize.X + 0.2f * tempNetSize.Y - tempNetSize.X), gameInstance.LevelSize.Y - tempNetSize.Y - 0.94480775f * tempNetSize.Y), 50, Model.MeasurementUnit.Meter);
-            //leftPlayerBorder.Body.Friction = 0.0f;
-
-            // 45° -> Radiant: 0.785398163
-            // 22.5° -> Radiant: 0.392699098f => sin(22.5°) = 0.3826834f; cos = 0.9238795f
-            //// 10° -> Radiant: 0.174532925f => sin(10°) = 0.1736482f; cos(10°) = 0.98480775f
-            //leftPlayerBorder.Rotation = 0.392699098f;
-
+            // Borders to prevent lifting at the net
             Border rightSideNetHandBorder = new Border("rightSideNetHandBorder", false, test, null, null, new Vector2(1.0f, 0.2f), tempNet.Position + new Vector2(tempNetSize.X, 0), 50, Model.MeasurementUnit.Meter);
             Border leftSideNetHandBorder = new Border("leftSideNetHandBorder", false, test, null, null, new Vector2(1.0f, 0.2f), tempNet.Position - new Vector2(1.0f, 0), 50, Model.MeasurementUnit.Meter);
+
+            // Borders to prevent right players from grabbing too far over the net.
+            float allowedHandDistance = 0.3f;
+            float borderHeight = 4.0f;
+            float magicNumber = 0.2f;
+
+            Border rightSideHandDistanceBorder = new Border("rightSideHandDistanceBorder", true, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 + new Vector2(allowedHandDistance, 0), 50, Model.MeasurementUnit.Meter);
+            Border leftSideHandDistanceBorder = new Border("leftSideHandDistanceBorder", true, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 - new Vector2(allowedHandDistance + magicNumber, 0), 50, Model.MeasurementUnit.Meter);
 
             SuperController.Instance.addGameObjectToGameInstance(leftBorder);
             SuperController.Instance.addGameObjectToGameInstance(rightBorder);
@@ -405,7 +396,8 @@ namespace ManhattanMorning.Controller
             SuperController.Instance.addGameObjectToGameInstance(middleBorder);
             SuperController.Instance.addGameObjectToGameInstance(rightSideNetHandBorder);
             SuperController.Instance.addGameObjectToGameInstance(leftSideNetHandBorder);
-            //SuperController.Instance.addGameObjectToGameInstance(leftPlayerBorder);
+            SuperController.Instance.addGameObjectToGameInstance(rightSideHandDistanceBorder);
+            SuperController.Instance.addGameObjectToGameInstance(leftSideHandDistanceBorder);
 
             Physics.Instance.disableCollisionBetweenActiveObjectAndCollisionCategory(middleBorder, Category.Cat4);
             Physics.Instance.disableCollisionBetweenActiveObjectAndCollisionCategory(bottomBorder, Category.Cat4);
@@ -426,12 +418,16 @@ namespace ManhattanMorning.Controller
                 if (((Player)tempPlayer).Team == 1)
                 {
                     Physics.Instance.disableCollisionBetweenActiveObjects(leftSideNetHandBorder, tempPlayer);
+                    Physics.Instance.disableCollisionBetweenActiveObjects(leftSideHandDistanceBorder, tempPlayer);
                     Physics.Instance.disableCollisionBetweenBodies(leftSideNetHandBorder.Body, ((Player)tempPlayer).HandBody);
+                    Physics.Instance.disableCollisionBetweenBodies(leftSideHandDistanceBorder.Body, ((Player)tempPlayer).HandBody);
                 }
                 else
                 {
                     Physics.Instance.disableCollisionBetweenActiveObjects(rightSideNetHandBorder, tempPlayer);
+                    Physics.Instance.disableCollisionBetweenActiveObjects(rightSideHandDistanceBorder, tempPlayer);
                     Physics.Instance.disableCollisionBetweenBodies(rightSideNetHandBorder.Body, ((Player)tempPlayer).HandBody);
+                    Physics.Instance.disableCollisionBetweenBodies(rightSideHandDistanceBorder.Body, ((Player)tempPlayer).HandBody);
                 }
             }
 
