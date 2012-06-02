@@ -25,7 +25,7 @@ namespace ManhattanMorning.Model.GameObject
         public Texture2D waterfallStencilTex;
         private int layer;
         private String name = "Waterfall";
-        public int Laufzeit = 2100;
+        public int Laufzeit = 2100000;
         public int Layer
         {
             get{return this.layer;}
