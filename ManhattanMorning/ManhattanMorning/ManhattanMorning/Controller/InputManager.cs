@@ -1106,25 +1106,6 @@ namespace ManhattanMorning.Controller
 
             }
 
-            // if there are player with gamepads, also update their gamepads
-            if (playerList != null)
-            {
-                foreach (Player player in playerList)
-                {
-
-                    // Just update Gamepads, not Keyboards
-                    if (player.InputDevice.Device == InputDevice.Gamepad)
-                    {
-
-                        // Update states
-                        player.InputDevice.PreviousGamePadState = player.InputDevice.CurrentGamePadState;
-                        player.InputDevice.CurrentGamePadState = GamePad.GetState(player.InputDevice.Index);
-                    }
-
-                }
-            }
-
-
         }
 
         /// <summary>

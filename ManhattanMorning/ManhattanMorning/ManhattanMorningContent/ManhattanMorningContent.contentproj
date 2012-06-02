@@ -767,33 +767,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\HUD\IngameHUD\Countdown_1.png">
-      <Name>Countdown_1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\HUD\IngameHUD\Countdown_2.png">
-      <Name>Countdown_2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\HUD\IngameHUD\Countdown_3.png">
-      <Name>Countdown_3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\HUD\IngameHUD\Countdown_4.png">
-      <Name>Countdown_4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\HUD\IngameHUD\Countdown_5.png">
-      <Name>Countdown_5</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\PowerUps\powerupBox_volcano.png">
       <Name>powerupBox_volcano</Name>
       <Importer>TextureImporter</Importer>
@@ -1359,6 +1332,58 @@
     </Compile>
     <Compile Include="Textures\Menu\MainMenu\TeamMenu_Keyboard2.png">
       <Name>TeamMenu_Keyboard2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_01.png">
+      <Name>Countdown_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_02.png">
+      <Name>Countdown_02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_03.png">
+      <Name>Countdown_03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_04.png">
+      <Name>Countdown_04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_05.png">
+      <Name>Countdown_05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_06.png">
+      <Name>Countdown_06</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_07.png">
+      <Name>Countdown_07</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_08.png">
+      <Name>Countdown_08</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_09.png">
+      <Name>Countdown_09</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_10.png">
+      <Name>Countdown_10</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
