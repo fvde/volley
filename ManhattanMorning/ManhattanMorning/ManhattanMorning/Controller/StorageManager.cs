@@ -804,12 +804,13 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_ReallyQuit_No = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_No");
             Texture2D Texture_ReallyQuit_No_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_No_s");
 
-            Texture2D Texture_MainScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_MainScreen");
-            Texture2D Texture_ReallyQuit_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_ReallyQuit");
-            Texture2D Texture_Help_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_Help");
-            Texture2D Texture_TeamMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_TeamMenu");
-            Texture2D Texture_TeamMenuWarning_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_TeamMenu_Warning");
-            Texture2D Texture_SelectLevel_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_SelectLevel");
+            Texture2D Texture_MainScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_select");
+            Texture2D Texture_ReallyQuit_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_select_back");
+            Texture2D Texture_Help_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_browse_back");
+            Texture2D Texture_TeamMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_continue_back");
+            Texture2D Texture_TeamMenuWarning1_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_noTeam");
+            Texture2D Texture_TeamMenuWarning2_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_tooManyTeam");
+            Texture2D Texture_SelectLevel_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_startGame_back");
 
             // Create objects
             LayerList<LayerInterface> objectList = new LayerList<LayerInterface>();
@@ -997,27 +998,30 @@ namespace ManhattanMorning.Controller
             // Overlays
 
             MenuObject MainScreen_Overlay = new MenuObject("MainScreen_Overlay", false,
-                Texture_MainScreen_Overlay, null, new Vector2(600f / 1280f, 40f / 720f), new Vector2(665f / 1280f, 665f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_MainScreen_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(MainScreen_Overlay);
 
             MenuObject ReallyQuit_Overlay = new MenuObject("ReallyQuit_Overlay", false,
-                Texture_ReallyQuit_Overlay, null, new Vector2(600f / 1280f, 80f / 720f), new Vector2(665f / 1280f, 625f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_ReallyQuit_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(ReallyQuit_Overlay);
 
             MenuObject Help_Overlay = new MenuObject("Help_Overlay", false,
-                Texture_Help_Overlay, null, new Vector2(600f / 1280f, 40f / 720f), new Vector2(665f / 1280f, 665f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_Help_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(Help_Overlay);
 
             MenuObject TeamMenu_Overlay = new MenuObject("TeamMenu_Overlay", false,
-                Texture_TeamMenu_Overlay, null, new Vector2(600f / 1280f, 80f / 720f), new Vector2(665f / 1280f, 625f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_TeamMenu_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(TeamMenu_Overlay);
 
-            MenuObject TeamMenuWarning_Overlay = new MenuObject("TeamMenuWarning_Overlay", false,
-                Texture_TeamMenuWarning_Overlay, null, new Vector2(600f / 1280f, 40f / 720f), new Vector2(200f / 1280f, 665f / 720f), 95, MeasurementUnit.PercentOfScreen);
-            objectList.Add(TeamMenuWarning_Overlay);
+            MenuObject TeamMenuWarning1_Overlay = new MenuObject("TeamMenuWarning1_Overlay", false,
+                Texture_TeamMenuWarning1_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+            objectList.Add(TeamMenuWarning1_Overlay);
+            MenuObject TeamMenuWarning2_Overlay = new MenuObject("TeamMenuWarning2_Overlay", false,
+                Texture_TeamMenuWarning2_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+            objectList.Add(TeamMenuWarning2_Overlay);
 
             MenuObject SelectLevel_Overlay = new MenuObject("SelectLevel_Overlay", false,
-                Texture_SelectLevel_Overlay, null, new Vector2(600f / 1280f, 80f / 720f), new Vector2(665f / 1280f, 625f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_SelectLevel_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(SelectLevel_Overlay);
 
             // return list with all objects
@@ -1071,8 +1075,8 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_IngameMenu_Winner_Team1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\IngameMenu_Winner_team1");
             Texture2D Texture_IngameMenu_Winner_Team2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\IngameMenu_Winner_team2");
 
-            Texture2D Texture_IngameMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\Overlay_IngameMenu");
-            Texture2D Texture_WinnerScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\Overlay_WinnerScreen");
+            Texture2D Texture_IngameMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\Overlay_choose_select_back");
+            Texture2D Texture_WinnerScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\Overlay_mainmenu_revenge");
 
             // Create objects
             LayerList<LayerInterface> objectList = new LayerList<LayerInterface>();
@@ -1108,11 +1112,11 @@ namespace ManhattanMorning.Controller
             // Create Overlays
 
             MenuObject IngameMenu_Overlay = new MenuObject("IngameMenu_Overlay", false,
-                Texture_IngameMenu_Overlay, null, new Vector2(600f / 1280f, 80f / 720f), new Vector2(665f / 1280f, 625f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_IngameMenu_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(IngameMenu_Overlay);
 
             MenuObject WinnerScreen_Overlay = new MenuObject("WinnerScreen_Overlay", false,
-                Texture_WinnerScreen_Overlay, null, new Vector2(600f / 1280f, 40f / 720f), new Vector2(665f / 1280f, 665f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_WinnerScreen_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(WinnerScreen_Overlay);
 
             // Return list with all objects
