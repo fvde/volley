@@ -1218,6 +1218,31 @@ namespace ManhattanMorning.Controller
                 MeasurementUnit.Meter,
                 true);
 
+            // Add a fading animation so that the black bomb fades out
+            bomb.FadingAnimation = new FadingAnimation(false, false, 0, true, (int)SettingsManager.Instance.get("superBombDuration"));
+            bomb.FadingAnimation.Inverted = true;
+
+            // Create the bomb top
+            Vector2 size = new Vector2((265f / 527f) * bomb.Size.X, (308f / 527f) * bomb.Size.Y);
+            PassiveObject bomb_top = new PassiveObject("Bomb_top", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_top"), null, null,
+                size, position, 59, MeasurementUnit.Meter);
+
+            Vector2 offset = new Vector2(0f, -0.4f * bomb.Size.Y);
+            bomb_top.Offset = offset;
+
+            //bomb.attachObject(bomb_top);
+            //SuperController.Instance.addGameObjectToGameInstance(bomb_top);
+
+
+
+            // Create the red background
+            PassiveObject bomb_red = new PassiveObject("Bomb_red", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_red"), null, null,
+                (Vector2)SettingsManager.Instance.get("superBombSize"), position, 57, MeasurementUnit.Meter);
+
+            // Attach it to the bomb
+            bomb.attachObject(bomb_red);
+            SuperController.Instance.addGameObjectToGameInstance(bomb_red);
+
             // Save the created bomb.
             TaskManager.Instance.addTask(new PhysicsTask((int)SettingsManager.Instance.get("superBombDuration"), PhysicsTask.PhysicTaskType.DetonateSuperBomb));
 
@@ -1247,6 +1272,10 @@ namespace ManhattanMorning.Controller
             {
                 createExplosionAtPoint(superBombList.First().Body.Position, (float)settingsManager.get("superBombRange"), (float)settingsManager.get("superBombImpact"), true);
                 SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First());
+
+                // Remove also attached objects
+                SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First().AttachedObjects.First());
+
                 ParticleSystemsManager.Instance.stopBombFalling(superBombList.First());
                 superBombList.Remove(superBombList.First());
             }

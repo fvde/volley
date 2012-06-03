@@ -220,7 +220,7 @@ namespace ManhattanMorning.Controller
             #region SuperBomb
 
             // The size of bombs
-            settings.Add("superBombSize", new object[] { new Vector2(0.1f, 0.1f), new Vector2(1.8f, 1.8f), new Vector2(5f, 5f) });
+            settings.Add("superBombSize", new object[] { new Vector2(0.1f, 0.1f), new Vector2(1.6f, 1.6f), new Vector2(5f, 5f) });
 
             // The range of bombs
             settings.Add("superBombRange", new object[] { 0.0f, 4.0f, 30.0f });

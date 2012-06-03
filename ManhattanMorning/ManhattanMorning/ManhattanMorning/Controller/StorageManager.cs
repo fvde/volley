@@ -568,6 +568,8 @@ namespace ManhattanMorning.Controller
             #region PowerUps
 
             Texture2D texturePowerUpBomb = game1.Content.Load<Texture2D>(@"Textures\PowerUps\powerup_bomb");
+            Texture2D texturePowerUpBomb_red = game1.Content.Load<Texture2D>(@"Textures\PowerUps\powerup_bomb_red");
+            Texture2D texturePowerUpBomb_top = game1.Content.Load<Texture2D>(@"Textures\PowerUps\powerup_bomb_top");
             Texture2D texturePowerUpLava = game1.Content.Load<Texture2D>(@"Textures\PowerUps\powerup_lava");
             Texture2D texturePowerUpJump = game1.Content.Load<Texture2D>(@"Textures\Animations\powerjump_cut");
 
@@ -583,6 +585,8 @@ namespace ManhattanMorning.Controller
             Texture2D iconWindRight = game1.Content.Load<Texture2D>(@"Textures\PowerUps\icon_wind_right");
 
             saveTextureByName(texturePowerUpBomb, "PowerUp_Bomb");
+            saveTextureByName(texturePowerUpBomb_red, "PowerUp_Bomb_red");
+            saveTextureByName(texturePowerUpBomb_top, "PowerUp_Bomb_top");
             saveTextureByName(texturePowerUpLava, "PowerUp_Lava");
             saveTextureByName(texturePowerUpJump, "PowerUp_Jump");
 
