@@ -285,6 +285,8 @@ namespace ManhattanMorning.Controller
                     return 15000;
                 case PowerUpType.SunsetSunrise:
                     return 34500;
+                case PowerUpType.BallRain:
+                    return 10000;
                 default:
                     return 3000;
             }
