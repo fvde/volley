@@ -197,7 +197,7 @@ namespace ManhattanMorning.Controller
 
             // Increased jumpheight factor
             // Used in GameLogic
-            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.5f, 3.0f });
+            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.2f, 3.0f });
 
             #endregion
 
@@ -252,7 +252,7 @@ namespace ManhattanMorning.Controller
             settings.Add("ballRainAmount", new object[] { 1, 3, 5 });
 
             // Time between ballrain spawns
-            settings.Add("ballRainTime", new object[] { 1000, 6000, 20000 });
+            settings.Add("ballRainTime", new object[] { 1000, 5000, 20000 });
 
             #endregion
 
