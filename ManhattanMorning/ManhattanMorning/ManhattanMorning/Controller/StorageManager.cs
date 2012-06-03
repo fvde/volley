@@ -606,6 +606,8 @@ namespace ManhattanMorning.Controller
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light_smooth"), "light_smooth");
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light"), "light");
 
+            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/highlight_ball"), "highlight_ball");
+
             #endregion
 
         }

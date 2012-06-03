@@ -741,15 +741,7 @@ namespace ManhattanMorning.Controller
                     handleDirectPointBonus(1);
                 }
 
-                //remove Lights from Ball in forest level
-                if (Graphics.Instance.IsNight)
-                {
-                    Graphics.Instance.removeLightFromObject(ball);
-                }
-                // remove the ball
-                SuperController.Instance.removeGameObjectFromGameInstance(ball);
-                // delete corresponding  ballIndicator
-                SuperController.Instance.removeGameObjectFromGameInstance(ball.BallIndicator);
+                removeBall(ball);
 
                 // If there is no more ball and no task to spawn a ball, spawn a new one
                 bool spawnBall = true;
@@ -767,13 +759,8 @@ namespace ManhattanMorning.Controller
                     // Creating a new random ballResetPosition 
                     ballResetPosition = Physics.Instance.getRandomPositionAtTheTop();
 
-                    // Showing a Ball-Texture at the releasing point for a short Period
-                    GraphicsTask g = new GraphicsTask(500, GraphicTask.CreateBall, 4);
-                    g.Position = ballResetPosition;
-                    TaskManager.Instance.addTask(g);
-                    TaskManager.Instance.addTask(new GraphicsTask(1500, GraphicTask.CreateBall, 5));
-                    // Creating the new ball afterwards
-                    TaskManager.Instance.addTask(new PhysicsTask(1500, PhysicsTask.PhysicTaskType.CreateNewOriginalBall, ballResetPosition));
+                    createBall(ballResetPosition, 500);
+
                 }
 
                 //reset bonus counter
@@ -1325,6 +1312,59 @@ namespace ManhattanMorning.Controller
             }
             HUD matchball = SuperController.Instance.getHUDElementByName("matchball");
             matchball.Visible = true;
+        }
+
+
+        /// <summary>
+        /// Creates a new ball at the specified position
+        /// </summary>
+        /// <param name="position">The position where the ball will appear</param>
+        /// <param name="afterTime">The time in MS after which the ball will appear</param>
+        public void createBall(Vector2 position, int afterTime)
+        {
+
+            // Showing a Ball-Texture at the releasing point for a short Period
+            GraphicsTask g = new GraphicsTask(afterTime, GraphicTask.CreateBall, 4);
+            g.Position = position;
+            TaskManager.Instance.addTask(g);
+            TaskManager.Instance.addTask(new GraphicsTask(afterTime + 1000, GraphicTask.CreateBall, 5));
+
+            // Creating the new ball afterwards
+            TaskManager.Instance.addTask(new PhysicsTask(afterTime + 1000, PhysicsTask.PhysicTaskType.CreateNewOriginalBall, position));
+
+        }
+
+        /// <summary>
+        /// Removes the given ball from the level
+        /// </summary>
+        /// <param name="ball">The ball that should be removed</param>
+        private void removeBall(Ball ball)
+        {
+
+            //remove Lights from Ball in forest level
+            if (Graphics.Instance.IsNight)
+            {
+                Graphics.Instance.removeLightFromObject(ball);
+            }
+
+
+            // Remove highlight
+            PassiveObject ballHighlight = null;
+
+            foreach (DrawableObject attachedObject in ball.AttachedObjects)
+                if (attachedObject.Name == "BallHighlight")
+                    ballHighlight = (PassiveObject)attachedObject;
+
+            if (ballHighlight != null)
+                SuperController.Instance.removeGameObjectFromGameInstance(ballHighlight);
+
+
+            // remove the ball
+            SuperController.Instance.removeGameObjectFromGameInstance(ball);
+
+            // delete corresponding  ballIndicator
+            SuperController.Instance.removeGameObjectFromGameInstance(ball.BallIndicator);
+
         }
 
         #endregion
