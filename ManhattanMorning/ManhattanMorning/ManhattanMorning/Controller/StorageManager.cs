@@ -145,8 +145,11 @@ namespace ManhattanMorning.Controller
                 int team = i + 1;
 
                 foreach (PlayerRepresentationMainMenu playerRepresentation in (team == 1) ? playerLeftTeam : playerRightTeam)
-                {                    
-                    Vector2 resetPosition = (team == 1) ? gameInstance.Team1ResetPosition : gameInstance.Team2ResetPosition;
+                {
+                    offset = -offset;
+
+                    Vector2 resetPosition = (team == 1) ? new Vector2(gameInstance.Team1ResetPosition.X + offset, gameInstance.Team1ResetPosition.Y) : 
+                        new Vector2(gameInstance.Team2ResetPosition.X + offset, gameInstance.Team2ResetPosition.Y);
                     PlayerStatus status;
 
                     if (playerRepresentation.KI)
