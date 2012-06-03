@@ -302,7 +302,6 @@ namespace ManhattanMorning.Controller
                 // update HUD elements
                 updateHUD(ballList, levelTime, score);
 
-                startScoreboardBlinking(0);
             }
 
         }
@@ -553,6 +552,13 @@ namespace ManhattanMorning.Controller
 
                         // Weiter: Task zum Löschen von Countdown
                         TaskManager.Instance.addTask(new GameLogicTask(900, countdownTexture));
+
+                        // Let gamepads rumble
+                        InputManager.Instance.setRumble(300, new Vector2(0.3f, 0.3f));
+
+                        // Let clock blink
+                        ((HUD)relevantHUDObjects.GetObjectByName("Clock_highlightedRightHalf")).FadingAnimation = new FadingAnimation(false, true, 100, true, 200);
+                        ((HUD)relevantHUDObjects.GetObjectByName("Clock_highlightedHalf")).FadingAnimation = new FadingAnimation(false, true, 100, true, 200);
 
                         activatedCountdowns[i-1] = true;
                     }
@@ -1378,8 +1384,6 @@ namespace ManhattanMorning.Controller
             // delete corresponding  ballIndicator
             SuperController.Instance.removeGameObjectFromGameInstance(ball.BallIndicator);
 
-            InputManager.Instance.setRumble(100, new Vector2(0.5f, 0.5f));
-
         }
 
         /// <summary>
@@ -1402,12 +1406,6 @@ namespace ManhattanMorning.Controller
                     SuperController.Instance.getHUDElementByName("Digit_left_2").FadingAnimation = new FadingAnimation(true, true, timeBeforeReverse, true, fadingTime);
                     SuperController.Instance.getHUDElementByName("Digit_left_2").BlendColor = Color.Red;
                 }
-                else
-                {
-                    if (SuperController.Instance.getHUDElementByName("Digit_left_1").FadingAnimation.TimeSinceFadingStarted > fadingTime - 50)
-                        if (SuperController.Instance.getHUDElementByName("Digit_left_1").FadingAnimation.Inverted == true)
-                            InputManager.Instance.setRumble(300, new Vector2(0.3f, 0.3f));
-                }
             }
 
             // Right score
@@ -1419,12 +1417,6 @@ namespace ManhattanMorning.Controller
                     SuperController.Instance.getHUDElementByName("Digit_right_1").BlendColor = Color.Red;
                     SuperController.Instance.getHUDElementByName("Digit_right_2").FadingAnimation = new FadingAnimation(true, true, timeBeforeReverse, true, fadingTime);
                     SuperController.Instance.getHUDElementByName("Digit_right_2").BlendColor = Color.Red;
-                }
-                else
-                {
-                    if (SuperController.Instance.getHUDElementByName("Digit_right_1").FadingAnimation.TimeSinceFadingStarted > fadingTime - 50)
-                        if (SuperController.Instance.getHUDElementByName("Digit_left_1").FadingAnimation.Reverse == true)
-                            InputManager.Instance.setRumble(300, new Vector2(0.3f, 0.3f));
                 }
             }
 
