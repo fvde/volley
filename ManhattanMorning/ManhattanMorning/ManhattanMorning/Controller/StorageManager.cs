@@ -629,33 +629,32 @@ namespace ManhattanMorning.Controller
             Texture2D scoreboardTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\scoreboard_background");
 
             Texture2D texture_digit_0 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_0");
-            Texture2D texture_digit_1 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_1");
-            Texture2D texture_digit_2 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_2");
-            Texture2D texture_digit_3 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_3");
-            Texture2D texture_digit_4 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_4");
-            Texture2D texture_digit_5 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_5");
-            Texture2D texture_digit_6 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_6");
-            Texture2D texture_digit_7 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_7");
-            Texture2D texture_digit_8 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_8");
-            Texture2D texture_digit_9 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_9");
-
-            Texture2D texture_matchball = game1.Content.Load<Texture2D>(@"Textures\HUD\matchball");
+            Texture2D texture_digit_blank = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_blank");
 
             // Explanation for y-Size: X-Size * proportion texture * proportion Screen
             HUD scoreboard = new HUD("Scoreboard", true, scoreboardTexture, null, new Vector2(0.27f, (0.27f * 0.2185f * 1.7778f)), new Vector2(0.365f, -0.02f), 73, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(scoreboard);
 
-            HUD digit_left_1 = new HUD("Digit_left_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            HUD digit_left_1 = new HUD("Digit_left_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_left_1);
-            HUD digit_left_2 = new HUD("Digit_left_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
-            SuperController.Instance.addGameObjectToGameInstance(digit_left_2);
-            HUD digit_right_1 = new HUD("Digit_right_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
-            SuperController.Instance.addGameObjectToGameInstance(digit_right_1);
-            HUD digit_right_2 = new HUD("Digit_right_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
-            SuperController.Instance.addGameObjectToGameInstance(digit_right_2);
+            HUD digit_left_1_blank = new HUD("Digit_left_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_left_1_blank);
 
-            HUD matchball = new HUD("matchball", false, texture_matchball, null, new Vector2(0.20f, 0.04f), new Vector2(0.4f, 0.2f), 74, MeasurementUnit.PercentOfScreen);
-            SuperController.Instance.addGameObjectToGameInstance(matchball);
+            HUD digit_left_2 = new HUD("Digit_left_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_left_2);
+            HUD digit_left_2_blank = new HUD("Digit_left_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_left_2_blank);
+
+            HUD digit_right_1 = new HUD("Digit_right_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_right_1);
+            HUD digit_right_1_blank = new HUD("Digit_right_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_right_1_blank);
+
+            HUD digit_right_2 = new HUD("Digit_right_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_right_2);
+            HUD digit_right_2_blank = new HUD("Digit_right_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_right_2_blank);
+
 
             if (winCondition is TimeLimit_WinCondition)
             {

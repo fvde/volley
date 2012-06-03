@@ -222,13 +222,9 @@ namespace ManhattanMorning.Controller
                 {
                     task.AffectedPlayer.Flags.Remove(PlayerFlag.Stunned);
                 }
-                else if (task.Type.Contains(PhysicsTask.PhysicTaskType.CreateNewOriginalBall))
+                else if (task.Type.Contains(PhysicsTask.PhysicTaskType.CreateNewBall))
                 {
-                    createOriginalBall(task.Position);
-                }
-                else if (task.Type.Contains(PhysicsTask.PhysicTaskType.CreateNewPowerupBall))
-                {
-                    createAdditionalBall(getRandomPositionAtTheTop(task.AffectedPlayer.Team));
+                    createBall(task.Position);
                 }
                 else if (task.Type.Contains(PhysicsTask.PhysicTaskType.CreateDoubleBall))
                 {
@@ -1105,7 +1101,7 @@ namespace ManhattanMorning.Controller
         {
             foreach (Ball currentBall in SuperController.Instance.getAllBalls())
             {
-                createAdditionalBall(currentBall.Position);
+                createBall(currentBall.Position);
                 return;
             }
 
@@ -1114,10 +1110,10 @@ namespace ManhattanMorning.Controller
         }
 
         /// <summary>
-        /// Creates the original Ball.
+        /// Creates a Ball.
         /// </summary>
-        /// <param name="position"></param>
-        private void createOriginalBall(Vector2 position)
+        /// <param name="position">The position of the ball</param>
+        private void createBall(Vector2 position)
         {
             // Get ball size
             Vector2 ballSize = (Vector2)SettingsManager.Instance.get("ballSize");
@@ -1152,6 +1148,7 @@ namespace ManhattanMorning.Controller
         /// Creates an additional Ball.
         /// </summary>
         /// <param name="position"></param>
+        /*
         private void createAdditionalBall(Vector2 position)
         {
             // Get ball size
@@ -1174,7 +1171,7 @@ namespace ManhattanMorning.Controller
 
             // Add Light if necessary
             Graphics.Instance.addLightToObject(newBall);
-        }
+        }*/
 
         /// <summary>
         /// Creates lava.
