@@ -467,7 +467,7 @@ namespace ManhattanMorning.Controller
                 playerLabel.Offset = offset;
 
                 // Add a fading animation
-                playerLabel.FadingAnimation = new FadingAnimation(false, true, 2000, true, 500);
+                playerLabel.FadingAnimation = new FadingAnimation(false, true, 4000, true, 500);
 
                 // Attach the label to the player and add it to the gameObjects
                 player.attachObject(playerLabel);
