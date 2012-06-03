@@ -399,7 +399,7 @@ namespace ManhattanMorning.Controller
                 if (score.X == ((ScoreLimit_WinCondition)winCondition).WinningScore - 1 ||
                     score.Y == ((ScoreLimit_WinCondition)winCondition).WinningScore - 1)
                 {
-                    activateMatchballFlag();
+                    activateMatchballFlag(score);
                 }
 
                 // check if one of both teams has reached the score limit
@@ -440,7 +440,7 @@ namespace ManhattanMorning.Controller
                     }
                     else
                     {
-                        activateMatchballFlag();
+                        activateMatchballFlag(score);
                         this.winCondition = new ScoreLimit_WinCondition((int)score.Y + 1);
                     }
                 }
@@ -1304,14 +1304,25 @@ namespace ManhattanMorning.Controller
         /// <summary>
         /// Sets the flag, if the next ball is a match ball.
         /// </summary>
-        private void activateMatchballFlag()
+        /// <param name="score">The latest score of the game</param>
+        private void activateMatchballFlag(Vector2 score)
         {
             if (this.winCondition is TimeLimit_WinCondition)
             {
                 this.matchBallTimeWinningCondition = true;
+                startScoreboardBlinking(0);
             }
-            HUD matchball = SuperController.Instance.getHUDElementByName("matchball");
-            matchball.Visible = true;
+            else
+            {
+                if (score.X > score.Y)
+                    startScoreboardBlinking(1);
+                else if (score.X < score.Y)
+                    startScoreboardBlinking(2);
+                else
+                    startScoreboardBlinking(0);
+            }
+
+
         }
 
 
@@ -1330,7 +1341,7 @@ namespace ManhattanMorning.Controller
             TaskManager.Instance.addTask(new GraphicsTask(afterTime + 1000, GraphicTask.CreateBall, 5));
 
             // Creating the new ball afterwards
-            TaskManager.Instance.addTask(new PhysicsTask(afterTime + 1000, PhysicsTask.PhysicTaskType.CreateNewOriginalBall, position));
+            TaskManager.Instance.addTask(new PhysicsTask(afterTime + 1000, PhysicsTask.PhysicTaskType.CreateNewBall, position));
 
         }
 
@@ -1364,6 +1375,42 @@ namespace ManhattanMorning.Controller
 
             // delete corresponding  ballIndicator
             SuperController.Instance.removeGameObjectFromGameInstance(ball.BallIndicator);
+
+        }
+
+        /// <summary>
+        /// Let the score in the scoreboard blinking
+        /// </summary>
+        /// <param name="team"> 1 = left team, 2 = right team, 3 = both teams</param>
+        private void startScoreboardBlinking(int team)
+        {
+
+            int timeBeforeReverse = 100;
+            int fadingTime = 800;
+
+            // Left score
+            if ((team == 1) || (team == 0))
+            {
+                if (SuperController.Instance.getHUDElementByName("Digit_left_1").FadingAnimation == null)
+                {
+                    SuperController.Instance.getHUDElementByName("Digit_left_1").FadingAnimation = new FadingAnimation(true, true, timeBeforeReverse, true, fadingTime);
+                    SuperController.Instance.getHUDElementByName("Digit_left_1").BlendColor = Color.Red;
+                    SuperController.Instance.getHUDElementByName("Digit_left_2").FadingAnimation = new FadingAnimation(true, true, timeBeforeReverse, true, fadingTime);
+                    SuperController.Instance.getHUDElementByName("Digit_left_2").BlendColor = Color.Red;
+                }
+            }
+
+            // Right score
+            if ((team == 2) || (team == 0))
+            {
+                if (SuperController.Instance.getHUDElementByName("Digit_right_1").FadingAnimation == null)
+                {
+                    SuperController.Instance.getHUDElementByName("Digit_right_1").FadingAnimation = new FadingAnimation(true, true, timeBeforeReverse, true, fadingTime);
+                    SuperController.Instance.getHUDElementByName("Digit_right_1").BlendColor = Color.Red;
+                    SuperController.Instance.getHUDElementByName("Digit_right_2").FadingAnimation = new FadingAnimation(true, true, timeBeforeReverse, true, fadingTime);
+                    SuperController.Instance.getHUDElementByName("Digit_right_2").BlendColor = Color.Red;
+                }
+            }
 
         }
 

@@ -613,12 +613,12 @@ namespace ManhattanMorning.Controller
         private void setBallRainPowerUp(PowerUp powerUp)
         {
             // First Ball
-            TaskManager.Instance.addTask(new PhysicsTask(1000, powerUp.Owner, PhysicsTask.PhysicTaskType.CreateNewPowerupBall));
+            TaskManager.Instance.addTask(new PhysicsTask(1000, powerUp.Owner, PhysicsTask.PhysicTaskType.CreateNewBall));
 
             // Consecutive balls
             for (int x = (int)settingsManager.get("ballRainAmount") - 1; x > 0; x--)
             {
-                TaskManager.Instance.addTask(new PhysicsTask(x * (int)settingsManager.get("ballRainTime"), powerUp.Owner, PhysicsTask.PhysicTaskType.CreateNewPowerupBall));
+                TaskManager.Instance.addTask(new PhysicsTask(x * (int)settingsManager.get("ballRainTime"), powerUp.Owner, PhysicsTask.PhysicTaskType.CreateNewBall));
             }
         }
 
