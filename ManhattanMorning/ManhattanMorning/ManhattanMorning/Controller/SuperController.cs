@@ -448,11 +448,7 @@ namespace ManhattanMorning.Controller
             gameInstance.Score = Vector2.Zero;
 
             // task that creates ball after some specified time
-            TaskManager.Instance.addTask(new PhysicsTask(2000, PhysicsTask.PhysicTaskType.CreateNewOriginalBall, gameInstance.BallResetPosition));
-            GraphicsTask g = new GraphicsTask(1000, GraphicTask.CreateBall, 4);
-            g.Position = gameInstance.BallResetPosition;
-            TaskManager.Instance.addTask(g);
-            TaskManager.Instance.addTask(new GraphicsTask(2000, GraphicTask.CreateBall, 5));
+            GameLogic.Instance.createBall(gameInstance.BallResetPosition, 1000);
 
             // Create a label above each player that is shown in the first settings so that everbody knows which his player is
             foreach (Player player in getAllPlayers())

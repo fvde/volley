@@ -1137,6 +1137,13 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenActiveObjects(newBall, leftSideHandDistanceBorder);
             disableCollisionBetweenActiveObjects(newBall, rightSideHandDistanceBorder);
 
+            // Add highlight
+            PassiveObject ballHighlight = new PassiveObject("BallHighlight", true, StorageManager.Instance.getTextureByName("highlight_ball"), null, null, ballSize, position, 53,
+                MeasurementUnit.Meter, null);
+            SuperController.Instance.addGameObjectToGameInstance(ballHighlight);
+
+            newBall.attachObject(ballHighlight);
+
             // Add Light if necessary
             Graphics.Instance.addLightToObject(newBall);
         }
