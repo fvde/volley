@@ -197,18 +197,25 @@ namespace ManhattanMorning.Controller
                 sanim.TimeSinceFadingStarted = 0;
                 sanim.CountLoops++;
 
-                if (!sanim.Looping || sanim.CountLoops >= sanim.LoopTimes * 2 + 2)
-                    sanim.Active = false;
-
                 //negate animation direction when minimum or maximum is reached
                 if (sanim.Reverse)
                 {
-                    sanim.ScalingRange = new Vector2(sanim.ScalingRange.Y, sanim.ScalingRange.X);
+                    if ((!sanim.Looping && sanim.CountLoops == 2) || sanim.CountLoops >= sanim.LoopTimes * 2 + 2)
+                    {
+                        sanim.Active = false;
+                        sanim.CountLoops = 0;
+                    }
+                    else
+                        sanim.ScalingRange = new Vector2(sanim.ScalingRange.Y, sanim.ScalingRange.X);
                 }
                 //disable animation if you don't want to reverse it
                 else
                 {
-                    sanim.Active = false;
+                    if (!sanim.Looping || sanim.CountLoops > sanim.LoopTimes + 1)
+                    {
+                        sanim.Active = false;
+                        sanim.CountLoops = 0;
+                    }
                 }
             }
         }
