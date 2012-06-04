@@ -179,6 +179,13 @@ namespace ManhattanMorning.Controller
                         resetPosition, 50,
                         1, MeasurementUnit.Meter, playerRepresentation.PlayerIndex, team, status, playerRepresentation.InputDevice);
 
+                    PassiveObject playerHighlight = new PassiveObject("PlayerHighlight", true, StorageManager.Instance.getTextureByName("light"), null, null, player.Size / 1.4f, player.Position, 53,
+                        MeasurementUnit.Meter, null);
+                    //playerHighlight.Offset = -player.Size / 8;
+                    SuperController.Instance.addGameObjectToGameInstance(playerHighlight);
+
+                    player.attachObject(playerHighlight);
+
                     // Add player to given GameInstance
                     SuperController.Instance.addGameObjectToGameInstance(player);
                 }
