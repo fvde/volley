@@ -1485,22 +1485,25 @@ namespace ManhattanMorning.View
             if (team == 1)
             {
                 po = gameObjects.GetObjectByName("teamplay_t1") as HUD;
-                moveTo = new Vector2(viewPortWidth / 4, 0.3f);
+                moveTo = convertUnits(new Vector2(viewPortWidth / 4, 30f), MeasurementUnit.Pixel, MeasurementUnit.Meter) ;
             }
             else
             {
                 po = gameObjects.GetObjectByName("teamplay_t2") as HUD;
-                moveTo = new Vector2(viewPortWidth / 4 * 3, 0.3f);
+                moveTo = convertUnits(new Vector2(viewPortWidth / 4 * 3, 30f), MeasurementUnit.Pixel, MeasurementUnit.Meter);
             }
 
             Curve2D c = new Curve2D();
             c.addPoint(0, displayPoint);
-            c.addPoint(0.3f, displayPoint);
+            c.addPoint(0.5f, displayPoint);
             c.addPoint(1, moveTo);
-            PathAnimation p = new PathAnimation(c, 4000);
+            PathAnimation p = new PathAnimation(c, 2000);
+            p.Active = true;
             po.PathAnimation = p;
-            po.PathAnimation.Active = true;
 
+            po.FadingAnimation.DurationBeforeReverse = 600;
+            po.FadingAnimation.TimeSinceFadingStarted = 0;
+            po.ScalingAnimation.TimeSinceFadingStarted = 0;            
             po.Texture = tex;
             po.Visible = true;
             po.FadingAnimation.Active = true;
@@ -1814,7 +1817,7 @@ namespace ManhattanMorning.View
                 else if (to == MeasurementUnit.Meter)
                 {
                     returnVector.X = vector.X / meterToPixel;
-                    returnVector.Y = vector.X / meterToPixel;
+                    returnVector.Y = vector.Y / meterToPixel;
                 }
 
             }

@@ -749,15 +749,21 @@ namespace ManhattanMorning.Controller
             
             //additional texts
             ScalingAnimation scaling = new ScalingAnimation(false, false, 0, false, 500);
-            FadingAnimation fading = new FadingAnimation(false, true, 300, false, 600);
+            FadingAnimation fading = new FadingAnimation(false, true, 600, false, 600);
+            scaling.ScalingRange = new Vector2(0.2f, 1f);
+            fading.ResetAfterFade = true;
+            ScalingAnimation scaling1 = new ScalingAnimation(false, false, 0, false, 500);
+            FadingAnimation fading1 = new FadingAnimation(false, true, 600, false, 600);
+            scaling1.ScalingRange = new Vector2(0.2f, 1f);
+            fading1.ResetAfterFade = true;
 
-            HUD text_teamplay_t1 = new HUD("teamplay_t1", false, teamplay, null, new Vector2(teamplay.Width, teamplay.Height) / meterpixel, new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
+            HUD text_teamplay_t1 = new HUD("teamplay_t1", false, teamplay, null, new Vector2(teamplay.Width, teamplay.Height) / 1.5f / meterpixel, new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
             text_teamplay_t1.ScalingAnimation = scaling;
             text_teamplay_t1.FadingAnimation = fading;
 
-            HUD text_teamplay_t2 = new HUD("teamplay_t2", false, teamplay, null, new Vector2(teamplay.Width, teamplay.Height) / meterpixel, new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
-            text_teamplay_t2.ScalingAnimation = scaling;
-            text_teamplay_t2.FadingAnimation = fading;
+            HUD text_teamplay_t2 = new HUD("teamplay_t2", false, teamplay, null, new Vector2(teamplay.Width, teamplay.Height) / 1.5f / meterpixel, new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
+            text_teamplay_t2.ScalingAnimation = scaling1;
+            text_teamplay_t2.FadingAnimation = fading1;
 
             SuperController.Instance.addGameObjectToGameInstance(text_teamplay_t1);
             SuperController.Instance.addGameObjectToGameInstance(text_teamplay_t2);
