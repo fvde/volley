@@ -118,6 +118,11 @@ namespace ManhattanMorning.Model.HUD
         /// </summary>
         private float specialbar_offset = 0.043f;
 
+        /// <summary>
+        /// The y-Position of every filling tile (in percent of screen)
+        /// </summary>
+        private float fillingTile_yPosition = 0.024f;
+
         #endregion
 
 
@@ -464,6 +469,10 @@ namespace ManhattanMorning.Model.HUD
                 while (specialbarFillingTiles_Left.Count > 0)
                     SuperController.Instance.GameInstance.GameObjects.Remove(specialbarFillingTiles_Left.Pop());
                 ParticleSystemsManager.Instance.resizeSpecialbarEmitter(Vector2.Zero, Vector2.Zero, 1);
+
+                // Animate left bar
+                specialbarBar_Left.ScalingAnimation = new ScalingAnimation(false, true, 0, true, 500);
+                specialbarBar_Left.ScalingAnimation.ScalingRange = new Vector2(1, 1.3f);
             }
             else
             {
@@ -473,7 +482,13 @@ namespace ManhattanMorning.Model.HUD
                 while (specialbarFillingTiles_Right.Count > 0)
                     SuperController.Instance.GameInstance.GameObjects.Remove(specialbarFillingTiles_Right.Pop());
                 ParticleSystemsManager.Instance.resizeSpecialbarEmitter(Vector2.Zero, Vector2.Zero, 2);
+
+                // Animate right bar
+                specialbarBar_Right.ScalingAnimation = new ScalingAnimation(false, true, 0, true, 500);
+                specialbarBar_Right.ScalingAnimation.ScalingRange = new Vector2(1, 1.3f);
             }
+
+
 
             // Spawn powerup
             SuperController.Instance.SpawnPositivePowerup(team);
@@ -493,7 +508,7 @@ namespace ManhattanMorning.Model.HUD
                 texture = StorageManager.Instance.getTextureByName("specialbar_fillingRectTexture_right");
 
             // Calculate new position
-            Vector2 position = new Vector2(0, 0.023f);
+            Vector2 position = new Vector2(0, fillingTile_yPosition);
             if (team == 1)
             {
                 if (specialbarFillingTiles_Left.Count == 0)
