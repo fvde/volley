@@ -178,7 +178,7 @@ namespace ManhattanMorning.Controller
                             float jumpHeightModifier = 1.0f;
                             if (player.Flags.Contains(PlayerFlag.DoubleJump))
                             {
-                                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.playerJump, (int)Sound.Jump));
+                                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.playerJump, (int)IngameSound.Jump));
                                 jumpHeightModifier = (float)settingsManager.get("increasedJumpHeight");
                             }
 
@@ -923,13 +923,13 @@ namespace ManhattanMorning.Controller
                     {
                         duration = (int)SettingsManager.Instance.get("superBombStunDuration");
                         TaskManager.Instance.addTask(new PhysicsTask(duration, p, PhysicsTask.PhysicTaskType.RemoveStun));
-                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombBig, (int)Sound.ExplosionBig));
+                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombBig, (int)IngameSound.ExplosionBig));
                     }
                     else
                     {
                         duration = (int)SettingsManager.Instance.get("lavaStunDuration");
                         TaskManager.Instance.addTask(new PhysicsTask(duration, p, PhysicsTask.PhysicTaskType.RemoveStun));
-                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)Sound.ExplosionSmall));
+                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)IngameSound.ExplosionSmall));
                     }
                     ParticleSystemsManager.Instance.playStun(p, duration);
                 }
@@ -1040,7 +1040,7 @@ namespace ManhattanMorning.Controller
         {
             if (on)
             {
-                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.windPowerup, (int)Sound.windPowerUp));
+                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.windPowerup, (int)IngameSound.WindPowerUp));
                 // Team identification has to be added.
                 if (team == 1)
                 {

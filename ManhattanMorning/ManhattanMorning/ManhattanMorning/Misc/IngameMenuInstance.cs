@@ -198,7 +198,7 @@ namespace ManhattanMorning.Misc
             if (menuState == 0)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // unhighlight all previous selected button items
                 foreach (LayerInterface menuObject in menuStructure[0, selectedItem])
@@ -232,7 +232,7 @@ namespace ManhattanMorning.Misc
             if (menuState == 0)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // unhighlight all previous selected button items
                 foreach (LayerInterface menuObject in menuStructure[0, selectedItem])
@@ -262,7 +262,7 @@ namespace ManhattanMorning.Misc
         public void enterButtonPressed()
         {
 
-            SoundManager.Instance.playSoundEffect((int)Sound.menu_select);
+            SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
 
             // when in normal ingame menu
             if (menuState == 0)
@@ -303,7 +303,7 @@ namespace ManhattanMorning.Misc
             if (menuState != 0)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_select);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
 
                 // Restart game
                 SuperController.Instance.restartGame();
