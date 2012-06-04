@@ -818,13 +818,13 @@ namespace ManhattanMorning.Controller
 
             Vector2 collisionPosition = playerMiddlePosition + ((ballMiddlePosition - playerMiddlePosition) * ratio);
 
-            //calculate bonus
-            lastPlayerThatHitBall = player;
+            //calculate bonus            
             if(gameTime.TotalGameTime.TotalMilliseconds - timeLastHit >= 20)
                 ParticleSystemsManager.Instance.stopMeteorBall(ball);
 
             handleBallbounceBonus(player);
             handleSmashBonus(collisionPosition, ball, player);
+            lastPlayerThatHitBall = player;
 
             timeLastHit = gameTime.TotalGameTime.TotalMilliseconds;
             
@@ -893,7 +893,7 @@ namespace ManhattanMorning.Controller
             }
 
             //positive powerUps
-            if (p.Owner.Team == 1)
+            if ((p.Owner.Team == 1 && p.PowerUpType != PowerUpType.InvertedControl) || (p.Owner.Team == 2 && p.PowerUpType == PowerUpType.InvertedControl))
             {
                 Vector2 position = new Vector2(0.1f, anchor.Position.Y + anchor.Size.Y * 1.5f);
 
@@ -929,7 +929,7 @@ namespace ManhattanMorning.Controller
                     movePowerupIconToFirst(powerupDisplay_t1, tempObject, tex, position, 1, p);
                 }
             }
-            else if (p.Owner.Team == 2)
+            else if ((p.Owner.Team == 2 && p.PowerUpType != PowerUpType.InvertedControl) || (p.Owner.Team == 1 && p.PowerUpType == PowerUpType.InvertedControl))
             {
                 Vector2 position = new Vector2(1f - 0.1f, anchor.Position.Y + anchor.Size.Y * 1.5f);
 
