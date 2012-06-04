@@ -397,44 +397,6 @@ namespace ManhattanMorning.Controller
         }
 
         /// <summary>
-        /// You can change the SoundState of the soundInstances with this function so that all sounds
-        /// are paused, resumed or stopped.
-        /// </summary>
-        /// <param name="state">SoundState of the musicInstance.</param>
-        public void changeSoundState(SoundState state)
-        {
-            switch (state)
-            {
-                case SoundState.Paused:
-                    for (int i = 0; i < ingameSoundInstance.Length; i++)
-                    {
-                        ingameSoundInstance[i].Pause();
-                    }
-                    for (int i = 0; i < menuSoundInstance.Length; i++)
-                    {
-                        menuSoundInstance[i].Pause();
-                    }
-                    break;
-
-                case SoundState.Playing:
-                    musicInstance.Play();
-                    break;
-
-                case SoundState.Stopped:
-                    disableSound = true;
-                    for (int i = 0; i < ingameSoundInstance.Length; i++)
-                    {
-                        ingameSoundInstance[i].Stop(true);
-                    }
-                    for (int i = 0; i < menuSoundInstance.Length; i++)
-                    {
-                        menuSoundInstance[i].Stop(true);
-                    }
-                    break;
-            }
-        }
-
-        /// <summary>
         /// Plays the next song in the playlist.
         /// </summary>
         public void nextSong()
@@ -470,6 +432,76 @@ namespace ManhattanMorning.Controller
             currentSong++;
         }
 
+        /// <summary>
+        /// Stops all menu sounds immediately and throws the sound instances away
+        /// </summary>
+        public void discardMenuSounds()
+        {
+
+            for (int i = 0; i < menuSoundInstance.Length; i++)
+            {
+
+                // Release instance
+                if (menuSoundInstance[i] != null)
+                {
+                    menuSoundInstance[i].Stop();
+                    menuSoundInstance[i].Dispose();
+                }
+
+                menuSoundInstance[i] = null;
+            }
+
+            // Reset array
+            menuSoundInstanceUsage = 0;
+
+        }
+
+        /// <summary>
+        /// Stops all ingame sounds immediately and throws the sound instances away
+        /// </summary>
+        public void discardIngameSounds()
+        {
+
+            for (int i = 0; i < ingameSoundInstance.Length; i++)
+            {
+
+                // Release instance
+                if (ingameSoundInstance[i] != null)
+                {
+                    ingameSoundInstance[i].Stop();
+                    ingameSoundInstance[i].Dispose();
+                }
+
+                ingameSoundInstance[i] = null;
+            }
+
+            // Reset array
+            ingameSoundInstanceUsage = 0;
+
+        }
+
+        /// <summary>
+        /// Pauses all ingame sounds immediately and throws the sound instances away
+        /// </summary>
+        /// <param name="pause">True: Sounds will be paused, False: Sounds will continue</param>
+        public void pauseIngameSounds(bool pause)
+        {
+
+            for (int i = 0; i < ingameSoundInstance.Length; i++)
+            {
+
+                // Check if it's a SoundInstance. If so, pause/continue
+                if ((ingameSoundInstance[i] != null) && (ingameSoundInstance[i].State != SoundState.Stopped))
+                {
+                    if (pause)
+                        ingameSoundInstance[i].Pause();
+                    else
+                        ingameSoundInstance[i].Resume();
+                }
+
+            }
+
+        }
 
         #endregion
 

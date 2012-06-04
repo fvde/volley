@@ -296,6 +296,10 @@ namespace ManhattanMorning.Controller
         /// </summary>
         public void switchFromMainMenuToIngame(String levelName, WinCondition winCondition, List<PlayerRepresentationMainMenu> leftTeam, List<PlayerRepresentationMainMenu> rightTeam)
         {
+
+            // Remove all menu sounds
+            SoundManager.Instance.discardMenuSounds();
+
             LoadLevel(levelName, winCondition, leftTeam, rightTeam);
 
             // Change gamestate
@@ -332,6 +336,10 @@ namespace ManhattanMorning.Controller
         /// </summary>
         public void switchFromIngameToIngameMenu(int winner)
         {
+
+            // Pause ingame sounds
+            SoundManager.Instance.pauseIngameSounds(true);
+
             // Change gamestate
             gameState = GameState.IngameMenu;
 
@@ -347,6 +355,13 @@ namespace ManhattanMorning.Controller
         /// </summary>
         public void switchFromIngameMenuToIngame()
         {
+
+            // Resume ingame sounds
+            SoundManager.Instance.pauseIngameSounds(false);
+
+            // Remove all menu sounds
+            SoundManager.Instance.discardMenuSounds();
+
             // Change gamestate
             gameState = GameState.Ingame;            
 
@@ -360,6 +375,11 @@ namespace ManhattanMorning.Controller
         /// </summary>
         public void switchFromIngameMenuToMainMenu()
         {
+
+            // Remove all sounds
+            SoundManager.Instance.discardMenuSounds();
+            SoundManager.Instance.discardIngameSounds();
+
             // Change gamestate
             gameState = GameState.MainMenu;
 
@@ -376,6 +396,10 @@ namespace ManhattanMorning.Controller
         /// </summary>
         public void restartGame()
         {
+
+            // Remove all sounds
+            SoundManager.Instance.discardMenuSounds();
+            SoundManager.Instance.discardIngameSounds();
 
             clearControllers();
 
