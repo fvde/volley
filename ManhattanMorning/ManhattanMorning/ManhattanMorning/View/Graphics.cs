@@ -790,6 +790,8 @@ namespace ManhattanMorning.View
         /// </summary>
         public void drawVideo(GameTime gameTime)
         {
+            game.GraphicsDevice.SetRenderTarget(null);
+            game.GraphicsDevice.Clear(Color.Black);
             updateFade(gameTime);
 
             spriteBatchAll.Begin();

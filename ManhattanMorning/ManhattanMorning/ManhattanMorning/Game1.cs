@@ -51,7 +51,10 @@ namespace ManhattanMorning
         /// <summary>
         /// True if a video is being played right now.
         /// </summary>
-        public static bool VideoPlaying { get { return videoPlayer.State == Microsoft.Xna.Framework.Media.MediaState.Playing; } }
+        public static bool VideoPlaying {
+            get {
+                if (videoPlayer.IsDisposed) return false;
+                return videoPlayer.State == Microsoft.Xna.Framework.Media.MediaState.Playing; } }
 
         /// <summary>
         /// The video that is played.
@@ -235,6 +238,7 @@ namespace ManhattanMorning
         /// <param name="v"></param>
         public static void playVideo(Video v)
         {
+            if (videoPlayer.IsDisposed) videoPlayer = new VideoPlayer();
             videoPlayer.Play(v);
         }
 
@@ -263,6 +267,7 @@ namespace ManhattanMorning
         public static void stopVideo()
         {
             videoPlayer.Stop();
+            videoPlayer.Dispose();
         }
 
         #endregion

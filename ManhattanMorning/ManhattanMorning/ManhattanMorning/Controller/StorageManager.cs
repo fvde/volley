@@ -183,7 +183,6 @@ namespace ManhattanMorning.Controller
                         MeasurementUnit.Meter, null);
                     //playerHighlight.Offset = -player.Size / 8;
                     SuperController.Instance.addGameObjectToGameInstance(playerHighlight);
-
                     player.attachObject(playerHighlight);
 
                     // Add player to given GameInstance
