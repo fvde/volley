@@ -58,7 +58,7 @@ namespace ManhattanMorning.Misc
         public int LoopTimes
         {
             get { return loopTimes; }
-            set { loopTimes = value; }
+            set { loopTimes = value; } 
         }
 
         /// <summary>

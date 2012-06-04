@@ -1463,27 +1463,48 @@ namespace ManhattanMorning.View
         /// Sets all values of the teamplay text so that it fades in at the right position.
         /// </summary>
         /// <param name="team">Number if team that got teamplay.</param>
-        /// <param name="visible">Is the text visible?</param>
-        private void setTeamplayText(int team, bool visible)
+        public void setTeamplayText(int teamplyID, Vector2 displayPoint, int team, bool visible)
         {
-            PassiveObject po;
+            Texture2D tex = null;
+            switch (teamplyID)
+            {
+                case 0:
+                    tex = StorageManager.Instance.getTextureByName("bonus_directpoint");
+                    break;
+                case 1:
+                    tex = StorageManager.Instance.getTextureByName("bonus_pointstreak");
+                    break;
+                case 2:
+                    tex = StorageManager.Instance.getTextureByName("bonus_smash");
+                    break;
+            }
+            if (tex == null) return;
+
+            HUD po;
+            Vector2 moveTo;
             if (team == 1)
             {
-                po = gameObjects.GetObjectByName("teamplay_t1") as PassiveObject;
+                po = gameObjects.GetObjectByName("teamplay_t1") as HUD;
+                moveTo = new Vector2(viewPortWidth / 4, 0.3f);
             }
             else
             {
-                po = gameObjects.GetObjectByName("teamplay_t2") as PassiveObject;
+                po = gameObjects.GetObjectByName("teamplay_t2") as HUD;
+                moveTo = new Vector2(viewPortWidth / 4 * 3, 0.3f);
             }
 
-            if (!visible)
-            {
-                po.Visible = false;
-                return;
-            }
+            Curve2D c = new Curve2D();
+            c.addPoint(0, displayPoint);
+            c.addPoint(0.3f, displayPoint);
+            c.addPoint(1, moveTo);
+            PathAnimation p = new PathAnimation(c, 4000);
+            po.PathAnimation = p;
+            po.PathAnimation.Active = true;
 
+            po.Texture = tex;
             po.Visible = true;
             po.FadingAnimation.Active = true;
+            po.ScalingAnimation.Active = true;
         }
 
         private float cos, sin, angle;

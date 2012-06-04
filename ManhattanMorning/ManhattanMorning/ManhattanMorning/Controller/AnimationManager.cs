@@ -195,6 +195,10 @@ namespace ManhattanMorning.Controller
             if (sanim.TimeSinceFadingStarted >= sanim.FadingTime)
             {
                 sanim.TimeSinceFadingStarted = 0;
+                sanim.CountLoops++;
+
+                if (!sanim.Looping || sanim.CountLoops >= sanim.LoopTimes * 2 + 2)
+                    sanim.Active = false;
 
                 //negate animation direction when minimum or maximum is reached
                 if (sanim.Reverse)

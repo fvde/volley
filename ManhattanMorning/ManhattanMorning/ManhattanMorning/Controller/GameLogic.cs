@@ -1051,6 +1051,7 @@ namespace ManhattanMorning.Controller
                 SuperController.Instance.setSpecialbarFilling(player.Team, 2 * energyMultiplicator);
                 TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.smashBall, (int)Sound.SmashBall));
                 ParticleSystemsManager.Instance.playMeteorBall(ball);
+                Graphics.Instance.setTeamplayText(2, collisionPosition, player.Team, true);
             }
         }
 
@@ -1065,7 +1066,10 @@ namespace ManhattanMorning.Controller
                 pointsInARow++;
                 if (pointsInARow % 3 == 0)
                 {
+
                     SuperController.Instance.setSpecialbarFilling(teamNumber, 3 * energyMultiplicator);
+                    Graphics.Instance.setTeamplayText(1, (teamNumber == 1) 
+                        ? new Vector2(levelSize.X / 4, levelSize.Y / 2) : new Vector2(levelSize.X / 4 * 3, levelSize.Y / 2) , teamNumber, true);
                 }
             }
             else
@@ -1085,6 +1089,7 @@ namespace ManhattanMorning.Controller
             if (!(lastPlayerThatHitBall == null) && lastPlayerThatHitBall.Team == team)
             {
                 SuperController.Instance.setSpecialbarFilling(lastPlayerThatHitBall.Team, 3 * energyMultiplicator);
+                Graphics.Instance.setTeamplayText(0, lastPlayerThatHitBall.Position, team, true);
             }
         }
 

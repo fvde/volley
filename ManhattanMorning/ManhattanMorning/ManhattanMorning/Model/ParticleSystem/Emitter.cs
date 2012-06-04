@@ -483,6 +483,7 @@ namespace ManhattanMorning.Model.ParticleSystem
         /// </summary>
         public void initializeParticles()
         {
+            this.particleList.Clear();
             for (int i = 0; i < numberOfParticles; i++)
             {
                 Particle p = new Particle(this.Position + getStartingPosition(), this.particleLifeTime, (float) rng.NextDouble());
@@ -497,6 +498,7 @@ namespace ManhattanMorning.Model.ParticleSystem
         /// </summary>
         public void initializeParticles(bool dirAsRot)
         {
+            this.particleList.Clear();
             for (int i = 0; i < numberOfParticles; i++)
             {
                 Particle p = new Particle(this.Position + getStartingPosition(), this.particleLifeTime, (float)rng.NextDouble());

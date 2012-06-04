@@ -94,9 +94,6 @@ namespace ManhattanMorning.Misc.Levels
             levelObjectsList.Add(new PassiveObject("Background", "Background", levelSize, Vector2.Zero, 0));
 
             PassiveObject p = new PassiveObject("Volcano", "Volcano", levelSize, Vector2.Zero, 8);
-            ScalingAnimation s = new ScalingAnimation(true, true, 0, true, 1000);
-            s.ScalingRange = new Vector2(1, 2.5f);
-            p.ScalingAnimation = s;
             levelObjectsList.Add(p);
 
             levelObjectsList.Add(new PassiveObject("Front", "front", levelSize, Vector2.Zero, 60));

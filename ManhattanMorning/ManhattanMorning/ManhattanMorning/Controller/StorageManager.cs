@@ -548,13 +548,11 @@ namespace ManhattanMorning.Controller
             Texture2D bonus_teamplay = game1.Content.Load<Texture2D>(@"Textures\HUD\PowerupText\bonus_teamplay");
             Texture2D bonus_directpoint = game1.Content.Load<Texture2D>(@"Textures\HUD\PowerupText\bonus_directpoint");
             Texture2D bonus_pointstreak = game1.Content.Load<Texture2D>(@"Textures\HUD\PowerupText\bonus_pointstreak");
-            Texture2D bonus_control = game1.Content.Load<Texture2D>(@"Textures\HUD\PowerupText\bonus_control");
 
             saveTextureByName(bonus_smash, "bonus_smash");
             saveTextureByName(bonus_teamplay, "bonus_teamplay");
             saveTextureByName(bonus_directpoint, "bonus_directpoint");
             saveTextureByName(bonus_pointstreak, "bonus_pointstreak");
-            saveTextureByName(bonus_control, "bonus_control");
 
             saveTextureByName(specialbar_fillingRectTexture_left, "specialbar_fillingRectTexture_left");
             saveTextureByName(specialbar_fillingRectTexture_right, "specialbar_fillingRectTexture_right");
@@ -748,9 +746,18 @@ namespace ManhattanMorning.Controller
             // PowerupText. We need one text for every team.
             float meterpixel = (float)SettingsManager.Instance.get("meterToPixel");
 
+            
             //additional texts
+            ScalingAnimation scaling = new ScalingAnimation(false, false, 0, false, 500);
+            FadingAnimation fading = new FadingAnimation(false, true, 300, false, 600);
+
             HUD text_teamplay_t1 = new HUD("teamplay_t1", false, teamplay, null, new Vector2(teamplay.Width, teamplay.Height) / meterpixel, new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
+            text_teamplay_t1.ScalingAnimation = scaling;
+            text_teamplay_t1.FadingAnimation = fading;
+
             HUD text_teamplay_t2 = new HUD("teamplay_t2", false, teamplay, null, new Vector2(teamplay.Width, teamplay.Height) / meterpixel, new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
+            text_teamplay_t2.ScalingAnimation = scaling;
+            text_teamplay_t2.FadingAnimation = fading;
 
             SuperController.Instance.addGameObjectToGameInstance(text_teamplay_t1);
             SuperController.Instance.addGameObjectToGameInstance(text_teamplay_t2);
