@@ -118,6 +118,10 @@ namespace ManhattanMorning.Controller
                 {
                     updateWaypointsAndPosition(gameTime, drawableObject.PathAnimation);
                 }
+                if (drawableObject.ScalingAnimation != null && drawableObject.ScalingAnimation.Active)
+                {
+                    updateScaling(drawableObject, gameTime);
+                }
             }
 
             if (elapsedTime >= 15) elapsedTime -= 15;
@@ -148,6 +152,61 @@ namespace ManhattanMorning.Controller
         public void pause(bool on)
         {
             paused = on;
+        }
+
+        private void updateScaling(DrawableObject obj, GameTime gameTime)
+        {
+            ScalingAnimation sanim = obj.ScalingAnimation;
+
+            // Do not update if animation is not active
+            if (sanim.FadeMode == FadeMode.None) return;
+
+            //update time since fading started
+            sanim.TimeSinceFadingStarted += (int)(gameTime.ElapsedGameTime.TotalMilliseconds);
+            sanim.TimeSinceTotalAnimationStarted += (int)(gameTime.ElapsedGameTime.TotalMilliseconds);
+
+            bool reverse = (sanim.ScalingRange.X > sanim.ScalingRange.Y) ? true : false;
+            //calculate alpha value depending on FadeValue
+            float diff;
+            switch (sanim.FadeMode)
+            {
+                case FadeMode.Linear:
+                    diff = (sanim.TimeSinceFadingStarted / (float)sanim.FadingTime);
+                    if(diff > 1) diff = 1;
+                    if (!reverse)
+                        sanim.Scale = (sanim.ScalingRange.Y - sanim.ScalingRange.X) * diff + sanim.ScalingRange.X;
+                    else
+                        sanim.Scale = sanim.ScalingRange.X - (sanim.ScalingRange.X - sanim.ScalingRange.Y) * diff;
+                    break;
+                case FadeMode.Quadratic:
+                    diff = (sanim.TimeSinceFadingStarted / (float)sanim.FadingTime);
+                    if (diff > 1) diff = 1;
+                    if (!reverse)
+                        sanim.Scale = (sanim.ScalingRange.Y - sanim.ScalingRange.X) * diff + sanim.ScalingRange.X;
+                    else
+                        sanim.Scale = sanim.ScalingRange.X - (sanim.ScalingRange.X - sanim.ScalingRange.Y) * diff;
+                    break;
+                case FadeMode.None:
+                    break;
+            }
+
+
+            //fading is over, set clip alpha and set fadingMode to do nothing
+            if (sanim.TimeSinceFadingStarted >= sanim.FadingTime)
+            {
+                sanim.TimeSinceFadingStarted = 0;
+
+                //negate animation direction when minimum or maximum is reached
+                if (sanim.Reverse)
+                {
+                    sanim.ScalingRange = new Vector2(sanim.ScalingRange.Y, sanim.ScalingRange.X);
+                }
+                //disable animation if you don't want to reverse it
+                else
+                {
+                    sanim.Active = false;
+                }
+            }
         }
 
         /// <summary>

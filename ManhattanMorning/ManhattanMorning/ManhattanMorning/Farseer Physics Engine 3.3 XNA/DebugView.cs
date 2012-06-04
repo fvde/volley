@@ -177,7 +177,7 @@ namespace FarseerPhysics
         public abstract void DrawSegment(Vector2 start, Vector2 end, float red, float blue, float green);
 
         /// <summary>
-        /// Draw a transform. Choose your own length scale.
+        /// Draw a transform. Choose your own length Scale.
         /// </summary>
         /// <param name="transform">The transform.</param>
         public abstract void DrawTransform(ref Transform transform);

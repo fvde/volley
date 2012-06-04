@@ -322,7 +322,7 @@ namespace FarseerPhysics.Common
 
             _bodyMap[gx, gy] = new List<Body>();
 
-            // create the scale vector
+            // create the Scale vector
             Vector2 scale = new Vector2(1f / PointsPerUnit, 1f / -PointsPerUnit);
 
             // create physics object for this grid cell

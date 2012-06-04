@@ -234,6 +234,7 @@
     <Compile Include="Farseer Physics Engine 3.3 XNA\Factories\LinkFactory.cs" />
     <Compile Include="Farseer Physics Engine 3.3 XNA\Settings.cs" />
     <Compile Include="Misc\Animation\Animation.cs" />
+    <Compile Include="Misc\Animation\ScalingAnimation.cs" />
     <Compile Include="Misc\Animation\SpriteAnimation.cs" />
     <Compile Include="Misc\Curves\Bezier.cs" />
     <Compile Include="Misc\Curves\BezierBatch.cs" />

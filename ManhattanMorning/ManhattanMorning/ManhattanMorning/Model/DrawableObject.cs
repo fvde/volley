@@ -149,6 +149,15 @@ namespace ManhattanMorning.Model
         }
 
         /// <summary>
+        /// Scales objects like an animation.
+        /// </summary>
+        public ScalingAnimation ScalingAnimation
+        {
+            get { return scalingAnimation; }
+            set { scalingAnimation = value; }
+        }
+
+        /// <summary>
         /// Color of the light.
         /// </summary>
         public Color BlendColor { get { return blendColor; } set { blendColor = value; } }
@@ -253,6 +262,11 @@ namespace ManhattanMorning.Model
         /// FadingAnimation is used to fade in and out with alpha value.
         /// </summary>
         private FadingAnimation fadingAnimation;
+
+        /// <summary>
+        /// Scales objects like an animation.
+        /// </summary>
+        private ScalingAnimation scalingAnimation;
 
         /// <summary>
         /// Color of the light.

@@ -968,6 +968,8 @@ namespace ManhattanMorning.View
             //calculate size and position of the object we want to draw
             calculateObjectSizeAndPosition(p);
 
+            float scale = (p.ScalingAnimation != null) ? p.ScalingAnimation.Scale : 1f;
+
             //draw HUD in seperate spritebatch beacuse of color mixing with mood            
             if (p is HUD)
             {
@@ -985,8 +987,7 @@ namespace ManhattanMorning.View
                     Vector2 origin = (source == null) ? new Vector2(p.Texture.Width * 0.5f, p.Texture.Height * 0.5f)
                         : new Vector2(((Rectangle)source).Width / 2, ((Rectangle)source).Height / 2);
 
-                    spriteBatchHUD.Draw(p.Texture,
-                        new Rectangle((int)(objectPosition.X + objectSize.X * 0.5f), (int)(objectPosition.Y + objectSize.Y * 0.5f), (int)(objectSize.X), (int)(objectSize.Y)),
+                    spriteBatchHUD.Draw(p.Texture, new Rectangle((int)(objectPosition.X + objectSize.X * 0.5f), (int)(objectPosition.Y + objectSize.Y * 0.5f), (int)(objectSize.X * scale), (int)(objectSize.Y * scale)),
                         source, p.BlendColor * p.Alpha, p.Rotation, origin, flipHorizontally, 0.0f);
                 }
             }
@@ -1007,7 +1008,7 @@ namespace ManhattanMorning.View
                         else
                             //texture, dest rect, source rect,  color, rotation, origin, effect, depth
                             spriteBatchAll.Draw(p.Texture,
-                                new Rectangle((int)(objectPosition.X + objectSize.X * 0.5f), (int)(objectPosition.Y + objectSize.Y * 0.5f), (int)(objectSize.X), (int)(objectSize.Y)),
+                                new Rectangle((int)(objectPosition.X + objectSize.X * 0.5f), (int)(objectPosition.Y + objectSize.Y * 0.5f), (int)(objectSize.X * scale), (int)(objectSize.Y * scale)),
                                 null, p.BlendColor * p.Alpha, p.Rotation, new Vector2(p.Texture.Width * 0.5f, p.Texture.Height * 0.5f), flipHorizontally, 0.0f);
                     }
                 }

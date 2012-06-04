@@ -169,7 +169,7 @@ namespace FarseerPhysics
         public const float MaxAngularCorrection = (8.0f / 180.0f * Pi);
 
         /// <summary>
-        /// This scale factor controls how fast overlap is resolved. Ideally this would be 1 so
+        /// This Scale factor controls how fast overlap is resolved. Ideally this would be 1 so
         /// that overlap is removed in one time step. However using values close to 1 often lead
         /// to overshoot.
         /// </summary>
