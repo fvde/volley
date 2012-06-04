@@ -52,7 +52,7 @@ namespace ManhattanMorning.Controller
             /// <summary>
             /// Play level video?
             /// </summary>
-            settings.Add("LevelVideo", new object[] { false, true, true });
+            settings.Add("LevelVideo", new object[] { false, false, true });
 
             /// <summary>
             /// True if a game between KI players should be allowed
@@ -191,13 +191,13 @@ namespace ManhattanMorning.Controller
             settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 30000, 60000 });
 
             // Defines how fast the specialbar fills if you perform a positive action
-            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 10.0f, 10.0f });
+            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 1.0f, 10.0f });
 
             #region Jumpheight
 
             // Increased jumpheight factor
             // Used in GameLogic
-            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.17f, 3.0f });
+            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.2f, 3.0f });
 
             #endregion
 
@@ -220,7 +220,7 @@ namespace ManhattanMorning.Controller
             #region SuperBomb
 
             // The size of bombs
-            settings.Add("superBombSize", new object[] { new Vector2(0.1f, 0.1f), new Vector2(1.8f, 1.8f), new Vector2(5f, 5f) });
+            settings.Add("superBombSize", new object[] { new Vector2(0.1f, 0.1f), new Vector2(1.6f, 1.6f), new Vector2(5f, 5f) });
 
             // The range of bombs
             settings.Add("superBombRange", new object[] { 0.0f, 4.0f, 30.0f });
@@ -252,7 +252,7 @@ namespace ManhattanMorning.Controller
             settings.Add("ballRainAmount", new object[] { 1, 3, 5 });
 
             // Time between ballrain spawns
-            settings.Add("ballRainTime", new object[] { 1000, 6000, 20000 });
+            settings.Add("ballRainTime", new object[] { 1000, 5000, 20000 });
 
             #endregion
 

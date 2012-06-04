@@ -301,6 +301,7 @@ namespace ManhattanMorning.Controller
 
                 // update HUD elements
                 updateHUD(ballList, levelTime, score);
+
             }
 
         }
@@ -399,7 +400,7 @@ namespace ManhattanMorning.Controller
                 if (score.X == ((ScoreLimit_WinCondition)winCondition).WinningScore - 1 ||
                     score.Y == ((ScoreLimit_WinCondition)winCondition).WinningScore - 1)
                 {
-                    activateMatchballFlag();
+                    activateMatchballFlag(score);
                 }
 
                 // check if one of both teams has reached the score limit
@@ -440,7 +441,7 @@ namespace ManhattanMorning.Controller
                     }
                     else
                     {
-                        activateMatchballFlag();
+                        activateMatchballFlag(score);
                         this.winCondition = new ScoreLimit_WinCondition((int)score.Y + 1);
                     }
                 }
@@ -544,13 +545,20 @@ namespace ManhattanMorning.Controller
 
                         FadingAnimation fadingAnimation = new FadingAnimation(false, false, 0, true, 900, Model.ParticleSystem.FadeMode.Quadratic);
                         fadingAnimation.Inverted = true;
-                        HUD countdownTexture = new HUD("CountdownTexture", true, StorageManager.Instance.getTextureByName("texture_countdown_" + i), null, new Vector2(0.08f, 0.12f),
-                            new Vector2(0.46f, 0.01f), 79, MeasurementUnit.PercentOfScreen);
+                        HUD countdownTexture = new HUD("CountdownTexture", true, StorageManager.Instance.getTextureByName("texture_countdown_" + i), null, new Vector2(0.06f, 0.06f * 1.7778f),
+                            new Vector2(0.47f, 0.01f), 79, MeasurementUnit.PercentOfScreen);
                         countdownTexture.FadingAnimation = fadingAnimation;
                         SuperController.Instance.addGameObjectToGameInstance(countdownTexture);
 
                         // Weiter: Task zum Löschen von Countdown
                         TaskManager.Instance.addTask(new GameLogicTask(900, countdownTexture));
+
+                        // Let gamepads rumble
+                        InputManager.Instance.setRumble(300, new Vector2(0.3f, 0.3f));
+
+                        // Let clock blink
+                        ((HUD)relevantHUDObjects.GetObjectByName("Clock_highlightedRightHalf")).FadingAnimation = new FadingAnimation(false, true, 100, true, 200);
+                        ((HUD)relevantHUDObjects.GetObjectByName("Clock_highlightedHalf")).FadingAnimation = new FadingAnimation(false, true, 100, true, 200);
 
                         activatedCountdowns[i-1] = true;
                     }
@@ -741,15 +749,7 @@ namespace ManhattanMorning.Controller
                     handleDirectPointBonus(1);
                 }
 
-                //remove Lights from Ball in forest level
-                if (Graphics.Instance.IsNight)
-                {
-                    Graphics.Instance.removeLightFromObject(ball);
-                }
-                // remove the ball
-                SuperController.Instance.removeGameObjectFromGameInstance(ball);
-                // delete corresponding  ballIndicator
-                SuperController.Instance.removeGameObjectFromGameInstance(ball.BallIndicator);
+                removeBall(ball);
 
                 // If there is no more ball and no task to spawn a ball, spawn a new one
                 bool spawnBall = true;
@@ -767,13 +767,8 @@ namespace ManhattanMorning.Controller
                     // Creating a new random ballResetPosition 
                     ballResetPosition = Physics.Instance.getRandomPositionAtTheTop();
 
-                    // Showing a Ball-Texture at the releasing point for a short Period
-                    GraphicsTask g = new GraphicsTask(500, GraphicTask.CreateBall, 4);
-                    g.Position = ballResetPosition;
-                    TaskManager.Instance.addTask(g);
-                    TaskManager.Instance.addTask(new GraphicsTask(1500, GraphicTask.CreateBall, 5));
-                    // Creating the new ball afterwards
-                    TaskManager.Instance.addTask(new PhysicsTask(1500, PhysicsTask.PhysicTaskType.CreateNewOriginalBall, ballResetPosition));
+                    createBall(ballResetPosition, 500);
+
                 }
 
                 //reset bonus counter
@@ -1229,8 +1224,9 @@ namespace ManhattanMorning.Controller
 
             for (int i = 0; i <= 1; i++)
             {
-                //get new stone position
-                int stone = random.Next(0 + 3 * i, 3 + 3 * i);
+                //get new stone position. Pick one on each side.
+                int stone = random.Next(0 + 2 * i, 2 + 2 * i);
+                int safetyCounter = 10;
                 PassiveObject newStone = SuperController.Instance.getObjectByName("stone" + stone) as PassiveObject;
 
 
@@ -1240,7 +1236,18 @@ namespace ManhattanMorning.Controller
                 {
                     stone = random.Next(0 + 2* i , 2 + 2*i);
                     newStone = SuperController.Instance.getObjectByName("stone" + stone) as PassiveObject;
-                }                
+
+                    safetyCounter--;
+                    if (safetyCounter < 0)
+                    {
+                        break;
+                    }
+                }
+
+                if (safetyCounter < 0)
+                {
+                    break;
+                }
 
                 if (!init)
                 {
@@ -1305,14 +1312,114 @@ namespace ManhattanMorning.Controller
         /// <summary>
         /// Sets the flag, if the next ball is a match ball.
         /// </summary>
-        private void activateMatchballFlag()
+        /// <param name="score">The latest score of the game</param>
+        private void activateMatchballFlag(Vector2 score)
         {
             if (this.winCondition is TimeLimit_WinCondition)
             {
                 this.matchBallTimeWinningCondition = true;
+                startScoreboardBlinking(0);
             }
-            HUD matchball = SuperController.Instance.getHUDElementByName("matchball");
-            matchball.Visible = true;
+            else
+            {
+                if (score.X > score.Y)
+                    startScoreboardBlinking(1);
+                else if (score.X < score.Y)
+                    startScoreboardBlinking(2);
+                else
+                    startScoreboardBlinking(0);
+            }
+
+
+        }
+
+
+        /// <summary>
+        /// Creates a new ball at the specified position
+        /// </summary>
+        /// <param name="position">The position where the ball will appear</param>
+        /// <param name="afterTime">The time in MS after which the ball will appear</param>
+        public void createBall(Vector2 position, int afterTime)
+        {
+
+            // Showing a Ball-Texture at the releasing point for a short Period
+            GraphicsTask g = new GraphicsTask(afterTime, GraphicTask.CreateBall, 4);
+            g.Position = position;
+            TaskManager.Instance.addTask(g);
+            TaskManager.Instance.addTask(new GraphicsTask(afterTime + 1000, GraphicTask.CreateBall, 5));
+
+            // Creating the new ball afterwards
+            TaskManager.Instance.addTask(new PhysicsTask(afterTime + 1000, PhysicsTask.PhysicTaskType.CreateNewBall, position));
+
+        }
+
+        /// <summary>
+        /// Removes the given ball from the level
+        /// </summary>
+        /// <param name="ball">The ball that should be removed</param>
+        private void removeBall(Ball ball)
+        {
+
+            //remove Lights from Ball in forest level
+            if (Graphics.Instance.IsNight)
+            {
+                Graphics.Instance.removeLightFromObject(ball);
+            }
+
+
+            // Remove highlight
+            PassiveObject ballHighlight = null;
+
+            foreach (DrawableObject attachedObject in ball.AttachedObjects)
+                if (attachedObject.Name == "BallHighlight")
+                    ballHighlight = (PassiveObject)attachedObject;
+
+            if (ballHighlight != null)
+                SuperController.Instance.removeGameObjectFromGameInstance(ballHighlight);
+
+
+            // remove the ball
+            SuperController.Instance.removeGameObjectFromGameInstance(ball);
+
+            // delete corresponding  ballIndicator
+            SuperController.Instance.removeGameObjectFromGameInstance(ball.BallIndicator);
+
+        }
+
+        /// <summary>
+        /// Let the score in the scoreboard blinking
+        /// </summary>
+        /// <param name="team"> 1 = left team, 2 = right team, 3 = both teams</param>
+        private void startScoreboardBlinking(int team)
+        {
+
+            int timeBeforeReverse = 100;
+            int fadingTime = 800;
+
+            // Left score
+            if ((team == 1) || (team == 0))
+            {
+                if (SuperController.Instance.getHUDElementByName("Digit_left_1").FadingAnimation == null)
+                {
+                    SuperController.Instance.getHUDElementByName("Digit_left_1").FadingAnimation = new FadingAnimation(true, true, timeBeforeReverse, true, fadingTime);
+                    SuperController.Instance.getHUDElementByName("Digit_left_1").BlendColor = Color.Red;
+                    SuperController.Instance.getHUDElementByName("Digit_left_2").FadingAnimation = new FadingAnimation(true, true, timeBeforeReverse, true, fadingTime);
+                    SuperController.Instance.getHUDElementByName("Digit_left_2").BlendColor = Color.Red;
+                }
+            }
+
+            // Right score
+            if ((team == 2) || (team == 0))
+            {
+                if (SuperController.Instance.getHUDElementByName("Digit_right_1").FadingAnimation == null)
+                {
+                    SuperController.Instance.getHUDElementByName("Digit_right_1").FadingAnimation = new FadingAnimation(true, true, timeBeforeReverse, true, fadingTime);
+                    SuperController.Instance.getHUDElementByName("Digit_right_1").BlendColor = Color.Red;
+                    SuperController.Instance.getHUDElementByName("Digit_right_2").FadingAnimation = new FadingAnimation(true, true, timeBeforeReverse, true, fadingTime);
+                    SuperController.Instance.getHUDElementByName("Digit_right_2").BlendColor = Color.Red;
+                }
+            }
+
         }
 
         #endregion

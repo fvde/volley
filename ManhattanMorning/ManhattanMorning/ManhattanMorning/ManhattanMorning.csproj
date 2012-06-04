@@ -13,7 +13,7 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
-    <XnaProfile>Reach</XnaProfile>
+    <XnaProfile>HiDef</XnaProfile>
     <XnaCrossPlatformGroupID>8e5f0a91-d43d-464f-bf11-f6a2ebef2e2a</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
@@ -285,6 +285,7 @@
     <Compile Include="Model\GameObject\PowerUpObjects\Bomb.cs" />
     <Compile Include="Model\GameObject\PowerUpObjects\Lava.cs" />
     <Compile Include="Model\GameObject\PowerUpObjects\PowerUpObject.cs" />
+    <Compile Include="Model\GameObject\Waterfall.cs" />
     <Compile Include="Model\HUD\Specialbar.cs" />
     <Compile Include="Model\LayerInterface.cs" />
     <Compile Include="Model\Menu\MenuButtonObject.cs" />

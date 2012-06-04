@@ -285,6 +285,8 @@ namespace ManhattanMorning.Controller
                     return 15000;
                 case PowerUpType.SunsetSunrise:
                     return 34500;
+                case PowerUpType.BallRain:
+                    return 10000;
                 default:
                     return 3000;
             }
@@ -611,12 +613,12 @@ namespace ManhattanMorning.Controller
         private void setBallRainPowerUp(PowerUp powerUp)
         {
             // First Ball
-            TaskManager.Instance.addTask(new PhysicsTask(1000, powerUp.Owner, PhysicsTask.PhysicTaskType.CreateNewPowerupBall));
+            TaskManager.Instance.addTask(new PhysicsTask(1000, powerUp.Owner, PhysicsTask.PhysicTaskType.CreateNewBall));
 
             // Consecutive balls
             for (int x = (int)settingsManager.get("ballRainAmount") - 1; x > 0; x--)
             {
-                TaskManager.Instance.addTask(new PhysicsTask(x * (int)settingsManager.get("ballRainTime"), powerUp.Owner, PhysicsTask.PhysicTaskType.CreateNewPowerupBall));
+                TaskManager.Instance.addTask(new PhysicsTask(x * (int)settingsManager.get("ballRainTime"), powerUp.Owner, PhysicsTask.PhysicTaskType.CreateNewBall));
             }
         }
 

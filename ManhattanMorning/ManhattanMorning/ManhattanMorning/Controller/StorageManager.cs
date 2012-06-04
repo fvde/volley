@@ -101,7 +101,7 @@ namespace ManhattanMorning.Controller
             gameInstance.IntroVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
             gameInstance.BeachVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
             gameInstance.ForestVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
-            gameInstance.MayaVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
+            gameInstance.MayaVideo = Game1.Instance.Content.Load<Video>(@"Videos\maya");
         }
 
 
@@ -128,11 +128,16 @@ namespace ManhattanMorning.Controller
 
             #region Players
 
-            Texture2D player1Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player1");
-            Texture2D player2Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player2");
-            Texture2D player3Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player3");
-            Texture2D player4Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player4"); 
+            Texture2D player1Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_blue");
+            Texture2D player2Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_red");
+            Texture2D player3Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_green");
+            Texture2D player4Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_yellow"); 
             Vector2 playerSize = new Vector2((float)SettingsManager.Instance.get("playerSize"), (float)SettingsManager.Instance.get("playerSize"));
+
+            // Check if it's a 2vs2 game (necessary for spawn positions)
+            float offset = 0;
+            if (playerLeftTeam.Count > 1)
+                offset = playerSize.X;
 
             // Create all left team player 
             for (int i = 0; i < 2; i++)
@@ -140,8 +145,11 @@ namespace ManhattanMorning.Controller
                 int team = i + 1;
 
                 foreach (PlayerRepresentationMainMenu playerRepresentation in (team == 1) ? playerLeftTeam : playerRightTeam)
-                {                    
-                    Vector2 resetPosition = (team == 1) ? gameInstance.Team1ResetPosition : gameInstance.Team2ResetPosition;
+                {
+                    offset = -offset;
+
+                    Vector2 resetPosition = (team == 1) ? new Vector2(gameInstance.Team1ResetPosition.X + offset, gameInstance.Team1ResetPosition.Y) : 
+                        new Vector2(gameInstance.Team2ResetPosition.X + offset, gameInstance.Team2ResetPosition.Y);
                     PlayerStatus status;
 
                     if (playerRepresentation.KI)
@@ -202,6 +210,7 @@ namespace ManhattanMorning.Controller
                     gameInstance.GameObjects.GetPlayer(playerRightTeam[1].PlayerIndex).Body);
                 Physics.Instance.disableCollisionBetweenBodies(gameInstance.GameObjects.GetPlayer(playerRightTeam[0].PlayerIndex).Body,
                     gameInstance.GameObjects.GetPlayer(playerRightTeam[1].PlayerIndex).HandBody);
+
             }
             
             #endregion
@@ -239,9 +248,15 @@ namespace ManhattanMorning.Controller
             Net tempNet = null;
 
             // Take each level object and check which type it is, then create the right game object
-            foreach (DrawableObject drawObj in level.LevelObjectsList)
+            foreach (LayerInterface drawObj in level.LevelObjectsList)
             {
-                if (drawObj is PassiveObject && !(drawObj is Light))
+
+                if (drawObj is Waterfall)
+                {
+                    SuperController.Instance.addGameObjectToGameInstance(drawObj);
+
+                }
+                if (drawObj is DrawableObject && drawObj is PassiveObject && !(drawObj is Light))
                 {
                     #region PassiveObjects
 
@@ -252,13 +267,13 @@ namespace ManhattanMorning.Controller
                     {
                         // Load the texture
                         tempObject.Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\" + levelName + "\\" + tempObject.TextureName);
-                        drawObj.Visible = true;
+                        ((DrawableObject)drawObj).Visible = true;
                     }
                     if(tempObject.Animation != null)
                     {
                         // Create the animation
                         tempObject.Animation.SpriteStrip = game1.Content.Load<Texture2D>(@"Textures\Levels\" + levelName + "\\" + tempObject.Animation.TextureName);
-                        drawObj.Visible = true;
+                        ((DrawableObject)drawObj).Visible = true;
                     }
                     tempObject.Position *= resizeFactorLevelSize;
                     tempObject.Size *= resizeFactorLevelSize;
@@ -280,6 +295,7 @@ namespace ManhattanMorning.Controller
 
                     #endregion
                 }
+
                 else if (drawObj is Net)
                 {
                     #region Net
@@ -288,7 +304,7 @@ namespace ManhattanMorning.Controller
 
                     // Load the texture
                     tempObject.Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\" + levelName + "\\" + tempObject.TextureName);
-                    drawObj.Visible = true;
+                   ((DrawableObject)drawObj).Visible = true;
 
                     // Create the object
                     tempObject.Size *= resizeFactorLevelSize;
@@ -332,7 +348,7 @@ namespace ManhattanMorning.Controller
                         // Save texture for later powerup creation
                         saveTextureByName(objectTexture, "Border");
                         tempObject.Texture = objectTexture;
-                        drawObj.Visible = true;
+                        ((DrawableObject)drawObj).Visible = true;
                     }
                     tempObject.Position *= resizeFactorLevelSize;
                     tempObject.Size *= resizeFactorLevelSize;
@@ -345,12 +361,14 @@ namespace ManhattanMorning.Controller
                 {
                     Light tempObject = drawObj as Light;
                     tempObject.Texture = game1.Content.Load<Texture2D>(@"Textures\Light\" + tempObject.TextureName);
-                    drawObj.Visible = true;
+                    ((DrawableObject)drawObj).Visible = true;
                     tempObject.Position *= resizeFactorLevelSize;
                     tempObject.Size *= resizeFactorLevelSize;
 
                     SuperController.Instance.addGameObjectToGameInstance(tempObject);
                 }
+               
+                
             }
 
             #region Borders
@@ -377,26 +395,17 @@ namespace ManhattanMorning.Controller
             
             Texture2D test = game1.Content.Load<Texture2D>(@"Textures\HUD\BallIndicator");
             
-            // Through the rotation of the border, it gets "smaller
-            // sinus(45°) & cosinus(45°)  = 0.707106
-
-            //Border leftPlayerBorder = new Border("leftPlayerBorder", true, test, null, null, new Vector2(tempNetSize.X, tempNetSize.Y),
-            //    new Vector2(gameInstance.LevelSize.X / 2.0f - (0.5f * tempNetSize.X) + 0.707106f * 0.5f * tempNetSize.Y, gameInstance.LevelSize.Y - 2 * tempNetSize.Y + (0.5f * tempNetSize.Y * (1 - 0.707106f))), 50, Model.MeasurementUnit.Meter);
-
-            //float lengthAfterRotation = (0.1736482f * tempNetSize.Y + 0.98480775f * tempNetSize.X);
-            //float widthAfterRotation = 0.98480775f * tempNetSize.X + 0.1736482f * tempNetSize.Y;
-
-            //Border leftPlayerBorder = new Border("leftPlayerBorder", true, test, null, null, new Vector2(tempNetSize.X, tempNetSize.Y),
-            //   new Vector2(gameInstance.LevelSize.X / 2.0f - (0.5f * tempNetSize.X) + (0.98480775f * tempNetSize.X + 0.2f * tempNetSize.Y - tempNetSize.X), gameInstance.LevelSize.Y - tempNetSize.Y - 0.94480775f * tempNetSize.Y), 50, Model.MeasurementUnit.Meter);
-            //leftPlayerBorder.Body.Friction = 0.0f;
-
-            // 45° -> Radiant: 0.785398163
-            // 22.5° -> Radiant: 0.392699098f => sin(22.5°) = 0.3826834f; cos = 0.9238795f
-            //// 10° -> Radiant: 0.174532925f => sin(10°) = 0.1736482f; cos(10°) = 0.98480775f
-            //leftPlayerBorder.Rotation = 0.392699098f;
-
+            // Borders to prevent lifting at the net
             Border rightSideNetHandBorder = new Border("rightSideNetHandBorder", false, test, null, null, new Vector2(1.0f, 0.2f), tempNet.Position + new Vector2(tempNetSize.X, 0), 50, Model.MeasurementUnit.Meter);
             Border leftSideNetHandBorder = new Border("leftSideNetHandBorder", false, test, null, null, new Vector2(1.0f, 0.2f), tempNet.Position - new Vector2(1.0f, 0), 50, Model.MeasurementUnit.Meter);
+
+            // Borders to prevent right players from grabbing too far over the net.
+            float allowedHandDistance = 0.3f;
+            float borderHeight = 4.0f;
+            float magicNumber = 0.2f;
+
+            Border rightSideHandDistanceBorder = new Border("rightSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 + new Vector2(allowedHandDistance, 0), 50, Model.MeasurementUnit.Meter);
+            Border leftSideHandDistanceBorder = new Border("leftSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 - new Vector2(allowedHandDistance + magicNumber, 0), 50, Model.MeasurementUnit.Meter);
 
             SuperController.Instance.addGameObjectToGameInstance(leftBorder);
             SuperController.Instance.addGameObjectToGameInstance(rightBorder);
@@ -405,7 +414,8 @@ namespace ManhattanMorning.Controller
             SuperController.Instance.addGameObjectToGameInstance(middleBorder);
             SuperController.Instance.addGameObjectToGameInstance(rightSideNetHandBorder);
             SuperController.Instance.addGameObjectToGameInstance(leftSideNetHandBorder);
-            //SuperController.Instance.addGameObjectToGameInstance(leftPlayerBorder);
+            SuperController.Instance.addGameObjectToGameInstance(rightSideHandDistanceBorder);
+            SuperController.Instance.addGameObjectToGameInstance(leftSideHandDistanceBorder);
 
             Physics.Instance.disableCollisionBetweenActiveObjectAndCollisionCategory(middleBorder, Category.Cat4);
             Physics.Instance.disableCollisionBetweenActiveObjectAndCollisionCategory(bottomBorder, Category.Cat4);
@@ -426,12 +436,16 @@ namespace ManhattanMorning.Controller
                 if (((Player)tempPlayer).Team == 1)
                 {
                     Physics.Instance.disableCollisionBetweenActiveObjects(leftSideNetHandBorder, tempPlayer);
+                    Physics.Instance.disableCollisionBetweenActiveObjects(leftSideHandDistanceBorder, tempPlayer);
                     Physics.Instance.disableCollisionBetweenBodies(leftSideNetHandBorder.Body, ((Player)tempPlayer).HandBody);
+                    Physics.Instance.disableCollisionBetweenBodies(leftSideHandDistanceBorder.Body, ((Player)tempPlayer).HandBody);
                 }
                 else
                 {
                     Physics.Instance.disableCollisionBetweenActiveObjects(rightSideNetHandBorder, tempPlayer);
+                    Physics.Instance.disableCollisionBetweenActiveObjects(rightSideHandDistanceBorder, tempPlayer);
                     Physics.Instance.disableCollisionBetweenBodies(rightSideNetHandBorder.Body, ((Player)tempPlayer).HandBody);
+                    Physics.Instance.disableCollisionBetweenBodies(rightSideHandDistanceBorder.Body, ((Player)tempPlayer).HandBody);
                 }
             }
 
@@ -481,30 +495,18 @@ namespace ManhattanMorning.Controller
             // clear Dictionary
             textures.Clear();
 
-            #region MainMenu
-
-            Texture2D texture_TeamMenu_Gamepad = game1.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad");
-            Texture2D texture_TeamMenu_Keyboard = game1.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Keyboard");
-            Texture2D texture_TeamMenu_KI = game1.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_KI");
-
-            saveTextureByName(texture_TeamMenu_Gamepad, "texture_TeamMenu_Gamepad");
-            saveTextureByName(texture_TeamMenu_Keyboard, "texture_TeamMenu_Keyboard");
-            saveTextureByName(texture_TeamMenu_KI, "texture_TeamMenu_KI");
-
-            #endregion
-
             #region Ingame HUD
 
-            Texture2D texture_countdown_1 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_1");
-            Texture2D texture_countdown_2 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_2");
-            Texture2D texture_countdown_3 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_3");
-            Texture2D texture_countdown_4 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_4");
-            Texture2D texture_countdown_5 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_5");
-            Texture2D texture_countdown_6 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_1");
-            Texture2D texture_countdown_7 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_2");
-            Texture2D texture_countdown_8 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_3");
-            Texture2D texture_countdown_9 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_4");
-            Texture2D texture_countdown_10 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_5");
+            Texture2D texture_countdown_1 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_01");
+            Texture2D texture_countdown_2 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_02");
+            Texture2D texture_countdown_3 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_03");
+            Texture2D texture_countdown_4 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_04");
+            Texture2D texture_countdown_5 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_05");
+            Texture2D texture_countdown_6 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_06");
+            Texture2D texture_countdown_7 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_07");
+            Texture2D texture_countdown_8 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_08");
+            Texture2D texture_countdown_9 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_09");
+            Texture2D texture_countdown_10 = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\Countdown_10");
 
             saveTextureByName(texture_countdown_1, "texture_countdown_1");
             saveTextureByName(texture_countdown_2, "texture_countdown_2");
@@ -566,6 +568,8 @@ namespace ManhattanMorning.Controller
             #region PowerUps
 
             Texture2D texturePowerUpBomb = game1.Content.Load<Texture2D>(@"Textures\PowerUps\powerup_bomb");
+            Texture2D texturePowerUpBomb_red = game1.Content.Load<Texture2D>(@"Textures\PowerUps\powerup_bomb_red");
+            Texture2D texturePowerUpBomb_top = game1.Content.Load<Texture2D>(@"Textures\PowerUps\powerup_bomb_top");
             Texture2D texturePowerUpLava = game1.Content.Load<Texture2D>(@"Textures\PowerUps\powerup_lava");
             Texture2D texturePowerUpJump = game1.Content.Load<Texture2D>(@"Textures\Animations\powerjump_cut");
 
@@ -581,6 +585,8 @@ namespace ManhattanMorning.Controller
             Texture2D iconWindRight = game1.Content.Load<Texture2D>(@"Textures\PowerUps\icon_wind_right");
 
             saveTextureByName(texturePowerUpBomb, "PowerUp_Bomb");
+            saveTextureByName(texturePowerUpBomb_red, "PowerUp_Bomb_red");
+            saveTextureByName(texturePowerUpBomb_top, "PowerUp_Bomb_top");
             saveTextureByName(texturePowerUpLava, "PowerUp_Lava");
             saveTextureByName(texturePowerUpJump, "PowerUp_Jump");
 
@@ -604,6 +610,8 @@ namespace ManhattanMorning.Controller
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light_smooth"), "light_smooth");
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light"), "light");
 
+            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/highlight_ball"), "highlight_ball");
+
             #endregion
 
         }
@@ -625,33 +633,32 @@ namespace ManhattanMorning.Controller
             Texture2D scoreboardTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\scoreboard_background");
 
             Texture2D texture_digit_0 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_0");
-            Texture2D texture_digit_1 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_1");
-            Texture2D texture_digit_2 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_2");
-            Texture2D texture_digit_3 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_3");
-            Texture2D texture_digit_4 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_4");
-            Texture2D texture_digit_5 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_5");
-            Texture2D texture_digit_6 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_6");
-            Texture2D texture_digit_7 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_7");
-            Texture2D texture_digit_8 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_8");
-            Texture2D texture_digit_9 = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_9");
-
-            Texture2D texture_matchball = game1.Content.Load<Texture2D>(@"Textures\HUD\matchball");
+            Texture2D texture_digit_blank = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_blank");
 
             // Explanation for y-Size: X-Size * proportion texture * proportion Screen
             HUD scoreboard = new HUD("Scoreboard", true, scoreboardTexture, null, new Vector2(0.27f, (0.27f * 0.2185f * 1.7778f)), new Vector2(0.365f, -0.02f), 73, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(scoreboard);
 
-            HUD digit_left_1 = new HUD("Digit_left_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            HUD digit_left_1 = new HUD("Digit_left_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_left_1);
-            HUD digit_left_2 = new HUD("Digit_left_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
-            SuperController.Instance.addGameObjectToGameInstance(digit_left_2);
-            HUD digit_right_1 = new HUD("Digit_right_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
-            SuperController.Instance.addGameObjectToGameInstance(digit_right_1);
-            HUD digit_right_2 = new HUD("Digit_right_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
-            SuperController.Instance.addGameObjectToGameInstance(digit_right_2);
+            HUD digit_left_1_blank = new HUD("Digit_left_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_left_1_blank);
 
-            HUD matchball = new HUD("matchball", false, texture_matchball, null, new Vector2(0.20f, 0.04f), new Vector2(0.4f, 0.2f), 74, MeasurementUnit.PercentOfScreen);
-            SuperController.Instance.addGameObjectToGameInstance(matchball);
+            HUD digit_left_2 = new HUD("Digit_left_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_left_2);
+            HUD digit_left_2_blank = new HUD("Digit_left_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_left_2_blank);
+
+            HUD digit_right_1 = new HUD("Digit_right_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_right_1);
+            HUD digit_right_1_blank = new HUD("Digit_right_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_right_1_blank);
+
+            HUD digit_right_2 = new HUD("Digit_right_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_right_2);
+            HUD digit_right_2_blank = new HUD("Digit_right_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            SuperController.Instance.addGameObjectToGameInstance(digit_right_2_blank);
+
 
             if (winCondition is TimeLimit_WinCondition)
             {
@@ -792,11 +799,14 @@ namespace ManhattanMorning.Controller
 
             Texture2D Texture_TeamMenu_Background2_1vs1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_1vs1");
             Texture2D Texture_TeamMenu_Background2_2vs2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_2vs2");
-            Texture2D Texture_TeamMenu_Player1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Player1");
-            Texture2D Texture_TeamMenu_Player2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Player2");
-            Texture2D Texture_TeamMenu_Player3 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Player3");
-            Texture2D Texture_TeamMenu_Player4 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Player4");
-            Texture2D Texture_TeamMenu_Gamepad = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad");
+            Texture2D Texture_TeamMenu_Gamepad1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_1");
+            Texture2D Texture_TeamMenu_Gamepad2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_2");
+            Texture2D Texture_TeamMenu_Gamepad3 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_3");
+            Texture2D Texture_TeamMenu_Gamepad4 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_4");
+            Texture2D Texture_TeamMenu_Keyboard1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Keyboard1");
+            Texture2D Texture_TeamMenu_Keyboard2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Keyboard2");
+            Texture2D Texture_TeamMenu_KI = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_KI");
+            Texture2D Texture_TeamMenu_Gamepad_Deactivated = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_Deactivated");
 
             Texture2D Texture_Help_Box1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_Box1");
             Texture2D Texture_Help_Box2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_Box2");
@@ -813,12 +823,13 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_ReallyQuit_No = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_No");
             Texture2D Texture_ReallyQuit_No_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_No_s");
 
-            Texture2D Texture_MainScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_MainScreen");
-            Texture2D Texture_ReallyQuit_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_ReallyQuit");
-            Texture2D Texture_Help_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_Help");
-            Texture2D Texture_TeamMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_TeamMenu");
-            Texture2D Texture_TeamMenuWarning_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_TeamMenu_Warning");
-            Texture2D Texture_SelectLevel_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_SelectLevel");
+            Texture2D Texture_MainScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_select");
+            Texture2D Texture_ReallyQuit_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_select_back");
+            Texture2D Texture_Help_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_browse_back");
+            Texture2D Texture_TeamMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_continue_back");
+            Texture2D Texture_TeamMenuWarning1_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_noTeam");
+            Texture2D Texture_TeamMenuWarning2_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_tooManyTeam");
+            Texture2D Texture_SelectLevel_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_startGame_back");
 
             // Create objects
             LayerList<LayerInterface> objectList = new LayerList<LayerInterface>();
@@ -901,35 +912,55 @@ namespace ManhattanMorning.Controller
                 Texture_TeamMenu_Background2_2vs2, null, new Vector2(1f, 1f), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_TeamMenu_Background2_2vs2);
 
-            MenuObject Passive_MainMenu_TeamMenu_Player1_Title = new MenuObject("TeamMenu_Player1_Title", false,
-                Texture_TeamMenu_Player1, null, new Vector2(0.1f, 0.08f), new Vector2(0.45f, 0.35f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player1_Title);
-            MenuObject Passive_MainMenu_TeamMenu_Player1_Picture = new MenuObject("TeamMenu_Player1_Picture", false,
-                Texture_TeamMenu_Gamepad, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player1_Picture);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad1 = new MenuObject("TeamMenu_Gamepad1", false,
+                Texture_TeamMenu_Gamepad1, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad1);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad2 = new MenuObject("TeamMenu_Gamepad2", false,
+                Texture_TeamMenu_Gamepad2, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.37f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad2);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad3 = new MenuObject("TeamMenu_Gamepad3", false,
+                Texture_TeamMenu_Gamepad3, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.55f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad3);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad4 = new MenuObject("TeamMenu_Gamepad4", false,
+                Texture_TeamMenu_Gamepad4, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.73f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad4);
 
-            MenuObject Passive_MainMenu_TeamMenu_Player2_Title = new MenuObject("TeamMenu_Player2_Title", false,
-                Texture_TeamMenu_Player2, null, new Vector2(0.1f, 0.08f), new Vector2(0.45f, 0.48f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player2_Title);
-            MenuObject Passive_MainMenu_TeamMenu_Player2_Picture = new MenuObject("TeamMenu_Player2_Picture", false,
-                Texture_TeamMenu_Gamepad, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.37f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player2_Picture);
+            MenuObject Passive_MainMenu_TeamMenu_Keyboard1 = new MenuObject("TeamMenu_Keyboard1", false,
+                Texture_TeamMenu_Keyboard1, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.73f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Keyboard1);
+            MenuObject Passive_MainMenu_TeamMenu_Keyboard2 = new MenuObject("TeamMenu_Keyboard2", false,
+                Texture_TeamMenu_Keyboard2, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.73f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Keyboard2);
 
-            MenuObject Passive_MainMenu_TeamMenu_Player3_Title = new MenuObject("TeamMenu_Player3_Title", false,
-                Texture_TeamMenu_Player3, null, new Vector2(0.1f, 0.08f), new Vector2(0.45f, 0.66f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player3_Title);
-            MenuObject Passive_MainMenu_TeamMenu_Player3_Picture = new MenuObject("TeamMenu_Player3_Picture", false,
-                Texture_TeamMenu_Gamepad, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.55f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player3_Picture);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad_Deactivated1 = new MenuObject("TeamMenu_Gamepad_Deactivated1", false,
+                Texture_TeamMenu_Gamepad_Deactivated, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad_Deactivated1);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad_Deactivated2 = new MenuObject("TeamMenu_Gamepad_Deactivated2", false,
+                Texture_TeamMenu_Gamepad_Deactivated, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad_Deactivated2);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad_Deactivated3 = new MenuObject("TeamMenu_Gamepad_Deactivated3", false,
+                Texture_TeamMenu_Gamepad_Deactivated, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad_Deactivated3);
+            MenuObject Passive_MainMenu_TeamMenu_Gamepad_Deactivated4 = new MenuObject("TeamMenu_Gamepad_Deactivated4", false,
+                Texture_TeamMenu_Gamepad_Deactivated, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_TeamMenu_Gamepad_Deactivated4);
 
-            MenuObject Passive_MainMenu_TeamMenu_Player4_Title = new MenuObject("TeamMenu_Player4_Title", false,
-                Texture_TeamMenu_Player4, null, new Vector2(0.1f, 0.08f), new Vector2(0.45f, 0.84f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player4_Title);
-            MenuObject Passive_MainMenu_TeamMenu_Player4_Picture = new MenuObject("TeamMenu_Player4_Picture", false,
-                Texture_TeamMenu_Gamepad, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.73f), 93, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_TeamMenu_Player4_Picture);
-
-
+            MenuObject Passive_MainMenu_TeamMenu_KI1 = new MenuObject("TeamMenu_KI1", false,
+                Texture_TeamMenu_KI, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            Passive_MainMenu_TeamMenu_KI1.Alpha = 0.5f;
+            objectList.Add(Passive_MainMenu_TeamMenu_KI1);
+            MenuObject Passive_MainMenu_TeamMenu_KI2 = new MenuObject("TeamMenu_KI2", false,
+                Texture_TeamMenu_KI, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            Passive_MainMenu_TeamMenu_KI2.Alpha = 0.5f;
+            objectList.Add(Passive_MainMenu_TeamMenu_KI2);
+            MenuObject Passive_MainMenu_TeamMenu_KI3 = new MenuObject("TeamMenu_KI3", false,
+                Texture_TeamMenu_KI, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            Passive_MainMenu_TeamMenu_KI3.Alpha = 0.5f;
+            objectList.Add(Passive_MainMenu_TeamMenu_KI3);
+            MenuObject Passive_MainMenu_TeamMenu_KI4 = new MenuObject("TeamMenu_KI4", false,
+                Texture_TeamMenu_KI, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
+            Passive_MainMenu_TeamMenu_KI4.Alpha = 0.5f;
+            objectList.Add(Passive_MainMenu_TeamMenu_KI4);
             // Help
 
             MenuObject Passive_MainMenu_Help_Box1 = new MenuObject("Help_Box1", false,
@@ -986,27 +1017,30 @@ namespace ManhattanMorning.Controller
             // Overlays
 
             MenuObject MainScreen_Overlay = new MenuObject("MainScreen_Overlay", false,
-                Texture_MainScreen_Overlay, null, new Vector2(600f / 1280f, 40f / 720f), new Vector2(665f / 1280f, 665f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_MainScreen_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(MainScreen_Overlay);
 
             MenuObject ReallyQuit_Overlay = new MenuObject("ReallyQuit_Overlay", false,
-                Texture_ReallyQuit_Overlay, null, new Vector2(600f / 1280f, 80f / 720f), new Vector2(665f / 1280f, 625f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_ReallyQuit_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(ReallyQuit_Overlay);
 
             MenuObject Help_Overlay = new MenuObject("Help_Overlay", false,
-                Texture_Help_Overlay, null, new Vector2(600f / 1280f, 40f / 720f), new Vector2(665f / 1280f, 665f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_Help_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(Help_Overlay);
 
             MenuObject TeamMenu_Overlay = new MenuObject("TeamMenu_Overlay", false,
-                Texture_TeamMenu_Overlay, null, new Vector2(600f / 1280f, 80f / 720f), new Vector2(665f / 1280f, 625f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_TeamMenu_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(TeamMenu_Overlay);
 
-            MenuObject TeamMenuWarning_Overlay = new MenuObject("TeamMenuWarning_Overlay", false,
-                Texture_TeamMenuWarning_Overlay, null, new Vector2(600f / 1280f, 40f / 720f), new Vector2(200f / 1280f, 665f / 720f), 95, MeasurementUnit.PercentOfScreen);
-            objectList.Add(TeamMenuWarning_Overlay);
+            MenuObject TeamMenuWarning1_Overlay = new MenuObject("TeamMenuWarning1_Overlay", false,
+                Texture_TeamMenuWarning1_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+            objectList.Add(TeamMenuWarning1_Overlay);
+            MenuObject TeamMenuWarning2_Overlay = new MenuObject("TeamMenuWarning2_Overlay", false,
+                Texture_TeamMenuWarning2_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+            objectList.Add(TeamMenuWarning2_Overlay);
 
             MenuObject SelectLevel_Overlay = new MenuObject("SelectLevel_Overlay", false,
-                Texture_SelectLevel_Overlay, null, new Vector2(600f / 1280f, 80f / 720f), new Vector2(665f / 1280f, 625f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_SelectLevel_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(SelectLevel_Overlay);
 
             // return list with all objects
@@ -1060,8 +1094,8 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_IngameMenu_Winner_Team1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\IngameMenu_Winner_team1");
             Texture2D Texture_IngameMenu_Winner_Team2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\IngameMenu_Winner_team2");
 
-            Texture2D Texture_IngameMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\Overlay_IngameMenu");
-            Texture2D Texture_WinnerScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\Overlay_WinnerScreen");
+            Texture2D Texture_IngameMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\Overlay_choose_select_back");
+            Texture2D Texture_WinnerScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\IngameMenu\Overlay_mainmenu_revenge");
 
             // Create objects
             LayerList<LayerInterface> objectList = new LayerList<LayerInterface>();
@@ -1097,11 +1131,11 @@ namespace ManhattanMorning.Controller
             // Create Overlays
 
             MenuObject IngameMenu_Overlay = new MenuObject("IngameMenu_Overlay", false,
-                Texture_IngameMenu_Overlay, null, new Vector2(600f / 1280f, 80f / 720f), new Vector2(665f / 1280f, 625f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_IngameMenu_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(IngameMenu_Overlay);
 
             MenuObject WinnerScreen_Overlay = new MenuObject("WinnerScreen_Overlay", false,
-                Texture_WinnerScreen_Overlay, null, new Vector2(600f / 1280f, 40f / 720f), new Vector2(665f / 1280f, 665f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_WinnerScreen_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(WinnerScreen_Overlay);
 
             // Return list with all objects
