@@ -25,6 +25,7 @@ const float2 c2[9] = {
             float2( 0.00 , 0.00355),
             float2( 0.002, 0.00355),
 };
+const float gaussW[9] = { 1,2,1,2,4,2,1,2,1};
 const float3 rgb2lum = float3(0.30, 0.59, 0.11);
 
 //------- Texture Samplers --------
@@ -61,22 +62,47 @@ float4 SobelEdgeFilterPS(float2 tex: TEXCOORD0) : COLOR0
 	return OUT;
 }
 
+float4 GaussFilterPS(float2 tex: TEXCOORD0) : COLOR0
+{
+	float4 col = tex2D(TextureSampler, tex.xy);
+	
+	col = float4(0,0,0,0);
+	for (int i=0; i < NUM; i++) {
+		col += (tex2D(TextureSampler, tex.xy + c2[i]*0.4) * gaussW[i]);
+	}
+	return col / 16;
+}
+
 float4 DarkenEdgesPS(float2 tex: TEXCOORD0) : COLOR0
 {
-	float4 col = tex2D(TextureSamplerY, tex.xy);
-	float4 dest = tex2D(TextureSampler, tex.xy);
-	if(col.a < 0.1) return dest;
-
-	float alpha = 1;
+	float4 col = tex2D(TextureSampler, tex.xy);
+	int c = 0;
 
 	for (int i=0; i < NUM; i++) {
-      col = tex2D(TextureSamplerY, tex.xy + c2[i]*1.5);
-	  alpha *= col.a;
+      col = tex2D(TextureSampler, tex.xy + c2[i]*0.75);
+	  if(dot(col,float4(1,1,1,0)) < 0.1) c++;
     }
-	if(alpha < 0.1) return float4(0,0,0,1);
 
-	return col;
+	if(c == 9) return float4(0,0,0,0);
+	if(c > 6 && c <=8) return float4(0,0,0,1);
+	return tex2D(TextureSampler, tex.xy);
 }
+
+float4 InterpolateColorPS(float2 tex: TEXCOORD0) : COLOR0
+{
+	float4 col = tex2D(TextureSamplerY, tex.xy);
+
+	if(dot(col,float4(1,1,1,0)) < 0.1) return float4(0,0,0,0);
+
+	float4 dest = float4(0,0,0,0);
+	for (int i=0; i < NUM; i++) {
+      dest += tex2D(TextureSamplerY, tex.xy + c2[i]*1);
+    }
+
+	return dest / 9;
+}
+
+
 
 technique SobelEdgeFilter
 {
@@ -86,10 +112,25 @@ technique SobelEdgeFilter
 	}
 }
 
+technique GaussFilter
+{
+	pass Pass0
+	{   
+		PixelShader  = compile ps_2_0 GaussFilterPS();
+	}
+}
+
 technique DarkenEdges
 {
 	pass Pass0
 	{   
 		PixelShader  = compile ps_2_0 DarkenEdgesPS();
+	}
+	pass Pass1
+	{
+		AlphaBlendEnable = true;
+		SrcBlend = SrcAlpha;
+		DestBlend = InvSrcAlpha;
+		PixelShader  = compile ps_2_0 InterpolateColorPS();
 	}
 }

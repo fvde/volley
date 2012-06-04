@@ -59,8 +59,8 @@ float4 TexturedPS(VertexToPixel PSIn) : COLOR0
 {
 	float4 color = tex2D(TextureSampler, PSIn.TextureCoords);
 	return color;
+	return lerp(color, PSIn.Color, 0.5);
 }
-
 
 //------- Technique: Toon --------
 float4 ToonPS(VertexToPixel PSIn) : COLOR0
