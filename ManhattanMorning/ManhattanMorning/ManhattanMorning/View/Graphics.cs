@@ -540,6 +540,10 @@ namespace ManhattanMorning.View
             spriteBatchLight.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             foreach (LayerInterface l in gameObjects)
             {
+                if (l is Waterfall)
+                {
+                    drawWaterfall((Waterfall)l);
+                }
                 //check if object is DrawableObject or ParticleSystem
                 if (l is DrawableObject)
                 {
@@ -560,6 +564,8 @@ namespace ManhattanMorning.View
                         sobelEdge.Parameters["yTexture"].SetValue(rtPlayer);
                         spriteBatchAll.Draw(rtPlayer, new Rectangle(0, 0, game.GraphicsDeviceManager.PreferredBackBufferWidth, game.GraphicsDeviceManager.PreferredBackBufferHeight), Color.White);
                     }
+
+                  
                     else
                         //draw Ball
                         if (drawableObject is Ball)
@@ -581,7 +587,7 @@ namespace ManhattanMorning.View
                             drawObjectWithTextureOrAnimation(drawableObject);
                         }                    
                 }
-                else
+                else if(l is ParticleSystem)
                 {
                     particleSystem = l as ParticleSystem;
                     if (currentRenderSettings != RenderSettings.Particle)
@@ -634,6 +640,7 @@ namespace ManhattanMorning.View
             spriteBatchAll.End();
             
             #endregion
+
 
             #region Bounding Boxes
             if (showBoundingBoxes)
@@ -956,6 +963,100 @@ namespace ManhattanMorning.View
             }
         }
 
+        private void drawWaterfall(Waterfall w)
+        {
+            spriteBatchAll.End();
+
+            w.Counter += w.Speed;
+            
+            int tipHeight = 40;
+
+            Rectangle dest;
+            Rectangle source;
+
+
+            if (w.Counter > w.Laufzeit && w.StopCounter < w.Size.Y)
+            {
+                spriteBatchAll.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null, textureShader);
+
+                textureShader.CurrentTechnique = textureShader.Techniques["WaterFadeOut"];
+                textureShader.Parameters["yTexture"].SetValue(w.waterfallStencilTex);
+               textureShader.CurrentTechnique.Passes[0].Apply();
+
+                Rectangle headSource = new Rectangle(0, w.tHeight - w.Counter + w.StopCounter - 40, w.tWidth, 40);
+              // Rectangle headSource = new Rectangle(0, 0, w.tWidth, 40);
+                
+                Rectangle headDest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter - 40, (int)w.Size.X, 50);
+
+                //Draw Head
+
+                spriteBatchAll.Draw(w.waterfallTex, headDest, headSource, Color.White);
+                spriteBatchAll.End();
+            }
+
+            spriteBatchAll.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null);
+            
+
+            if (w.Counter < w.Size.Y - tipHeight)
+            {
+                source = new Rectangle(0, w.tHeight - w.Counter, w.tWidth, w.Counter);
+                dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, w.Counter);
+
+                //Draw Tip
+
+                spriteBatchAll.Draw(w.waterfallTipTex, new Rectangle((int)w.Position.X, (int)w.Position.Y + w.Counter, (int)w.Size.X, tipHeight), Color.White);
+            }
+            else
+            {
+                if (w.Counter < w.Laufzeit)
+                {
+                    source = new Rectangle(0, w.tHeight - w.Counter, w.tWidth, (int)w.Size.Y);
+                    dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, (int)w.Size.Y);
+
+
+                    //Draw Cloud
+                    spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White);
+                }
+                else if (w.StopCounter < w.Size.Y)
+                {
+                    w.StopCounter += w.Speed;
+
+                    source = new Rectangle(0, w.tHeight - w.Counter + w.StopCounter, w.tWidth, (int)w.Size.Y - w.StopCounter);
+                    dest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter, (int)w.Size.X, (int)w.Size.Y - w.StopCounter);
+
+
+                    //Draw Cloud
+
+                    spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y +(int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White);
+                }
+                else
+                {
+                    source = new Rectangle(0, w.tHeight - w.Counter + w.StopCounter, w.tWidth, (int)w.Size.Y - w.StopCounter);
+                    dest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter,(int) w.Size.X,(int) w.Size.Y - w.StopCounter);
+                }
+
+
+            }
+
+            spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
+
+
+
+           
+
+            if (w.Counter >= w.Laufzeit+400)
+            {
+                w.Counter = 0;
+                w.StopCounter = 0;
+            }
+
+
+            spriteBatchAll.End();
+            spriteBatchAll.Begin();
+
+
+        }
+
         /// <summary>
         /// Draws a DrawableObject with a texture  or, if it has one, with an animation. If it's not visible this function will do nothing.
         /// </summary>
@@ -970,7 +1071,7 @@ namespace ManhattanMorning.View
 
             float scale = (p.ScalingAnimation != null) ? p.ScalingAnimation.Scale : 1f;
 
-            //draw HUD in seperate spritebatch beacuse of color mixing with mood            
+             //draw HUD in seperate spritebatch beacuse of color mixing with mood            
             if (p is HUD)
             {
                 if (p.Name == "BallIndicator")

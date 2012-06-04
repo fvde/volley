@@ -104,6 +104,17 @@ namespace ManhattanMorning.Controller
         /// </summary>
         private int timeTillNextScrollAction;
 
+        /// <summary>
+        /// The remaining duration of the rumbling action
+        /// </summary>
+        private int rumbling_remainingDuration;
+
+        /// <summary>
+        /// The intensity of the rumbling (0.0f - 1.0f)
+        /// X = left motor, Y = right motor
+        /// </summary>
+        private Vector2 rumbling_intensity;
+
         #endregion
 
 
@@ -154,6 +165,9 @@ namespace ManhattanMorning.Controller
 
             this.playerList = playerList;
 
+            rumbling_intensity = Vector2.Zero;
+            rumbling_remainingDuration = 0;
+
         }
 
         #endregion
@@ -181,6 +195,7 @@ namespace ManhattanMorning.Controller
             if (timeTillNextScrollAction < 0)
                 timeTillNextScrollAction = 0;
 
+            handleRumbling(gameTime);
         }
 
         /// <summary>
@@ -200,6 +215,8 @@ namespace ManhattanMorning.Controller
             updateGamepads();
 
             handleIngameInput();
+
+            
         }
 
         /// <summary>
@@ -347,6 +364,18 @@ namespace ManhattanMorning.Controller
         }
 
 
+        /// <summary>
+        /// Sets rumbling for every connected gamepad
+        /// </summary>
+        /// <param name="duration">The duration of the rumbling in MS</param>
+        /// <param name="intensity">The intensity (0.0f - 1.0f) for left(X) and right(Y) motor</param>
+        public void setRumble(int duration, Vector2 intensity)
+        {
+
+            rumbling_intensity = intensity;
+            rumbling_remainingDuration = duration;
+
+        }
 
         #endregion
 
@@ -1106,25 +1135,30 @@ namespace ManhattanMorning.Controller
 
             }
 
-            // if there are player with gamepads, also update their gamepads
-            if (playerList != null)
+        }
+
+        /// <summary>
+        /// Goes through all RumbleActions, updates them,
+        /// lets rumble the gamepads
+        /// </summary>
+        /// <param name="gameTime"></param>
+        private void handleRumbling(GameTime gameTime)
+        {
+
+            rumbling_remainingDuration -= gameTime.ElapsedGameTime.Milliseconds;
+
+            if (rumbling_remainingDuration < 0)
             {
-                foreach (Player player in playerList)
-                {
-
-                    // Just update Gamepads, not Keyboards
-                    if (player.InputDevice.Device == InputDevice.Gamepad)
-                    {
-
-                        // Update states
-                        player.InputDevice.PreviousGamePadState = player.InputDevice.CurrentGamePadState;
-                        player.InputDevice.CurrentGamePadState = GamePad.GetState(player.InputDevice.Index);
-                    }
-
-                }
+                rumbling_intensity = Vector2.Zero;
+                rumbling_remainingDuration = 0;
             }
 
-
+            // Let gamepads rumble
+            GamePad.SetVibration(PlayerIndex.One, rumbling_intensity.X, rumbling_intensity.Y);
+            GamePad.SetVibration(PlayerIndex.Two, rumbling_intensity.X, rumbling_intensity.Y);
+            GamePad.SetVibration(PlayerIndex.Three, rumbling_intensity.X, rumbling_intensity.Y);
+            GamePad.SetVibration(PlayerIndex.Four, rumbling_intensity.X, rumbling_intensity.Y);
+            
         }
 
         /// <summary>
@@ -1160,6 +1194,7 @@ namespace ManhattanMorning.Controller
         public void clear()
         {
             playerList = null;
+            
         }
 
         /// <summary>
@@ -1173,4 +1208,5 @@ namespace ManhattanMorning.Controller
 
 
     }
+
 }

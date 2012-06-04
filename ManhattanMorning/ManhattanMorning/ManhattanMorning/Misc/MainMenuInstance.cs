@@ -72,18 +72,6 @@ namespace ManhattanMorning.Misc
         private int selectedItem;
 
         /// <summary>
-        /// Local list of all players of the left team
-        /// (to initialize GameInstance)
-        /// </summary>
-        private List<PlayerRepresentationMainMenu> leftPlayers;
-
-        /// <summary>
-        /// Local list of all players of the right team
-        /// (to initialize GameInstance)
-        /// </summary>
-        private List<PlayerRepresentationMainMenu> rightPlayers;
-
-        /// <summary>
         /// Name of the selected level
         /// (to initialize GameInstance)
         /// </summary>
@@ -155,28 +143,7 @@ namespace ManhattanMorning.Misc
         /// <summary>
         /// yPositions for all PlayerRepresentations when playing 2vs2
         /// </summary>
-        private float[] yPositionsPlayerRepresentations2vs2 = { 0.22f, 0.37f, 0.52f, 0.67f };
-
-        /// <summary>
-        /// Size of a PlayerRepresentation (in percent of screen)
-        /// </summary>
-        private Vector2 sizePlayerRepresentation = new Vector2(0.09f, 0.22f);
-
-        /// <summary>
-        /// The distance between PlayerPicture and PlayerTitle in a PlayerRepresentation
-        /// </summary>
-        private float offsetPictureTitle = 0.11f;
-
-        /// <summary>
-        /// Array of all 4 available Player
-        /// </summary>
-        private PlayerRepresentationMainMenu[] availablePlayer;
-
-        /// <summary>
-        /// A list of all KI players
-        /// (necessary when switching from select level back to team menu)
-        /// </summary>
-        private List<PlayerRepresentationMainMenu> kiPlayer;
+        private float[] yPositionsPlayerRepresentations2vs2 = { 0.25f, 0.40f, 0.55f, 0.70f };
 
         /// <summary>
         /// The Intro Video.
@@ -199,6 +166,21 @@ namespace ManhattanMorning.Misc
         /// </summary>
         private MenuObject overlayObject;
 
+        /// <summary>
+        /// Array with all possible player representations
+        /// </summary>
+        private PlayerRepresentationMainMenu[] playerArray = new PlayerRepresentationMainMenu[6];
+
+        /// <summary>
+        /// True if a 2vs2 game should be started
+        /// </summary>
+        private bool gameMode2vs2;
+
+        /// <summary>
+        /// List of all active player indexes
+        /// </summary>
+        private List<int> activePlayers = new List<int>();
+
         #endregion
 
 
@@ -214,7 +196,7 @@ namespace ManhattanMorning.Misc
             introVideo = Game1.Instance.Content.Load<Video>(@"Videos\video2");
             // Save attributes
             this.levels = levels;
-            
+
             // Load the objects
             menuObjectList = StorageManager.Instance.LoadMainMenuObjects();
 
@@ -225,29 +207,22 @@ namespace ManhattanMorning.Misc
             // Create the structure
             createMenuStructure();
 
+            // Create all PlayerRepresentations:
+            // 4 Gamepads
+            for (int i = 0; i < 4; i++)
+                playerArray[i] = new PlayerRepresentationMainMenu((MenuObject)menuObjectList.GetObjectByName("TeamMenu_Gamepad" + (i+1)),
+                    InputManager.Instance.GamepadArray[i], false, i+1);
+            // 2 Keyboards
+            playerArray[4] = new PlayerRepresentationMainMenu((MenuObject)menuObjectList.GetObjectByName("TeamMenu_Keyboard1"),
+                    new Gamepad(PlayerIndex.One, InputDevice.Keyboard, true), false, 1);
+            playerArray[5] = new PlayerRepresentationMainMenu((MenuObject)menuObjectList.GetObjectByName("TeamMenu_Keyboard2"),
+                    new Gamepad(PlayerIndex.Two, InputDevice.Keyboard, true), false, 2);
+
             // set all necessary members
             selectedItem = 0;
             menuState = 0;
             previousMenuState = 0;
             previousMainScreenSelectedItem = 0;
-
-            availablePlayer = new PlayerRepresentationMainMenu[4];
-            availablePlayer[0] = new PlayerRepresentationMainMenu((MenuObject)menuObjectList.GetObjectByName("TeamMenu_Player1_Title"),
-                (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Player1_Picture"), new Gamepad(PlayerIndex.One, InputDevice.Gamepad, true),
-                false, 1, new Vector2(xPositionNoTeam, yPositionsPlayerRepresentations2vs2[0]), sizePlayerRepresentation, offsetPictureTitle);
-            availablePlayer[1] = new PlayerRepresentationMainMenu((MenuObject)menuObjectList.GetObjectByName("TeamMenu_Player2_Title"),
-                (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Player2_Picture"), new Gamepad(PlayerIndex.Two, InputDevice.Gamepad, true),
-                false, 2, new Vector2(xPositionNoTeam, yPositionsPlayerRepresentations2vs2[1]), sizePlayerRepresentation, offsetPictureTitle);
-            availablePlayer[2] = new PlayerRepresentationMainMenu((MenuObject)menuObjectList.GetObjectByName("TeamMenu_Player3_Title"),
-                (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Player3_Picture"), new Gamepad(PlayerIndex.Three, InputDevice.Gamepad, true),
-                false, 3, new Vector2(xPositionNoTeam, yPositionsPlayerRepresentations2vs2[2]), sizePlayerRepresentation, offsetPictureTitle);
-            availablePlayer[3] = new PlayerRepresentationMainMenu((MenuObject)menuObjectList.GetObjectByName("TeamMenu_Player4_Title"),
-                (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Player4_Picture"), new Gamepad(PlayerIndex.Four, InputDevice.Gamepad, true),
-                false, 4, new Vector2(xPositionNoTeam, yPositionsPlayerRepresentations2vs2[3]), sizePlayerRepresentation, offsetPictureTitle);
-
-            leftPlayers = new List<PlayerRepresentationMainMenu>();
-
-            rightPlayers = new List<PlayerRepresentationMainMenu>();
 
             levelName = "";
 
@@ -296,7 +271,6 @@ namespace ManhattanMorning.Misc
                 }
             }
 
-
         }
 
         /// <summary>
@@ -310,7 +284,7 @@ namespace ManhattanMorning.Misc
 
             if ((menuState == 1) || (menuState == 2))
             {
-                updateTeamplayMenu(gamepadArray);
+                updateTeamMenu();
             }
 
             manageOverlays(gameTime);
@@ -321,207 +295,243 @@ namespace ManhattanMorning.Misc
         /// Checks if gamepads are connected/disconnected now
         /// and updates the teamplayMenu according to these changes
         /// </summary>
-        /// <param name="connectedGamePads">Array with all gamepads, independent from
-        /// being connected or disconnected</param>
-        private void updateTeamplayMenu(Gamepad[] gamepadArray)
+        private void updateTeamMenu()
         {
 
-            // When in teamplay 1vs1 menu
+            // List of all active players indexes
+            activePlayers.Clear();
+
+            // 1.Deactivate all players
+            for (int i = 0; i < playerArray.Length; i++)
+            {
+                playerArray[i].Active = false;
+                playerArray[i].PlayerPicture.Visible = false;
+            }
+
+            #region 2. Update Gamepads
+
+            for (int i = 0; i < 4; i++)
+            {
+
+                // Check if gamepad that belongs to the player is connected
+                if (InputManager.Instance.GamepadArray[i].IsConnected == true)
+                {
+                    // Check if there is still a player needed
+                    if (((activePlayers.Count < 2) && (menuState == 1)) ||
+                        (activePlayers.Count < 4) && (menuState == 2))
+                    {
+                        // Activate Player
+
+                        // Check if player was already connected
+                        // If not do the following
+                        if (playerArray[i].Connected == false)
+                        {
+                            playerArray[i].Connected = true;
+                            playerArray[i].Team = 0;
+                            playerArray[i].setXPosition(xPositionNoTeam);
+
+                        }
+
+                        // If active, update y-Position and show picture
+                        if (menuState == 1)
+                            playerArray[i].setYPosition(yPositionsPlayerRepresentations1vs1[activePlayers.Count]);
+                        else
+                            playerArray[i].setYPosition(yPositionsPlayerRepresentations2vs2[activePlayers.Count]);
+
+                        playerArray[i].PlayerPicture.Visible = true;
+                        playerArray[i].Active = true;
+                        activePlayers.Add(i+1);
+                    }
+                    else
+                    {
+                        // Deactivate Player
+                        playerArray[i].Team = 0;
+                        playerArray[i].setXPosition(xPositionNoTeam);
+                    }
+
+                }
+                // If gamepad was connected and is no more connected, deactivate PlayerRepresentation
+                else
+                {
+                    if (playerArray[i].Connected == true)
+                    {
+                        playerArray[i].Connected = false;
+                        playerArray[i].Active = false;
+                        playerArray[i].Team = 0;
+                        playerArray[i].setXPosition(xPositionNoTeam);
+                        playerArray[i].PlayerPicture.Visible = false;
+                    }
+                
+                }
+            
+
+            }
+
+            #endregion
+
+            #region 3. Update Keyboards
+            #if WINDOWS
+
+            for (int i = 4; i < 6; i++)
+            {
+
+                // Check if there is still a player needed
+                if (((activePlayers.Count < 2) && (menuState == 1)) ||
+                    (activePlayers.Count < 4) && (menuState == 2))
+                {
+                        // Activate Player
+
+                        // Check if player was already connected
+                        // If not do the following
+                        if (playerArray[i].Connected == false)
+                        {
+                            playerArray[i].Connected = true;
+                            playerArray[i].Team = 0;
+                            playerArray[i].setXPosition(xPositionNoTeam);
+
+                        }
+
+                        // If active, update y-Position and show picture
+                        if (menuState == 1)
+                            playerArray[i].setYPosition(yPositionsPlayerRepresentations1vs1[activePlayers.Count]);
+                        else
+                            playerArray[i].setYPosition(yPositionsPlayerRepresentations2vs2[activePlayers.Count]);
+
+                        playerArray[i].PlayerPicture.Visible = true;
+                        playerArray[i].Active = true;
+
+                        // Set index by finding the first free one
+                        int index = 0;
+                        for (int j = 1; j < 5; j++)
+                        {
+                            if (!activePlayers.Contains(j))
+                            {
+                                index = j;
+                                break;
+                            }
+                        }
+                        playerArray[i].PlayerIndex = index;                      
+                        activePlayers.Add(index);
+
+                    }
+                    else
+                    {
+                        // Deactivate Player
+                        playerArray[i].Team = 0;
+                        playerArray[i].setXPosition(xPositionNoTeam);
+                        playerArray[i].Connected = false;
+                    }
+            
+            
+
+            }
+
+            #endif
+            #endregion
+
+
+
+            #region 4. Show KI Gameobjects left and right
+
+            int countLeftTeam = getNumberOfTeamMembers(1);
+            int countRightTeam = getNumberOfTeamMembers(2);
+            int kiCounter = 0;
+
+            // First, hide all KIObjects
+            for (int i = 1; i < 5; i++)
+            {
+                ((MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI" + i)).Visible = false;
+            }
+
+            // Go through all player representations
+            for (int i = 0; i < playerArray.Length; i++)
+            {
+
+                // If a player is active but has no team, show a KI player at the right side
+                if ((playerArray[i].Active) && (playerArray[i].Team == 0))
+                {
+                    // Left
+                    if (((countLeftTeam < 1) && (menuState == 1)) ||
+                        ((countLeftTeam < 2) && (menuState == 2)))
+                    {
+                        countLeftTeam++;
+                        kiCounter++;
+                        MenuObject KIObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI" + kiCounter);
+                        KIObject.Visible = true;
+                        KIObject.Position = new Vector2(xPositionLeftTeam, playerArray[i].PlayerPicture.Position.Y);
+                    }
+                    // Right
+                    else
+                    {
+                        countRightTeam++;
+                        kiCounter++;
+                        MenuObject KIObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI" + kiCounter);
+                        KIObject.Visible = true;
+                        KIObject.Position = new Vector2(xPositionRightTeam, playerArray[i].PlayerPicture.Position.Y);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            #region 4. Fill with Deactivated Gamepads and the belonging KI textures
+
+            int limit = 0;
             if (menuState == 1)
+                limit = 2;
+            else
+                limit = 4;
+
+            // First, make them all invisible
+            for (int i = 1; i < 5; i++)
             {
 
-                List<int> indexesToBeSet = new List<int>();
-                indexesToBeSet.Add(1);
-                indexesToBeSet.Add(2);
-
-                // Update player textures (Gamepad, Keyboard, KI)
-
-                // 1. Set gamepads
-                if (gamepadArray[0].IsConnected)
-                {
-                    // Set texture
-                    availablePlayer[0].PlayerPicture.Texture =
-                        StorageManager.Instance.getTextureByName("texture_TeamMenu_Gamepad");
-                    // Set device and index
-                    availablePlayer[0].InputDevice = new Gamepad(PlayerIndex.One, InputDevice.Gamepad, true);
-                    availablePlayer[0].KI = false;
-
-                    indexesToBeSet.Remove(1);
-                }
-
-                if (gamepadArray[1].IsConnected)
-                {
-                    // Set texture
-                    availablePlayer[1].PlayerPicture.Texture =
-                        StorageManager.Instance.getTextureByName("texture_TeamMenu_Gamepad");
-                    // Set device and index
-                    availablePlayer[1].InputDevice = new Gamepad(PlayerIndex.Two, InputDevice.Gamepad, true);
-                    availablePlayer[1].KI = false;
-
-                    indexesToBeSet.Remove(2);
-                }
-
-                // 2. Set Keyboards (Windows)
-#if WINDOWS
-
-                for (int i = 0; i < 2; i++)
-                {
-                    if (indexesToBeSet.Count > 0)
-                    {
-                        // Set texture
-                        availablePlayer[indexesToBeSet.First() - 1].PlayerPicture.Texture =
-                            StorageManager.Instance.getTextureByName("texture_TeamMenu_Keyboard");
-                        // Set device and index
-                        PlayerIndex playerIndex;
-                        if (i == 0)
-                            playerIndex = PlayerIndex.One;
-                        else
-                            playerIndex = PlayerIndex.Two;
-                        availablePlayer[indexesToBeSet.First() - 1].InputDevice = new Gamepad(playerIndex, InputDevice.Keyboard, true);
-                        availablePlayer[indexesToBeSet.First() - 1].KI = false;
-
-                        indexesToBeSet.Remove(indexesToBeSet.First());
-                    }
-                }
-
-#endif
-
-                // 3. Set KI 
-
-                while (indexesToBeSet.Count > 0)
-                {
-                    // Set texture
-                    availablePlayer[indexesToBeSet.First() - 1].PlayerPicture.Texture =
-                        StorageManager.Instance.getTextureByName("texture_TeamMenu_KI");
-
-                    // Set device and index
-                    PlayerIndex playerIndex;
-                    if (indexesToBeSet.First() == 0)
-                        playerIndex = PlayerIndex.One;
-                    else
-                        playerIndex = PlayerIndex.Two;
-
-                    availablePlayer[indexesToBeSet.First() - 1].InputDevice = new Gamepad(playerIndex, InputDevice.Gamepad, true);
-
-                    indexesToBeSet.Remove(indexesToBeSet.First());
-                }
+                MenuObject deactivatedGamepad = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated" + i);
+                deactivatedGamepad.Visible = false;
 
             }
 
-            // When in teamplay 2vs2 menu
-            else if (menuState == 2)
+            // Go through all necessary indexes and check it there is no device for that index
+            for (int i = 0; i < limit; i++)
             {
+                MenuObject deactivatedGamepad = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated" + (i + 1));
+                deactivatedGamepad.Visible = false;
 
-                List<int> indexesToBeSet = new List<int>();
-                indexesToBeSet.Add(1);
-                indexesToBeSet.Add(2);
-                indexesToBeSet.Add(3);
-                indexesToBeSet.Add(4);
-
-                // Update player textures (Gamepad, Keyboard, KI)
-
-                // 1. Set gamepads
-                if (gamepadArray[0].IsConnected)
+                if (!activePlayers.Contains(i + 1))
                 {
-                    // Set texture
-                    availablePlayer[0].PlayerPicture.Texture =
-                        StorageManager.Instance.getTextureByName("texture_TeamMenu_Gamepad");
-                    // Set device and index
-                    availablePlayer[0].InputDevice = new Gamepad(PlayerIndex.One, InputDevice.Gamepad, true);
-                    availablePlayer[0].KI = false;
 
-                    indexesToBeSet.Remove(1);
-                }
+                    // If so, show the deactivated texture
+                    deactivatedGamepad.Visible = true;
+                    if (menuState == 1)
+                        deactivatedGamepad.Position = new Vector2(xPositionNoTeam, yPositionsPlayerRepresentations1vs1[i]);
+                    else
+                        deactivatedGamepad.Position = new Vector2(xPositionNoTeam, yPositionsPlayerRepresentations2vs2[i]);
 
-                if (gamepadArray[1].IsConnected)
-                {
-                    // Set texture
-                    availablePlayer[1].PlayerPicture.Texture =
-                        StorageManager.Instance.getTextureByName("texture_TeamMenu_Gamepad");
-                    // Set device and index
-                    availablePlayer[1].InputDevice = new Gamepad(PlayerIndex.Two, InputDevice.Gamepad, true);
-                    availablePlayer[1].KI = false;
-
-                    indexesToBeSet.Remove(2);
-                }
-
-                if (gamepadArray[2].IsConnected)
-                {
-                    // Set texture
-                    availablePlayer[2].PlayerPicture.Texture =
-                        StorageManager.Instance.getTextureByName("texture_TeamMenu_Gamepad");
-                    // Set device and index
-                    availablePlayer[2].InputDevice = new Gamepad(PlayerIndex.Three, InputDevice.Gamepad, true);
-                    availablePlayer[2].KI = false;
-
-                    indexesToBeSet.Remove(3);
-                }
-
-                if (gamepadArray[3].IsConnected)
-                {
-                    // Set texture
-                    availablePlayer[3].PlayerPicture.Texture =
-                        StorageManager.Instance.getTextureByName("texture_TeamMenu_Gamepad");
-                    // Set device and index
-                    availablePlayer[3].InputDevice = new Gamepad(PlayerIndex.Four, InputDevice.Gamepad, true);
-                    availablePlayer[3].KI = false;
-
-                    indexesToBeSet.Remove(4);
-                }
-
-                // 2. Set Keyboards (Windows)
-#if WINDOWS
-
-                for (int i = 0; i < 2; i++)
-                {
-                    if (indexesToBeSet.Count > 0)
+                    // Also show a KI texture on the right side
+                    // Left
+                    if (((countLeftTeam < 1) && (menuState == 1)) ||
+                        ((countLeftTeam < 2) && (menuState == 2)))
                     {
-                        // Set texture
-                        availablePlayer[indexesToBeSet.First() - 1].PlayerPicture.Texture =
-                            StorageManager.Instance.getTextureByName("texture_TeamMenu_Keyboard");
-                        // Set device and index
-                        PlayerIndex playerIndex;
-                        if (i == 0)
-                            playerIndex = PlayerIndex.One;
-                        else
-                            playerIndex = PlayerIndex.Two;
-                        availablePlayer[indexesToBeSet.First() - 1].InputDevice = new Gamepad(playerIndex, InputDevice.Keyboard, true);
-                        availablePlayer[indexesToBeSet.First() - 1].KI = false;
-
-                        indexesToBeSet.Remove(indexesToBeSet.First());
+                        countLeftTeam++;
+                        kiCounter++;
+                        MenuObject KIObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI" + kiCounter);
+                        KIObject.Visible = true;
+                        KIObject.Position = new Vector2(xPositionLeftTeam, playerArray[i].PlayerPicture.Position.Y);
+                    }
+                    // Right
+                    else
+                    {
+                        countRightTeam++;
+                        kiCounter++;
+                        MenuObject KIObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI" + kiCounter);
+                        KIObject.Visible = true;
+                        KIObject.Position = new Vector2(xPositionRightTeam, playerArray[i].PlayerPicture.Position.Y);
                     }
                 }
-
-#endif
-
-                // 3. Set KI 
-
-                while (indexesToBeSet.Count > 0)
-                {
-                    // Set texture
-                    availablePlayer[indexesToBeSet.First() - 1].PlayerPicture.Texture =
-                        StorageManager.Instance.getTextureByName("texture_TeamMenu_KI");
-
-                    // Set device and index
-                    PlayerIndex playerIndex;
-                    if (indexesToBeSet.First() == 0)
-                        playerIndex = PlayerIndex.One;
-                    else if (indexesToBeSet.First() == 1)
-                        playerIndex = PlayerIndex.Two;
-                    else if (indexesToBeSet.First() == 2)
-                        playerIndex = PlayerIndex.Three;
-                    else
-                        playerIndex = PlayerIndex.Four;
-
-                    availablePlayer[indexesToBeSet.First() - 1].InputDevice = new Gamepad(playerIndex, InputDevice.Gamepad, true);
-
-                    indexesToBeSet.Remove(indexesToBeSet.First());
-                }
-
-
             }
 
-
+            #endregion
 
         }
 
@@ -771,62 +781,16 @@ namespace ManhattanMorning.Misc
 
                 timeSinceLastInput = 0;
             }
-            // When in team menu 1vs1
-            else if (menuState == 1)
+            // When in team menu 
+            else if ((menuState == 1) || (menuState == 2))
             {
 
                 SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
 
-                // Save local reference
-                PlayerRepresentationMainMenu player = getAvailablePlayer(device, deviceIndex);
-                if (player == null)
-                    return;
-
-                // Move from the right to the middle
-                if (rightPlayers.Contains(player))
+                PlayerRepresentationMainMenu player = getPlayerRepresentation(device, deviceIndex);
+                if (player.Active)
                 {
-                    rightPlayers.Remove(player);
-                    player.setXPosition(xPositionNoTeam);
-                }
-                // Move from the middle to the left
-                else if (!leftPlayers.Contains(player))
-                {
-                    // if nobody else is in the left team
-                    if (leftPlayers.Count < 1)
-                    {
-                        leftPlayers.Add(player);
-                        player.setXPosition(xPositionLeftTeam);
-                    }
-                }
-
-                timeSinceLastInput = 0;
-            }
-            // When in team menu 2vs2
-            else if (menuState == 2)
-            {
-
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
-
-                // Save local reference
-                PlayerRepresentationMainMenu player = getAvailablePlayer(device, deviceIndex);
-                if (player == null)
-                    return;
-
-                // Move from the right to the middle
-                if (rightPlayers.Contains(player))
-                {
-                    rightPlayers.Remove(player);
-                    player.setXPosition(xPositionNoTeam);
-                }
-                // Move from the middle to the left
-                else if (!leftPlayers.Contains(player))
-                {
-                    // if nobody else is in the left team
-                    if (leftPlayers.Count < 2)
-                    {
-                        leftPlayers.Add(player);
-                        player.setXPosition(xPositionLeftTeam);
-                    }
+                    movePlayerRepresentationLeft(player);
                 }
 
                 timeSinceLastInput = 0;
@@ -933,62 +897,16 @@ namespace ManhattanMorning.Misc
 
                 timeSinceLastInput = 0;
             }
-            // When in team menu 1vs1
-            else if (menuState == 1)
+            // When in team menu 
+            else if ((menuState == 1) || (menuState == 2))
             {
 
                 SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
 
-                // Save local reference
-                PlayerRepresentationMainMenu player = getAvailablePlayer(device, deviceIndex);
-                if (player == null)
-                    return;
-
-                // Move from the left to the middle
-                if (leftPlayers.Contains(player))
+                PlayerRepresentationMainMenu player = getPlayerRepresentation(device, deviceIndex);
+                if (player.Active)
                 {
-                    leftPlayers.Remove(player);
-                    player.setXPosition(xPositionNoTeam);
-                }
-                // Move from the middle to the right
-                else if (!rightPlayers.Contains(player))
-                {
-                    // if nobody else is in the left team
-                    if (rightPlayers.Count < 1)
-                    {
-                        rightPlayers.Add(player);
-                        player.setXPosition(xPositionRightTeam);
-                    }
-                }
-
-                timeSinceLastInput = 0;
-            }
-            // When in team menu 2vs2
-            else if (menuState == 2)
-            {
-
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
-
-                // Save local reference
-                PlayerRepresentationMainMenu player = getAvailablePlayer(device, deviceIndex);
-                if (player == null)
-                    return;
-
-                // Move from the left to the middle
-                if (leftPlayers.Contains(player))
-                {
-                    leftPlayers.Remove(player);
-                    player.setXPosition(xPositionNoTeam);
-                }
-                // Move from the middle to the right
-                else if (!rightPlayers.Contains(player))
-                {
-                    // if nobody else is in the left team
-                    if (rightPlayers.Count < 2)
-                    {
-                        rightPlayers.Add(player);
-                        player.setXPosition(xPositionRightTeam);
-                    }
+                    movePlayerRepresentationRight(player);
                 }
 
                 timeSinceLastInput = 0;
@@ -1084,39 +1002,23 @@ namespace ManhattanMorning.Misc
 
                 timeSinceLastInput = 0;
             }
-            // When in team menu 1vs1
-            else if (menuState == 1)
+            // When in team menu 
+            else if ((menuState == 1) || (menuState == 2))
             {
                 timeSinceLastInput = 0;
-
+                
                 if (((bool)SettingsManager.Instance.get("AllowKIOnlyGame") == false) &&
-                    (leftPlayers.Count == 0) && (rightPlayers.Count == 0))
+                    (getNumberOfTeamMembers(1) == 0) && (getNumberOfTeamMembers(2) == 0))
                 {
-                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = null;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).Visible = false;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
                     SoundManager.Instance.playSoundEffect((int)Sound.menu_warning);
                     return;
                 }
                 // Switch to select level
                 SoundManager.Instance.playSoundEffect((int)Sound.menu_select);
-                previousMenuState = 1;
-                switchMenuState(5);
-
-            }
-            // When in team menu 2vs2
-            else if (menuState == 2)
-            {
-                timeSinceLastInput = 0;
-
-                if (((bool)SettingsManager.Instance.get("AllowKIOnlyGame") == false) &&
-                    (leftPlayers.Count == 0) && (rightPlayers.Count == 0))
-                {
-                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
-                    SoundManager.Instance.playSoundEffect((int)Sound.menu_warning);
-                    return;
-                }
-                // Switch to select level
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_select);
-                previousMenuState = 2;
+                previousMenuState = menuState;
                 switchMenuState(5);
 
             }
@@ -1154,7 +1056,7 @@ namespace ManhattanMorning.Misc
             {
 
                 // Start game
-                SuperController.Instance.switchFromMainMenuToIngame(levelName, winCondition, leftPlayers, rightPlayers);
+                startGame();
                 SoundManager.Instance.playSoundEffect((int)Sound.menu_select);
 
                 timeSinceLastInput = 0;
@@ -1254,23 +1156,39 @@ namespace ManhattanMorning.Misc
             menuStructure[1, 0] = new List<LayerInterface>();
             menuStructure[1, 0].Add(menuObjectList.GetObjectByName("MainMenu_Background"));
             menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Background2_1vs1"));
-            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player1_Title"));
-            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player1_Picture"));
-            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player2_Title"));
-            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player2_Picture"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad1"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad2"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad3"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad4"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Keyboard1"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Keyboard2"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated1"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated2"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated3"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated4"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_KI1"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_KI2"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_KI3"));
+            menuStructure[1, 0].Add(menuObjectList.GetObjectByName("TeamMenu_KI4"));
 
             // Team menu 2vs2
             menuStructure[2, 0] = new List<LayerInterface>();
             menuStructure[2, 0].Add(menuObjectList.GetObjectByName("MainMenu_Background"));
             menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Background2_2vs2"));
-            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player1_Title"));
-            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player1_Picture"));
-            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player2_Title"));
-            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player2_Picture"));
-            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player3_Title"));
-            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player3_Picture"));
-            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player4_Title"));
-            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Player4_Picture"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad1"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad2"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad3"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad4"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Keyboard1"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Keyboard2"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated1"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated2"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated3"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated4"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_KI1"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_KI2"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_KI3"));
+            menuStructure[2, 0].Add(menuObjectList.GetObjectByName("TeamMenu_KI4"));
 
             // help
             menuStructure[3, 0] = new List<LayerInterface>();
@@ -1399,78 +1317,25 @@ namespace ManhattanMorning.Misc
             // When switching from main screen to team menu reset all players
             if ((menuState == 0) && ((newState == 1) || (newState == 2)))
             {
-                leftPlayers = new List<PlayerRepresentationMainMenu>();
-                rightPlayers = new List<PlayerRepresentationMainMenu>();
 
-
-                int counter = 0;
-                foreach (PlayerRepresentationMainMenu player in availablePlayer)
+                for (int i = 0; i < playerArray.Length; i++)
                 {
-                    // Set size and position of PlayerRepresentation
-                    if (newState == 1)
-                        player.setYPosition(yPositionsPlayerRepresentations1vs1[counter]);
-
-                    if (newState == 2)
-                        player.setYPosition(yPositionsPlayerRepresentations2vs2[counter]);
-                    
-                    player.setXPosition(xPositionNoTeam);
-                    player.KI = false;
-
-                    counter++;
+                    playerArray[i].Team = 0;
+                    playerArray[i].KI = false;
+                    playerArray[i].Connected = false;
                 }
+
 
             }
 
-            // When switching from team menu to select level fill with KI players
+            // When switching from team menu to select level set gameMode
             if (newState == 5)
             {
 
-                kiPlayer = new List<PlayerRepresentationMainMenu>();
-
-                // If it's a 1vs1 game
-                if (menuState == 1)
-                {
-                    for (int i = 0; i < 2; i++)
-                    {
-                        if (availablePlayer[i].Position == new Vector2(xPositionNoTeam, yPositionsPlayerRepresentations1vs1[i]))
-                        {
-                            if (leftPlayers.Count < 1)
-                            {
-                                availablePlayer[i].KI = true;
-                                leftPlayers.Add(availablePlayer[i]);
-                                kiPlayer.Add(availablePlayer[i]);
-                            }
-                            else if (rightPlayers.Count < 1)
-                            {
-                                availablePlayer[i].KI = true;
-                                rightPlayers.Add(availablePlayer[i]);
-                                kiPlayer.Add(availablePlayer[i]);
-                            }
-                        }
-                    }
-                }
-                // If it's a 2vs2 game
-                else if (menuState == 2)
-                {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        if (availablePlayer[i].Position == new Vector2(xPositionNoTeam, yPositionsPlayerRepresentations2vs2[i]))
-                        {
-                            if (leftPlayers.Count < 2)
-                            {
-                                availablePlayer[i].KI = true;
-                                leftPlayers.Add(availablePlayer[i]);
-                                kiPlayer.Add(availablePlayer[i]);
-                            }
-                            else if (rightPlayers.Count < 2)
-                            {
-                                availablePlayer[i].KI = true;
-                                rightPlayers.Add(availablePlayer[i]);
-                                kiPlayer.Add(availablePlayer[i]);
-                            }
-                        }
-                    }
-                }
+               if (menuState == 1)
+                   gameMode2vs2 = false;
+               else
+                   gameMode2vs2 = true;
 
             }
 
@@ -1478,15 +1343,6 @@ namespace ManhattanMorning.Misc
             if ((menuState == 5) && ((newState == 1) || (newState == 2)))
             {
 
-                // Deselect KI flag and remove it from team
-                foreach (PlayerRepresentationMainMenu player in kiPlayer)
-                {
-                    player.KI = false;
-                    if (leftPlayers.Contains(player))
-                        leftPlayers.Remove(player);
-                    else if (rightPlayers.Contains(player))
-                        rightPlayers.Remove(player);
-                }
 
             }
 
@@ -1554,8 +1410,10 @@ namespace ManhattanMorning.Misc
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("SelectLevel_Overlay");
                     break;
             }
-            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning_Overlay")).FadingAnimation = null;
-            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning_Overlay")).Visible = false;
+            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = null;
+            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).Visible = false;
+            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = null;
+            ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).Visible = false;
 
             animateTransition(menuState, newState);
 
@@ -1593,23 +1451,6 @@ namespace ManhattanMorning.Misc
             }
 
 
-        }
-
-        /// <summary>
-        /// Gets the specified PlayerRepresentation from the available player
-        /// </summary>
-        /// <param name="device">The device of the player</param>
-        /// <param name="deviceIndex">The index of the device</param>
-        /// <returns>The PlayerRepresentation</returns>
-        private PlayerRepresentationMainMenu getAvailablePlayer(InputDevice device, PlayerIndex deviceIndex)
-        {
-
-            for (int i = 0; i < availablePlayer.Length; i++)
-                if ((device == availablePlayer[i].InputDevice.Device) && (deviceIndex == availablePlayer[i].InputDevice.Index))
-                    return availablePlayer[i];
-
-            // If PlayerRepresentation isn't found, return null
-            return null;
         }
 
         /// <summary>
@@ -1685,6 +1526,179 @@ namespace ManhattanMorning.Misc
         }
 
 
+        /// <summary>
+        /// Takes the player from the playerArray and create lists with the correct
+        /// PlayerRepresentations for the GameInstance
+        /// Then it triggers the game start in SuperController
+        /// </summary>
+        private void startGame()
+        {
+            List<int> possibleIndexes = new List<int>();
+            for (int i = 1; i < 5; i++)
+                possibleIndexes.Add(i);
+            List<PlayerRepresentationMainMenu> leftPlayers = new List<PlayerRepresentationMainMenu>();
+            List<PlayerRepresentationMainMenu> rightPlayers = new List<PlayerRepresentationMainMenu>();
+
+            // Go through all playerRepresentations and if they're active and belong to one
+            // team, put them in the list
+            for (int i = 0; i < playerArray.Length; i++)
+            {
+
+                if (playerArray[i].Active && (playerArray[i].Team != 0))
+                {
+
+                    if (playerArray[i].Team == 1)
+                    {
+
+                        leftPlayers.Add(playerArray[i]);
+                        possibleIndexes.Remove(playerArray[i].PlayerIndex);
+                    }
+                    else
+                    {
+                        rightPlayers.Add(playerArray[i]);
+                        possibleIndexes.Remove(playerArray[i].PlayerIndex);
+                    }
+
+                }
+
+            }
+
+            // Fill with KI players
+            for (int i = 0; i < 4; i++)
+            {
+
+                if (((leftPlayers.Count < 1) && (!gameMode2vs2)) ||
+                    ((leftPlayers.Count < 2) && (gameMode2vs2)))
+                {
+                    int index = possibleIndexes.First();
+                    leftPlayers.Add(new PlayerRepresentationMainMenu((MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI1"), 
+                        new Gamepad(PlayerIndex.Four, InputDevice.Gamepad, false), true, index));
+                    possibleIndexes.Remove(index);
+                }
+                else if (((rightPlayers.Count < 1) && (!gameMode2vs2)) ||
+                    ((rightPlayers.Count < 2) && (gameMode2vs2)))
+                {
+                    int index = possibleIndexes.First();
+                    rightPlayers.Add(new PlayerRepresentationMainMenu((MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI1"), 
+                        new Gamepad(PlayerIndex.Four, InputDevice.Gamepad, false), true, index));
+                    possibleIndexes.Remove(index);
+                }
+            }
+
+            // Start game
+            SuperController.Instance.switchFromMainMenuToIngame(levelName, winCondition, leftPlayers, rightPlayers);
+
+        }
+
+        /// <summary>
+        /// Returns the fitting PlayerRepresentation
+        /// </summary>
+        /// <param name="device">The device</param>
+        /// <param name="deviceIndex">The index of the device</param>
+        /// <returns>The PlayerRepresentation or null if it doesn't exist</returns>
+        private PlayerRepresentationMainMenu getPlayerRepresentation(InputDevice device, PlayerIndex deviceIndex)
+        {
+
+            PlayerRepresentationMainMenu player = null;
+
+            // Go through all player and check if there is the right one
+            for (int i = 0; i < playerArray.Length; i++)
+                if ((playerArray[i].InputDevice.Device == device) && (playerArray[i].InputDevice.Index == deviceIndex))
+                {
+                    player = playerArray[i];
+                    break;
+                }
+
+            return player;
+
+        }
+
+        /// <summary>
+        /// Returns the number of PlayerRepresentations in one team
+        /// </summary>
+        /// <param name="team"></param>
+        /// <returns></returns>
+        private int getNumberOfTeamMembers(int team)
+        {
+            int number = 0;
+
+            for (int i = 0; i < playerArray.Length; i++)
+                if (playerArray[i].Team == team)
+                    number++;
+
+            return number;
+
+        }
+
+        /// <summary>
+        /// Moves the given PlayerRepresentation one position left
+        /// </summary>
+        /// <param name="player">The PlayerRepresentation that should be moved</param>
+        private void movePlayerRepresentationLeft(PlayerRepresentationMainMenu player)
+        {
+
+            // From the right to the middle
+            if (player.Team == 2)
+            {
+                player.Team = 0;
+                player.setXPosition(xPositionNoTeam);
+            }
+            // From the middle to the left
+            else if (player.Team == 0)
+            {
+                // Check if it can move left, otherwise show warning
+                if (((menuState == 1) && (getNumberOfTeamMembers(1) < 1)) ||
+                    ((menuState == 2) && (getNumberOfTeamMembers(1) < 2)))
+                {
+                    player.Team = 1;
+                    player.setXPosition(xPositionLeftTeam);
+                }
+                else
+                {
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = null;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).Visible = false;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
+                    SoundManager.Instance.playSoundEffect((int)Sound.menu_warning);
+                }
+            }
+
+        }
+
+
+        /// <summary>
+        /// Moves the given PlayerRepresentation one position right
+        /// </summary>
+        /// <param name="player">The PlayerRepresentation that should be moved</param>
+        private void movePlayerRepresentationRight(PlayerRepresentationMainMenu player)
+        {
+
+            // From the left to the middle
+            if (player.Team == 1)
+            {
+                player.Team = 0;
+                player.setXPosition(xPositionNoTeam);
+            }
+            // From the middle to the right
+            else if (player.Team == 0)
+            {
+                // Check if it can move right, otherwise show warning
+                if (((menuState == 1) && (getNumberOfTeamMembers(2) < 1)) ||
+                    ((menuState == 2) && (getNumberOfTeamMembers(2) < 2)))
+                {
+                    player.Team = 2;
+                    player.setXPosition(xPositionRightTeam);
+                }
+                else
+                {
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = null;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).Visible = false;
+                    ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
+                    SoundManager.Instance.playSoundEffect((int)Sound.menu_warning);
+                }
+            }
+
+        }
+
         #endregion
 
     }
@@ -1696,9 +1710,6 @@ namespace ManhattanMorning.Misc
     /// </summary>
     public class PlayerRepresentationMainMenu
     {
-
-        /// <param name="playerTitle">The object for the title texture</param>
-        public MenuObject PlayerTitle;
 
         /// <param name="playerPicture">The object for the player Picture</param>
         public MenuObject PlayerPicture;
@@ -1715,48 +1726,40 @@ namespace ManhattanMorning.Misc
         public int PlayerIndex;
 
         /// <summary>
-        /// The position of the PlayerRepresentation
+        /// Defines if the PlayerRepresentation is an active player at the moment
         /// </summary>
-        public Vector2 Position;
+        public bool Active;
 
         /// <summary>
-        /// The size of the PlayerRepresentationMenu
+        /// The team to which the PlayerRepresentation belongs
+        /// (0: no team)
         /// </summary>
-        public Vector2 Size;
+        public int Team;
 
         /// <summary>
-        /// The distance between picture and title in percent of screen
+        /// True if the PlayerRepresentation's device was connected in the last loop
         /// </summary>
-        private float offsetPictureTitle;
+        public bool Connected;
 
         /// <summary>
         /// Initializes a new PlayerRepresentation
         /// </summary>
-        /// <param name="playerTitle">The object for the title texture</param>
-        /// <param name="playerPicture">The object for the player Picture</param>
-        /// <param name="inputDevice">The input device that is assigned to the player</param>
-        /// <param name="ki">True if KI player</param>
-        /// <param name="playerIndex">The index of the player (between 1 and 4)</param>
-        /// <param name="position">The position of the PlayerRepresentation</param>
-        /// <param name="size">The size of the PlayerRepresentation</param>
-        /// <param name="offsetPictureTitle">The distance between picture and title in percent of screen</param>
-        public PlayerRepresentationMainMenu(MenuObject playerTitle, MenuObject playerPicture, Gamepad inputDevice, 
-            bool ki, int playerIndex, Vector2 position, Vector2 size, float offsetPictureTitle)
+        /// <param name="playerPicture">The MenuObject that represents the PlayerIcon</param>
+        /// <param name="inputDevice">The input device</param>
+        /// <param name="ki">True if it's a KI player</param>
+        /// <param name="playerIndex">The index of the player</param>
+        public PlayerRepresentationMainMenu(MenuObject playerPicture, Gamepad inputDevice, 
+            bool ki, int playerIndex)
         {
 
-            this.PlayerTitle = playerTitle;
             this.PlayerPicture = playerPicture;
             this.InputDevice = inputDevice;
             this.KI = ki;
             this.PlayerIndex = playerIndex;
-            this.Position = position;
-            this.Size = size;
-            this.offsetPictureTitle = offsetPictureTitle;
 
-            this.PlayerTitle.Position = new Vector2(position.X, position.Y + offsetPictureTitle);
-            this.PlayerTitle.Size = new Vector2(size.X, 0.3f * size.Y);
-            this.PlayerPicture.Position = new Vector2(position.X, position.Y);
-            this.PlayerPicture.Size = new Vector2(size.X, 0.7f * size.Y);
+            Team = 0;
+            Connected = false;
+
 
         }
 
@@ -1766,11 +1769,7 @@ namespace ManhattanMorning.Misc
         /// <param name="newPosition">The x-value for the new position</param>
         public void setXPosition(float xPosition)
         {
-
-            Position = new Vector2(xPosition, Position.Y);
-
-            // Set the new position in the player representation textures
-            PlayerTitle.Position = new Vector2(xPosition, PlayerTitle.Position.Y);
+            
             PlayerPicture.Position = new Vector2(xPosition, PlayerPicture.Position.Y);
 
         }
@@ -1782,13 +1781,10 @@ namespace ManhattanMorning.Misc
         public void setYPosition(float yPosition)
         {
 
-            Position = new Vector2(Position.X, yPosition);
-
-            // Set the new position in the player representation textures
-            PlayerTitle.Position = new Vector2(PlayerTitle.Position.X, yPosition + offsetPictureTitle);
             PlayerPicture.Position = new Vector2(PlayerPicture.Position.X, yPosition);
 
         }
+
 
     }
 

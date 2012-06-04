@@ -432,6 +432,29 @@ namespace ManhattanMorning.Misc
 
         #endregion
 
+        #region Methods
+
+        /// <summary>
+        /// Returns the PlayerRepresentation for an index
+        /// </summary>
+        /// <param name="index">The index of the PlayerRepresentation</param>
+        /// <returns>The PlayerRepresentation</returns>
+        public PlayerRepresentationMainMenu getPlayerRepresentation(int index)
+        {
+
+            foreach (PlayerRepresentationMainMenu player in playerTeam1)
+                if (player.PlayerIndex == index)
+                    return player;
+
+            foreach (PlayerRepresentationMainMenu player in playerTeam2)
+                if (player.PlayerIndex == index)
+                    return player;
+
+
+            return null;
+        }
+
+        #endregion
 
     }
 }

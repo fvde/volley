@@ -98,6 +98,16 @@ namespace ManhattanMorning.Controller
         private Border rightHandBlockBorder;
 
         /// <summary>
+        /// Middle border of the level
+        /// </summary>
+        private Border leftSideHandDistanceBorder;
+
+        /// <summary>
+        /// Middle border of the level
+        /// </summary>
+        private Border rightSideHandDistanceBorder;
+
+        /// <summary>
         /// The current SuperBomb.
         /// </summary>
         private List<Bomb> superBombList;
@@ -194,7 +204,7 @@ namespace ManhattanMorning.Controller
                         if (!player.HandAmplitude.Equals(Vector2.Zero) && !player.Flags.Contains(PlayerFlag.HandStunned))
                         {
 
-                            Vector2 handImpulse = (float)settingsManager.get("handImpulseScalar") * new Vector2(player.HandAmplitude.X, player.HandAmplitude.Y);
+                            Vector2 handImpulse = (float)settingsManager.get("handImpulseScalar") * player.HandAmplitude;
                             player.HandBody.ApplyLinearImpulse(handImpulse);
                             // Contrary force
                             player.Body.ApplyLinearImpulse(-handImpulse);
@@ -212,13 +222,9 @@ namespace ManhattanMorning.Controller
                 {
                     task.AffectedPlayer.Flags.Remove(PlayerFlag.Stunned);
                 }
-                else if (task.Type.Contains(PhysicsTask.PhysicTaskType.CreateNewOriginalBall))
+                else if (task.Type.Contains(PhysicsTask.PhysicTaskType.CreateNewBall))
                 {
-                    createOriginalBall(task.Position);
-                }
-                else if (task.Type.Contains(PhysicsTask.PhysicTaskType.CreateNewPowerupBall))
-                {
-                    createAdditionalBall(getRandomPositionAtTheTop(task.AffectedPlayer.Team));
+                    createBall(task.Position);
                 }
                 else if (task.Type.Contains(PhysicsTask.PhysicTaskType.CreateDoubleBall))
                 {
@@ -368,7 +374,7 @@ namespace ManhattanMorning.Controller
             // but it doesnt behave the same way in all directions.
             float jointFrequency = 3.0f;
             float jointDampingRatio = 0.5f;
-            float PlayerAnchorOffset = Size.X / 2;
+            float PlayerAnchorOffset = Size.X * 0.5f;
             float maxDistanceBetweenPlayerAndHand = 0.6f;
 
             DistanceJoint[] bodyHandDistanceJoints = new DistanceJoint[4];
@@ -495,6 +501,8 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenBodies(powerupBody, middleBorder.Body);
             disableCollisionBetweenBodies(powerupBody, rightHandBlockBorder.Body);
             disableCollisionBetweenBodies(powerupBody, leftHandBlockBorder.Body);
+            disableCollisionBetweenBodies(powerupBody, leftSideHandDistanceBorder.Body);
+            disableCollisionBetweenBodies(powerupBody, rightSideHandDistanceBorder.Body);
 
 
             return powerupBody;
@@ -610,7 +618,7 @@ namespace ManhattanMorning.Controller
             {
                 Player p = fixtureA.Body.LinkedActiveObject as Player;
                 p.Flags.Add(PlayerFlag.HandStunned);
-                TaskManager.Instance.addTask(new PhysicsTask(150, p, PhysicsTask.PhysicTaskType.RemoveHandStun));
+                TaskManager.Instance.addTask(new PhysicsTask(350, p, PhysicsTask.PhysicTaskType.RemoveHandStun));
             }
             return true;
         }
@@ -1009,10 +1017,13 @@ namespace ManhattanMorning.Controller
         /// <param name="middle"></param>
         /// <param name="leftHandBlock"></param>
         /// <param name="rightHandBlock"></param>
-        public void SetBorders(Border middle, Border leftHandBlock, Border rightHandBlock){
+        public void SetBorders(Border middle, Border leftHandBlock, Border rightHandBlock, Border rightSideHandDistance, Border leftSideHandDistance)
+        {
             this.middleBorder = middle;
             this.leftHandBlockBorder = leftHandBlock;
             this.rightHandBlockBorder = rightHandBlock;
+            this.rightSideHandDistanceBorder = rightSideHandDistance;
+            this.leftSideHandDistanceBorder = leftSideHandDistance;
         }
 
 
@@ -1090,7 +1101,7 @@ namespace ManhattanMorning.Controller
         {
             foreach (Ball currentBall in SuperController.Instance.getAllBalls())
             {
-                createAdditionalBall(currentBall.Position);
+                createBall(currentBall.Position);
                 return;
             }
 
@@ -1099,10 +1110,10 @@ namespace ManhattanMorning.Controller
         }
 
         /// <summary>
-        /// Creates the original Ball.
+        /// Creates a Ball.
         /// </summary>
-        /// <param name="position"></param>
-        private void createOriginalBall(Vector2 position)
+        /// <param name="position">The position of the ball</param>
+        private void createBall(Vector2 position)
         {
             // Get ball size
             Vector2 ballSize = (Vector2)SettingsManager.Instance.get("ballSize");
@@ -1119,6 +1130,15 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenActiveObjects(newBall, middleBorder);
             disableCollisionBetweenActiveObjects(newBall, rightHandBlockBorder);
             disableCollisionBetweenActiveObjects(newBall, leftHandBlockBorder);
+            disableCollisionBetweenActiveObjects(newBall, leftSideHandDistanceBorder);
+            disableCollisionBetweenActiveObjects(newBall, rightSideHandDistanceBorder);
+
+            // Add highlight
+            PassiveObject ballHighlight = new PassiveObject("BallHighlight", true, StorageManager.Instance.getTextureByName("highlight_ball"), null, null, ballSize, position, 53,
+                MeasurementUnit.Meter, null);
+            SuperController.Instance.addGameObjectToGameInstance(ballHighlight);
+
+            newBall.attachObject(ballHighlight);
 
             // Add Light if necessary
             Graphics.Instance.addLightToObject(newBall);
@@ -1128,6 +1148,7 @@ namespace ManhattanMorning.Controller
         /// Creates an additional Ball.
         /// </summary>
         /// <param name="position"></param>
+        /*
         private void createAdditionalBall(Vector2 position)
         {
             // Get ball size
@@ -1145,10 +1166,12 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenActiveObjects(newBall, middleBorder);
             disableCollisionBetweenActiveObjects(newBall, rightHandBlockBorder);
             disableCollisionBetweenActiveObjects(newBall, leftHandBlockBorder);
+            disableCollisionBetweenActiveObjects(newBall, leftSideHandDistanceBorder);
+            disableCollisionBetweenActiveObjects(newBall, rightSideHandDistanceBorder);
 
             // Add Light if necessary
             Graphics.Instance.addLightToObject(newBall);
-        }
+        }*/
 
         /// <summary>
         /// Creates lava.
@@ -1175,6 +1198,8 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenActiveObjects(lava, middleBorder);
             disableCollisionBetweenActiveObjects(lava, rightHandBlockBorder);
             disableCollisionBetweenActiveObjects(lava, leftHandBlockBorder);
+            disableCollisionBetweenActiveObjects(lava, leftSideHandDistanceBorder);
+            disableCollisionBetweenActiveObjects(lava, rightSideHandDistanceBorder);
         }
 
         /// <summary>
@@ -1193,6 +1218,31 @@ namespace ManhattanMorning.Controller
                 MeasurementUnit.Meter,
                 true);
 
+            // Add a fading animation so that the black bomb fades out
+            bomb.FadingAnimation = new FadingAnimation(false, false, 0, true, (int)SettingsManager.Instance.get("superBombDuration"));
+            bomb.FadingAnimation.Inverted = true;
+
+            // Create the bomb top
+            Vector2 size = new Vector2((265f / 527f) * bomb.Size.X, (308f / 527f) * bomb.Size.Y);
+            PassiveObject bomb_top = new PassiveObject("Bomb_top", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_top"), null, null,
+                size, position, 59, MeasurementUnit.Meter);
+
+            Vector2 offset = new Vector2(0f, -0.4f * bomb.Size.Y);
+            bomb_top.Offset = offset;
+
+            //bomb.attachObject(bomb_top);
+            //SuperController.Instance.addGameObjectToGameInstance(bomb_top);
+
+
+
+            // Create the red background
+            PassiveObject bomb_red = new PassiveObject("Bomb_red", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_red"), null, null,
+                (Vector2)SettingsManager.Instance.get("superBombSize"), position, 57, MeasurementUnit.Meter);
+
+            // Attach it to the bomb
+            bomb.attachObject(bomb_red);
+            SuperController.Instance.addGameObjectToGameInstance(bomb_red);
+
             // Save the created bomb.
             TaskManager.Instance.addTask(new PhysicsTask((int)SettingsManager.Instance.get("superBombDuration"), PhysicsTask.PhysicTaskType.DetonateSuperBomb));
 
@@ -1209,6 +1259,8 @@ namespace ManhattanMorning.Controller
             disableCollisionBetweenActiveObjects(bomb, middleBorder);
             disableCollisionBetweenActiveObjects(bomb, rightHandBlockBorder);
             disableCollisionBetweenActiveObjects(bomb, leftHandBlockBorder);
+            disableCollisionBetweenActiveObjects(bomb, leftSideHandDistanceBorder);
+            disableCollisionBetweenActiveObjects(bomb, rightSideHandDistanceBorder);
         }
 
         /// <summary>
@@ -1220,6 +1272,10 @@ namespace ManhattanMorning.Controller
             {
                 createExplosionAtPoint(superBombList.First().Body.Position, (float)settingsManager.get("superBombRange"), (float)settingsManager.get("superBombImpact"), true);
                 SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First());
+
+                // Remove also attached objects
+                SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First().AttachedObjects.First());
+
                 ParticleSystemsManager.Instance.stopBombFalling(superBombList.First());
                 superBombList.Remove(superBombList.First());
             }

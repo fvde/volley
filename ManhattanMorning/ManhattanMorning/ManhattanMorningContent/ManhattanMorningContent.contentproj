@@ -607,23 +607,23 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Levels\Default\Player1.png">
-      <Name>Player1</Name>
+    <Compile Include="Textures\Levels\Default\Player_green.png">
+      <Name>Player_green</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\Levels\Default\Player2.png">
-      <Name>Player2</Name>
+    <Compile Include="Textures\Levels\Default\Player_red.png">
+      <Name>Player_red</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\Levels\Default\Player3.png">
-      <Name>Player3</Name>
+    <Compile Include="Textures\Levels\Default\Player_yellow.png">
+      <Name>Player_yellow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\Levels\Default\Player4.png">
-      <Name>Player4</Name>
+    <Compile Include="Textures\Levels\Default\Player_blue.png">
+      <Name>Player_blue</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -753,38 +753,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Gamepad.png">
-      <Name>TeamMenu_Gamepad</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Keyboard.png">
-      <Name>TeamMenu_Keyboard</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Textures\Menu\MainMenu\TeamMenu_KI.png">
       <Name>TeamMenu_KI</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Player1.png">
-      <Name>TeamMenu_Player1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Player2.png">
-      <Name>TeamMenu_Player2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Player3.png">
-      <Name>TeamMenu_Player3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Player4.png">
-      <Name>TeamMenu_Player4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -792,33 +762,6 @@
   <ItemGroup>
     <Compile Include="Textures\Particles\leave_new.png">
       <Name>leave_new</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\HUD\IngameHUD\Countdown_1.png">
-      <Name>Countdown_1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\HUD\IngameHUD\Countdown_2.png">
-      <Name>Countdown_2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\HUD\IngameHUD\Countdown_3.png">
-      <Name>Countdown_3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\HUD\IngameHUD\Countdown_4.png">
-      <Name>Countdown_4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\HUD\IngameHUD\Countdown_5.png">
-      <Name>Countdown_5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1224,13 +1167,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Menu\MainMenu\Overlay_SelectLevel.png">
-      <Name>Overlay_SelectLevel</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Audio\Effects\windPowerUp.wav">
       <Name>windPowerUp</Name>
       <Importer>WavImporter</Importer>
@@ -1261,45 +1197,6 @@
   <ItemGroup>
     <Compile Include="Textures\Levels\Beach\light.png">
       <Name>light</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\Menu\MainMenu\Overlay_Help.png">
-      <Name>Overlay_Help</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\Overlay_MainScreen.png">
-      <Name>Overlay_MainScreen</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\Overlay_ReallyQuit.png">
-      <Name>Overlay_ReallyQuit</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\Overlay_TeamMenu.png">
-      <Name>Overlay_TeamMenu</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\Overlay_TeamMenu_Warning.png">
-      <Name>Overlay_TeamMenu_Warning</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\Menu\IngameMenu\Overlay_IngameMenu.png">
-      <Name>Overlay_IngameMenu</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\IngameMenu\Overlay_WinnerScreen.png">
-      <Name>Overlay_WinnerScreen</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1350,6 +1247,210 @@
       <Name>menu_warning</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Gamepad_1.png">
+      <Name>TeamMenu_Gamepad_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Gamepad_2.png">
+      <Name>TeamMenu_Gamepad_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Gamepad_3.png">
+      <Name>TeamMenu_Gamepad_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Gamepad_4.png">
+      <Name>TeamMenu_Gamepad_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Gamepad_Deactivated.png">
+      <Name>TeamMenu_Gamepad_Deactivated</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Keyboard1.png">
+      <Name>TeamMenu_Keyboard1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\TeamMenu_Keyboard2.png">
+      <Name>TeamMenu_Keyboard2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_01.png">
+      <Name>Countdown_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_02.png">
+      <Name>Countdown_02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_03.png">
+      <Name>Countdown_03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_04.png">
+      <Name>Countdown_04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_05.png">
+      <Name>Countdown_05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_06.png">
+      <Name>Countdown_06</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_07.png">
+      <Name>Countdown_07</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_08.png">
+      <Name>Countdown_08</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_09.png">
+      <Name>Countdown_09</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\IngameHUD\Countdown_10.png">
+      <Name>Countdown_10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\IngameMenu\Overlay_choose_select_back.png">
+      <Name>Overlay_choose_select_back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\IngameMenu\Overlay_mainmenu_revenge.png">
+      <Name>Overlay_mainmenu_revenge</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\Overlay_browse_back.png">
+      <Name>Overlay_browse_back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\Overlay_choose_continue_back.png">
+      <Name>Overlay_choose_continue_back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\Overlay_choose_select.png">
+      <Name>Overlay_choose_select</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\Overlay_choose_select_back.png">
+      <Name>Overlay_choose_select_back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\Overlay_choose_startGame_back.png">
+      <Name>Overlay_choose_startGame_back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\Overlay_noTeam.png">
+      <Name>Overlay_noTeam</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\Overlay_tooManyTeam.png">
+      <Name>Overlay_tooManyTeam</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Videos\maya.wmv">
+      <Name>maya</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Waterfall\stencil.png">
+      <Name>stencil</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Waterfall\Wasserfall-bottom.png">
+      <Name>Wasserfall-bottom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Waterfall\Wasserfallthin-head.png">
+      <Name>Wasserfallthin-head</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Waterfall\Wasserfallthin-tip.png">
+      <Name>Wasserfallthin-tip</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Waterfall\Wasserfallthin.png">
+      <Name>Wasserfallthin</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Light\highlight_ball.png">
+      <Name>highlight_ball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\HUD\Digits\digit_blank.png">
+      <Name>digit_blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\PowerUps\powerup_bomb_red.png">
+      <Name>powerup_bomb_red</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\PowerUps\powerup_bomb_top.png">
+      <Name>powerup_bomb_top</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
