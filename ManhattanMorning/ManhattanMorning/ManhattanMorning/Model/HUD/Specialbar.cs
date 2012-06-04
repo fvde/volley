@@ -473,6 +473,8 @@ namespace ManhattanMorning.Model.HUD
                 // Animate left bar
                 specialbarBar_Left.ScalingAnimation = new ScalingAnimation(false, true, 0, true, 500);
                 specialbarBar_Left.ScalingAnimation.ScalingRange = new Vector2(1, 1.3f);
+
+                SoundManager.Instance.playIngameSoundEffect((int)IngameSound.SpecialbarFull);
             }
             else
             {
@@ -486,6 +488,8 @@ namespace ManhattanMorning.Model.HUD
                 // Animate right bar
                 specialbarBar_Right.ScalingAnimation = new ScalingAnimation(false, true, 0, true, 500);
                 specialbarBar_Right.ScalingAnimation.ScalingRange = new Vector2(1, 1.3f);
+
+                SoundManager.Instance.playIngameSoundEffect((int)IngameSound.SpecialbarFull);
             }
 
 

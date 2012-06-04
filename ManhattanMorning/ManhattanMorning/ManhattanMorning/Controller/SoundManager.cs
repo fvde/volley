@@ -11,10 +11,10 @@ using Microsoft.Xna.Framework;
 namespace ManhattanMorning.Controller
 {
     /// <summary>
-    /// This is used to simplify playing sound effects. You don't have to know every number of the files,
+    /// This is used to simplify playing ingame sound effects. You don't have to know every number of the files,
     /// just use this enum to identify the right effect.
     /// </summary>
-    public enum Sound
+    public enum IngameSound
     {
         Jump,
         HitBall,
@@ -25,13 +25,22 @@ namespace ManhattanMorning.Controller
         ExplosionSmall,
         InvertedControl,
         SmashBall,
-        sunsetPowerUp,
-        windPowerUp,
+        SunsetPowerUp,
+        WindPowerUp,
         MayaStongeChange,
         StartWhistle,
-        menu_select,
-        menu_switch,
-        menu_warning
+        SpecialbarFull
+    };
+
+    /// <summary>
+    /// This is used to simplify playing menu sound effects. You don't have to know every number of the files,
+    /// just use this enum to identify the right effect.
+    /// </summary>
+    public enum MenuSound
+    {
+        Select,
+        Switch,
+        Warning
     };
 
 
@@ -110,14 +119,24 @@ namespace ManhattanMorning.Controller
         SoundEffectInstance musicInstance;
 
         /// <summary>
-        /// Holds the current sound effects that can be played.
+        /// Holds the current sound effects that can be played ingame
         /// </summary>
-        SoundEffectInstance[] soundInstance = new SoundEffectInstance[16];
+        SoundEffectInstance[] ingameSoundInstance = new SoundEffectInstance[13];
 
         /// <summary>
-        /// Points to the next free soundInstance that can play a sound.
+        /// Points to the next free ingameSoundInstance that can play a sound.
         /// </summary>
-        int soundInstanceUsage;
+        int ingameSoundInstanceUsage;
+
+        /// <summary>
+        /// Holds the current sound effects that can be played in menu
+        /// </summary>
+        SoundEffectInstance[] menuSoundInstance = new SoundEffectInstance[2];
+
+        /// <summary>
+        /// Points to the next free menuSoundInstance that can play a sound.
+        /// </summary>
+        int menuSoundInstanceUsage;
 
         /// <summary>
         /// Indicates the number of the song that is currently played.
@@ -130,14 +149,24 @@ namespace ManhattanMorning.Controller
         SoundEffect[] backgroundMusic = new SoundEffect[11];
 
         /// <summary>
-        /// Stores all the sound effects.
+        /// Stores all the ingameSound effects.
         /// </summary>
-        SoundEffect[] soundEffects = new SoundEffect[30];
+        SoundEffect[] ingameSoundEffects = new SoundEffect[30];
 
         /// <summary>
-        /// Time till next sound Of the given effect im ms
+        /// Time till next ingame sound of the given effect im ms
         /// </summary>
-        int[] timeTillNextSound = new int[30];
+        int[] timeTillNextIngameSound = new int[30];
+
+        /// <summary>
+        /// Stores all the menuSound effects.
+        /// </summary>
+        SoundEffect[] menuSoundEffects = new SoundEffect[10];
+
+        /// <summary>
+        /// Time till next menu sound of the given effect im ms
+        /// </summary>
+        int[] timeTillNextMenuSound = new int[10];
 
         /// <summary>
         /// Stores the order of the songs so that every song is played before the lists repeats
@@ -199,30 +228,32 @@ namespace ManhattanMorning.Controller
             backgroundMusic[9] = game.Content.Load<SoundEffect>(@"Audio\Music\Suspense4");
             backgroundMusic[10] = game.Content.Load<SoundEffect>(@"Audio\Music\Dreh_den_Swag_auf_Indie_Version");
 
-            soundEffects[0] = game.Content.Load<SoundEffect>(@"Audio\Effects\jump");
-            soundEffects[1] = game.Content.Load<SoundEffect>(@"Audio\Effects\hitBall");
-            soundEffects[2] = game.Content.Load<SoundEffect>(@"Audio\Effects\hitNet");
-            soundEffects[3] = game.Content.Load<SoundEffect>(@"Audio\Effects\pickupPowerup");
-            soundEffects[4] = game.Content.Load<SoundEffect>(@"Audio\Effects\bottomTouch");
-            soundEffects[5] = game.Content.Load<SoundEffect>(@"Audio\Effects\explosionBig");
-            soundEffects[6] = game.Content.Load<SoundEffect>(@"Audio\Effects\explosionSmall");
-            soundEffects[7] = game.Content.Load<SoundEffect>(@"Audio\Effects\invertedControl");
-            soundEffects[8] = game.Content.Load<SoundEffect>(@"Audio\Effects\smashBall");
-            soundEffects[9] = game.Content.Load<SoundEffect>(@"Audio\Effects\sunset");
-            soundEffects[10] = game.Content.Load<SoundEffect>(@"Audio\Effects\windPowerUp");
-            soundEffects[11] = game.Content.Load<SoundEffect>(@"Audio\Effects\stoneChange");
-            soundEffects[12] = game.Content.Load<SoundEffect>(@"Audio\Effects\gameStartWhistle");
-            soundEffects[13] = game.Content.Load<SoundEffect>(@"Audio\Effects\menu_select");
-            soundEffects[14] = game.Content.Load<SoundEffect>(@"Audio\Effects\menu_switch");
-            soundEffects[15] = game.Content.Load<SoundEffect>(@"Audio\Effects\menu_warning");
+            ingameSoundEffects[(int)IngameSound.Jump] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\jump");
+            ingameSoundEffects[(int)IngameSound.HitBall] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\hitBall");
+            ingameSoundEffects[(int)IngameSound.HitNet] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\hitNet");
+            ingameSoundEffects[(int)IngameSound.PickupPowerup] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\pickupPowerup");
+            ingameSoundEffects[(int)IngameSound.TouchFloor] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\bottomTouch");
+            ingameSoundEffects[(int)IngameSound.ExplosionBig] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\explosionBig");
+            ingameSoundEffects[(int)IngameSound.ExplosionSmall] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\explosionSmall");
+            ingameSoundEffects[(int)IngameSound.InvertedControl] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\invertedControl");
+            ingameSoundEffects[(int)IngameSound.SmashBall] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\smashBall");
+            ingameSoundEffects[(int)IngameSound.SunsetPowerUp] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\sunset");
+            ingameSoundEffects[(int)IngameSound.WindPowerUp] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\windPowerUp");
+            ingameSoundEffects[(int)IngameSound.MayaStongeChange] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\stoneChange");
+            ingameSoundEffects[(int)IngameSound.StartWhistle] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\gameStartWhistle");
+            ingameSoundEffects[(int)IngameSound.SpecialbarFull] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\specialbarFull");
+
+            menuSoundEffects[(int)MenuSound.Select] = game.Content.Load<SoundEffect>(@"Audio\Effects\Menu\Select");
+            menuSoundEffects[(int)MenuSound.Switch] = game.Content.Load<SoundEffect>(@"Audio\Effects\Menu\Switch");
+            menuSoundEffects[(int)MenuSound.Warning] = game.Content.Load<SoundEffect>(@"Audio\Effects\Menu\Warning");
 
             musicInstance = backgroundMusic[0].CreateInstance();
-            soundInstanceUsage = 0;
+            menuSoundInstanceUsage = 0;
+            ingameSoundInstanceUsage = 0;
             disableMusic = true;
 
             currentSong = -1;
 
-            //timeTillNextSound = new int[15];
         }
         
         #endregion
@@ -239,12 +270,22 @@ namespace ManhattanMorning.Controller
 
             getTasks();
 
-            for (int i = 0; i < timeTillNextSound.Length; i++)
+            // Update the times for every sound so that it can be played again
+            for (int i = 0; i < timeTillNextIngameSound.Length; i++)
             {
-                timeTillNextSound[i] -= gametime.ElapsedGameTime.Milliseconds;
-                if (timeTillNextSound[i] < 0)
+                timeTillNextIngameSound[i] -= gametime.ElapsedGameTime.Milliseconds;
+                if (timeTillNextIngameSound[i] < 0)
                 {
-                    timeTillNextSound[i] = 0;
+                    timeTillNextIngameSound[i] = 0;
+                }
+            }
+
+            for (int i = 0; i < timeTillNextMenuSound.Length; i++)
+            {
+                timeTillNextMenuSound[i] -= gametime.ElapsedGameTime.Milliseconds;
+                if (timeTillNextMenuSound[i] < 0)
+                {
+                    timeTillNextMenuSound[i] = 0;
                 }
             }
 
@@ -257,53 +298,79 @@ namespace ManhattanMorning.Controller
 
 
         /// <summary>
-        /// Plays the SoundEffect with the given number.
+        /// Plays the ingame SoundEffect with the given number.
         /// </summary>
-        /// <param name="n"></param>
-        public void playSoundEffect(int n)
+        /// <param name="n">The enum/int of the sound effect</param>
+        public void playIngameSoundEffect(int n)
         {
             if (n < 0) return;
 
-           if (n != (int) Sound.ExplosionSmall)
+            if (n != (int)IngameSound.ExplosionSmall)
             {
 
-                if (timeTillNextSound[n] > 0) return;
+                if (timeTillNextIngameSound[n] > 0) return;
 
-                if (SuperController.Instance.GameState == GameState.Ingame)
-                {
-                    // timeBetweenTwoEqualSounds: 500 ms (Ingame)
-                    timeTillNextSound[n] = 500;
-                }
-                else
-                {
-                    // timeBetweenTwoEqualSounds: 100 ms (in Menues)
-                    timeTillNextSound[n] = 100;
-                }
+                // timeBetweenTwoEqualSounds: 500 ms (Ingame)
+                timeTillNextIngameSound[n] = 500;
+
             }
 
-            if (soundInstance[soundInstanceUsage] != null)
-                soundInstance[soundInstanceUsage].Dispose();
+            if (ingameSoundInstance[ingameSoundInstanceUsage] != null)
+                ingameSoundInstance[ingameSoundInstanceUsage].Dispose();
 
-           soundInstance[soundInstanceUsage] = soundEffects[n].CreateInstance();
+            ingameSoundInstance[ingameSoundInstanceUsage] = ingameSoundEffects[n].CreateInstance();
 
            switch (n)
            {
-               case (int)Sound.ExplosionSmall:
-                   soundInstance[soundInstanceUsage].Volume = smallExplosionSoundEffectVolume;
+               case (int)IngameSound.ExplosionSmall:
+                   ingameSoundInstance[ingameSoundInstanceUsage].Volume = smallExplosionSoundEffectVolume;
                    break;
-               case (int)Sound.ExplosionBig:
-                   soundInstance[soundInstanceUsage].Volume = bigExplosionSoundEffectVolume;
+               case (int)IngameSound.ExplosionBig:
+                   ingameSoundInstance[ingameSoundInstanceUsage].Volume = bigExplosionSoundEffectVolume;
                    break;
                default:
-                   soundInstance[soundInstanceUsage].Volume = soundEffectVolume;
+                   ingameSoundInstance[ingameSoundInstanceUsage].Volume = soundEffectVolume;
                    break;
            }
 
-            soundInstance[soundInstanceUsage].Play();
-            
+           ingameSoundInstance[ingameSoundInstanceUsage].Play();
 
-            soundInstanceUsage = (soundInstanceUsage + 1) % soundInstance.Length;
+
+           ingameSoundInstanceUsage = (ingameSoundInstanceUsage + 1) % ingameSoundInstance.Length;
         }
+
+
+        /// <summary>
+        /// Plays the menu SoundEffect with the given number.
+        /// </summary>
+        /// <param name="n">The enum/int of the sound effect</param>
+        public void playMenuSoundEffect(int n)
+        {
+            if (n < 0) return;
+
+
+            if (timeTillNextMenuSound[n] > 0) return;
+
+            // timeBetweenTwoEqualSounds: 200 ms (Menu)
+            timeTillNextMenuSound[n] = 200;
+
+
+
+            if (menuSoundInstance[menuSoundInstanceUsage] != null)
+                menuSoundInstance[menuSoundInstanceUsage].Dispose();
+
+            menuSoundInstance[menuSoundInstanceUsage] = menuSoundEffects[n].CreateInstance();
+
+            menuSoundInstance[menuSoundInstanceUsage].Volume = soundEffectVolume;
+
+
+
+            menuSoundInstance[menuSoundInstanceUsage].Play();
+
+
+            menuSoundInstanceUsage = (menuSoundInstanceUsage + 1) % menuSoundInstance.Length;
+        }
+
 
         /// <summary>
         /// You can change the SoundState of the musicInstance with this function so that the music
@@ -339,9 +406,13 @@ namespace ManhattanMorning.Controller
             switch (state)
             {
                 case SoundState.Paused:
-                    for (int i = 0; i < soundInstance.Length; i++)
+                    for (int i = 0; i < ingameSoundInstance.Length; i++)
                     {
-                        soundInstance[i].Pause();
+                        ingameSoundInstance[i].Pause();
+                    }
+                    for (int i = 0; i < menuSoundInstance.Length; i++)
+                    {
+                        menuSoundInstance[i].Pause();
                     }
                     break;
 
@@ -351,9 +422,13 @@ namespace ManhattanMorning.Controller
 
                 case SoundState.Stopped:
                     disableSound = true;
-                    for (int i = 0; i < soundInstance.Length; i++)
+                    for (int i = 0; i < ingameSoundInstance.Length; i++)
                     {
-                        soundInstance[i].Stop(true);
+                        ingameSoundInstance[i].Stop(true);
+                    }
+                    for (int i = 0; i < menuSoundInstance.Length; i++)
+                    {
+                        menuSoundInstance[i].Stop(true);
                     }
                     break;
             }
@@ -407,7 +482,7 @@ namespace ManhattanMorning.Controller
         {
             foreach(SoundTask task in TaskManager.Instance.SoundTasks)
             {
-                playSoundEffect(task.SoundEffectNumber);
+                playIngameSoundEffect(task.SoundEffectNumber);
             }
 
             // Clear list after executing all tasks
@@ -479,13 +554,13 @@ namespace ManhattanMorning.Controller
         {
             changeMusicState(SoundState.Stopped);
             musicInstance = null;
-            soundInstanceUsage = 0;
+            ingameSoundInstanceUsage = 0;
+            menuSoundInstanceUsage = 0;
             disableMusic = true;
 
             currentSong = -1;
 
             TaskManager.Instance.SoundTasks.Clear();
-            //throw new NotImplementedException();
         }
 
         /// <summary>

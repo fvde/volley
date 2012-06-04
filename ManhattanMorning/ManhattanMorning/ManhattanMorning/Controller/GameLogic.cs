@@ -796,7 +796,7 @@ namespace ManhattanMorning.Controller
 
                 ParticleSystemsManager.Instance.playSandFountain(new Vector2(player.Position.X + player.Size.X * 0.5f, player.Position.Y + player.Size.Y), player.PlayerIndex - 1);
 
-                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bottomCollision, (int) Sound.TouchFloor));
+                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bottomCollision, (int) IngameSound.TouchFloor));
 
                 Logger.Instance.log(Sender.GameLogic, "Collision Player-BottomBorder processed", PriorityLevel.Priority_1);
 
@@ -828,7 +828,7 @@ namespace ManhattanMorning.Controller
 
             timeLastHit = gameTime.TotalGameTime.TotalMilliseconds;
             
-            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.hitBall, (int)Sound.HitBall));
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.hitBall, (int)IngameSound.HitBall));
             TaskManager.Instance.addTask(new ParticleSystemTask(0, collisionPosition, EffectIndicator.ballCollision));
         }
 
@@ -1049,7 +1049,7 @@ namespace ManhattanMorning.Controller
                 if ((gameTime.TotalGameTime.TotalMilliseconds - timeLastHit) < 200f) return;
 
                 SuperController.Instance.setSpecialbarFilling(player.Team, 2 * energyMultiplicator);
-                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.smashBall, (int)Sound.SmashBall));
+                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.smashBall, (int)IngameSound.SmashBall));
                 ParticleSystemsManager.Instance.playMeteorBall(ball);
                 Graphics.Instance.setTeamplayText(2, collisionPosition, player.Team, true);
             }
@@ -1089,7 +1089,12 @@ namespace ManhattanMorning.Controller
             if (!(lastPlayerThatHitBall == null) && lastPlayerThatHitBall.Team == team)
             {
                 SuperController.Instance.setSpecialbarFilling(lastPlayerThatHitBall.Team, 3 * energyMultiplicator);
-                Graphics.Instance.setTeamplayText(0, lastPlayerThatHitBall.Position, team, true);
+
+                // Calculate the middle position above the player: playerposition - 0.5 * (textsize (in meters) - playersize)
+                Vector2 textSizeMeter = Graphics.Instance.convertUnits(((HUD)SuperController.Instance.getObjectByName("teamplay_t" + team)).Size, MeasurementUnit.Pixel,
+                    MeasurementUnit.Meter);
+                float xPosition = lastPlayerThatHitBall.Position.X - 0.5f * (textSizeMeter.X - lastPlayerThatHitBall.Size.X);
+                Graphics.Instance.setTeamplayText(0, new Vector2(xPosition - 0.25f * lastPlayerThatHitBall.Size.X, lastPlayerThatHitBall.Position.Y), team, true);
             }
         }
 
@@ -1161,7 +1166,7 @@ namespace ManhattanMorning.Controller
         {
             ParticleSystemsManager.Instance.stopMeteorBall(ball);
             // Create Sound Task
-            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.netCollision, (int)Sound.HitNet));
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.netCollision, (int)IngameSound.HitNet));
 
         }
 
@@ -1173,7 +1178,7 @@ namespace ManhattanMorning.Controller
         private void processCollision_Player_Powerup(Player player, PowerUp powerup)
         {
             // Create Sound Task
-            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.pickupPowerup, (int)Sound.PickupPowerup));
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.pickupPowerup, (int)IngameSound.PickupPowerup));
 
         }
 
@@ -1235,7 +1240,7 @@ namespace ManhattanMorning.Controller
                 PassiveObject newStone = SuperController.Instance.getObjectByName("stone" + stone) as PassiveObject;
 
 
-                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)Sound.MayaStongeChange));
+                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
 
                 while (Physics.Instance.getBodiesInCircle(newStone.Position + newStone.Size / 2, Math.Max(newStone.Size.X, newStone.Size.Y) / 1.5f).Count > 0)
                 {
