@@ -205,21 +205,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\jump_old.mp3">
-      <Name>jump_old</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio\Effects\pickupPowerup_old.mp3">
-      <Name>pickupPowerup_old</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio\Effects\hitNet.mp3">
+    <Compile Include="Audio\Effects\Ingame\hitNet.mp3">
       <Name>hitNet</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
@@ -1062,63 +1048,63 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\bottomTouch.wav">
+    <Compile Include="Audio\Effects\Ingame\bottomTouch.wav">
       <Name>bottomTouch</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\hitBall.wav">
+    <Compile Include="Audio\Effects\Ingame\hitBall.wav">
       <Name>hitBall</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\pickupPowerup.wav">
+    <Compile Include="Audio\Effects\Ingame\pickupPowerup.wav">
       <Name>pickupPowerup</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\explosionBig.wav">
+    <Compile Include="Audio\Effects\Ingame\explosionBig.wav">
       <Name>explosionBig</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\explosionSmall.wav">
+    <Compile Include="Audio\Effects\Ingame\explosionSmall.wav">
       <Name>explosionSmall</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\jump.wav">
+    <Compile Include="Audio\Effects\Ingame\jump.wav">
       <Name>jump</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\invertedControl.wav">
+    <Compile Include="Audio\Effects\Ingame\invertedControl.wav">
       <Name>invertedControl</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\smashBall.wav">
+    <Compile Include="Audio\Effects\Ingame\smashBall.wav">
       <Name>smashBall</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\sunset.wav">
+    <Compile Include="Audio\Effects\Ingame\sunset.wav">
       <Name>sunset</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
@@ -1167,21 +1153,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\windPowerUp.wav">
+    <Compile Include="Audio\Effects\Ingame\windPowerUp.wav">
       <Name>windPowerUp</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\gameStartWhistle.wav">
+    <Compile Include="Audio\Effects\Ingame\gameStartWhistle.wav">
       <Name>gameStartWhistle</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\stoneChange.wav">
+    <Compile Include="Audio\Effects\Ingame\stoneChange.wav">
       <Name>stoneChange</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
@@ -1233,18 +1219,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\menu_select.wav">
-      <Name>menu_select</Name>
+    <Compile Include="Audio\Effects\Menu\Select.wav">
+      <Name>Select</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="Audio\Effects\menu_switch.wav">
-      <Name>menu_switch</Name>
+    <Compile Include="Audio\Effects\Menu\Switch.wav">
+      <Name>Switch</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="Audio\Effects\menu_warning.wav">
-      <Name>menu_warning</Name>
+    <Compile Include="Audio\Effects\Menu\Warning.wav">
+      <Name>Warning</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -1453,6 +1439,14 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\specialbarFull.wav">
+      <Name>specialbarFull</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

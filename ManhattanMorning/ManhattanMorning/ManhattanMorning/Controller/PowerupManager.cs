@@ -404,7 +404,7 @@ namespace ManhattanMorning.Controller
                     }
                 case PowerUpType.InvertedControl:
                     {
-                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.invertedControl, (int)Sound.InvertedControl));
+                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.invertedControl, (int)IngameSound.InvertedControl));
                         setInvertedControlPowerUp(powerUp, true);
                         Logger.Instance.log(Sender.PowerupManager, "Started inverted control PowerUp.", PriorityLevel.Priority_1);
                         break;
@@ -688,7 +688,7 @@ namespace ManhattanMorning.Controller
         /// <param name="on"></param>
         private void setSunsetSunrisePowerUp()
         {
-            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.sunsetPowerup, (int)Sound.sunsetPowerUp));
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.sunsetPowerup, (int)IngameSound.SunsetPowerUp));
             TaskManager.Instance.addTask(new GraphicsTask(0, GraphicTask.Sunset, 0)); 
         }
 

@@ -471,7 +471,7 @@ namespace ManhattanMorning.Controller
 
             }
 
-            TaskManager.Instance.addTask(new SoundTask(2000, SoundIndicator.startWhistle, (int)Sound.StartWhistle));
+            TaskManager.Instance.addTask(new SoundTask(2000, SoundIndicator.startWhistle, (int)IngameSound.StartWhistle));
 
             // set meterToPixel factor in settingsManager
             SettingsManager.Instance.set("meterToPixel", Game1.Instance.GraphicsDevice.Viewport.Width / gameInstance.LevelSize.X);
