@@ -517,8 +517,7 @@ namespace ManhattanMorning.View
             if (gameObjects.GetPlayer().Count > 0)
             {
                 game.GraphicsDevice.SetRenderTarget(rtPlayer);
-                game.GraphicsDevice.Clear(Color.Transparent);
-                textureShader.CurrentTechnique = textureShader.Techniques["MapTexture"];
+                game.GraphicsDevice.Clear(Color.Black);
                 spriteBatchAll.Begin(SpriteSortMode.FrontToBack, null, null, null, null, textureShader, viewMatrix);
 
                 foreach (Player p in gameObjects.GetPlayer())
@@ -526,14 +525,34 @@ namespace ManhattanMorning.View
                     drawPlayer(p);
                 }
                 spriteBatchAll.End();
-            }
+                
+                game.GraphicsDevice.SetRenderTarget(rtTempBuffer);
+                game.GraphicsDevice.Clear(Color.Transparent);
 
+                sobelEdge.CurrentTechnique = sobelEdge.Techniques["DarkenEdges"];
+                spriteBatchAll.Begin(SpriteSortMode.Deferred, null, null, null, null, sobelEdge, viewMatrix);
+                spriteBatchAll.Draw(rtPlayer, new Rectangle(0, 0, game.GraphicsDeviceManager.PreferredBackBufferWidth, game.GraphicsDeviceManager.PreferredBackBufferHeight), Color.White);
+                spriteBatchAll.End();
+                
+                
+                game.GraphicsDevice.SetRenderTarget(rtPlayer);
+                game.GraphicsDevice.Clear(Color.Transparent);
+                
+                sobelEdge.CurrentTechnique = sobelEdge.Techniques["GaussFilter"];
+                spriteBatchAll.Begin(SpriteSortMode.Deferred, null, null, null, null, sobelEdge, viewMatrix);
+                spriteBatchAll.Draw(rtTempBuffer, new Rectangle(0, 0, game.GraphicsDeviceManager.PreferredBackBufferWidth, game.GraphicsDeviceManager.PreferredBackBufferHeight), Color.White);
+                spriteBatchAll.End();
+                 
+            }
+            
             //draw all objects
             game.GraphicsDevice.SetRenderTarget(rtTempBuffer);
             game.GraphicsDevice.Clear(Color.Transparent);
 
             DrawableObject drawableObject = null;
             ParticleSystem particleSystem = null;
+
+            bool playerOnce = false;
 
             //begin batches for HUD stencil and lights
             spriteBatchHUD.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null);
@@ -557,12 +576,13 @@ namespace ManhattanMorning.View
                     //draw Player
                     if (drawableObject is Player)
                     {
-                        if (currentRenderSettings != RenderSettings.Player)
-                            changeRenderSettings(RenderSettings.Player, null);
-                        //drawPlayer(drawableObject as Player);
-
-                        sobelEdge.Parameters["yTexture"].SetValue(rtPlayer);
-                        spriteBatchAll.Draw(rtPlayer, new Rectangle(0, 0, game.GraphicsDeviceManager.PreferredBackBufferWidth, game.GraphicsDeviceManager.PreferredBackBufferHeight), Color.White);
+                        if (!playerOnce)
+                        {
+                            if (currentRenderSettings != RenderSettings.Player)
+                                changeRenderSettings(RenderSettings.Player, null);
+                            playerOnce = true;
+                            spriteBatchAll.Draw(rtPlayer, new Rectangle(0, 0, game.GraphicsDeviceManager.PreferredBackBufferWidth, game.GraphicsDeviceManager.PreferredBackBufferHeight), Color.White);
+                        }
                     }
 
                   
@@ -1260,8 +1280,8 @@ namespace ManhattanMorning.View
                     return;
 
                 case RenderSettings.Player:
-                    sobelEdge.CurrentTechnique = sobelEdge.Techniques["DarkenEdges"];
-                    spriteBatchAll.Begin(SpriteSortMode.Deferred, null, null, null, null, sobelEdge, viewMatrix);
+                    //sobelEdge.CurrentTechnique = sobelEdge.Techniques["DarkenEdges"];
+                    spriteBatchAll.Begin(SpriteSortMode.Deferred, null, null, null, null, null, viewMatrix);
                     return;
 
                 case RenderSettings.Particle:
