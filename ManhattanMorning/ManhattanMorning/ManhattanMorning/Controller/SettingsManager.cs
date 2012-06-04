@@ -301,7 +301,7 @@ namespace ManhattanMorning.Controller
             #region Sound
 
             //Sound volume of sound effects
-            settings.Add("soundVolume", new object[] { 0.0f, 0.15f, 1.0f });
+            settings.Add("soundVolume", new object[] { 0.0f, 0.75f, 1.0f });
 
             //Sound volume of BigExplosion sound effects
             settings.Add("bigExplosionSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });

@@ -369,6 +369,7 @@ namespace ManhattanMorning.Misc
 
             #endregion
 
+            
             #region 3. Update Keyboards
             #if WINDOWS
 
@@ -428,9 +429,7 @@ namespace ManhattanMorning.Misc
 
             #endif
             #endregion
-
-
-
+            
             #region 4. Show KI Gameobjects left and right
 
             int countLeftTeam = getNumberOfTeamMembers(1);
@@ -492,43 +491,45 @@ namespace ManhattanMorning.Misc
 
             }
 
-            // Go through all necessary indexes and check it there is no device for that index
-            for (int i = 0; i < limit; i++)
+            // Get each position from down to the top where no gamepad is connected
+            for (int i = limit; i > getNumberOfConnectedDevices(); i--)
             {
-                MenuObject deactivatedGamepad = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated" + (i + 1));
-                deactivatedGamepad.Visible = false;
 
-                if (!activePlayers.Contains(i + 1))
+                // Get yPosition
+                float yPosition;
+                if (menuState == 1)
+                    yPosition = yPositionsPlayerRepresentations1vs1[i - 1];
+                else
+                    yPosition = yPositionsPlayerRepresentations2vs2[i - 1];
+
+                // Get the reference to the Gameobject
+                MenuObject deactivatedGamepad = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Gamepad_Deactivated" + i);
+
+                deactivatedGamepad.Visible = true;
+                deactivatedGamepad.Position = new Vector2(xPositionNoTeam, yPosition);
+
+
+                // Also show a KI texture on the right side
+                // Left
+                if (((countLeftTeam < 1) && (menuState == 1)) ||
+                    ((countLeftTeam < 2) && (menuState == 2)))
                 {
-
-                    // If so, show the deactivated texture
-                    deactivatedGamepad.Visible = true;
-                    if (menuState == 1)
-                        deactivatedGamepad.Position = new Vector2(xPositionNoTeam, yPositionsPlayerRepresentations1vs1[i]);
-                    else
-                        deactivatedGamepad.Position = new Vector2(xPositionNoTeam, yPositionsPlayerRepresentations2vs2[i]);
-
-                    // Also show a KI texture on the right side
-                    // Left
-                    if (((countLeftTeam < 1) && (menuState == 1)) ||
-                        ((countLeftTeam < 2) && (menuState == 2)))
-                    {
-                        countLeftTeam++;
-                        kiCounter++;
-                        MenuObject KIObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI" + kiCounter);
-                        KIObject.Visible = true;
-                        KIObject.Position = new Vector2(xPositionLeftTeam, playerArray[i].PlayerPicture.Position.Y);
-                    }
-                    // Right
-                    else
-                    {
-                        countRightTeam++;
-                        kiCounter++;
-                        MenuObject KIObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI" + kiCounter);
-                        KIObject.Visible = true;
-                        KIObject.Position = new Vector2(xPositionRightTeam, playerArray[i].PlayerPicture.Position.Y);
-                    }
+                    countLeftTeam++;
+                    kiCounter++;
+                    MenuObject KIObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI" + kiCounter);
+                    KIObject.Visible = true;
+                    KIObject.Position = new Vector2(xPositionLeftTeam, deactivatedGamepad.Position.Y);
                 }
+                // Right
+                else
+                {
+                    countRightTeam++;
+                    kiCounter++;
+                    MenuObject KIObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_KI" + kiCounter);
+                    KIObject.Visible = true;
+                    KIObject.Position = new Vector2(xPositionRightTeam, deactivatedGamepad.Position.Y);
+                }
+
             }
 
             #endregion
@@ -1243,12 +1244,15 @@ namespace ManhattanMorning.Misc
         private void switchMenuState(int newState)
         {
 
-            // First, make all objects invisible
+            // First, make all objects invisible and disable a fading animation
             for (int i = 0; i < menuStructure.GetLength(0); i++)
                 for (int j = 0; j < menuStructure.GetLength(1); j++)
                     if (menuStructure[i, j] != null)
                         foreach (LayerInterface menuObject in menuStructure[i, j])
+                        {
                             ((DrawableObject)menuObject).Visible = false;
+                            ((DrawableObject)menuObject).FadingAnimation = null;
+                        }
 
             // Make all necessary menu objects visible
             for (int i = 0; i < menuStructure.GetLength(1); i++)
@@ -1343,6 +1347,13 @@ namespace ManhattanMorning.Misc
             if ((menuState == 5) && ((newState == 1) || (newState == 2)))
             {
 
+                // Make sure that no levelpreview is fading any more
+                for (int i = 0; i < levels.LevelPreviews.Count; i++)
+                {
+                    ((MenuButtonObject)levels.LevelPreviews[i]).Visible = false;
+                    ((MenuButtonObject)levels.LevelPreviews[i]).FadingAnimation = null;
+
+                }
 
             }
 
@@ -1380,36 +1391,37 @@ namespace ManhattanMorning.Misc
             switch (newState)
             {
                 case 0:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
                     break;
                 case 1:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Overlay");
                     break;
                 case 2:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Overlay");
                     break;
                 case 3:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("Help_Overlay");
                     break;
                 case 4:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("ReallyQuit_Overlay");
                     break;
                 case 5:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("SelectLevel_Overlay");
                     break;
             }
+
             ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = null;
             ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).Visible = false;
             ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = null;
@@ -1628,6 +1640,31 @@ namespace ManhattanMorning.Misc
 
             return number;
 
+        }
+
+        /// <summary>
+        /// Returns the number of connected devices
+        /// </summary>
+        /// <returns>The number of devices</returns>
+        private int getNumberOfConnectedDevices()
+        {
+
+            int count = 0;
+
+            // Go through the 4 gamepads and check if they're connected
+            for (int i = 0; i < 4; i++)
+            {
+                if (playerArray[i].InputDevice.IsConnected == true)
+                    count++;
+            }
+
+            // If it's a PC the keyboard is connected for sure
+            // -> 2 Devices
+            #if WINDOWS
+            count += 2;
+            #endif
+
+            return count;
         }
 
         /// <summary>
