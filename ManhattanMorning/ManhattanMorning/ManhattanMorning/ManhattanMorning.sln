@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManhattanMorning", "ManhattanMorning.csproj", "{D7918A6E-3EAE-45A0-878D-FB6D99EE035F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManhattanMorningContent", "..\ManhattanMorningContent\ManhattanMorningContent.contentproj", "{107E66AE-DA19-49B3-B2D5-64F815C6C719}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7918A6E-3EAE-45A0-878D-FB6D99EE035F}.Debug|x86.ActiveCfg = Debug|x86
+		{D7918A6E-3EAE-45A0-878D-FB6D99EE035F}.Debug|x86.Build.0 = Debug|x86
+		{D7918A6E-3EAE-45A0-878D-FB6D99EE035F}.Release|x86.ActiveCfg = Release|x86
+		{D7918A6E-3EAE-45A0-878D-FB6D99EE035F}.Release|x86.Build.0 = Release|x86
+		{107E66AE-DA19-49B3-B2D5-64F815C6C719}.Debug|x86.ActiveCfg = Debug|x86
+		{107E66AE-DA19-49B3-B2D5-64F815C6C719}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
