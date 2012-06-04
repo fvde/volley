@@ -1089,7 +1089,12 @@ namespace ManhattanMorning.Controller
             if (!(lastPlayerThatHitBall == null) && lastPlayerThatHitBall.Team == team)
             {
                 SuperController.Instance.setSpecialbarFilling(lastPlayerThatHitBall.Team, 3 * energyMultiplicator);
-                Graphics.Instance.setTeamplayText(0, lastPlayerThatHitBall.Position, team, true);
+
+                // Calculate the middle position above the player: playerposition - 0.5 * (textsize (in meters) - playersize)
+                Vector2 textSizeMeter = Graphics.Instance.convertUnits(((HUD)SuperController.Instance.getObjectByName("teamplay_t" + team)).Size, MeasurementUnit.Pixel,
+                    MeasurementUnit.Meter);
+                float xPosition = lastPlayerThatHitBall.Position.X - 0.5f * (textSizeMeter.X - lastPlayerThatHitBall.Size.X);
+                Graphics.Instance.setTeamplayText(0, new Vector2(xPosition - 0.25f * lastPlayerThatHitBall.Size.X, lastPlayerThatHitBall.Position.Y), team, true);
             }
         }
 
