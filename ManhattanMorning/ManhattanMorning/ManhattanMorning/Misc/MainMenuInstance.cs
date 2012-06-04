@@ -546,7 +546,7 @@ namespace ManhattanMorning.Misc
             if (menuState == 0)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // unhighlight all previous selected button items
                 if (selectedItem > 0)
@@ -586,7 +586,7 @@ namespace ManhattanMorning.Misc
             {
 
                 if (selectedItem < 2)
-                    SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                    SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
 
                 // unhighlight first item of previous selected button items
@@ -606,7 +606,7 @@ namespace ManhattanMorning.Misc
             else if (menuState == 5)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // Make all winning conditions invisible
                 ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_15pts")).Visible = false;
@@ -660,7 +660,7 @@ namespace ManhattanMorning.Misc
             if (menuState == 0)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // unhighlight all previous selected button items
                 if (selectedItem > 0)
@@ -700,7 +700,7 @@ namespace ManhattanMorning.Misc
             {
 
                 if (selectedItem > 1)
-                    SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                    SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // unhighlight first item of previous selected button items
                 ((MenuButtonObject)menuStructure[menuState, selectedItem][0]).Selected = false;
@@ -719,7 +719,7 @@ namespace ManhattanMorning.Misc
             else if (menuState == 5)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // If powerups are on
                 if ((bool)SettingsManager.Instance.get("enablePowerups") == true)
@@ -762,7 +762,7 @@ namespace ManhattanMorning.Misc
             if (menuState == 0)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // unhighlight all previous selected button items
                 if (selectedItem > 0)
@@ -786,7 +786,7 @@ namespace ManhattanMorning.Misc
             else if ((menuState == 1) || (menuState == 2))
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 PlayerRepresentationMainMenu player = getPlayerRepresentation(device, deviceIndex);
                 if (player.Active)
@@ -800,7 +800,7 @@ namespace ManhattanMorning.Misc
             else if (menuState == 3)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // unhighlight previous selected button item
                 ((MenuButtonObject)menuStructure[menuState, selectedItem][0]).Selected = false;
@@ -848,7 +848,7 @@ namespace ManhattanMorning.Misc
             else if (menuState == 5)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // Switch to previous levelPreview
                 selectedLevelPreviewIndex--;
@@ -878,7 +878,7 @@ namespace ManhattanMorning.Misc
             if (menuState == 0)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // unhighlight all previous selected button items
                 if (selectedItem > 0)
@@ -902,7 +902,7 @@ namespace ManhattanMorning.Misc
             else if ((menuState == 1) || (menuState == 2))
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 PlayerRepresentationMainMenu player = getPlayerRepresentation(device, deviceIndex);
                 if (player.Active)
@@ -916,7 +916,7 @@ namespace ManhattanMorning.Misc
             else if (menuState == 3)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // unhighlight previous selected button item
                 ((MenuButtonObject)menuStructure[menuState, selectedItem][0]).Selected = false;
@@ -964,7 +964,7 @@ namespace ManhattanMorning.Misc
             else if (menuState == 5)
             {
 
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_switch);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // Switch to next levelPreview
                 selectedLevelPreviewIndex++;
@@ -999,7 +999,7 @@ namespace ManhattanMorning.Misc
 
                 // Otherwise switch to the right state
                 switchMenuState(selectedItem);
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_select);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
 
                 timeSinceLastInput = 0;
             }
@@ -1014,11 +1014,11 @@ namespace ManhattanMorning.Misc
                     ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = null;
                     ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).Visible = false;
                     ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
-                    SoundManager.Instance.playSoundEffect((int)Sound.menu_warning);
+                    SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Warning);
                     return;
                 }
                 // Switch to select level
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_select);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
                 previousMenuState = menuState;
                 switchMenuState(5);
 
@@ -1041,13 +1041,13 @@ namespace ManhattanMorning.Misc
                 {
                     // Quit game
                     Game1.Instance.QuitGame();
-                    SoundManager.Instance.playSoundEffect((int)Sound.menu_select);
+                    SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
                 }
                 else
                 {
                     // Go back to main screen
                     switchMenuState(0);
-                    SoundManager.Instance.playSoundEffect((int)Sound.menu_select);
+                    SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
                 }
 
                 timeSinceLastInput = 0;
@@ -1058,7 +1058,7 @@ namespace ManhattanMorning.Misc
 
                 // Start game
                 startGame();
-                SoundManager.Instance.playSoundEffect((int)Sound.menu_select);
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
 
                 timeSinceLastInput = 0;
             }
@@ -1695,7 +1695,7 @@ namespace ManhattanMorning.Misc
                     ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = null;
                     ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).Visible = false;
                     ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
-                    SoundManager.Instance.playSoundEffect((int)Sound.menu_warning);
+                    SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Warning);
                 }
             }
 
@@ -1730,7 +1730,7 @@ namespace ManhattanMorning.Misc
                     ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = null;
                     ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).Visible = false;
                     ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 200);
-                    SoundManager.Instance.playSoundEffect((int)Sound.menu_warning);
+                    SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Warning);
                 }
             }
 
