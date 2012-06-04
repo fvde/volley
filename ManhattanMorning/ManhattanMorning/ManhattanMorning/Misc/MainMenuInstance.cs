@@ -1243,12 +1243,15 @@ namespace ManhattanMorning.Misc
         private void switchMenuState(int newState)
         {
 
-            // First, make all objects invisible
+            // First, make all objects invisible and disable a fading animation
             for (int i = 0; i < menuStructure.GetLength(0); i++)
                 for (int j = 0; j < menuStructure.GetLength(1); j++)
                     if (menuStructure[i, j] != null)
                         foreach (LayerInterface menuObject in menuStructure[i, j])
+                        {
                             ((DrawableObject)menuObject).Visible = false;
+                            ((DrawableObject)menuObject).FadingAnimation = null;
+                        }
 
             // Make all necessary menu objects visible
             for (int i = 0; i < menuStructure.GetLength(1); i++)
@@ -1343,6 +1346,13 @@ namespace ManhattanMorning.Misc
             if ((menuState == 5) && ((newState == 1) || (newState == 2)))
             {
 
+                // Make sure that no levelpreview is fading any more
+                for (int i = 0; i < levels.LevelPreviews.Count; i++)
+                {
+                    ((MenuButtonObject)levels.LevelPreviews[i]).Visible = false;
+                    ((MenuButtonObject)levels.LevelPreviews[i]).FadingAnimation = null;
+
+                }
 
             }
 
@@ -1380,36 +1390,37 @@ namespace ManhattanMorning.Misc
             switch (newState)
             {
                 case 0:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
                     break;
                 case 1:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Overlay");
                     break;
                 case 2:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("TeamMenu_Overlay");
                     break;
                 case 3:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("Help_Overlay");
                     break;
                 case 4:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("ReallyQuit_Overlay");
                     break;
                 case 5:
-                    overlayObject.Animation = null;
+                    overlayObject.FadingAnimation = null;
                     overlayObject.Visible = false;
                     overlayObject = (MenuObject)menuObjectList.GetObjectByName("SelectLevel_Overlay");
                     break;
             }
+
             ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).FadingAnimation = null;
             ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning1_Overlay")).Visible = false;
             ((MenuObject)menuObjectList.GetObjectByName("TeamMenuWarning2_Overlay")).FadingAnimation = null;
