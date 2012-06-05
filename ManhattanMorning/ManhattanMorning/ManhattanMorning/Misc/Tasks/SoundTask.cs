@@ -43,7 +43,13 @@ namespace ManhattanMorning.Misc.Tasks
         /// <summary>
         /// Soundtype which we want to play.
         /// </summary>
-        public SoundIndicator SoundType { get { return soundType; } set { SoundType = value; } }
+        public SoundIndicator SoundType { get { return soundType; } set { soundType = value; } }
+
+        /// <summary>
+        /// Duration of the time in MS, sound is looped if it is too short
+        /// 0 if no looping is required
+        /// </summary>
+        public int LoopingDuration { get { return loopingDuration; } set { loopingDuration = value; } }
 
         #endregion
 
@@ -60,6 +66,12 @@ namespace ManhattanMorning.Misc.Tasks
         /// Soundtype which we want to play.
         /// </summary>
         SoundIndicator soundType;
+
+        /// <summary>
+        /// Duration of the time in MS, sound is looped if it is too short
+        /// 0 if no looping is required
+        /// </summary>
+        int loopingDuration = 0;
 
         #endregion
 
@@ -90,6 +102,22 @@ namespace ManhattanMorning.Misc.Tasks
         {
             this.soundEffectNumber = SoundEffectNumber;
             this.soundType = soundType;
+        }
+
+        /// <summary>
+        /// Plays a SoundEffect with the given number or enum.
+        /// Flag indicates which kind of sound it is.
+        /// </summary>
+        /// <param name="time">Time in ms until the task is executed</param>
+        /// <param name="soundType">Type of sound you want to play.</param>
+        /// <param name="SoundEffectNumber">Number of the sound effect you want to play.</param>
+        /// <param name="loopingDuration">Duration of the time in MS, sound is looped if it is too short</param>
+        public SoundTask(int time, SoundIndicator soundType, int SoundEffectNumber, int loopingDuration)
+            : base(Sender.SoundEngine, time)
+        {
+            this.soundEffectNumber = SoundEffectNumber;
+            this.soundType = soundType;
+            this.loopingDuration = loopingDuration;
         }
 
         #endregion

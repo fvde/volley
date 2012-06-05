@@ -124,6 +124,11 @@ namespace ManhattanMorning.Controller
         SoundEffectInstance[] ingameSoundInstance = new SoundEffectInstance[13];
 
         /// <summary>
+        /// Holds the duration and the remaining time in MS if a sound is looped
+        /// </summary>
+        int[,] ingameSoundInstanceDuration = new int[13,2];
+
+        /// <summary>
         /// Points to the next free ingameSoundInstance that can play a sound.
         /// </summary>
         int ingameSoundInstanceUsage;
@@ -265,7 +270,7 @@ namespace ManhattanMorning.Controller
         /// is called by game1, all the functionality is implemented
         /// in this method or a submethod
         /// </summary>
-        public void update(GameTime gametime)
+        public void update(GameTime gameTime)
         {
 
             getTasks();
@@ -273,7 +278,7 @@ namespace ManhattanMorning.Controller
             // Update the times for every sound so that it can be played again
             for (int i = 0; i < timeTillNextIngameSound.Length; i++)
             {
-                timeTillNextIngameSound[i] -= gametime.ElapsedGameTime.Milliseconds;
+                timeTillNextIngameSound[i] -= gameTime.ElapsedGameTime.Milliseconds;
                 if (timeTillNextIngameSound[i] < 0)
                 {
                     timeTillNextIngameSound[i] = 0;
@@ -282,17 +287,59 @@ namespace ManhattanMorning.Controller
 
             for (int i = 0; i < timeTillNextMenuSound.Length; i++)
             {
-                timeTillNextMenuSound[i] -= gametime.ElapsedGameTime.Milliseconds;
+                timeTillNextMenuSound[i] -= gameTime.ElapsedGameTime.Milliseconds;
                 if (timeTillNextMenuSound[i] < 0)
                 {
                     timeTillNextMenuSound[i] = 0;
                 }
             }
 
+            updateLoopingSounds(gameTime);
+
             //after a song is played its state will be stopped so that this clause plays the next song
             if (musicInstance.State == SoundState.Stopped && !disableMusic)
                 nextSong();
 
+
+        }
+
+        /// <summary>
+        /// Updates the looping sounds' times and stop them if the time is over
+        /// </summary>
+        /// <param name="gameTime">The gametime</param>
+        public void updateLoopingSounds(GameTime gameTime)
+        {
+
+            // Go through every ingame sound
+            // (ingameSoundInstanceDuration.Length / 2 because the array is 2D and has 2x the size)
+            for (int i = 0; i < (ingameSoundInstanceDuration.Length / 2); i++)
+            {
+
+                // If the sound is null or paused, do nothing
+                if ((ingameSoundInstance[i] == null) || (ingameSoundInstance[i].State == SoundState.Paused))
+                    continue;
+
+                // Check if it has a looping
+                if (ingameSoundInstanceDuration[i, 0] > 0)
+                {
+
+                    // Subtract elapsed time
+                    ingameSoundInstanceDuration[i, 1] -= gameTime.ElapsedGameTime.Milliseconds;
+
+                    // If the time is over, stop the sound and remove it
+                    if (ingameSoundInstanceDuration[i, 1] < 0)
+                    {
+
+                        ingameSoundInstanceDuration[i, 0] = 0;
+                        ingameSoundInstanceDuration[i, 1] = 0;
+
+                        ingameSoundInstance[i].Stop();
+                        ingameSoundInstance[i].Dispose();
+                        ingameSoundInstance[i] = null;
+                    }
+                }
+
+            }
 
         }
 
@@ -315,10 +362,30 @@ namespace ManhattanMorning.Controller
 
             }
 
+            // Make sure that at the position in the array is not a looped sound which is stil be player
+            int temp_ingameSoundInstanceUsage = ingameSoundInstanceUsage;
+
+            while (ingameSoundInstanceDuration[ingameSoundInstanceUsage, 1] > 0)
+            {
+                ingameSoundInstanceUsage = (ingameSoundInstanceUsage + 1) % ingameSoundInstance.Length;
+                // Make sure that it's not an endless loop:
+                // If there are just looped sounds, take the first one and override it
+                if (ingameSoundInstanceUsage == temp_ingameSoundInstanceUsage)
+                    break;
+            }
+
             if (ingameSoundInstance[ingameSoundInstanceUsage] != null)
                 ingameSoundInstance[ingameSoundInstanceUsage].Dispose();
 
+            // Create instance
             ingameSoundInstance[ingameSoundInstanceUsage] = ingameSoundEffects[n].CreateInstance();
+
+            // Set duration time to 0
+            ingameSoundInstanceDuration[ingameSoundInstanceUsage, 0] = 0;
+            ingameSoundInstanceDuration[ingameSoundInstanceUsage, 1] = 0;
+
+            // Disable looping
+            ingameSoundInstance[ingameSoundInstanceUsage].IsLooped = false;
 
            switch (n)
            {
@@ -337,6 +404,69 @@ namespace ManhattanMorning.Controller
 
 
            ingameSoundInstanceUsage = (ingameSoundInstanceUsage + 1) % ingameSoundInstance.Length;
+        }
+
+        /// <summary>
+        /// Plays the ingame SoundEffect with the looped for a specified time
+        /// </summary>
+        /// <param name="n">The enum/int of the sound effect</param>
+        /// <param name="loopingDuration">The duration of the sound (in MS), it is looped till the time is over</param>
+        public void playIngameSoundEffect(int n, int loopingDuration)
+        {
+            if (n < 0) return;
+
+            if (n != (int)IngameSound.ExplosionSmall)
+            {
+
+                if (timeTillNextIngameSound[n] > 0) return;
+
+                // timeBetweenTwoEqualSounds: 500 ms (Ingame)
+                timeTillNextIngameSound[n] = 500;
+
+            }
+
+            // Make sure that at the position in the array is not a looped sound which is stil be player
+            int temp_ingameSoundInstanceUsage = ingameSoundInstanceUsage;
+
+            while (ingameSoundInstanceDuration[ingameSoundInstanceUsage, 1] > 0)
+            {
+                ingameSoundInstanceUsage = (ingameSoundInstanceUsage + 1) % ingameSoundInstance.Length;
+                // Make sure that it's not an endless loop:
+                // If there are just looped sounds, take the first one and override it
+                if (ingameSoundInstanceUsage == temp_ingameSoundInstanceUsage)
+                    break;
+            }
+
+            if (ingameSoundInstance[ingameSoundInstanceUsage] != null)
+                ingameSoundInstance[ingameSoundInstanceUsage].Dispose();
+
+            // Create instance
+            ingameSoundInstance[ingameSoundInstanceUsage] = ingameSoundEffects[n].CreateInstance();
+            
+            // Save time
+            ingameSoundInstanceDuration[ingameSoundInstanceUsage, 0] = loopingDuration;
+            ingameSoundInstanceDuration[ingameSoundInstanceUsage, 1] = loopingDuration;
+
+            // Enable looping
+            ingameSoundInstance[ingameSoundInstanceUsage].IsLooped = true;
+
+            switch (n)
+            {
+                case (int)IngameSound.ExplosionSmall:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = smallExplosionSoundEffectVolume;
+                    break;
+                case (int)IngameSound.ExplosionBig:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = bigExplosionSoundEffectVolume;
+                    break;
+                default:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = soundEffectVolume;
+                    break;
+            }
+
+            ingameSoundInstance[ingameSoundInstanceUsage].Play();
+
+
+            ingameSoundInstanceUsage = (ingameSoundInstanceUsage + 1) % ingameSoundInstance.Length;
         }
 
 
@@ -477,6 +607,7 @@ namespace ManhattanMorning.Controller
 
             // Reset array
             ingameSoundInstanceUsage = 0;
+            ingameSoundInstanceDuration = new int[13, 2];
 
         }
 
@@ -514,7 +645,13 @@ namespace ManhattanMorning.Controller
         {
             foreach(SoundTask task in TaskManager.Instance.SoundTasks)
             {
-                playIngameSoundEffect(task.SoundEffectNumber);
+
+                // Check if sound should be looped
+                if (task.LoopingDuration > 0)
+                    playIngameSoundEffect(task.SoundEffectNumber, task.LoopingDuration);
+                else
+                    playIngameSoundEffect(task.SoundEffectNumber);
+
             }
 
             // Clear list after executing all tasks
@@ -589,6 +726,8 @@ namespace ManhattanMorning.Controller
             ingameSoundInstanceUsage = 0;
             menuSoundInstanceUsage = 0;
             disableMusic = true;
+
+            ingameSoundInstanceDuration = new int[13, 2];
 
             currentSong = -1;
 

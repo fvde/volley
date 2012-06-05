@@ -1040,7 +1040,7 @@ namespace ManhattanMorning.Controller
         {
             if (on)
             {
-                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.windPowerup, (int)IngameSound.WindPowerUp));
+                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.windPowerup, (int)IngameSound.WindPowerUp, PowerUpManager.Instance.getDurationFromType(PowerUpType.Wind)));
                 // Team identification has to be added.
                 if (team == 1)
                 {

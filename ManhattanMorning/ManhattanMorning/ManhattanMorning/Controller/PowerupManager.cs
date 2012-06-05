@@ -688,7 +688,7 @@ namespace ManhattanMorning.Controller
         /// <param name="on"></param>
         private void setSunsetSunrisePowerUp()
         {
-            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.sunsetPowerup, (int)IngameSound.SunsetPowerUp));
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.sunsetPowerup, (int)IngameSound.SunsetPowerUp, getDurationFromType(PowerUpType.SunsetSunrise)));
             TaskManager.Instance.addTask(new GraphicsTask(0, GraphicTask.Sunset, 0)); 
         }
 
