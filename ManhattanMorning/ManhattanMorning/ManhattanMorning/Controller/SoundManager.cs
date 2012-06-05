@@ -199,6 +199,11 @@ namespace ManhattanMorning.Controller
         /// </summary>
         float smallExplosionSoundEffectVolume;
 
+        /// <summary>
+        /// The time (in MS) for a loop sound to fade in and out
+        /// </summary>
+        int fadingTimeLoopSounds = 1500;
+
         #endregion
 
         #region Initialization
@@ -326,6 +331,9 @@ namespace ManhattanMorning.Controller
                     // Subtract elapsed time
                     ingameSoundInstanceDuration[i, 1] -= gameTime.ElapsedGameTime.Milliseconds;
 
+                    // Set sound volume
+                    ingameSoundInstance[i].Volume = soundEffectVolume;
+
                     // If the time is over, stop the sound and remove it
                     if (ingameSoundInstanceDuration[i, 1] < 0)
                     {
@@ -336,6 +344,28 @@ namespace ManhattanMorning.Controller
                         ingameSoundInstance[i].Stop();
                         ingameSoundInstance[i].Dispose();
                         ingameSoundInstance[i] = null;
+
+                    }
+                    // Check if the sound has to be faded in
+                    else if ((ingameSoundInstanceDuration[i, 0] - ingameSoundInstanceDuration[i, 1]) < fadingTimeLoopSounds)
+                    {
+
+                        // Fade linear
+                        float percentOfFading = ((float)(ingameSoundInstanceDuration[i, 0] - ingameSoundInstanceDuration[i, 1])) / ((float)fadingTimeLoopSounds);
+
+                        // apply to sound
+                        ingameSoundInstance[i].Volume = percentOfFading * soundEffectVolume;
+
+                    }
+                    else if (ingameSoundInstanceDuration[i, 1] < fadingTimeLoopSounds)
+                    {
+
+                        // Fade linear
+                        float percentOfFading = ((float)ingameSoundInstanceDuration[i, 1]) / ((float)fadingTimeLoopSounds);
+
+                        // apply to sound
+                        ingameSoundInstance[i].Volume = percentOfFading * soundEffectVolume;
+                    
                     }
                 }
 
