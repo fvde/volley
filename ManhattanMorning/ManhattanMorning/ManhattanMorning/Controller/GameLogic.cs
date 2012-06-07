@@ -1414,10 +1414,7 @@ namespace ManhattanMorning.Controller
         {
 
             //remove Lights from Ball in forest level
-            if (Graphics.Instance.IsNight)
-            {
-                Graphics.Instance.removeLightFromObject(ball);
-            }
+            Graphics.Instance.removeLightFromObject(ball);
 
 
             // Remove highlight

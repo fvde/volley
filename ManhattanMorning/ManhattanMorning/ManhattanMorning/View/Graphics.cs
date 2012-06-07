@@ -1280,7 +1280,6 @@ namespace ManhattanMorning.View
                             else
                             {
                                 fadingState = 0;
-                                TaskManager.Instance.addTask(new GraphicsTask(nightDurationTime,GraphicTask.Sunrise));
                             }
             }
         }
@@ -1386,6 +1385,8 @@ namespace ManhattanMorning.View
                     case GraphicTask.Sunrise:
                         fadingState = 2;
 
+                        isNight = false;
+
                         task.Task = GraphicTask.LightDisable;
                         task.CurrentTime = 5500;
                         task.MaximumTime = task.CurrentTime;
@@ -1394,9 +1395,10 @@ namespace ManhattanMorning.View
                         break;
 
                     case GraphicTask.Sunset:
-                        if (isNight || fadingState != 0) break;
+                        //if (isNight) break;
 
                         fadingState = 1;
+                        isNight = true;
 
                         task.Task = GraphicTask.LightEnable;
                         task.CurrentTime = 4500;
@@ -1406,12 +1408,15 @@ namespace ManhattanMorning.View
                         break;
 
                     case GraphicTask.LightEnable:
-                        isNight = true;
-                        LightsInForest_Add();
+                        //isNight = true;
+                        if (isNight)
+                        {
+                            LightsInForest_Add();
+                        }
                         break;
 
                     case GraphicTask.LightDisable:
-                        isNight = false;
+                        //isNight = false;
                         LightsInForest_Remove();
                         break;
 
