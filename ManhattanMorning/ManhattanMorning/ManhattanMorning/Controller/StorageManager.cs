@@ -125,7 +125,7 @@ namespace ManhattanMorning.Controller
             // Set allowed powerups
             PowerUpManager.Instance.setAllowedPowerUps(level.AllowedPowerUps);
           
-          
+          /*
             #region EvilMayaLevelHack
             if (levelName == "Maya")
             {
@@ -167,6 +167,7 @@ namespace ManhattanMorning.Controller
             
 
             #endregion
+           * */
           
             #region Players
 
