@@ -166,7 +166,7 @@ namespace ManhattanMorning.Model.GameObject
         /// </summary>
         /// <param name="pos">Position in Meter</param>
         /// <param name="size">Size in Meter</param>
-        public Waterfall(Vector2 pos, Vector2 size)
+        public Waterfall(Vector2 pos, Vector2 size, int mayapos)
         {
             this.name = "Waterfall";
             
