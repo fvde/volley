@@ -179,12 +179,12 @@ namespace ManhattanMorning.Controller
         /// <summary>
         /// Holds the stones which are currently blocking.
         /// </summary>
-        private int[] currentStones = new int[2];
+        private List<int> activeMayaStones = new List<int>();
 
         /// <summary>
         /// The bodies of the stones in maya level.
         /// </summary>
-        private Body[] stoneBlocks = new Body[2];
+        private Body[] stoneBlocks = new Body[4];
 
         /// <summary>
         /// Indicates if a countdown texture (1-5) was already displayed
@@ -251,8 +251,7 @@ namespace ManhattanMorning.Controller
             // Set first spawn times for powerups
             timeForNextSpawn_neutralPowerup = random.Next((int)(averageSpawnTime_neutralPowerup - maxSpreading_spawnTimes * averageSpawnTime_neutralPowerup),
                 (int)(averageSpawnTime_neutralPowerup + maxSpreading_spawnTimes * averageSpawnTime_neutralPowerup));
-                        
-            changeStonePositions(true);
+
         }
 
         /// <summary>
@@ -328,7 +327,7 @@ namespace ManhattanMorning.Controller
             lastTeamThatScored = 0;
             pointsInARow = 0;
 
-            currentStones.Initialize();
+            activeMayaStones.Clear();
             stoneBlocks.Initialize();
 
             activatedCountdowns = new bool[10];
@@ -1228,10 +1227,52 @@ namespace ManhattanMorning.Controller
         /// Changes the stone positions in Maya Level.
         /// </summary>
         /// <param name="init">True on init (only when called from gamelogic), false on every other call.</param>
-        public void changeStonePositions(bool init)
+        public void changeStonePositions(bool on)
         {
             if (SuperController.Instance.GameInstance.LevelName != "Maya") return;
 
+            if (on)
+            {
+                // Find new random stones to switch on
+                for (int i = 0; i < stoneBlocks.Length; i++)
+                {
+                    if (random.NextDouble() > 0.5f)
+                    {
+                        PassiveObject newStone = SuperController.Instance.getObjectByName("stone" + i) as PassiveObject;
+
+                        // Go to the next stone if this one is blocked by objects
+                        if (Physics.Instance.getBodiesInCircle(newStone.Position + newStone.Size / 2, Math.Max(newStone.Size.X, newStone.Size.Y) / 1.5f).Count > 0)
+                        {
+                            continue;
+                        }
+
+                        // Create sound
+                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
+
+                        activeMayaStones.Add(i);
+                        newStone.Animation.Active = true;
+                        newStone.Animation.WaitOnReverse = true;
+                        stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
+                    }
+                }
+            }
+            else
+            {
+                // Turn off all stones
+                foreach (int i in activeMayaStones)
+                {
+                    PassiveObject oldStone = SuperController.Instance.getObjectByName("stone" + i) as PassiveObject;
+                    oldStone.Animation.Active = true;
+
+                    Physics.Instance.removeBodyFromPhysicSimulation(stoneBlocks[i]);
+                    stoneBlocks[i] = null;
+                }
+
+                activeMayaStones.Clear();
+            }
+           
+
+            /*
             for (int i = 0; i <= 1; i++)
             {
                 //get new stone position. Pick one on each side.
@@ -1275,6 +1316,8 @@ namespace ManhattanMorning.Controller
                 newStone.Animation.WaitOnReverse = true;
                 stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
             }
+             * 
+             * */
         }
 
         /// <summary>
