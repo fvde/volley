@@ -302,6 +302,9 @@ namespace ManhattanMorning.Controller
             SoundManager.Instance.discardMenuSounds();
             LoadLevel(levelName, winCondition, leftTeam, rightTeam);
 
+            // Fade
+            SoundManager.Instance.completeyFadeOutIn();
+
             // Change gamestate
             gameState = GameState.Ingame;
 
@@ -338,6 +341,9 @@ namespace ManhattanMorning.Controller
             // Pause ingame sounds
             SoundManager.Instance.pauseIngameSounds(true);
 
+            // Fade
+            SoundManager.Instance.completeyFadeOutIn();
+
             // Change gamestate
             gameState = GameState.IngameMenu;
 
@@ -360,6 +366,9 @@ namespace ManhattanMorning.Controller
             // Remove all menu sounds
             SoundManager.Instance.discardMenuSounds();
 
+            // Fade
+            SoundManager.Instance.completeyFadeOutIn();
+
             // Change gamestate
             gameState = GameState.Ingame;            
 
@@ -377,6 +386,9 @@ namespace ManhattanMorning.Controller
             // Remove all sounds
             SoundManager.Instance.discardMenuSounds();
             SoundManager.Instance.discardIngameSounds();
+
+            // Fade
+            SoundManager.Instance.completeyFadeOutIn();
 
             // Change gamestate
             gameState = GameState.MainMenu;
