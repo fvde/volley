@@ -588,6 +588,8 @@ namespace ManhattanMorning.Controller
             Texture2D iconWindLeft = game1.Content.Load<Texture2D>(@"Textures\PowerUps\icon_wind_left");
             Texture2D iconWindRight = game1.Content.Load<Texture2D>(@"Textures\PowerUps\icon_wind_right");
 
+            Texture2D superbombRadius = game1.Content.Load<Texture2D>(@"Textures\PowerUps\bomb_explosion");
+
             saveTextureByName(texturePowerUpBomb, "PowerUp_Bomb");
             saveTextureByName(texturePowerUpBomb_red, "PowerUp_Bomb_red");
             saveTextureByName(texturePowerUpBomb_top, "PowerUp_Bomb_top");
@@ -604,6 +606,8 @@ namespace ManhattanMorning.Controller
             saveTextureByName(iconVulcano, "Powerup_Volcano");
             saveTextureByName(iconWindLeft, "Powerup_WindLeft");
             saveTextureByName(iconWindRight, "Powerup_WindRight");
+
+            saveTextureByName(superbombRadius, "bomb_explosion");
 
             #endregion
 
