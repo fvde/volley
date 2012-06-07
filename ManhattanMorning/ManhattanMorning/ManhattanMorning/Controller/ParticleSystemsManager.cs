@@ -36,6 +36,7 @@ namespace ManhattanMorning.Controller
         private ParticleSystem specialbarHighlight;
         private ParticleSystem highlightJumpSystem;
         private ParticleSystem[] orbitterPlayers; //all orbitters for the player. paralysis is 0th, stun is 1st element
+        private ParticleSystem sandStormSystem;
         
         /// <summary>
         /// Are all Particle Systems Paused?
@@ -147,6 +148,63 @@ namespace ManhattanMorning.Controller
 
             return pointShape;
         }
+
+        public void activateSandStorm(int direction)
+        {
+            Vector2 pos;
+            if (direction < 0)
+            {
+                direction = -1;
+                pos = new Vector2(13.0f, 7.0f);
+            }
+            else
+            {
+                direction = 1;
+                pos = new Vector2(-1.0f, 7.0f);
+            }
+            foreach (Emitter e in sandStormSystem.EmitterList)
+            {
+                e.Active = true;
+                e.Position = pos;
+                ((EmitterFountain)e).EmitterDirection = new Vector2((float)direction, 0);
+            }
+            
+        }
+
+        public void deactivateSandStorm()
+        {
+            foreach (Emitter e in sandStormSystem.EmitterList)
+            {
+                e.Active = false;
+            }
+        }
+
+        private ParticleSystem createSandStormSystem()
+        {
+            EmitterFountain e = new EmitterFountain(new Vector2(-1.0f, 7.0f), 800, 100);
+            e.EmitterShape = new EmitterRectangleShape(0.1f, 1.50f, new Vector2(0, 1));
+            e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/particle1");
+            e.ParticleColor = Color.Beige;
+            e.ParticleFadeOut = FadeMode.None;
+            e.ParticleSize = new Vector2(1.0f, 1.0f);
+            e.Active = false;
+            e.InitialParticleSpeed = 3.8f;
+            e.EmitterDirection = Vector2.UnitX;
+            e.EmitterAngle = 0.05f;
+            e.ParticleLifeTime = 7.0f;
+            e.ParticleStartingAlpha = 0.1f;
+            e.initializeParticles(true);
+
+
+            ParticleSystem p = new ParticleSystem(255);
+            p.SystemBlendState = BlendState.AlphaBlend;
+           
+            p.addEmitter(e);
+
+            return p;
+        }
+           
+
 
         /// <summary>
         /// Creates a vulcano particle system for beach level with lava and smoke.
@@ -883,6 +941,8 @@ namespace ManhattanMorning.Controller
         /// </summary>
         public void initialize()
         {
+            sandStormSystem = createSandStormSystem();
+
             metertopixel = (float)SettingsManager.Instance.get("meterToPixel");
             viewportSize = new Vector2(Game1.Instance.GraphicsDevice.Viewport.Width, Game1.Instance.GraphicsDevice.Viewport.Height);
 
@@ -1013,6 +1073,7 @@ namespace ManhattanMorning.Controller
             addSystem(ballCollision);
             addSystem(specialbarHighlight);
             addSystem(meteorBallSystem);
+            addSystem(sandStormSystem);
         }
 
         /// <summary>
