@@ -568,8 +568,8 @@ namespace ManhattanMorning.View
                 // Draw if Object is Waterfall and if Visible
                 if (l is Waterfall && ((Waterfall)l).Active)
                 {
-                    
-                    drawWaterfall((Waterfall)l);
+                   
+                    drawWaterfall((Waterfall)l, gameTime);
                 }
                 //check if object is DrawableObject or ParticleSystem
                 if (l is DrawableObject)
@@ -993,23 +993,27 @@ namespace ManhattanMorning.View
             }
         }
 
-        private void drawWaterfall(Waterfall w)
+        private void drawWaterfall(Waterfall w,GameTime time)
         {
-            spriteBatchAll.End();
+
 
             //Update Waterfall
-             w.update();
+             w.update(time);
+
+             if (w.Active == false) return;
+
+             spriteBatchAll.End();
+
             
             //Testpurpose
            if (w.Counter >= 600) w.stop();
 
-
-
+         
             Rectangle dest;
             Rectangle source;
 
 
-            //Fade Out
+            //Draw Fading Out Top
             if (w.IsStopped == true && w.StopCounter < w.Size.Y)
             {
                 spriteBatchAll.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null, textureShader);
@@ -1033,7 +1037,9 @@ namespace ManhattanMorning.View
 
             spriteBatchAll.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null);
 
+           
 
+            //Draw Waterfall
             if (w.Counter < w.Size.Y - w.tipHeight && w.IsStopped!=true)
             {
                 //Draw Tip
