@@ -81,6 +81,11 @@ namespace ManhattanMorning.Controller
         /// </summary>
         public List<ParticleSystemTask> ParticleSystemTasks { get { return particleSystemTasks; } set { particleSystemTasks = value; } }
 
+        /// <summary>
+        /// List of all the tasks for the animation manager that have to be processed in the next update(). MAKE SURE TO REMOVE PROCESSED TASKS!
+        /// </summary>
+        public List<AnimationTask> AnimationTasks { get { return animationTasks; } set { animationTasks = value; } }
+
         #endregion
 
         #region Members
@@ -135,6 +140,11 @@ namespace ManhattanMorning.Controller
         /// </summary>
         private List<ParticleSystemTask> particleSystemTasks;
 
+        /// <summary>
+        /// List of all the tasks that have to be executed in the next update() of the particle system manager.
+        /// </summary>
+        private List<AnimationTask> animationTasks;
+
 
         #endregion
 
@@ -155,6 +165,7 @@ namespace ManhattanMorning.Controller
             powerUpManagerTasks = new List<PowerUpManagerTask>();
             soundTasks = new List<SoundTask>();
             particleSystemTasks = new List<ParticleSystemTask>();
+            animationTasks = new List<AnimationTask>();
             paused = false;
         }
 
@@ -292,6 +303,10 @@ namespace ManhattanMorning.Controller
             }
             else if (task is ParticleSystemTask){
                 particleSystemTasks.Add((ParticleSystemTask)task);
+            }
+            else if (task is AnimationTask)
+            {
+                animationTasks.Add((AnimationTask)task);
             }
             else {
                 Logger.Instance.log(Sender.TaskManager, "Couldn't identify sender!", PriorityLevel.Priority_5);

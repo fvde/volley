@@ -387,7 +387,7 @@ namespace ManhattanMorning.Controller
             settings.Add("bottomTouchSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
             //Sound volume of music
-            settings.Add("musicVolume", new object[] { 0.0f, 0.15f, 1.0f });
+            settings.Add("musicVolume", new object[] { 0.0f, 0.5f, 1.0f });
             
             #endregion
 

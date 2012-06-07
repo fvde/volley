@@ -586,13 +586,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Videos\video2.wmv">
-      <Name>video2</Name>
-      <Importer>WmvImporter</Importer>
-      <Processor>VideoProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\Levels\Default\Player_green.png">
       <Name>Player_green</Name>
       <Importer>TextureImporter</Importer>
@@ -612,13 +605,6 @@
       <Name>Player_blue</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Videos\video.wmv">
-      <Name>video</Name>
-      <Importer>WmvImporter</Importer>
-      <Processor>VideoProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -971,16 +957,6 @@
     </Compile>
     <Compile Include="Textures\PowerUps\powerupBox_wall.png">
       <Name>powerupBox_wall</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\PowerUps\powerupBox_wind_left.png">
-      <Name>powerupBox_wind_left</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\PowerUps\powerupBox_wind_right.png">
-      <Name>powerupBox_wind_right</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1413,7 +1389,7 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-    <ItemGroup>
+  <ItemGroup>
     <Compile Include="Textures\PowerUps\bomb_explosion.png">
       <Name>bomb_explosion</Name>
       <Importer>TextureImporter</Importer>
@@ -1521,6 +1497,25 @@
   <ItemGroup>
     <Compile Include="Textures\Particles\sparcles.PNG">
       <Name>sparcles</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\intro_GlassboxGames.png">
+      <Name>intro_GlassboxGames</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\intro_IvorySound.png">
+      <Name>intro_IvorySound</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\PowerUps\powerupBox_wind.png">
+      <Name>powerupBox_wind</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
