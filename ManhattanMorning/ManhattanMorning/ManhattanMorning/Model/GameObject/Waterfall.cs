@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ManhattanMorning.Misc;
 using ManhattanMorning.Controller;
+using ManhattanMorning.View;
+
 
 namespace ManhattanMorning.Model.GameObject
 {
@@ -104,6 +106,7 @@ namespace ManhattanMorning.Model.GameObject
                     this.active = false;
                     this.counter = 0;
                     this.stopCounter = 0;
+                    SuperController.Instance.GameInstance.GameObjects.Remove(this);
                 }
 
             }
@@ -148,6 +151,29 @@ namespace ManhattanMorning.Model.GameObject
             this.waterfallStencilTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Stencil");
             this.Layer = 1;
             this.Speed = 7;
+        }
+
+        /// <summary>
+        /// Create a new Waterfall and adds it to the GameObject list
+        /// </summary>
+        /// <param name="pos">Position in Meter</param>
+        /// <param name="size">Size in Meter</param>
+        static void createWaterfall(Vector2 pos, Vector2 size)
+        {
+            Waterfall w = new Waterfall("Waterfall");
+            w.Position = Graphics.Instance.convertUnits(pos,MeasurementUnit.Meter,MeasurementUnit.Pixel);
+            w.Size = Graphics.Instance.convertUnits(pos, MeasurementUnit.Meter, MeasurementUnit.Pixel);
+            w.start();
+            SuperController.Instance.GameInstance.GameObjects.Add(w);
+        }
+
+        /// <summary>
+        /// Removes a Waterfall from the GameObject List
+        /// </summary>
+        /// <param name="w">Waterfall to be removed</param>
+        static void deleteWaterfall(Waterfall w)
+        {
+            SuperController.Instance.GameInstance.GameObjects.Remove(w);
         }
 
     }
