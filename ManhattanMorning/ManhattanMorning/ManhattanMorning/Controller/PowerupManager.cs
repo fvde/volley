@@ -285,17 +285,21 @@ namespace ManhattanMorning.Controller
             switch (type)
             {
                 case PowerUpType.InvertedControl:
-                    return 8000;
+                    return (int)SettingsManager.Instance.get("invertedControlEffectDuration");
                 case PowerUpType.SwitchStones:
-                    return 10000;
+                    return (int)SettingsManager.Instance.get("switchStonesEffectDuration");
                 case PowerUpType.Wind:
-                    return 15000;
+                    return (int)SettingsManager.Instance.get("windEffectDuration");
                 case PowerUpType.SunsetSunrise:
-                    return 15000;
+                    return (int)SettingsManager.Instance.get("sunsetSunriseEffectDuration");
                 case PowerUpType.BallRain:
-                    return 10000;
+                    return (int)SettingsManager.Instance.get("ballRainEffectDuration");
+                case PowerUpType.Jumpheight:
+                    return (int)SettingsManager.Instance.get("jumpheightEffectDuration");
+                case PowerUpType.Volcano:
+                    return (int)SettingsManager.Instance.get("volcanoEffectDuration");
                 default:
-                    return 3000;
+                    return (int)SettingsManager.Instance.get("defaultEffectDuration");
             }
         }
 
