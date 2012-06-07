@@ -1268,6 +1268,9 @@ namespace ManhattanMorning.Controller
                         newStone.Animation.Active = true;
                         newStone.Animation.WaitOnReverse = true;
                         stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
+
+                        // Start Waterfall
+
                     }
                 }
             }
@@ -1285,6 +1288,8 @@ namespace ManhattanMorning.Controller
 
                     Physics.Instance.removeBodyFromPhysicSimulation(stoneBlocks[i]);
                     stoneBlocks[i] = null;
+
+                    // Waterfall
                 }
 
                 activeMayaStones.Clear();
