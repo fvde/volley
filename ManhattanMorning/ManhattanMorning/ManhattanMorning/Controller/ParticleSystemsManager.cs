@@ -843,7 +843,7 @@ namespace ManhattanMorning.Controller
 
                 orbitterPlayers[i] = new ParticleSystem(55);
                 orbitterPlayers[i].SystemBlendState = BlendState.AlphaBlend;
-                orbitterPlayers[i].addOrbitter(createParalysisOrbitter("Textures/Particles/question", new Vector2(0.2f, 0.2f), 8f, 1f, Color.Red));
+                orbitterPlayers[i].addOrbitter(createParalysisOrbitter("Textures/Particles/questionmark", new Vector2(0.2f, 0.2f), 8f, 1f, Color.White));
                 orbitterPlayers[i].addOrbitter(createParalysisOrbitter("Textures/Particles/star_particle", new Vector2(0.1f, 0.1f), (int)SettingsManager.Instance.get("lavaStunDuration") / 1000f, 0.125f, Color.Yellow));
 
                 addSystem(orbitterPlayers[i]);

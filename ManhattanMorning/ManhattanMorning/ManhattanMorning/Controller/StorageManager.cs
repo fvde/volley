@@ -763,18 +763,16 @@ namespace ManhattanMorning.Controller
             scaling1.ScalingRange = new Vector2(0.2f, 1f);
             fading1.ResetAfterFade = true;
 
-            Color fadeColor = new Color(230, 122, 0);
 
-            HUD text_teamplay_t1 = new HUD("teamplay_t1", false, teamplay, null, new Vector2(teamplay.Width, teamplay.Height) / 1.5f / meterpixel, new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
+            HUD text_teamplay_t1 = new HUD("teamplay_t1", false, teamplay, null, new Vector2(2.5f, (1f/6f) * 2.5f),
+                new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
             text_teamplay_t1.ScalingAnimation = scaling;
             text_teamplay_t1.FadingAnimation = fading;
-            // Fade it orange like the specialbar
-            text_teamplay_t1.BlendColor = fadeColor;
 
-            HUD text_teamplay_t2 = new HUD("teamplay_t2", false, teamplay, null, new Vector2(teamplay.Width, teamplay.Height) / 1.5f / meterpixel, new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
+            HUD text_teamplay_t2 = new HUD("teamplay_t2", false, teamplay, null, new Vector2(2.5f, (1f / 6f) * 2.5f),
+                 new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
             text_teamplay_t2.ScalingAnimation = scaling1;
             text_teamplay_t2.FadingAnimation = fading1;
-            text_teamplay_t2.BlendColor = fadeColor;
 
             SuperController.Instance.addGameObjectToGameInstance(text_teamplay_t1);
             SuperController.Instance.addGameObjectToGameInstance(text_teamplay_t2);
