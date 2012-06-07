@@ -17,7 +17,7 @@ namespace ManhattanMorning.Model.GameObject
 
         private int speed;
         private bool paused = false;
-        private bool active = false;
+        private bool active = true;
 
         private int textureHeight;
         private int textureWidth;
@@ -95,8 +95,10 @@ namespace ManhattanMorning.Model.GameObject
             {
                 this.stopCounter = this.counter - this.Laufzeit;
 
+  
+
                 Console.WriteLine(this.stopCounter);
-                if (this.stopCounter >= this.Size.Y)
+                if (this.stopCounter >= this.Size.Y+50)
                 {
 
                     this.active = false;

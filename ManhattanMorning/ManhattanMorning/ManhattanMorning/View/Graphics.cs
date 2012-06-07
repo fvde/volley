@@ -997,8 +997,10 @@ namespace ManhattanMorning.View
         {
             spriteBatchAll.End();
 
-           w.update();
-
+            //Update Waterfall
+             w.update();
+            
+            //Testpurpose
            if (w.Counter >= 600) w.stop();
 
 
@@ -1036,59 +1038,53 @@ namespace ManhattanMorning.View
             spriteBatchAll.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null);
 
 
-            if (w.Counter < w.Size.Y - w.tipHeight)
+            if (w.Counter < w.Size.Y - w.tipHeight && w.IsStopped!=true)
             {
+                //Draw Tip
+                spriteBatchAll.Draw(w.waterfallTipTex, new Rectangle((int)w.Position.X, (int)w.Position.Y + w.Counter, (int)w.Size.X, w.tipHeight), Color.White);
+            
+
                 source = new Rectangle(0, (w.tHeight - w.Counter) %( w.tHeight + 1), w.tWidth, w.Counter % (w.tHeight + 1));
                 dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, w.Counter);
+                spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
 
-                //Draw Tip
+              
 
-                spriteBatchAll.Draw(w.waterfallTipTex, new Rectangle((int)w.Position.X, (int)w.Position.Y + w.Counter, (int)w.Size.X, w.tipHeight), Color.White);
             }
 
             else
             {
                 if (w.IsStopped==false)
                 {
-                    source = new Rectangle(0, (w.tHeight - w.Counter) % (w.tHeight + 1), w.tWidth, (int)w.Size.Y);
-                    dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, (int)w.Size.Y);
-
 
                     //Draw Cloud
                     spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White);
-                }
+              
+
+                    source = new Rectangle(0, (w.tHeight - w.Counter) % (w.tHeight + 1), w.tWidth, (int)w.Size.Y);
+                    dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, (int)w.Size.Y);
+                    spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
+
+             }
                 else if (w.StopCounter < w.Size.Y)
                 {
-                
-                    source = new Rectangle(0, (w.tHeight - w.Counter + w.StopCounter) % (w.tHeight + 1), w.tWidth, ((int)w.Size.Y - w.StopCounter) % (w.tHeight + 1));
-                    dest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter, (int)w.Size.X, (int)w.Size.Y - w.StopCounter);
-
 
                     //Draw Cloud
 
-                    spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y +(int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White);
-                }
-                else
-                {
-                    source = new Rectangle(0, w.tHeight - w.Counter + w.StopCounter, w.tWidth, (int)w.Size.Y - w.StopCounter);
-                    dest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter,(int) w.Size.X,(int) w.Size.Y - w.StopCounter);
-                }
+                    spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White);
+          
+
+                    source = new Rectangle(0, (w.tHeight - w.Counter + w.StopCounter) % (w.tHeight + 1), w.tWidth, ((int)w.Size.Y - w.StopCounter) % (w.tHeight + 1));
+                    dest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter, (int)w.Size.X, (int)w.Size.Y - w.StopCounter);
+
+                    spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
+
+                 }
+          
 
 
             }
-            
-            spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
-
-
-            
-           
-
-            if (w.Counter >= w.Laufzeit+400)
-            {
-                w.Counter = 0;
-                w.StopCounter = 0;
-            }
-
+ 
 
             spriteBatchAll.End();
             spriteBatchAll.Begin();
