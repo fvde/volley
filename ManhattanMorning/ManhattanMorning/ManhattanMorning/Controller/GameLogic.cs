@@ -182,6 +182,11 @@ namespace ManhattanMorning.Controller
         private List<int> activeMayaStones = new List<int>();
 
         /// <summary>
+        /// Holds the waterfalls
+        /// </summary>
+        private List<Waterfall> waterfalls = new List<Waterfall>();
+
+        /// <summary>
         /// The bodies of the stones in maya level.
         /// </summary>
         private Body[] stoneBlocks = new Body[4];
@@ -1265,83 +1270,78 @@ namespace ManhattanMorning.Controller
                         TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
 
                         activeMayaStones.Add(i);
+                        newStone.Animation.CurrentFrame = 0;
                         newStone.Animation.Active = true;
                         newStone.Animation.WaitOnReverse = true;
                         stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
 
                         // Start Waterfall
+                        float leftSideOffset = 0.0f;
 
+                        if (i == 0)
+                        {
+                            leftSideOffset = 0.5f;
+                        } 
+                        else if (i == 1)
+                        {
+                            leftSideOffset = 0.45f;
+                        } 
+                        else if (i == 2)
+                        {
+                            leftSideOffset = 0.3f;
+                        }
+                        Vector2 waterfallPosition = newStone.Position + new Vector2(newStone.Size.X * 0.2f, newStone.Size.Y * 0.75f);
+                        Vector2 waterFallSize = new Vector2(newStone.Size.X * 0.65f, SuperController.Instance.GameInstance.LevelSize.Y - newStone.Position.Y - newStone.Size.Y - leftSideOffset);
+                        Waterfall w = new Waterfall(waterfallPosition, waterFallSize, i);
+
+                        waterfalls.Add(w);
+                        SuperController.Instance.addGameObjectToGameInstance(w);
                     }
                 }
             }
             else
             {
-                // Create sound
-                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
+                if (activeMayaStones.Count() > 0)
+                {
+                    // Create sound if any stones are removed
+                    TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
+                }
 
 
                 // Turn off all stones
-                foreach (int i in activeMayaStones)
+                for (int i = 0; i < stoneBlocks.Length; i++)
                 {
-                    PassiveObject oldStone = SuperController.Instance.getObjectByName("stone" + i) as PassiveObject;
-                    oldStone.Animation.Active = true;
+                    if (activeMayaStones.Contains(i))
+                    {
+                        PassiveObject oldStone = SuperController.Instance.getObjectByName("stone" + i) as PassiveObject;
+                        oldStone.Animation.Active = true;
 
-                    Physics.Instance.removeBodyFromPhysicSimulation(stoneBlocks[i]);
-                    stoneBlocks[i] = null;
+                        Physics.Instance.removeBodyFromPhysicSimulation(stoneBlocks[i]);
+                        stoneBlocks[i] = null;
+                    }
+                }
 
-                    // Waterfall
+
+                // Remove finished waterfalls
+                List<Waterfall> removalList = new List<Waterfall>();
+                foreach (Waterfall w in waterfalls)
+                {
+                    w.stop();
+                    if (!w.Active)
+                    {
+                        removalList.Add(w);
+                    }
+                }
+
+                foreach (Waterfall w in removalList)
+                {
+                    waterfalls.Remove(w);
+                    SuperController.Instance.removeGameObjectFromGameInstance(w);
                 }
 
                 activeMayaStones.Clear();
             }
            
-
-            /*
-            for (int i = 0; i <= 1; i++)
-            {
-                //get new stone position. Pick one on each side.
-                int stone = random.Next(0 + 2 * i, 2 + 2 * i);
-                int safetyCounter = 10;
-                PassiveObject newStone = SuperController.Instance.getObjectByName("stone" + stone) as PassiveObject;
-
-
-                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
-
-                while (Physics.Instance.getBodiesInCircle(newStone.Position + newStone.Size / 2, Math.Max(newStone.Size.X, newStone.Size.Y) / 1.5f).Count > 0)
-                {
-                    stone = random.Next(0 + 2* i , 2 + 2*i);
-                    newStone = SuperController.Instance.getObjectByName("stone" + stone) as PassiveObject;
-
-                    safetyCounter--;
-                    if (safetyCounter < 0)
-                    {
-                        break;
-                    }
-                }
-
-                if (safetyCounter < 0)
-                {
-                    break;
-                }
-
-                if (!init)
-                {
-                    PassiveObject oldStone = SuperController.Instance.getObjectByName("stone" + currentStones[i]) as PassiveObject;
-
-                    oldStone.Animation.Active = true;
-
-                    Physics.Instance.removeBodyFromPhysicSimulation(stoneBlocks[i]);
-                    stoneBlocks[i] = null;
-                }
-
-                //make them active and start animation
-                currentStones[i] = stone;
-                newStone.Animation.Active = true;
-                newStone.Animation.WaitOnReverse = true;
-                stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
-            }
-             * 
-             * */
         }
 
         /// <summary>
