@@ -101,7 +101,7 @@ float4 FadeOutWaterPS(float2 tex: TEXCOORD0, float4 col:COLOR0) : COLOR0
 {	
 	float2 mappedTex;
 	mappedTex.x = tex.x ;
-	mappedTex.y =  (tex.y / 12.8f ) + (waterfallY / 12.8);//* 640/50.0f; // Magic Number DAFUQ???
+	mappedTex.y =  (tex.y / 12.8f ) + (waterfallY / 12.8f)/50.0f;// Magic Number DAFUQ??? => Magic Number gives textures ratios. TODO: give them straight to shader
 	float4 color = tex2D(TextureSamplerY,mappedTex);
 	float4 light = tex2D(TextureSampler, tex);
 
