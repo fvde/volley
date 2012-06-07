@@ -207,6 +207,15 @@ namespace ManhattanMorning.Controller
         {
             this.playerList = playerList;
 
+            if (playerList != null && playerList.Count > 0)
+            {
+                setHandAmplitude(1, Vector2.Zero);
+                setHandAmplitude(2, Vector2.Zero);
+                setHandAmplitude(3, Vector2.Zero);
+                setHandAmplitude(4, Vector2.Zero);
+            }
+
+
             // Update keyboardstates
             previousKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();

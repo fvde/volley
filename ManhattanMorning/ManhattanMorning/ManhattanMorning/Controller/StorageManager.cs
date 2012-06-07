@@ -126,7 +126,7 @@ namespace ManhattanMorning.Controller
             // Set allowed powerups
             PowerUpManager.Instance.setAllowedPowerUps(level.AllowedPowerUps);
           
-            /*
+          
             #region EvilMayaLevelHack
             if (levelName == "Maya")
             {
@@ -168,8 +168,7 @@ namespace ManhattanMorning.Controller
             
 
             #endregion
-            */
-
+          
             #region Players
 
             Texture2D player1Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_blue");
