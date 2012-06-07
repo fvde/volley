@@ -285,6 +285,17 @@ namespace ManhattanMorning.Controller
         /// </summary>
         int fadingTimeLoopSounds = 1500;
 
+        /// <summary>
+        /// The time (in MS) for a complete fade out and in
+        /// </summary>
+        int fadingDurationCompleteFadeOutIn = 1000;
+
+        /// <summary>
+        /// The remaining fading time (in MS) when the complete fade out/in is active
+        /// </summary>
+        int remainingFadingDurationCompleteFadeOutIn = 0;
+
+
         #endregion
 
         #region Initialization
@@ -347,7 +358,7 @@ namespace ManhattanMorning.Controller
             musicInstance = backgroundMusic[0].CreateInstance();
             menuSoundInstanceUsage = 0;
             ingameSoundInstanceUsage = 0;
-            disableMusic = true;
+            disableMusic = false;
 
             currentSong = -1;
 
@@ -387,6 +398,8 @@ namespace ManhattanMorning.Controller
             }
 
             updateLoopingSounds(gameTime);
+
+            updateCompleteFading(gameTime);
 
             //after a song is played its state will be stopped so that this clause plays the next song
             if (musicInstance.State == SoundState.Stopped && !disableMusic)
@@ -454,6 +467,86 @@ namespace ManhattanMorning.Controller
                         ingameSoundInstance[i].Volume = percentOfFading * soundEffectVolume;
                     
                     }
+                }
+
+            }
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void updateCompleteFading(GameTime gameTime)
+        {
+
+            
+            // If the complete fading is active
+            if (remainingFadingDurationCompleteFadeOutIn > 0)
+            {
+
+                // Update time
+                remainingFadingDurationCompleteFadeOutIn -= gameTime.ElapsedGameTime.Milliseconds;
+                if (remainingFadingDurationCompleteFadeOutIn < 0)
+                    remainingFadingDurationCompleteFadeOutIn = 0;
+
+                // Fade out
+                if (remainingFadingDurationCompleteFadeOutIn > ((float)fadingDurationCompleteFadeOutIn / 2.0f))
+                {
+
+                    // Calculate percent of fading
+                    float percentOfFading = (((float)remainingFadingDurationCompleteFadeOutIn - ((float)fadingDurationCompleteFadeOutIn / 2.0f)) / ((float)fadingDurationCompleteFadeOutIn / 2.0f));
+                    
+
+                    // Apply it to every sound and music 
+                    float newVolume = percentOfFading * soundEffectVolume;
+
+                    for (int i = 0; i < ingameSoundInstance.Length; i++)
+                    {
+                        if (ingameSoundInstance[i] != null)
+                            ingameSoundInstance[i].Volume = newVolume;
+                    }
+
+                    for (int i = 0; i < menuSoundInstance.Length; i++)
+                    {
+                        if (menuSoundInstance[i] != null)
+                            menuSoundInstance[i].Volume = newVolume;
+                    }
+
+                    newVolume = percentOfFading * musicVolume;
+
+                    if (musicInstance != null)
+                        musicInstance.Volume = newVolume;
+
+                }
+                // Fade in
+                else
+                {
+
+                    // Calculate percent of fading
+                    float percentOfFading = 1.0f - (((float)remainingFadingDurationCompleteFadeOutIn) / ((float)fadingDurationCompleteFadeOutIn / 2.0f));
+
+
+                    // Apply it to every sound and music 
+                    float newVolume = percentOfFading * soundEffectVolume;
+
+                    for (int i = 0; i < ingameSoundInstance.Length; i++)
+                    {
+                        if (ingameSoundInstance[i] != null)
+                            ingameSoundInstance[i].Volume = newVolume;
+                    }
+
+                    for (int i = 0; i < menuSoundInstance.Length; i++)
+                    {
+                        if (menuSoundInstance[i] != null)
+                            menuSoundInstance[i].Volume = newVolume;
+                    }
+
+                    newVolume = percentOfFading * musicVolume;
+
+                    if (musicInstance != null)
+                        musicInstance.Volume = newVolume;
+
                 }
 
             }
@@ -799,6 +892,17 @@ namespace ManhattanMorning.Controller
                 }
 
             }
+
+        }
+
+        /// <summary>
+        /// The method fades all sounds and the music out and then in again
+        /// </summary>
+        public void completeyFadeOutIn()
+        {
+
+            // Set time
+            remainingFadingDurationCompleteFadeOutIn = fadingDurationCompleteFadeOutIn;
 
         }
 

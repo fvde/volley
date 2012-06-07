@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Microsoft.Xna.Framework;
 using ManhattanMorning.Model;
 using ManhattanMorning.Misc;
 using Microsoft.Xna.Framework.Graphics;
 using ManhattanMorning.Model.GameObject;
 using ManhattanMorning.Model.ParticleSystem;
+using ManhattanMorning.Misc.Tasks;
 
 namespace ManhattanMorning.Controller
 {
@@ -92,6 +94,8 @@ namespace ManhattanMorning.Controller
         {
             //do nothing if this controller is paused
             if (paused) return;
+
+            getTasks();
 
             //only update every 15 ms
             elapsedTime += gameTime.ElapsedGameTime.Milliseconds;
@@ -396,6 +400,28 @@ namespace ManhattanMorning.Controller
             path.updatePosition(gameTime);
         }
 
+
+        #endregion
+
+
+        #region HelperMethods
+
+        /// <summary>
+        /// Processes all tasks that are sent to the soundManager by other Controllers.
+        /// </summary>
+        private void getTasks()
+        {
+            foreach (AnimationTask task in TaskManager.Instance.AnimationTasks)
+            {
+
+                task.DelayedAnimation.Active = true;
+
+
+            }
+
+            // Clear list after executing all tasks
+            TaskManager.Instance.AnimationTasks.Clear();
+        }
 
         #endregion
 
