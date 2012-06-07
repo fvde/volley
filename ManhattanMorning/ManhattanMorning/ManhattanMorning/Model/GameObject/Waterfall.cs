@@ -17,7 +17,7 @@ namespace ManhattanMorning.Model.GameObject
 
         private int speed;
         private bool paused = false;
-        private bool active = true;
+        private bool active = false;
 
         private int textureHeight;
         private int textureWidth;
