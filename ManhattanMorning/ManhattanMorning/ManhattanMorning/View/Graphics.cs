@@ -995,21 +995,33 @@ namespace ManhattanMorning.View
 
         private void drawWaterfall(Waterfall w)
         {
-            spriteBatchAll.End();
+
+
+         
 
             //Update Waterfall
              w.update();
+
+             //Don't draw anything anymore when waterfall has faded out
+             if (w.StopCounter - 30 > w.Size.Y)
+             {
+                 return;
+             }
+
+
+
+             spriteBatchAll.End();
+
             
             //Testpurpose
            //if (w.Counter >= 600) w.stop();
 
-
-
+         
             Rectangle dest;
             Rectangle source;
 
 
-            //Fade Out
+            //Draw Fading Out Top
             if (w.IsStopped == true && w.StopCounter < w.Size.Y)
             {
                 spriteBatchAll.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null, textureShader);
@@ -1033,7 +1045,9 @@ namespace ManhattanMorning.View
 
             spriteBatchAll.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null);
 
+           
 
+            //Draw Waterfall
             if (w.Counter < w.Size.Y - w.tipHeight && w.IsStopped!=true)
             {
                 //Draw Tip
