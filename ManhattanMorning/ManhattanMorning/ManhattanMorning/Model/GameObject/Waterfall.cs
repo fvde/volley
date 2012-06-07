@@ -105,7 +105,7 @@ namespace ManhattanMorning.Model.GameObject
             {
                 this.stopCounter = this.counter - this.Laufzeit;
 
-                if (this.stopCounter - 30 > this.Size.Y)
+                if (this.stopCounter + 50 > this.Size.Y)
                 {
 
                     this.active = false;
@@ -121,7 +121,6 @@ namespace ManhattanMorning.Model.GameObject
                 //16.7 Milliseconds eqals 60 Updates per second
                 if (delta > 16.7f)
                 {
-
                     this.counter += (int)(this.speed * delta/16.7f);
                 }
                
@@ -161,6 +160,11 @@ namespace ManhattanMorning.Model.GameObject
             this.paused = true;
         }
 
+        /// <summary>
+        /// Creates a new Waterfall
+        /// </summary>
+        /// <param name="pos">Position in Meter</param>
+        /// <param name="size">Size in Meter</param>
         public Waterfall(Vector2 pos, Vector2 size)
         {
             this.name = "Waterfall";
@@ -177,12 +181,13 @@ namespace ManhattanMorning.Model.GameObject
 
         }
 
-
+        /// <summary>
+        /// Creates a new Waterfall with no position and no size
+        /// </summary>
+        /// <param name="name">The Name of the Waterfall Object</param>
         public Waterfall(String name)
         {
-            this.name = "Waterfall";
-
-          
+            this.name = name;
             this.start();
             this.waterfallTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Main");
             this.waterfallBottomTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Bottom");

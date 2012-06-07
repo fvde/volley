@@ -1000,7 +1000,7 @@ namespace ManhattanMorning.View
             //Update Waterfall
              w.update(time);
 
-
+             if (w.Active == false) return;
 
              spriteBatchAll.End();
 
