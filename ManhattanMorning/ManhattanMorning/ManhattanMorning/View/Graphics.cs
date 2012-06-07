@@ -1001,7 +1001,7 @@ namespace ManhattanMorning.View
              w.update();
             
             //Testpurpose
-           if (w.Counter >= 600) w.stop();
+           //if (w.Counter >= 600) w.stop();
 
 
 

@@ -37,6 +37,7 @@ namespace ManhattanMorning.Model.GameObject
         private bool isStopped = false;
         private String name = "Waterfall";
         public int Laufzeit = 0;
+        public int mayaLevelPosition;
 
 
         public bool IsStopped
@@ -106,7 +107,6 @@ namespace ManhattanMorning.Model.GameObject
                     this.active = false;
                     this.counter = 0;
                     this.stopCounter = 0;
-                    SuperController.Instance.GameInstance.GameObjects.Remove(this);
                 }
 
             }
@@ -141,12 +141,12 @@ namespace ManhattanMorning.Model.GameObject
             this.paused = true;
         }
 
-        public Waterfall(Vector2 pos, Vector2 size)
+        public Waterfall(Vector2 pos, Vector2 size, int mayapos)
         {
             this.name = "Waterfall";
             
             this.Position = Graphics.Instance.convertUnits(pos, MeasurementUnit.Meter, MeasurementUnit.Pixel);
-            this.Size = Graphics.Instance.convertUnits(pos, MeasurementUnit.Meter, MeasurementUnit.Pixel);
+            this.Size = Graphics.Instance.convertUnits(size, MeasurementUnit.Meter, MeasurementUnit.Pixel);
             this.start();
             this.waterfallTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Main");
             this.waterfallBottomTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Bottom");
@@ -155,6 +155,7 @@ namespace ManhattanMorning.Model.GameObject
             this.waterfallStencilTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Stencil");
             this.Layer = 1;
             this.Speed = 7;
+            mayaLevelPosition = mayapos;
         }
 
     
