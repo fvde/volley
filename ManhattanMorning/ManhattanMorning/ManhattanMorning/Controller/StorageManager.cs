@@ -99,8 +99,8 @@ namespace ManhattanMorning.Controller
             gameInstance.Team1ResetPosition = resizeFactorLevelSize * (Vector2)level.LevelProperties["LeftTeamResetPosition"];
             gameInstance.Team2ResetPosition = resizeFactorLevelSize * (Vector2)level.LevelProperties["RightTeamResetPosition"];
             gameInstance.IntroVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
-            gameInstance.BeachVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
-            gameInstance.ForestVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
+            gameInstance.BeachVideo = Game1.Instance.Content.Load<Video>(@"Videos\beach");
+            gameInstance.ForestVideo = Game1.Instance.Content.Load<Video>(@"Videos\forest");
             gameInstance.MayaVideo = Game1.Instance.Content.Load<Video>(@"Videos\maya");
         }
 
@@ -454,8 +454,8 @@ namespace ManhattanMorning.Controller
             float borderHeight = 4.0f;
             float magicNumber = 0.2f;
 
-            Border rightSideHandDistanceBorder = new Border("rightSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 + new Vector2(allowedHandDistance, 0), 50, Model.MeasurementUnit.Meter);
-            Border leftSideHandDistanceBorder = new Border("leftSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 - new Vector2(allowedHandDistance + magicNumber, 0), 50, Model.MeasurementUnit.Meter);
+            Border rightSideHandDistanceBorder = new Border("rightSideHandDistanceBorder", true, test, null, null, new Vector2(0.2f, 10.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 + new Vector2(allowedHandDistance, 0), 50, Model.MeasurementUnit.Meter);
+            Border leftSideHandDistanceBorder = new Border("leftSideHandDistanceBorder", true, test, null, null, new Vector2(0.2f, 10.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 - new Vector2(allowedHandDistance + magicNumber, 0), 50, Model.MeasurementUnit.Meter);
 
             SuperController.Instance.addGameObjectToGameInstance(leftBorder);
             SuperController.Instance.addGameObjectToGameInstance(rightBorder);
@@ -632,6 +632,8 @@ namespace ManhattanMorning.Controller
             Texture2D iconWindLeft = game1.Content.Load<Texture2D>(@"Textures\PowerUps\icon_wind_left");
             Texture2D iconWindRight = game1.Content.Load<Texture2D>(@"Textures\PowerUps\icon_wind_right");
 
+            Texture2D superbombRadius = game1.Content.Load<Texture2D>(@"Textures\PowerUps\bomb_explosion");
+
             saveTextureByName(texturePowerUpBomb, "PowerUp_Bomb");
             saveTextureByName(texturePowerUpBomb_red, "PowerUp_Bomb_red");
             saveTextureByName(texturePowerUpBomb_top, "PowerUp_Bomb_top");
@@ -648,6 +650,8 @@ namespace ManhattanMorning.Controller
             saveTextureByName(iconVulcano, "Powerup_Volcano");
             saveTextureByName(iconWindLeft, "Powerup_WindLeft");
             saveTextureByName(iconWindRight, "Powerup_WindRight");
+
+            saveTextureByName(superbombRadius, "bomb_explosion");
 
             #endregion
 
@@ -817,18 +821,16 @@ namespace ManhattanMorning.Controller
             scaling1.ScalingRange = new Vector2(0.2f, 1f);
             fading1.ResetAfterFade = true;
 
-            Color fadeColor = new Color(230, 122, 0);
 
-            HUD text_teamplay_t1 = new HUD("teamplay_t1", false, teamplay, null, new Vector2(teamplay.Width, teamplay.Height) / 1.5f / meterpixel, new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
+            HUD text_teamplay_t1 = new HUD("teamplay_t1", false, teamplay, null, new Vector2(2.5f, (1f/6f) * 2.5f),
+                new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
             text_teamplay_t1.ScalingAnimation = scaling;
             text_teamplay_t1.FadingAnimation = fading;
-            // Fade it orange like the specialbar
-            text_teamplay_t1.BlendColor = fadeColor;
 
-            HUD text_teamplay_t2 = new HUD("teamplay_t2", false, teamplay, null, new Vector2(teamplay.Width, teamplay.Height) / 1.5f / meterpixel, new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
+            HUD text_teamplay_t2 = new HUD("teamplay_t2", false, teamplay, null, new Vector2(2.5f, (1f / 6f) * 2.5f),
+                 new Vector2(levelSize.X / 4f, levelSize.Y / 4f), 70, Model.MeasurementUnit.Meter);
             text_teamplay_t2.ScalingAnimation = scaling1;
             text_teamplay_t2.FadingAnimation = fading1;
-            text_teamplay_t2.BlendColor = fadeColor;
 
             SuperController.Instance.addGameObjectToGameInstance(text_teamplay_t1);
             SuperController.Instance.addGameObjectToGameInstance(text_teamplay_t2);

@@ -470,7 +470,13 @@ namespace ManhattanMorning.View
             {
                 float elapsed = (float)(gameTime.TotalGameTime.TotalMilliseconds - fadeTimeStart);
                 lerpC = Color.Lerp(startColor, endColor, elapsed / fadeTime);
-                if (elapsed > fadeTime) fadeTime = 0;
+                if (elapsed > fadeTime)
+                {
+                    if (fadeBack)
+                        fadeColor(endColor, startColor, fadeTime, false);
+                    else
+                        fadeTime = 0;
+                }
             }
         }
 
@@ -838,7 +844,7 @@ namespace ManhattanMorning.View
                 foreach (Particle p in e.ParticleList)
                 {
                     if (p.Visible)
-                    {
+                    {                        
                         spriteBatchAll.Draw(e.ParticleTexture,
                             new Rectangle((int)((p.Position.X) * meterToPixel), (int)((p.Position.Y) * meterToPixel), (int)(p.Size.X * meterToPixel), (int)(p.Size.Y * meterToPixel)),
                             null, e.ParticleColor * p.Alpha, p.Rotation, new Vector2(e.ParticleTexture.Width, e.ParticleTexture.Height) / 2, SpriteEffects.None, (p.Age / p.LifeTime));
@@ -1176,6 +1182,10 @@ namespace ManhattanMorning.View
         /// Duration of the fading.
         /// </summary>
         private int fadeTime;
+        /// <summary>
+        /// True if you want to fade from start to end and back.
+        /// </summary>
+        private bool fadeBack;
 
         /// <summary>
         /// Fades the whole screen from starting color to ending color in the given time.
@@ -1183,12 +1193,24 @@ namespace ManhattanMorning.View
         /// <param name="startColor">Starting color.</param>
         /// <param name="endColor">Ending color.</param>
         /// <param name="fadeTime">Time of the fading in ms.</param>
-        public void fadeColor(Color startColor, Color endColor, int fadeTime)
+        /// <param name="fadeBack">True if you want to fade from start to end and back.</param>
+        public void fadeColor(Color startColor, Color endColor, int fadeTime, bool fadeBack)
         {
             this.startColor = startColor;
             this.endColor = endColor;
             this.fadeTime = fadeTime;
             this.fadeTimeStart = gameTime.TotalGameTime.TotalMilliseconds;
+            this.fadeBack = fadeBack;
+        }
+
+        /// <summary>
+        /// Fades from the currently active fading value to the assigned ending value.
+        /// </summary>
+        /// <param name="endColor">Color to which you want to fade.</param>
+        /// <param name="fadeTime">Duration of fading in ms.</param>
+        public void fadeColor(Color endColor, int fadeTime)
+        {
+            fadeColor(lerpC, endColor, fadeTime, false);
         }
 
         /// <summary>
@@ -1270,7 +1292,6 @@ namespace ManhattanMorning.View
                             else
                             {
                                 fadingState = 0;
-                                TaskManager.Instance.addTask(new GraphicsTask(nightDurationTime,GraphicTask.Sunrise));
                             }
             }
         }
@@ -1376,6 +1397,8 @@ namespace ManhattanMorning.View
                     case GraphicTask.Sunrise:
                         fadingState = 2;
 
+                        isNight = false;
+
                         task.Task = GraphicTask.LightDisable;
                         task.CurrentTime = 5500;
                         task.MaximumTime = task.CurrentTime;
@@ -1384,9 +1407,10 @@ namespace ManhattanMorning.View
                         break;
 
                     case GraphicTask.Sunset:
-                        if (isNight || fadingState != 0) break;
+                        //if (isNight) break;
 
                         fadingState = 1;
+                        isNight = true;
 
                         task.Task = GraphicTask.LightEnable;
                         task.CurrentTime = 4500;
@@ -1396,12 +1420,15 @@ namespace ManhattanMorning.View
                         break;
 
                     case GraphicTask.LightEnable:
-                        isNight = true;
-                        LightsInForest_Add();
+                        //isNight = true;
+                        if (isNight)
+                        {
+                            LightsInForest_Add();
+                        }
                         break;
 
                     case GraphicTask.LightDisable:
-                        isNight = false;
+                        //isNight = false;
                         LightsInForest_Remove();
                         break;
 
