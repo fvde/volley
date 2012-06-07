@@ -631,10 +631,13 @@ namespace ManhattanMorning.Controller
                 }
 
                 ParticleSystemsManager.Instance.applyForceFallingParticles((powerUp.Owner.Team == 1) ? new Vector2(0.4f, 0f) : new Vector2(-0.4f, 0));
+                if (SuperController.Instance.GameInstance.LevelName == "Beach") ParticleSystemsManager.Instance.activateSandStorm((powerUp.Owner.Team == 1) ? 1 : -1);
+
             }
             else
             {
                 ParticleSystemsManager.Instance.removeForceFallingParticles();
+                if (SuperController.Instance.GameInstance.LevelName == "Beach") ParticleSystemsManager.Instance.deactivateSandStorm();
             }
         }
 
