@@ -100,13 +100,13 @@ namespace ManhattanMorning.Model.GameObject
   
 
                 Console.WriteLine(this.stopCounter);
-                if (this.stopCounter >= this.Size.Y+50)
+
+                if (this.stopCounter  >= this.Size.Y+50)
                 {
 
                     this.active = false;
                     this.counter = 0;
                     this.stopCounter = 0;
-                    SuperController.Instance.GameInstance.GameObjects.Remove(this);
                 }
 
             }
@@ -123,7 +123,7 @@ namespace ManhattanMorning.Model.GameObject
             this.paused = false;
             this.counter = 0;
             this.stopCounter = 0;
-            this.Laufzeit = int.MaxValue;
+            this.Laufzeit = 0;
             this.active = true;
         }
 
@@ -157,6 +157,21 @@ namespace ManhattanMorning.Model.GameObject
             this.Speed = 7;
         }
 
+
+        public Waterfall(String name)
+        {
+            this.name = "Waterfall";
+
+          
+            this.start();
+            this.waterfallTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Main");
+            this.waterfallBottomTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Bottom");
+            this.waterfallHeadTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Head");
+            this.waterfallTipTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Tip");
+            this.waterfallStencilTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Stencil");
+            this.Layer = 1;
+            this.Speed = 7;
+        }
     
 
     }
