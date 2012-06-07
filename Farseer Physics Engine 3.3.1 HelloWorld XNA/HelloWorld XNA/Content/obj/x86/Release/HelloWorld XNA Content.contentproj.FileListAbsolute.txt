@@ -1,0 +1,2 @@
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\Content\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Ferdinand\Documents\Visual Studio 2010\Projects\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\Content\obj\x86\Release\ResolveAssemblyReference.cache
