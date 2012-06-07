@@ -29,7 +29,8 @@ namespace ManhattanMorning.Controller
         private ParticleSystem ballCollision;
         private ParticleSystem[] bombSystem; //holds emitters for fire, smoke and splash effects
         private ParticleSystem[] sparclingSystem;
-        private ParticleSystem[] explosionSystem; //holds emitters for smoke and fire
+        private ParticleSystem superbombExplosionSystem; //holds emitters for smoke and fire
+        private ParticleSystem[] lavaExplosionSystem; //holds emitters for smoke and fire
         private ParticleSystem[] windSystem;
         private ParticleSystem meteorBallSystem;
         private ParticleSystem specialbarHighlight;
@@ -320,7 +321,7 @@ namespace ManhattanMorning.Controller
             //Create new Emitter and Initialize Particles
             EmitterExplosion explosion = new EmitterExplosion(new Vector2(6f, 5.0f), 16, 30);
             explosion.EmitterShape = new EmitterPointShape();
-            explosion.ParticleLifeTime = 0.5f;
+            explosion.ParticleLifeTime = 0.4f;
             explosion.EmittingDuration = 0.2f;
             explosion.ParticleFadeOut = FadeMode.Quadratic;
             explosion.ParticleSize = size;
@@ -343,12 +344,12 @@ namespace ManhattanMorning.Controller
         /// <param name="speed">Emitting velocity</param>
         /// <param name="particles">Particle count</param>
         /// <returns></returns>
-        private Emitter createExplosionEmitter(Vector2 size, String texturePath, Color tinting, float speed, int particles)
+        private Emitter createExplosionEmitter(Vector2 size, String texturePath, Color tinting, float speed, int particles, float lifeTime)
         {
             //Create new Emitter and Initialize Particles
             EmitterExplosion explosion = new EmitterExplosion(Vector2.Zero, particles, particles / 0.15f);
             explosion.EmitterShape = new EmitterPointShape();
-            explosion.ParticleLifeTime = 0.3f;
+            explosion.ParticleLifeTime = lifeTime;
             explosion.EmittingDuration = 0.15f;
             explosion.ParticleFadeOut = FadeMode.Linear;
             explosion.ParticleGrowth = GrowthMode.Linear;
@@ -643,12 +644,39 @@ namespace ManhattanMorning.Controller
         }
 
         /// <summary>
+        /// Stops the effect.
+        /// </summary>
+        /// <param name="bomb">The object where the ParticleSystem is attached to.</param>
+        public void stopSparcle(DrawableObject bomb)
+        {
+            foreach (ParticleSystem p in sparclingSystem)
+            {
+                if (p.EmitterList.First().LinkedObject == bomb)
+                {
+                    foreach (Emitter e in p.EmitterList)
+                    {
+                        e.EmittingDuration = float.Epsilon;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Shows a bomb effect when the bomb is falling.
         /// </summary>
         /// <param name="pos">The position of the effect.</param>
-        public void playBombExplosion(Vector2 pos)
+        public void playBombExplosion(Vector2 pos, Vector2 size, bool superBomb)
         {
-            ParticleSystem p = explosionSystem[bombExplosionCount];
+            ParticleSystem p = (superBomb) ? superbombExplosionSystem : lavaExplosionSystem[bombExplosionCount];
+            Light l = new Light("explL", StorageManager.Instance.getTextureByName("light"), size, pos - size / 2, Color.LightYellow, true, null);
+            ScalingAnimation scaling = new ScalingAnimation(false, false, 0, true, 500);
+            FadingAnimation fading = new FadingAnimation(false, true, 50, true, 225);
+            scaling.ScalingRange = new Vector2(0.1f, 1f);
+            l.ScalingAnimation = scaling;
+            l.FadingAnimation = fading;
+            SuperController.Instance.addGameObjectToGameInstance(l);
+            TaskManager.Instance.addTask(new GameLogicTask(500, l));
+
             foreach (Emitter e in p.EmitterList)
             {
                 e.Position = pos;
@@ -876,7 +904,7 @@ namespace ManhattanMorning.Controller
             highlightJumpSystem.SystemBlendState = BlendState.AlphaBlend;
 
             bombSystem = new ParticleSystem[6];
-            explosionSystem = new ParticleSystem[6];
+            lavaExplosionSystem = new ParticleSystem[6];
             orbitterPlayers = new ParticleSystem[SuperController.Instance.getPlayerOfTeam(1).Count * 2];
             sparclingSystem = new ParticleSystem[2];
 
@@ -884,8 +912,8 @@ namespace ManhattanMorning.Controller
             {
                 bombSystem[i] = new ParticleSystem(55);
                 bombSystem[i].SystemBlendState = BlendState.NonPremultiplied;
-                explosionSystem[i] = new ParticleSystem(55);
-                explosionSystem[i].SystemBlendState = BlendState.NonPremultiplied;
+                lavaExplosionSystem[i] = new ParticleSystem(55);
+                lavaExplosionSystem[i].SystemBlendState = BlendState.NonPremultiplied;
             }
             for (int i = 0; i < sparclingSystem.Length; i++)
             {
@@ -950,6 +978,8 @@ namespace ManhattanMorning.Controller
             meteorBallSystem.addEmitter(createFireEmitter(new Vector2(1.65f, 1.65f), new Vector2(0.2f, 0.2f), "Particle001"));
             meteorBallSystem.addEmitter(createFireEmitter(new Vector2(0.55f, 0.55f), new Vector2(0.25f, 0.25f), "Flame"));
 
+            float scale = (float)SettingsManager.Instance.get("lavaRange") / (float) SettingsManager.Instance.get("superBombRange");
+
             for (int i = 0; i < bombSystem.Length; i++)
             {
                 bombSystem[i].addEmitter(createSmokeEmitterForTrail(new Vector2(0.8f, 0.8f)));
@@ -957,12 +987,21 @@ namespace ManhattanMorning.Controller
                 bombSystem[i].addEmitter(createFireEmitter(new Vector2(0.45f, 0.45f), new Vector2(0.2f, 0.2f), "Flame"));
                 addSystem(bombSystem[i]);
 
-                explosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.04f), "particle1", Color.Red, 3.2f, 60));
-                explosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.8f), "smoke_particle", Color.White, 2.5f, 16));
-                explosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.5f, 0.45f), "BeamBlurred", Color.Yellow, 3.8f, 15, true, new Vector2(0f, 4.5f), 0.5f));
-                explosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.7f), "Flame", Color.OrangeRed, 1.9f, 13));
-                addSystem(explosionSystem[i]);
+                lavaExplosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.3f) * scale, "FlowerBurst", Color.Red, 6.2f, 90, 0.5f * scale));
+                lavaExplosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(2.5f) * scale, "smoke_particle", Color.White, 2.1f, 15, 0.7f * scale));
+                lavaExplosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.5f, 0.65f) * scale, "Beam", Color.Yellow, 5.8f, 15, true, new Vector2(0f, 4.5f), 1.0f * scale));
+                lavaExplosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.8f) * scale, "Flame", Color.Orange, 1.9f, 13, 0.5f * scale));
+                lavaExplosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.45f) * scale, "Flame", Color.Orange, 0.35f, 17, 0.4f * scale));
+                addSystem(lavaExplosionSystem[i]);
             }
+            superbombExplosionSystem = new ParticleSystem(55);
+            superbombExplosionSystem.addEmitter(createExplosionEmitter(new Vector2(0.3f), "FlowerBurst", Color.Red, 6.2f, 90, 0.5f));
+            superbombExplosionSystem.addEmitter(createExplosionEmitter(new Vector2(2.5f), "smoke_particle", Color.White, 2.1f, 15, 0.7f));
+            superbombExplosionSystem.addEmitter(createExplosionEmitter(new Vector2(0.5f, 0.65f), "Beam", Color.Yellow, 5.8f, 15, true, new Vector2(0f, 4.5f), 1.0f));
+            superbombExplosionSystem.addEmitter(createExplosionEmitter(new Vector2(1.2f), "Flame", Color.Orange, 2.3f, 17, 0.55f));
+            superbombExplosionSystem.addEmitter(createExplosionEmitter(new Vector2(0.45f), "Flame", Color.Orange, 0.35f, 17, 0.4f));
+            addSystem(superbombExplosionSystem);
+
             for (int i = 0; i < sparclingSystem.Length; i++)
             {
                 sparclingSystem[i].addEmitter(createSparclingEmitterForSuperbomb(new Vector2(0.05f)));
