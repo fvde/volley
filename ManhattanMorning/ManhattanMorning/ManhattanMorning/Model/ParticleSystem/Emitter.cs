@@ -137,6 +137,11 @@ namespace ManhattanMorning.Model.ParticleSystem
         private Color particleColor;
 
         /// <summary>
+        /// If true, the particles will move with the emitter so that there is no gap with increasing speed of the emitter.
+        /// </summary>
+        private bool movingParticles;        
+
+        /// <summary>
         /// If set, the emitting duration will be a random number between x and y values of the vector.
         /// Z and W values represent the duration between 2 emits.
         /// The emit will repeat endlessly.
@@ -144,6 +149,11 @@ namespace ManhattanMorning.Model.ParticleSystem
         /// Values are in milliseconds.
         /// </summary>
         private Vector4 randomEmitDuration = Vector4.Zero;
+
+        /// <summary>
+        /// The distance between position in each update.
+        /// </summary>
+        private Vector2 movingOffset;
 
         #endregion
 
@@ -288,6 +298,20 @@ namespace ManhattanMorning.Model.ParticleSystem
             }
         }
 
+        /// <summary>
+        /// If true, the particles will move with the emitter so that there is no gap with increasing speed of the emitter.
+        /// </summary>
+        public bool MovingParticles
+        {
+            get { return movingParticles; }
+            set { movingParticles = value; }
+        }
+
+        /// <summary>
+        /// Return the vector between the last position of the emitter and the current position.
+        /// </summary>
+        public Vector2 MovingOffset { get { return movingOffset; } }
+
         #endregion
 
         #region Initialization
@@ -334,6 +358,8 @@ namespace ManhattanMorning.Model.ParticleSystem
             //don't update Particles when it's paused;
             if (this.pause) return;
 
+            movingOffset = position;
+
             //Update Emitter Position when it's linked to an Drawable Object
             if (linkedObject != null)
             {
@@ -354,7 +380,7 @@ namespace ManhattanMorning.Model.ParticleSystem
                 }
                 else
                 {
-                    
+                    lastPosition = linkedObject.Position;
                 }
                 if (rotateWithOffset)
                 {
@@ -365,6 +391,10 @@ namespace ManhattanMorning.Model.ParticleSystem
                     position += linkedObjectOffset;
                 }
             }
+
+            movingOffset -= position;
+            movingOffset *= -1;
+            
 
             if (emittingDuration != 0)
             {
@@ -435,6 +465,8 @@ namespace ManhattanMorning.Model.ParticleSystem
                         //Move Particle
 
                         p.Position += p.Veclocity * (float)time.ElapsedGameTime.TotalSeconds;
+                        if (movingParticles)
+                            p.Position += movingOffset;
 
                         if (this.ParticleFadeOut == FadeMode.Linear)
                         {

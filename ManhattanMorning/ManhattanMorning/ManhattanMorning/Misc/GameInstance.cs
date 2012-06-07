@@ -251,6 +251,11 @@ namespace ManhattanMorning.Misc
         public List<ParticleSystem> ParticleSystems { get { return particleSystems; } set { particleSystems = value; } }
 
         /// <summary>
+        /// List with all Waterfalls in the Level
+        /// </summary>
+        public List<Waterfall> WaterfallList { get { return this.waterfallList; } set { this.waterfallList = value; } }
+
+        /// <summary>
         /// The win condition for the game
         /// </summary>
         public WinCondition WinCondition { get { return winCondition; } set { winCondition = value; } }
@@ -358,6 +363,12 @@ namespace ManhattanMorning.Misc
         private LayerList<LayerInterface> gameObjects;
 
         /// <summary>
+        /// List of all Waterfalls
+        /// </summary>
+        private List<Waterfall> waterfallList;
+
+
+        /// <summary>
         /// List of all active Powerups
         /// </summary>
         private List<PowerUp> activePowerUps;
@@ -427,6 +438,7 @@ namespace ManhattanMorning.Misc
 
             activePowerUps = new List<PowerUp>();
             gameObjects = new LayerList<LayerInterface>();
+            waterfallList = new List<Waterfall>();
 
         }
 

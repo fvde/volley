@@ -1230,7 +1230,7 @@ namespace ManhattanMorning.Controller
                     (int)(averageSpawnTime_neutralPowerup + maxSpreading_spawnTimes * averageSpawnTime_neutralPowerup));
 
                 // spawn powerup
-                Vector2 newPosition = new Vector2((float)random.Next(0, (int)levelSize.X), -1);
+                Vector2 newPosition = new Vector2((float)random.Next(0, (int)levelSize.X), -5);
                 PowerUpManager.Instance.createRandomPowerUp(newPosition, PowerUpVersion.Neutral);
             }
 
@@ -1437,10 +1437,7 @@ namespace ManhattanMorning.Controller
         {
 
             //remove Lights from Ball in forest level
-            if (Graphics.Instance.IsNight)
-            {
-                Graphics.Instance.removeLightFromObject(ball);
-            }
+            Graphics.Instance.removeLightFromObject(ball);
 
 
             // Remove highlight

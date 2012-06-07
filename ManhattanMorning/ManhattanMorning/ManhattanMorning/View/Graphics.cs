@@ -565,8 +565,10 @@ namespace ManhattanMorning.View
             spriteBatchLight.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             foreach (LayerInterface l in gameObjects)
             {
-                if (l is Waterfall)
+                // Draw if Object is Waterfall and if Visible
+                if (l is Waterfall && ((Waterfall)l).Active)
                 {
+                    
                     drawWaterfall((Waterfall)l);
                 }
                 //check if object is DrawableObject or ParticleSystem
@@ -842,7 +844,7 @@ namespace ManhattanMorning.View
                 foreach (Particle p in e.ParticleList)
                 {
                     if (p.Visible)
-                    {
+                    {                        
                         spriteBatchAll.Draw(e.ParticleTexture,
                             new Rectangle((int)((p.Position.X) * meterToPixel), (int)((p.Position.Y) * meterToPixel), (int)(p.Size.X * meterToPixel), (int)(p.Size.Y * meterToPixel)),
                             null, e.ParticleColor * p.Alpha, p.Rotation, new Vector2(e.ParticleTexture.Width, e.ParticleTexture.Height) / 2, SpriteEffects.None, (p.Age / p.LifeTime));
@@ -995,50 +997,60 @@ namespace ManhattanMorning.View
         {
             spriteBatchAll.End();
 
-            w.Counter += w.Speed;
-            
-            int tipHeight = 40;
+           w.update();
+
+           if (w.Counter >= 600) w.stop();
+
+
 
             Rectangle dest;
             Rectangle source;
 
 
-            if (w.Counter > w.Laufzeit && w.StopCounter < w.Size.Y)
+            //Fade Out
+            if (w.IsStopped == true && w.StopCounter < w.Size.Y)
             {
                 spriteBatchAll.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null, textureShader);
 
                 textureShader.CurrentTechnique = textureShader.Techniques["WaterFadeOut"];
-                textureShader.Parameters["yTexture"].SetValue(w.waterfallStencilTex);
-               textureShader.CurrentTechnique.Passes[0].Apply();
+                textureShader.Parameters["yTexture"].SetValue(w.waterfallTex);
+                textureShader.Parameters["waterfallY"].SetValue((w.tHeight - w.Counter + w.StopCounter - 50) % (w.tHeight + 1));
 
-                Rectangle headSource = new Rectangle(0, w.tHeight - w.Counter + w.StopCounter - 40, w.tWidth, 40);
-              // Rectangle headSource = new Rectangle(0, 0, w.tWidth, 40);
+
+                textureShader.CurrentTechnique.Passes[0].Apply();
+
+
+
+              //  Rectangle headSource = new Rectangle(0, w.tHeight  + w.StopCounter - 43 , w.tWidth, 50);
                 
-                Rectangle headDest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter - 40, (int)w.Size.X, 50);
+                Rectangle headDest = new Rectangle((int)w.Position.X, ((int)w.Position.Y + w.StopCounter - 50), (int)w.Size.X, 50);
+
+              // Rectangle headDest = new Rectangle((int)w.Position.X, (int)w.Position.Y + 100, (int)w.Size.X, 50);
 
                 //Draw Head
 
-                spriteBatchAll.Draw(w.waterfallTex, headDest, headSource, Color.White);
+                spriteBatchAll.Draw(w.waterfallStencilTex, headDest, null, Color.White);
                 spriteBatchAll.End();
             }
 
             spriteBatchAll.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null);
-            
 
-            if (w.Counter < w.Size.Y - tipHeight)
+
+            if (w.Counter < w.Size.Y - w.tipHeight)
             {
-                source = new Rectangle(0, w.tHeight - w.Counter, w.tWidth, w.Counter);
+                source = new Rectangle(0, (w.tHeight - w.Counter) %( w.tHeight + 1), w.tWidth, w.Counter % (w.tHeight + 1));
                 dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, w.Counter);
 
                 //Draw Tip
 
-                spriteBatchAll.Draw(w.waterfallTipTex, new Rectangle((int)w.Position.X, (int)w.Position.Y + w.Counter, (int)w.Size.X, tipHeight), Color.White);
+                spriteBatchAll.Draw(w.waterfallTipTex, new Rectangle((int)w.Position.X, (int)w.Position.Y + w.Counter, (int)w.Size.X, w.tipHeight), Color.White);
             }
+
             else
             {
-                if (w.Counter < w.Laufzeit)
+                if (w.IsStopped==false)
                 {
-                    source = new Rectangle(0, w.tHeight - w.Counter, w.tWidth, (int)w.Size.Y);
+                    source = new Rectangle(0, (w.tHeight - w.Counter) % (w.tHeight + 1), w.tWidth, (int)w.Size.Y);
                     dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, (int)w.Size.Y);
 
 
@@ -1047,9 +1059,8 @@ namespace ManhattanMorning.View
                 }
                 else if (w.StopCounter < w.Size.Y)
                 {
-                    w.StopCounter += w.Speed;
-
-                    source = new Rectangle(0, w.tHeight - w.Counter + w.StopCounter, w.tWidth, (int)w.Size.Y - w.StopCounter);
+                
+                    source = new Rectangle(0, (w.tHeight - w.Counter + w.StopCounter) % (w.tHeight + 1), w.tWidth, ((int)w.Size.Y - w.StopCounter) % (w.tHeight + 1));
                     dest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter, (int)w.Size.X, (int)w.Size.Y - w.StopCounter);
 
 
@@ -1065,11 +1076,11 @@ namespace ManhattanMorning.View
 
 
             }
-
+            
             spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
 
 
-
+            
            
 
             if (w.Counter >= w.Laufzeit+400)
@@ -1280,7 +1291,6 @@ namespace ManhattanMorning.View
                             else
                             {
                                 fadingState = 0;
-                                TaskManager.Instance.addTask(new GraphicsTask(nightDurationTime,GraphicTask.Sunrise));
                             }
             }
         }
@@ -1386,6 +1396,8 @@ namespace ManhattanMorning.View
                     case GraphicTask.Sunrise:
                         fadingState = 2;
 
+                        isNight = false;
+
                         task.Task = GraphicTask.LightDisable;
                         task.CurrentTime = 5500;
                         task.MaximumTime = task.CurrentTime;
@@ -1394,9 +1406,10 @@ namespace ManhattanMorning.View
                         break;
 
                     case GraphicTask.Sunset:
-                        if (isNight || fadingState != 0) break;
+                        //if (isNight) break;
 
                         fadingState = 1;
+                        isNight = true;
 
                         task.Task = GraphicTask.LightEnable;
                         task.CurrentTime = 4500;
@@ -1406,12 +1419,15 @@ namespace ManhattanMorning.View
                         break;
 
                     case GraphicTask.LightEnable:
-                        isNight = true;
-                        LightsInForest_Add();
+                        //isNight = true;
+                        if (isNight)
+                        {
+                            LightsInForest_Add();
+                        }
                         break;
 
                     case GraphicTask.LightDisable:
-                        isNight = false;
+                        //isNight = false;
                         LightsInForest_Remove();
                         break;
 

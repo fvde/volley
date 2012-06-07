@@ -352,7 +352,7 @@ namespace ManhattanMorning.Controller
             settings.Add("matchballHeartbeatSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of player touching the bottom
-            settings.Add("bottomTouchSoundVolume", new object[] { 0.0f, 0.75f, 1.0f });
+            settings.Add("bottomTouchSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
             //Sound volume of music
             settings.Add("musicVolume", new object[] { 0.0f, 0.15f, 1.0f });
