@@ -842,7 +842,7 @@ namespace ManhattanMorning.View
                 foreach (Particle p in e.ParticleList)
                 {
                     if (p.Visible)
-                    {
+                    {                        
                         spriteBatchAll.Draw(e.ParticleTexture,
                             new Rectangle((int)((p.Position.X) * meterToPixel), (int)((p.Position.Y) * meterToPixel), (int)(p.Size.X * meterToPixel), (int)(p.Size.Y * meterToPixel)),
                             null, e.ParticleColor * p.Alpha, p.Rotation, new Vector2(e.ParticleTexture.Width, e.ParticleTexture.Height) / 2, SpriteEffects.None, (p.Age / p.LifeTime));
