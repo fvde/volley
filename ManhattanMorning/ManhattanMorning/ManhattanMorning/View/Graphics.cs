@@ -545,7 +545,15 @@ namespace ManhattanMorning.View
                 game.GraphicsDevice.Clear(Color.Transparent);
                 
                 sobelEdge.CurrentTechnique = sobelEdge.Techniques["GaussFilter"];
-                spriteBatchAll.Begin(SpriteSortMode.Deferred, null, null, null, null, sobelEdge, viewMatrix);
+                ///
+                //
+                //Attention Sobel Edge was removed here
+                //
+                //spriteBatchAll.Begin(SpriteSortMode.Deferred, null, null, null, null, sobelEdge, viewMatrix);
+                //
+                //
+      
+                spriteBatchAll.Begin(SpriteSortMode.Deferred, null, null, null, null,null, viewMatrix);
                 spriteBatchAll.Draw(rtTempBuffer, new Rectangle(0, 0, game.GraphicsDeviceManager.PreferredBackBufferWidth, game.GraphicsDeviceManager.PreferredBackBufferHeight), Color.White);
                 spriteBatchAll.End();
                  
