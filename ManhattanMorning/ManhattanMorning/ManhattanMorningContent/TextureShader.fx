@@ -36,6 +36,10 @@ const float2 c[9] = {
 
 Texture xTexture;
 Texture yTexture;
+int waterfallYPos;
+float waterfallTextureHeight;
+float waterfallStencilHeight;
+
 sampler TextureSampler = sampler_state { texture = <xTexture>; magfilter = LINEAR; minfilter = LINEAR; mipfilter=LINEAR; AddressU = Wrap; AddressV = Wrap;};
 sampler TextureSamplerY : register(s1) = sampler_state { texture = <yTexture>; magfilter = LINEAR; minfilter = LINEAR; mipfilter=LINEAR; AddressU = Wrap; AddressV = Wrap;};
 float4 tintingColor;
@@ -99,13 +103,14 @@ float4 LightPS(float2 tex: TEXCOORD0, float4 col:COLOR0) : COLOR0
 float4 FadeOutWaterPS(float2 tex: TEXCOORD0, float4 col:COLOR0) : COLOR0
 {	
 	float2 mappedTex;
-	mappedTex.x = tex.x *50/40.0f;
-	mappedTex.y = tex.y* 640/50.0f ; // Magic Number DAFUQ???
+	mappedTex.x = tex.x ;
+	float textureRatio = waterfallTextureHeight / waterfallStencilHeight;
+	mappedTex.y =  (tex.y / textureRatio ) + (waterfallYPos / textureRatio )/waterfallStencilHeight;// Magic Number DAFUQ??? => Magic Number gives textures ratios. TODO: give them straight to shader
 	float4 color = tex2D(TextureSamplerY,mappedTex);
 	float4 light = tex2D(TextureSampler, tex);
 
 
-	return light*color.a;
+	return color*light.a;
 
 }
 
