@@ -1255,8 +1255,7 @@ namespace ManhattanMorning.Controller
                         stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
 
                         // Start Waterfall
-                        SuperController.Instance.GameInstance.WaterfallList[i].Active = true;
-                        SuperController.Instance.GameInstance.WaterfallList[i].start();
+
                     }
                 }
             }
@@ -1272,7 +1271,6 @@ namespace ManhattanMorning.Controller
                     stoneBlocks[i] = null;
 
                     // Waterfall
-                    SuperController.Instance.GameInstance.WaterfallList[i].stop();
                 }
 
                 activeMayaStones.Clear();
