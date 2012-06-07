@@ -32,7 +32,7 @@ namespace ManhattanMorning.Controller
             /// <summary>
             /// Ultimate Answer to the Ultimate Question of Life, The Universe, and Everything
             /// </summary>
-            settings.Add("ultimateAnswer", new object[] {42, 42, 42});
+            settings.Add("ultimateAnswer", new object[] {42, 43, 42});
 
             /// <summary>
             /// Factor to convert Meter to Pixel
