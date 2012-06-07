@@ -53,6 +53,12 @@ namespace ManhattanMorning.Model.GameObject
         {
             exploded = false;
             isSuperBomb = superBomb;
+
+            if (superBomb)
+            {
+                Name = "Bomb";
+            }
+
         }
 
         #endregion
