@@ -99,8 +99,8 @@ namespace ManhattanMorning.Controller
             gameInstance.Team1ResetPosition = resizeFactorLevelSize * (Vector2)level.LevelProperties["LeftTeamResetPosition"];
             gameInstance.Team2ResetPosition = resizeFactorLevelSize * (Vector2)level.LevelProperties["RightTeamResetPosition"];
             gameInstance.IntroVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
-            gameInstance.BeachVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
-            gameInstance.ForestVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
+            gameInstance.BeachVideo = Game1.Instance.Content.Load<Video>(@"Videos\beach");
+            gameInstance.ForestVideo = Game1.Instance.Content.Load<Video>(@"Videos\forest");
             gameInstance.MayaVideo = Game1.Instance.Content.Load<Video>(@"Videos\maya");
         }
 
