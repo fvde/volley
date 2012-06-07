@@ -358,7 +358,7 @@ namespace ManhattanMorning.Controller
             musicInstance = backgroundMusic[0].CreateInstance();
             menuSoundInstanceUsage = 0;
             ingameSoundInstanceUsage = 0;
-            disableMusic = false;
+            disableMusic = true;
 
             currentSong = -1;
 

@@ -52,7 +52,7 @@ namespace ManhattanMorning.Controller
             /// <summary>
             /// Play level video?
             /// </summary>
-            settings.Add("LevelVideo", new object[] { false, true, true });
+            settings.Add("LevelVideo", new object[] { false, false, true });
 
             /// <summary>
             /// True if a game between KI players should be allowed
