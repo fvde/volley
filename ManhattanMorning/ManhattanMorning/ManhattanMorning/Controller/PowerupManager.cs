@@ -258,7 +258,7 @@ namespace ManhattanMorning.Controller
                     }
                 case PowerUpType.SunsetSunrise:
                     {
-                        return PowerUpBehaviour.NonExclusive;
+                        return PowerUpBehaviour.GameExclusive;
                     }
                 case PowerUpType.Volcano:
                     {
@@ -275,16 +275,23 @@ namespace ManhattanMorning.Controller
             }
         }
 
+        /// <summary>
+        /// Returns the duration of a powerup.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public int getDurationFromType(PowerUpType type)
         {
             switch (type)
             {
                 case PowerUpType.InvertedControl:
                     return 8000;
+                case PowerUpType.SwitchStones:
+                    return 10000;
                 case PowerUpType.Wind:
                     return 15000;
                 case PowerUpType.SunsetSunrise:
-                    return 34500;
+                    return 15000;
                 case PowerUpType.BallRain:
                     return 10000;
                 default:
@@ -353,8 +360,26 @@ namespace ManhattanMorning.Controller
             {
                 case PowerUpBehaviour.GameExclusive:
                     {
-                        // No need to check for PowerUp Version, since all instances will be removed.
-                        removeAllInstancesOfPowerUp(powerUp.PowerUpType);
+                        // Just renew if its the sunset powerup
+                        if (powerUp.PowerUpType == PowerUpType.SunsetSunrise)
+                        {
+                            foreach (PowerUp p in activePowerUps)
+                            {
+                                if (p.PowerUpType == PowerUpType.SunsetSunrise)
+                                {
+                                    p.LifeTime = powerUp.LifeTime;
+                                    GameLogic.Instance.handlePowerupDisplay(p);
+                                    return;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // No need to check for PowerUp Version, since all instances will be removed.
+                            removeAllInstancesOfPowerUp(powerUp.PowerUpType);
+                        }
+
+
                         break;
                     }
                 case PowerUpBehaviour.TeamExclusive:
@@ -423,13 +448,13 @@ namespace ManhattanMorning.Controller
                     }
                 case PowerUpType.SwitchStones:
                     {                        
-                        setSwitchStonesPowerUp();
+                        setSwitchStonesPowerUp(true);
                         Logger.Instance.log(Sender.PowerupManager, "Started SwitchStones PowerUp.", PriorityLevel.Priority_1);
                         break;
                     }
                 case PowerUpType.SunsetSunrise:
                     {
-                        setSunsetSunrisePowerUp();
+                        setSunsetSunrisePowerUp(true);
                         Logger.Instance.log(Sender.PowerupManager, "Started SunsetSunrise PowerUp.", PriorityLevel.Priority_1);
                         break;
                     }
@@ -487,6 +512,18 @@ namespace ManhattanMorning.Controller
                         ParticleSystemsManager.Instance.stopParalysis(powerUp.Owner.Team);
                         setInvertedControlPowerUp(powerUp, false);
                         Logger.Instance.log(Sender.PowerupManager, "Disposed of inverted control PowerUp.", PriorityLevel.Priority_1);
+                        break;
+                    }
+                case PowerUpType.SwitchStones:
+                    {
+                        setSwitchStonesPowerUp(false);
+                        Logger.Instance.log(Sender.PowerupManager, "Disposed of switch stones PowerUp.", PriorityLevel.Priority_1);
+                        break;
+                    }
+                case PowerUpType.SunsetSunrise:
+                    {
+                        setSunsetSunrisePowerUp(false);
+                        Logger.Instance.log(Sender.PowerupManager, "Disposed of sunset sunrise PowerUp.", PriorityLevel.Priority_1);
                         break;
                     }
                 default:
@@ -613,12 +650,12 @@ namespace ManhattanMorning.Controller
         private void setBallRainPowerUp(PowerUp powerUp)
         {
             // First Ball
-            TaskManager.Instance.addTask(new PhysicsTask(1000, powerUp.Owner, PhysicsTask.PhysicTaskType.CreateNewBall));
+            TaskManager.Instance.addTask(new PhysicsTask(1000, PhysicsTask.PhysicTaskType.CreateNewBall, Physics.Instance.getRandomPositionAtTheTop()));
 
             // Consecutive balls
             for (int x = (int)settingsManager.get("ballRainAmount") - 1; x > 0; x--)
             {
-                TaskManager.Instance.addTask(new PhysicsTask(x * (int)settingsManager.get("ballRainTime"), powerUp.Owner, PhysicsTask.PhysicTaskType.CreateNewBall));
+                TaskManager.Instance.addTask(new PhysicsTask(x * (int)settingsManager.get("ballRainTime"), PhysicsTask.PhysicTaskType.CreateNewBall, Physics.Instance.getRandomPositionAtTheTop()));
             }
         }
 
@@ -676,9 +713,9 @@ namespace ManhattanMorning.Controller
         /// </summary>
         /// <param name="powerUp"></param>
         /// <param name="on"></param>
-        private void setSwitchStonesPowerUp()
+        private void setSwitchStonesPowerUp(bool on)
         {
-            GameLogic.Instance.changeStonePositions(false);
+            GameLogic.Instance.changeStonePositions(on);
         }
 
         /// <summary>
@@ -686,10 +723,17 @@ namespace ManhattanMorning.Controller
         /// </summary>
         /// <param name="powerUp"></param>
         /// <param name="on"></param>
-        private void setSunsetSunrisePowerUp()
+        private void setSunsetSunrisePowerUp(bool on)
         {
-            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.sunsetPowerup, (int)IngameSound.SunsetPowerUp, getDurationFromType(PowerUpType.SunsetSunrise)));
-            TaskManager.Instance.addTask(new GraphicsTask(0, GraphicTask.Sunset, 0)); 
+            if (on)
+            {
+                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.sunsetPowerup, (int)IngameSound.SunsetPowerUp, getDurationFromType(PowerUpType.SunsetSunrise)));
+                TaskManager.Instance.addTask(new GraphicsTask(0, GraphicTask.Sunset, 0));
+            }
+            else
+            {
+                TaskManager.Instance.addTask(new GraphicsTask(0, GraphicTask.Sunrise, 0));
+            } 
         }
 
         /// <summary>

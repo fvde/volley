@@ -892,6 +892,21 @@ namespace ManhattanMorning.Controller
 
             // Notify Graphics:
             ParticleSystemsManager.Instance.playBombExplosion(targetPoint);
+            if (isSuperBomb)
+            {
+                Vector2 size = new Vector2(explosionRange*2);
+                PassiveObject passive = new PassiveObject("exRad", true, StorageManager.Instance.getTextureByName("bomb_explosion"), null, null, size, targetPoint - size / 2, 56, MeasurementUnit.Meter);
+                passive.BlendColor = Color.Yellow;
+                FadingAnimation fading = new FadingAnimation(false, false, 250, true, 450);
+                fading.Inverted = true;
+                ScalingAnimation scaling = new ScalingAnimation(false, false, 0, true, 250);
+                scaling.ScalingRange = new Vector2(0.05f, 1);
+                passive.FadingAnimation = fading;
+                passive.ScalingAnimation = scaling;
+
+                SuperController.Instance.addGameObjectToGameInstance(passive);
+                TaskManager.Instance.addTask(new GameLogicTask(400, passive));
+            }
 
             foreach (Body body in getBodiesInCircle(targetPoint, explosionRange))
             {
@@ -1227,13 +1242,12 @@ namespace ManhattanMorning.Controller
             PassiveObject bomb_top = new PassiveObject("Bomb_top", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_top"), null, null,
                 size, position, 59, MeasurementUnit.Meter);
 
-            Vector2 offset = new Vector2(0f, -0.4f * bomb.Size.Y);
+            Vector2 offset = new Vector2(0.03f, -0.7f * bomb.Size.Y);
             bomb_top.Offset = offset;
+            bomb_top.RotateWithOffset = true;
 
-            //bomb.attachObject(bomb_top);
-            //SuperController.Instance.addGameObjectToGameInstance(bomb_top);
-
-
+            bomb.attachObject(bomb_top);
+            SuperController.Instance.addGameObjectToGameInstance(bomb_top);
 
             // Create the red background
             PassiveObject bomb_red = new PassiveObject("Bomb_red", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_red"), null, null,
@@ -1253,7 +1267,7 @@ namespace ManhattanMorning.Controller
 
             SuperController.Instance.addGameObjectToGameInstance(bomb);
             superBombList.Add(bomb);
-            ParticleSystemsManager.Instance.playBombFalling(bomb, -bomb.Size*0.4f, false);
+            ParticleSystemsManager.Instance.playSparclingBomb(bomb, offset + new Vector2(0.05f, -0.18f), false);
 
             // Collision
             disableCollisionBetweenActiveObjects(bomb, middleBorder);
@@ -1273,8 +1287,10 @@ namespace ManhattanMorning.Controller
                 createExplosionAtPoint(superBombList.First().Body.Position, (float)settingsManager.get("superBombRange"), (float)settingsManager.get("superBombImpact"), true);
                 SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First());
 
-                // Remove also attached objects
-                SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First().AttachedObjects.First());
+                while (superBombList.First().AttachedObjects.Count > 0)
+                {
+                    SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First().AttachedObjects.First());
+                }
 
                 ParticleSystemsManager.Instance.stopBombFalling(superBombList.First());
                 superBombList.Remove(superBombList.First());
