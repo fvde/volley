@@ -34,7 +34,7 @@ namespace ManhattanMorning.Model.GameObject
         private int layer;
         private bool isStopped = false;
         private String name = "Waterfall";
-        public int Laufzeit = 2100000;
+        public int Laufzeit = 0;
 
 
         public bool IsStopped
@@ -118,6 +118,8 @@ namespace ManhattanMorning.Model.GameObject
         public void start()
         {
             this.paused = false;
+            this.counter = 0;
+            this.stopCounter = 0;
             this.Laufzeit = int.MaxValue;
             this.active = true;
         }
