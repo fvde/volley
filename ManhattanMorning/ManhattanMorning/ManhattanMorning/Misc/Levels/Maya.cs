@@ -102,8 +102,7 @@ namespace ManhattanMorning.Misc.Levels
             levelObjectsList.Add(new PassiveObject("stone1", new Vector2(1.35f, 0.9f), new Vector2(3.05f, 1.425f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
             levelObjectsList.Add(new PassiveObject("stone2", new Vector2(1.35f, 0.9f), new Vector2(6.25f, 1.425f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
             levelObjectsList.Add(new PassiveObject("stone3", new Vector2(0.95f, 0.95f), new Vector2(8.55f, 1.55f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
-
-
+             
 
             #endregion
 
