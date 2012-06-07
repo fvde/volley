@@ -127,45 +127,46 @@ namespace ManhattanMorning.Controller
             PowerUpManager.Instance.setAllowedPowerUps(level.AllowedPowerUps);
 
             #region EvilMayaLevelHack
-
-            Waterfall w1 = new Waterfall("Waterfall1");
-            w1.Position = new Vector2(130, 220);
-            w1.Size = new Vector2(55, 450);
-            // w.Position = new Vector2(450, 255);
-            // w.Size = new Vector2(100, 400);
-            w1.tWidth = 50;
-            w1.tHeight = 640;
-
-
-            Waterfall w2 = new Waterfall("Waterfall2");
-            w2.Position = new Vector2(340, 200);
-            w2.Size = new Vector2(100, 450);
-            w2.tWidth = 50;
-            w2.tHeight = 640;
-
-            Waterfall w3 = new Waterfall("Waterfall3");
-            w3.Position = new Vector2(660, 210);
-            w3.Size = new Vector2(80, 460);
-            w3.tWidth = 50;
-            w3.tHeight = 640;
-
-            Waterfall w4 = new Waterfall("Waterfall4");
-            w4.Position = new Vector2(880, 220);
-            w4.Size = new Vector2(60, 460);
-            w4.tWidth = 50;
-            w4.tHeight = 640;
-
-            gameInstance.WaterfallList.Add(w1);
-            gameInstance.WaterfallList.Add(w2);
-            gameInstance.WaterfallList.Add(w3);
-            gameInstance.WaterfallList.Add(w4);
-
-            gameInstance.GameObjects.Add(w1);
-            gameInstance.GameObjects.Add(w2);
-            gameInstance.GameObjects.Add(w3);
-            gameInstance.GameObjects.Add(w4);
+            if (levelName == "Maya")
+            {
+                Waterfall w1 = new Waterfall("Waterfall1");
+                w1.Position = new Vector2(130, 220);
+                w1.Size = new Vector2(55, 450);
+                // w.Position = new Vector2(450, 255);
+                // w.Size = new Vector2(100, 400);
+                w1.tWidth = 50;
+                w1.tHeight = 640;
 
 
+                Waterfall w2 = new Waterfall("Waterfall2");
+                w2.Position = new Vector2(340, 200);
+                w2.Size = new Vector2(100, 450);
+                w2.tWidth = 50;
+                w2.tHeight = 640;
+
+                Waterfall w3 = new Waterfall("Waterfall3");
+                w3.Position = new Vector2(660, 210);
+                w3.Size = new Vector2(80, 460);
+                w3.tWidth = 50;
+                w3.tHeight = 640;
+
+                Waterfall w4 = new Waterfall("Waterfall4");
+                w4.Position = new Vector2(880, 220);
+                w4.Size = new Vector2(60, 460);
+                w4.tWidth = 50;
+                w4.tHeight = 640;
+
+                gameInstance.WaterfallList.Add(w1);
+                gameInstance.WaterfallList.Add(w2);
+                gameInstance.WaterfallList.Add(w3);
+                gameInstance.WaterfallList.Add(w4);
+
+                gameInstance.GameObjects.Add(w1);
+                gameInstance.GameObjects.Add(w2);
+                gameInstance.GameObjects.Add(w3);
+                gameInstance.GameObjects.Add(w4);
+
+            }
 
             #endregion
 
