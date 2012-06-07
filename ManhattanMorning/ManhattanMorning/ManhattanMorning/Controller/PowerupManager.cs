@@ -256,7 +256,7 @@ namespace ManhattanMorning.Controller
                     }
                 case PowerUpType.SwitchStones:
                     {
-                        return PowerUpBehaviour.NonExclusive;
+                        return PowerUpBehaviour.GameExclusive;
                     }
                 case PowerUpType.SunsetSunrise:
                     {
