@@ -164,11 +164,10 @@ namespace ManhattanMorning.Controller
                 gameInstance.GameObjects.Add(w3);
                 gameInstance.GameObjects.Add(w4);
             }
-            
 
             #endregion
            * */
-          
+
             #region Players
 
             Texture2D player1Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_blue");
