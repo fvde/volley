@@ -296,10 +296,10 @@ namespace ManhattanMorning.Controller
         /// </summary>
         public void switchFromMainMenuToIngame(String levelName, WinCondition winCondition, List<PlayerRepresentationMainMenu> leftTeam, List<PlayerRepresentationMainMenu> rightTeam)
         {
+            Graphics.Instance.fadeColor(Color.Black, Color.White, 3200, false);
 
             // Remove all menu sounds
             SoundManager.Instance.discardMenuSounds();
-
             LoadLevel(levelName, winCondition, leftTeam, rightTeam);
 
             // Change gamestate
@@ -327,8 +327,6 @@ namespace ManhattanMorning.Controller
                     // Missing video!
                 }
             }
-
-
         }
 
         /// <summary>

@@ -892,6 +892,21 @@ namespace ManhattanMorning.Controller
 
             // Notify Graphics:
             ParticleSystemsManager.Instance.playBombExplosion(targetPoint);
+            if (isSuperBomb)
+            {
+                Vector2 size = new Vector2(explosionRange*2);
+                PassiveObject passive = new PassiveObject("exRad", true, StorageManager.Instance.getTextureByName("bomb_explosion"), null, null, size, targetPoint - size / 2, 56, MeasurementUnit.Meter);
+                passive.BlendColor = Color.Yellow;
+                FadingAnimation fading = new FadingAnimation(false, false, 250, true, 450);
+                fading.Inverted = true;
+                ScalingAnimation scaling = new ScalingAnimation(false, false, 0, true, 250);
+                scaling.ScalingRange = new Vector2(0.05f, 1);
+                passive.FadingAnimation = fading;
+                passive.ScalingAnimation = scaling;
+
+                SuperController.Instance.addGameObjectToGameInstance(passive);
+                TaskManager.Instance.addTask(new GameLogicTask(400, passive));
+            }
 
             foreach (Body body in getBodiesInCircle(targetPoint, explosionRange))
             {
