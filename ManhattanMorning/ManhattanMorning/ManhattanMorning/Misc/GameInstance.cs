@@ -251,11 +251,6 @@ namespace ManhattanMorning.Misc
         public List<ParticleSystem> ParticleSystems { get { return particleSystems; } set { particleSystems = value; } }
 
         /// <summary>
-        /// List with all Waterfalls in the Level
-        /// </summary>
-        public List<Waterfall> WaterfallList { get { return this.waterfallList; } set { this.waterfallList = value; } }
-
-        /// <summary>
         /// The win condition for the game
         /// </summary>
         public WinCondition WinCondition { get { return winCondition; } set { winCondition = value; } }
