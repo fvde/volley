@@ -17,7 +17,7 @@ namespace ManhattanMorning.Model.GameObject
         /// Warning Extremely ugly and not well implemented!!!
         /// </summary>
 
-        private int speed;
+        private int speed = 5;
         private bool paused = false;
         private bool active = false;
 
@@ -33,10 +33,11 @@ namespace ManhattanMorning.Model.GameObject
         public Texture2D waterfallHeadTex;
         public Texture2D waterfallStencilTex;
         public int tipHeight = 40;
-        private int layer;
+        private int layer = 1;
         private bool isStopped = false;
         private String name = "Waterfall";
         public int Laufzeit = 0;
+
 
 
         public bool IsStopped
@@ -91,33 +92,46 @@ namespace ManhattanMorning.Model.GameObject
 
 
         // Methods
-        public void update()
+        /// <summary>
+        /// Updates the Waterfall 60 times per second
+        /// </summary>
+        /// <param name="time">The Current GameTime Object</param>
+        public void update(GameTime time)
         {
+         
+            double delta = time.ElapsedGameTime.TotalMilliseconds ;
+           
             if (isStopped)
             {
                 this.stopCounter = this.counter - this.Laufzeit;
 
-  
-
-                Console.WriteLine(this.stopCounter);
-
-                if (this.stopCounter  >= this.Size.Y+50)
+                if (this.stopCounter - 30 > this.Size.Y)
                 {
 
                     this.active = false;
                     this.counter = 0;
                     this.stopCounter = 0;
+                    return;
                 }
 
             }
+
             if (this.paused == false && this.active == true)
             {
-                this.counter += this.speed;
+                //16.7 Milliseconds eqals 60 Updates per second
+                if (delta > 16.7f)
+                {
+
+                    this.counter += (int)(this.speed * delta/16.7f);
+                }
                
             }
     
         }
 
+        /// <summary>
+        /// Starts and Resets the Waterfall
+        /// </summary>
         public void start()
         {
             this.paused = false;
@@ -127,6 +141,9 @@ namespace ManhattanMorning.Model.GameObject
             this.active = true;
         }
 
+        /// <summary>
+        /// Stops and deactivates the waterfall
+        /// </summary>
         public void stop()
         {
             if (this.IsStopped == false)
@@ -136,6 +153,9 @@ namespace ManhattanMorning.Model.GameObject
             }
         }
 
+        /// <summary>
+        /// Pauses (Freezes) the waterfall
+        /// </summary>
         public void pause()
         {
             this.paused = true;
@@ -153,8 +173,8 @@ namespace ManhattanMorning.Model.GameObject
             this.waterfallHeadTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Head");
             this.waterfallTipTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Tip");
             this.waterfallStencilTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Stencil");
-            this.Layer = 1;
-            this.Speed = 7;
+
+
         }
 
 
@@ -169,8 +189,7 @@ namespace ManhattanMorning.Model.GameObject
             this.waterfallHeadTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Head");
             this.waterfallTipTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Tip");
             this.waterfallStencilTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Stencil");
-            this.Layer = 1;
-            this.Speed = 7;
+
         }
     
 
