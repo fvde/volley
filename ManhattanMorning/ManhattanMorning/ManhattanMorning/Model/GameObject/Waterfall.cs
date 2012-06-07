@@ -21,8 +21,8 @@ namespace ManhattanMorning.Model.GameObject
         private bool paused = false;
         private bool active = false;
 
-        private int textureHeight;
-        private int textureWidth;
+        private int textureHeight = 640;
+        private int textureWidth = 50; 
         private int counter;
         private int stopCounter;
         public Vector2 Position;
