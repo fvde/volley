@@ -566,7 +566,7 @@ namespace ManhattanMorning.View
             foreach (LayerInterface l in gameObjects)
             {
                 // Draw if Object is Waterfall and if Visible
-                if (l is Waterfall && ((Waterfall)l).Visible)
+                if (l is Waterfall && ((Waterfall)l).Active)
                 {
                     
                     drawWaterfall((Waterfall)l);
@@ -1023,7 +1023,7 @@ namespace ManhattanMorning.View
 
               //  Rectangle headSource = new Rectangle(0, w.tHeight  + w.StopCounter - 43 , w.tWidth, 50);
                 
-                Rectangle headDest = new Rectangle((int)w.Position.X, ((int)w.Position.Y + w.StopCounter - 43), (int)w.Size.X, 50);
+                Rectangle headDest = new Rectangle((int)w.Position.X, ((int)w.Position.Y + w.StopCounter - 50), (int)w.Size.X, 50);
 
               // Rectangle headDest = new Rectangle((int)w.Position.X, (int)w.Position.Y + 100, (int)w.Size.X, 50);
 
@@ -1057,10 +1057,9 @@ namespace ManhattanMorning.View
                     //Draw Cloud
                     spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White);
                 }
-                else if (-w.StopCounter < w.Size.Y)
+                else if (w.StopCounter < w.Size.Y)
                 {
-                    w.StopCounter += w.Speed;
-
+                
                     source = new Rectangle(0, (w.tHeight - w.Counter + w.StopCounter) % (w.tHeight + 1), w.tWidth, ((int)w.Size.Y - w.StopCounter) % (w.tHeight + 1));
                     dest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter, (int)w.Size.X, (int)w.Size.Y - w.StopCounter);
 

@@ -17,8 +17,8 @@ namespace ManhattanMorning.Model.GameObject
 
         private int speed;
         private bool paused = false;
-        private bool active = true;
-        private bool visible = true;
+        private bool active = false;
+
         private int textureHeight;
         private int textureWidth;
         private int counter;
@@ -80,10 +80,10 @@ namespace ManhattanMorning.Model.GameObject
             set { this.speed = value; }
             get { return this.speed; }
         }
-        public bool Visible
+        public bool Active
         {
-            set { this.visible = value; }
-            get { return this.visible; }
+            set { this.active = value; }
+            get { return this.active; }
         }
 
 
@@ -96,26 +96,28 @@ namespace ManhattanMorning.Model.GameObject
                 this.stopCounter = this.counter - this.Laufzeit;
 
                 Console.WriteLine(this.stopCounter);
-                if (-this.stopCounter >= this.Size.Y)
+                if (this.stopCounter >= this.Size.Y)
                 {
 
                     this.active = false;
-                    this.visible = false;
+                    this.counter = 0;
+                    this.stopCounter = 0;
                 }
 
             }
             if (this.paused == false && this.active == true)
             {
                 this.counter += this.speed;
+               
             }
     
-
         }
 
         public void start()
         {
             this.paused = false;
             this.Laufzeit = int.MaxValue;
+            this.active = true;
         }
 
         public void stop()
