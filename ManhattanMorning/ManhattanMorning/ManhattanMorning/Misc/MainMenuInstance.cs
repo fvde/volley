@@ -1066,9 +1066,9 @@ namespace ManhattanMorning.Misc
             else if (menuState == 5)
             {
 
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
                 // Start game
                 startGame();
-                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
 
                 timeSinceLastInput = 0;
             }
@@ -1089,6 +1089,7 @@ namespace ManhattanMorning.Misc
             // When in team menu 1vs1
             else if (menuState == 1)
             {
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.SelectBack);
 
                 // Go back to main screen
                 switchMenuState(0);
@@ -1098,6 +1099,7 @@ namespace ManhattanMorning.Misc
             // When in team menu 2vs2
             else if (menuState == 2)
             {
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.SelectBack);
 
                 // Go back to main screen
                 switchMenuState(0);
@@ -1107,6 +1109,7 @@ namespace ManhattanMorning.Misc
             // When in help
             else if (menuState == 3)
             {
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.SelectBack);
 
                 // Go back to main screen
                 switchMenuState(0);
@@ -1116,6 +1119,7 @@ namespace ManhattanMorning.Misc
             // When in really quit
             else if (menuState == 4)
             {
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.SelectBack);
 
                 // Go back to main screen
                 switchMenuState(0);
@@ -1125,6 +1129,7 @@ namespace ManhattanMorning.Misc
             // When in select level
             else if (menuState == 5)
             {
+                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.SelectBack);
 
                 // Go back to the right team menu
                 switchMenuState(previousMenuState);

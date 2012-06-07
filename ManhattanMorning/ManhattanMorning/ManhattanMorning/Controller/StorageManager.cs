@@ -124,10 +124,11 @@ namespace ManhattanMorning.Controller
 
             // Set allowed powerups
             PowerUpManager.Instance.setAllowedPowerUps(level.AllowedPowerUps);
-
+            /*
             #region EvilMayaLevelHack
             if (levelName == "Maya")
             {
+                
                 Waterfall w1 = new Waterfall("Waterfall1");
                 w1.Position = new Vector2(130, 220);
                 w1.Size = new Vector2(55, 450);
@@ -154,21 +155,12 @@ namespace ManhattanMorning.Controller
                 w4.Size = new Vector2(60, 460);
                 w4.tWidth = 50;
                 w4.tHeight = 640;
-
-                gameInstance.WaterfallList.Add(w1);
-                gameInstance.WaterfallList.Add(w2);
-                gameInstance.WaterfallList.Add(w3);
-                gameInstance.WaterfallList.Add(w4);
-
-                gameInstance.GameObjects.Add(w1);
-                gameInstance.GameObjects.Add(w2);
-                gameInstance.GameObjects.Add(w3);
-                gameInstance.GameObjects.Add(w4);
-
+                
             }
+            
 
             #endregion
-
+            */
 
             #region Players
 

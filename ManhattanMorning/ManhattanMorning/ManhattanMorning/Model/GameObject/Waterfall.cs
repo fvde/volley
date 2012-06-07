@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ManhattanMorning.Misc;
 using ManhattanMorning.Controller;
+using ManhattanMorning.View;
+
 
 namespace ManhattanMorning.Model.GameObject
 {
@@ -17,7 +19,7 @@ namespace ManhattanMorning.Model.GameObject
 
         private int speed;
         private bool paused = false;
-        private bool active = true;
+        private bool active = false;
 
         private int textureHeight;
         private int textureWidth;
@@ -104,6 +106,7 @@ namespace ManhattanMorning.Model.GameObject
                     this.active = false;
                     this.counter = 0;
                     this.stopCounter = 0;
+                    SuperController.Instance.GameInstance.GameObjects.Remove(this);
                 }
 
             }
@@ -138,9 +141,13 @@ namespace ManhattanMorning.Model.GameObject
             this.paused = true;
         }
 
-        public Waterfall(String name)
+        public Waterfall(Vector2 pos, Vector2 size)
         {
-            this.name = name;
+            this.name = "Waterfall";
+            
+            this.Position = Graphics.Instance.convertUnits(pos, MeasurementUnit.Meter, MeasurementUnit.Pixel);
+            this.Size = Graphics.Instance.convertUnits(pos, MeasurementUnit.Meter, MeasurementUnit.Pixel);
+            this.start();
             this.waterfallTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Main");
             this.waterfallBottomTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Bottom");
             this.waterfallHeadTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Head");
@@ -149,6 +156,8 @@ namespace ManhattanMorning.Model.GameObject
             this.Layer = 1;
             this.Speed = 7;
         }
+
+    
 
     }
 }

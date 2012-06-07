@@ -188,7 +188,7 @@ namespace ManhattanMorning.Controller
 
             // Defines after how much time a new neutral Powerups spawns (in ms)
             // Used in GameLogic
-            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 3000, 60000 });
+            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 30000, 60000 });
 
             // Defines how fast the specialbar fills if you perform a positive action
             settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 1.0f, 10.0f });
@@ -335,15 +335,60 @@ namespace ManhattanMorning.Controller
             //Sound volume of sound effects
             settings.Add("soundVolume", new object[] { 0.0f, 0.75f, 1.0f });
 
+            //Sound volume of extra jump height effects
+            settings.Add("jumpPowerUpSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+
+            //Sound volume of extra jump height effects
+            settings.Add("hitBallSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            
+            //Sound volume of hitNet sound effects
+            settings.Add("hitNetSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+
+            //Sound volume of picking up powerUp
+            settings.Add("pickupPowerUpSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+
             //Sound volume of BigExplosion sound effects
             settings.Add("bigExplosionSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
-            //Sound volume of BigExplosion sound effects
+            //Sound volume of small Explosion sound effects
             settings.Add("smallExplosionSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of inverted control sound effects
+            settings.Add("invertedControlSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of smash ball sound effects
+            settings.Add("smashBallSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of Sunset sound effects
+            settings.Add("sunsetPowerUpSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of wind sound effects
+            settings.Add("windPowerUpSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of stone change sound effects
+            settings.Add("mayaStoneChangeSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of start whistle
+            settings.Add("startWhistleSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of specialbar -> full sound effects
+            settings.Add("specialbarFullSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of applause -> GameEnd
+            settings.Add("applauseGameEndSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of spawing powerUp effect
+            settings.Add("powerUpSpawnSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of heartbeat -> Matchball
+            settings.Add("matchballHeartbeatSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+
+            //Sound volume of player touching the bottom
+            settings.Add("bottomTouchSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
             //Sound volume of music
             settings.Add("musicVolume", new object[] { 0.0f, 0.15f, 1.0f });
-
+            
             #endregion
 
 
