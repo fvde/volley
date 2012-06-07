@@ -12,7 +12,6 @@ namespace ManhattanMorning.Misc.Tasks
         hitBall,
         netCollision,
         pickupPowerup,
-        bottomCollision,
         bombBig,
         bombSmall,
         invertedControl,
@@ -20,7 +19,13 @@ namespace ManhattanMorning.Misc.Tasks
         sunsetPowerup,
         windPowerup,
         mayaStoneChange,
-        startWhistle
+        startWhistle,
+        applauseGameEnd,
+        powerUpSpawn,
+        matchballHeartbeat,
+        bottomTouchBeach,
+        bottomTouchMaya,
+        bottomTouchForest
     }
 
     /// <summary>
