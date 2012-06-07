@@ -1016,18 +1016,14 @@ namespace ManhattanMorning.View
 
                 textureShader.CurrentTechnique = textureShader.Techniques["WaterFadeOut"];
                 textureShader.Parameters["yTexture"].SetValue(w.waterfallTex);
-                textureShader.Parameters["waterfallY"].SetValue((w.tHeight - w.Counter + w.StopCounter - 50) % (w.tHeight + 1));
-
+                textureShader.Parameters["waterfallYPos"].SetValue((w.tHeight - w.Counter + w.StopCounter - 50) % (w.tHeight + 1));
+                textureShader.Parameters["waterfallTextureHeight"].SetValue((float)w.tHeight);
+                textureShader.Parameters["waterfallStencilHeight"].SetValue(50.0f);
 
                 textureShader.CurrentTechnique.Passes[0].Apply();
 
-
-
-              //  Rectangle headSource = new Rectangle(0, w.tHeight  + w.StopCounter - 43 , w.tWidth, 50);
                 
                 Rectangle headDest = new Rectangle((int)w.Position.X, ((int)w.Position.Y + w.StopCounter - 50), (int)w.Size.X, 50);
-
-              // Rectangle headDest = new Rectangle((int)w.Position.X, (int)w.Position.Y + 100, (int)w.Size.X, 50);
 
                 //Draw Head
 
@@ -1048,8 +1044,6 @@ namespace ManhattanMorning.View
                 dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, w.Counter);
                 spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
 
-              
-
             }
 
             else
@@ -1065,7 +1059,7 @@ namespace ManhattanMorning.View
                     dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, (int)w.Size.Y);
                     spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
 
-             }
+                 }
                 else if (w.StopCounter < w.Size.Y)
                 {
 
