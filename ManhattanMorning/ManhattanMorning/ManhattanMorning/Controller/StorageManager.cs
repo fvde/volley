@@ -274,7 +274,7 @@ namespace ManhattanMorning.Controller
             Texture2D powerupBox_rain = game1.Content.Load<Texture2D>(@"Textures\Powerups\powerupBox_rain");
             Texture2D powerupBox_sun = game1.Content.Load<Texture2D>(@"Textures\Powerups\powerupBox_sun");
             Texture2D powerupBox_wall = game1.Content.Load<Texture2D>(@"Textures\Powerups\powerupBox_wall");
-            Texture2D powerupBox_wind_left = game1.Content.Load<Texture2D>(@"Textures\Powerups\powerupBox_wind_left");
+            Texture2D powerupBox_wind = game1.Content.Load<Texture2D>(@"Textures\Powerups\powerupBox_wind");
 
             // Save textures for later powerup creation
             saveTextureByName(powerupBox_volcano, "PowerupBox_" + PowerUpType.Volcano.ToString() );
@@ -285,7 +285,7 @@ namespace ManhattanMorning.Controller
             saveTextureByName(powerupBox_rain, "PowerupBox_" + PowerUpType.BallRain.ToString());
             saveTextureByName(powerupBox_sun, "PowerupBox_" + PowerUpType.SunsetSunrise.ToString());
             saveTextureByName(powerupBox_wall, "PowerupBox_" + PowerUpType.SwitchStones.ToString());
-            saveTextureByName(powerupBox_wind_left, "PowerupBox_" + PowerUpType.Wind.ToString());
+            saveTextureByName(powerupBox_wind, "PowerupBox_" + PowerUpType.Wind.ToString());
           
 
             #endregion

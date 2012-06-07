@@ -960,16 +960,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\PowerUps\powerupBox_wind_left.png">
-      <Name>powerupBox_wind_left</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\PowerUps\powerupBox_wind_right.png">
-      <Name>powerupBox_wind_right</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Textures\HUD\matchball.png">
@@ -1519,6 +1509,13 @@
     </Compile>
     <Compile Include="Textures\Menu\MainMenu\intro_IvorySound.png">
       <Name>intro_IvorySound</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\PowerUps\powerupBox_wind.png">
+      <Name>powerupBox_wind</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
