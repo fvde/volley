@@ -891,7 +891,7 @@ namespace ManhattanMorning.Controller
             float distance = 0.0f;
 
             // Notify Graphics:
-            ParticleSystemsManager.Instance.playBombExplosion(targetPoint);
+            ParticleSystemsManager.Instance.playBombExplosion(targetPoint, new Vector2(explosionRange*2), isSuperBomb);
             if (isSuperBomb)
             {
                 Vector2 size = new Vector2(explosionRange*2);
@@ -1292,7 +1292,7 @@ namespace ManhattanMorning.Controller
                     SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First().AttachedObjects.First());
                 }
 
-                ParticleSystemsManager.Instance.stopBombFalling(superBombList.First());
+                ParticleSystemsManager.Instance.stopSparcle(superBombList.First());
                 superBombList.Remove(superBombList.First());
             }
         }
