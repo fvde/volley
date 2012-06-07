@@ -98,7 +98,6 @@ namespace ManhattanMorning.Controller
             gameInstance.BallResetPosition = resizeFactorLevelSize * (Vector2)level.LevelProperties["BallResetPosition"];
             gameInstance.Team1ResetPosition = resizeFactorLevelSize * (Vector2)level.LevelProperties["LeftTeamResetPosition"];
             gameInstance.Team2ResetPosition = resizeFactorLevelSize * (Vector2)level.LevelProperties["RightTeamResetPosition"];
-            gameInstance.IntroVideo = Game1.Instance.Content.Load<Video>(@"Videos\video");
             gameInstance.BeachVideo = Game1.Instance.Content.Load<Video>(@"Videos\beach");
             gameInstance.ForestVideo = Game1.Instance.Content.Load<Video>(@"Videos\forest");
             gameInstance.MayaVideo = Game1.Instance.Content.Load<Video>(@"Videos\maya");
@@ -853,6 +852,9 @@ namespace ManhattanMorning.Controller
         {
 
             // Load textures
+            Texture2D Texture_Intro_GlassboxGames = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\intro_GlassboxGames");
+            Texture2D Texture_Intro_IvorySound = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\intro_IvorySound");
+
             Texture2D Texture_MainMenu_Background = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\MainMenu_Background");
             Texture2D Texture_MainMenu_Background_Ball = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\MainMenu_Background_Ball");
 
@@ -914,6 +916,14 @@ namespace ManhattanMorning.Controller
 
             // Create objects
             LayerList<LayerInterface> objectList = new LayerList<LayerInterface>();
+
+            // Intro
+            MenuObject Passive_Intro_GlassboxGames = new MenuObject("Intro_GlassboxGames", true,
+                Texture_Intro_GlassboxGames, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_Intro_GlassboxGames);
+            MenuObject Passive_Intro_IvorySound = new MenuObject("Intro_IvorySound", true,
+                Texture_Intro_IvorySound, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_Intro_IvorySound);
 
             // Main Screen
             MenuObject Passive_MainMenu_Background = new MenuObject("MainMenu_Background", true,

@@ -192,8 +192,7 @@ namespace ManhattanMorning.Misc
         /// <param name="levels">Reference to the levels class to get all level previews</param>
         public MainMenuInstance(Levels.Levels levels)
         {
-            //load intro
-            introVideo = Game1.Instance.Content.Load<Video>(@"Videos\video2");
+
             // Save attributes
             this.levels = levels;
 
@@ -225,6 +224,9 @@ namespace ManhattanMorning.Misc
             previousMainScreenSelectedItem = 0;
 
             levelName = "";
+
+            // Play Intro
+            activateIntro();
 
             activateMenu();
         }
@@ -533,6 +535,14 @@ namespace ManhattanMorning.Misc
             }
 
             #endregion
+
+        }
+
+
+        public void activateIntro()
+        {
+
+
 
         }
 
