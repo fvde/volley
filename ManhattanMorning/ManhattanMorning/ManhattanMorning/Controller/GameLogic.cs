@@ -182,6 +182,11 @@ namespace ManhattanMorning.Controller
         private List<int> activeMayaStones = new List<int>();
 
         /// <summary>
+        /// Holds the waterfalls
+        /// </summary>
+        private List<Waterfall> waterfalls = new List<Waterfall>();
+
+        /// <summary>
         /// The bodies of the stones in maya level.
         /// </summary>
         private Body[] stoneBlocks = new Body[4];
@@ -1270,14 +1275,22 @@ namespace ManhattanMorning.Controller
                         stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
 
                         // Start Waterfall
+                        Vector2 waterfallPosition = newStone.Position + new Vector2(newStone.Size.X * 0.2f, newStone.Size.Y * 0.75f);
+                        Vector2 waterFallSize = new Vector2(newStone.Size.X * 0.65f, SuperController.Instance.GameInstance.LevelSize.Y - newStone.Position.Y - newStone.Size.Y);
+                        Waterfall w = new Waterfall(waterfallPosition, waterFallSize, i);
 
+                        waterfalls.Add(w);
+                        SuperController.Instance.addGameObjectToGameInstance(w);
                     }
                 }
             }
             else
             {
-                // Create sound
-                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
+                if (activeMayaStones.Count() > 0)
+                {
+                    // Create sound if any stones are removed
+                    TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
+                }
 
 
                 // Turn off all stones
@@ -1290,6 +1303,30 @@ namespace ManhattanMorning.Controller
                     stoneBlocks[i] = null;
 
                     // Waterfall
+                    foreach (Waterfall w in waterfalls)
+                    {
+                        if (w.mayaLevelPosition == i)
+                        {
+                            w.stop();
+                        }
+                    }
+                }
+
+
+                // Remove finished waterfalls
+                List<Waterfall> removalList = new List<Waterfall>();
+                foreach (Waterfall w in waterfalls)
+                {
+                    if (!w.Active)
+                    {
+                        removalList.Add(w);
+                    }
+                }
+
+                foreach (Waterfall w in removalList)
+                {
+                    waterfalls.Remove(w);
+                    SuperController.Instance.removeGameObjectFromGameInstance(w);
                 }
 
                 activeMayaStones.Clear();
