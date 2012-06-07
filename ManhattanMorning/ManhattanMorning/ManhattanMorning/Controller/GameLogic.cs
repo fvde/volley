@@ -795,7 +795,20 @@ namespace ManhattanMorning.Controller
 
                 ParticleSystemsManager.Instance.playSandFountain(new Vector2(player.Position.X + player.Size.X * 0.5f, player.Position.Y + player.Size.Y), player.PlayerIndex - 1);
 
-                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bottomCollision, (int) IngameSound.TouchFloor));
+                if (SuperController.Instance.GameInstance.LevelName == "Beach")
+                {
+                    TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bottomTouchBeach, (int)IngameSound.BottomTouchBeach));
+                }
+
+                if (SuperController.Instance.GameInstance.LevelName == "Maya")
+                {
+                    TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bottomTouchMaya, (int)IngameSound.BottomTouchMaya));
+                }
+
+                if (SuperController.Instance.GameInstance.LevelName == "Forest")
+                {
+                    TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bottomTouchForest, (int)IngameSound.BottomTouchForest));
+                }
 
                 Logger.Instance.log(Sender.GameLogic, "Collision Player-BottomBorder processed", PriorityLevel.Priority_1);
 
@@ -1196,6 +1209,8 @@ namespace ManhattanMorning.Controller
         /// <param name="winnerTeam">The name of the team that has won</param>
         public void levelEnds(int winnerTeam)
         {
+            // Create sound
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.applauseGameEnd, (int)IngameSound.ApplauseGameEnd));
             SuperController.Instance.switchFromIngameToIngameMenu(winnerTeam);
         }
 
@@ -1261,6 +1276,10 @@ namespace ManhattanMorning.Controller
             }
             else
             {
+                // Create sound
+                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
+
+
                 // Turn off all stones
                 foreach (int i in activeMayaStones)
                 {
@@ -1373,6 +1392,10 @@ namespace ManhattanMorning.Controller
         /// <param name="score">The latest score of the game</param>
         private void activateMatchballFlag(Vector2 score)
         {
+
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.matchballHeartbeat, (int)IngameSound.MatchballHeartbeat));
+
+
             if (this.winCondition is TimeLimit_WinCondition)
             {
                 this.matchBallTimeWinningCondition = true;

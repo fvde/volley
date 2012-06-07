@@ -1048,13 +1048,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\Ingame\hitBall.wav">
-      <Name>hitBall</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Audio\Effects\Ingame\pickupPowerup.wav">
       <Name>pickupPowerup</Name>
       <Importer>WavImporter</Importer>
@@ -1092,13 +1085,6 @@
   <ItemGroup>
     <Compile Include="Audio\Effects\Ingame\smashBall.wav">
       <Name>smashBall</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio\Effects\Ingame\sunset.wav">
-      <Name>sunset</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -1146,22 +1132,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\Ingame\windPowerUp.wav">
-      <Name>windPowerUp</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Audio\Effects\Ingame\gameStartWhistle.wav">
       <Name>gameStartWhistle</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio\Effects\Ingame\stoneChange.wav">
-      <Name>stoneChange</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -1212,11 +1184,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Effects\Menu\Select.wav">
-      <Name>Select</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
     <Compile Include="Audio\Effects\Menu\Switch.wav">
       <Name>Switch</Name>
       <Importer>WavImporter</Importer>
@@ -1451,6 +1418,90 @@
       <Name>bomb_explosion</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\applauseGameEnd.wav">
+      <Name>applauseGameEnd</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Menu\SelectBack.wav">
+      <Name>SelectBack</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Menu\Select.wav">
+      <Name>Select</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\hitBall.wav">
+      <Name>hitBall</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\powerUpSpawn.wav">
+      <Name>powerUpSpawn</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\sunset.wav">
+      <Name>sunset</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\matchballHeartbeat.wav">
+      <Name>matchballHeartbeat</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\windPowerUp.wav">
+      <Name>windPowerUp</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\bottomTouchBeach.wav">
+      <Name>bottomTouchBeach</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\bottomTouchMaya.wav">
+      <Name>bottomTouchMaya</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\bottomTouchForest.wav">
+      <Name>bottomTouchForest</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Effects\Ingame\stoneChange.wav">
+      <Name>stoneChange</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>

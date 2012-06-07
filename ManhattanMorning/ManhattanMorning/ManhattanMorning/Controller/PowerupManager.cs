@@ -171,6 +171,8 @@ namespace ManhattanMorning.Controller
         /// <returns></returns>
         private PowerUp createPowerUp(Vector2 position, PowerUpVersion version, PowerUpType type)
         {
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.powerUpSpawn, (int)IngameSound.PowerUpSpawn));
+
             return new PowerUp(getPowerUpName(type),
                 true,
                 StorageManager.Instance.getTextureByName("PowerupBox_" + type.ToString()),
