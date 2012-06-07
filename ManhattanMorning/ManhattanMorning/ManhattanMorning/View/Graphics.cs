@@ -1006,7 +1006,7 @@ namespace ManhattanMorning.View
 
             
             //Testpurpose
-           if (w.Counter >= 600) w.stop();
+           //if (w.Counter >= 600) w.stop();
 
          
             Rectangle dest;
