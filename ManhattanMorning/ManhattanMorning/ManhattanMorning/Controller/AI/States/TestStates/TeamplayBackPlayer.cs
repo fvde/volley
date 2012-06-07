@@ -75,27 +75,27 @@ namespace ManhattanMorning.Controller.AI.States.TestStates
             float estBallPosition = estimatedBallXPosition(observedBall, (float)SettingsManager.Instance.get("playerSize") * 2);
 
             int a = confusionHandling();
-
+            List<PowerUp> powerUps = SuperController.Instance.getAllPowerups();
 
             //let the player run towards the estimated ball position
             if (agent.ControlledPlayer.Team == 1)
             {
                 if (estBallPosition <= levelSize.X * 0.25 || (estBallPosition < levelSize.X * 0.5 && (observedBall != agent.Teammate.StateMachine.CurrentState.observedBall && !agent.Teammate.isHuman)))
                 {
-                   
+                  
                     InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex,a *  new Vector2((estBallPosition - (agent.ControlledPlayer.Size.X / 4) - agent.ControlledPlayer.Body.Position.X), 0));
                 }
                 else
                 {
                     //searching for powerups in the level which are on the players side
-                    if (SuperController.Instance.getAllPowerups() != null)
+                    if (!chaseBomb(a))
                     {
-                        if (SuperController.Instance.getAllPowerups().Count != 0)
+                        if (powerUps != null && powerUps.Count != 0)
                         {
                             
-                            foreach (PowerUp p in SuperController.Instance.getAllPowerups())
+                            foreach (PowerUp p in powerUps)
                             {
-                                if (p.Body.Position.X < levelSize.X * 0.5 + p.Size.X && p.Body.Position.Y < levelSize.Y * 0.5)
+                                if (p.Body.Position.X < levelSize.X * 0.5 + p.Size.X )
                                 {
                                  
                                     InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a* new Vector2(p.Body.Position.X - agent.ControlledPlayer.Body.Position.X, 0));
@@ -116,27 +116,31 @@ namespace ManhattanMorning.Controller.AI.States.TestStates
                 if (estBallPosition >= levelSize.X * 0.75 || (estBallPosition > levelSize.X * 0.5 && (observedBall != agent.Teammate.StateMachine.CurrentState.observedBall && !agent.Teammate.isHuman)))
                 {
 
-                    InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex,a *  new Vector2((estBallPosition + (agent.ControlledPlayer.Size.X / 4) - agent.ControlledPlayer.Body.Position.X), 0));
+                    InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * new Vector2((estBallPosition + (agent.ControlledPlayer.Size.X / 4) - agent.ControlledPlayer.Body.Position.X), 0));
                 }
                 else
                 {
-                    if (SuperController.Instance.getAllPowerups().Count != 0)
+                    //searching for powerups in the level which are on the players side
+                    if (!chaseBomb(a))
                     {
-
-                        foreach (PowerUp p in SuperController.Instance.getAllPowerups())
+                        if (powerUps != null && powerUps.Count != 0)
                         {
-                            if (p.Body.Position.X > levelSize.X * 0.5 - p.Size.X && p.Body.Position.Y < levelSize.Y * 0.5)
+
+                            foreach (PowerUp p in powerUps)
                             {
-                              
-                                InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex,a * new Vector2(p.Body.Position.X - agent.ControlledPlayer.Body.Position.X, 0));
-                                break;
+                                if (p.Body.Position.X > levelSize.X * 0.5 - p.Size.X )
+                                {
+
+                                    InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * new Vector2(p.Body.Position.X - agent.ControlledPlayer.Body.Position.X, 0));
+                                    break;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
+                        else
+                        {
 
-                        InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex,a * getSmoothRandomMovementVec(levelSize.X * 0.875f, agent.ControlledPlayer.Body.Position.X));
+                            InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * getSmoothRandomMovementVec(levelSize.X * 0.875f, agent.ControlledPlayer.Body.Position.X));
+                        }
                     }
                 }
             }

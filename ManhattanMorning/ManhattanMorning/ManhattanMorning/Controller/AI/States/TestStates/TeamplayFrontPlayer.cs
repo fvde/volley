@@ -73,7 +73,7 @@ namespace ManhattanMorning.Controller.AI.States.TestStates
         {
             float estBallPosition = estimatedBallXPosition(observedBall, (float)SettingsManager.Instance.get("playerSize") * 2);
             int a = confusionHandling();
-
+            List<PowerUp> powerUps = SuperController.Instance.getAllPowerups();
 
             //let the player run towards the estimated ball position
             if (agent.ControlledPlayer.Team == 1)
@@ -86,14 +86,14 @@ namespace ManhattanMorning.Controller.AI.States.TestStates
                 else
                 {
                     //searching for powerups in the level which are on the players side
-                    if (SuperController.Instance.getAllPowerups() != null)
+                    if (!chaseBomb(a))
                     {
-                        if (SuperController.Instance.getAllPowerups().Count != 0)
+                        if (powerUps != null && powerUps.Count != 0)
                         {
                             
-                            foreach (PowerUp p in SuperController.Instance.getAllPowerups())
+                            foreach (PowerUp p in powerUps)
                             {
-                                if (p.Body.Position.X < levelSize.X * 0.5 + p.Size.X && p.Body.Position.Y < levelSize.Y * 0.5)
+                                if (p.Body.Position.X < levelSize.X * 0.5 + p.Size.X )
                                 {
                                    
                                     InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * new Vector2(p.Body.Position.X - agent.ControlledPlayer.Body.Position.X, 0));
@@ -118,23 +118,28 @@ namespace ManhattanMorning.Controller.AI.States.TestStates
                 }
                 else
                 {
-                    if (SuperController.Instance.getAllPowerups().Count != 0)
-                    {
+                    //searching for powerups in the level which are on the players side
 
-                        foreach (PowerUp p in SuperController.Instance.getAllPowerups())
+                    if (!chaseBomb(a))
+                    {
+                        if (powerUps != null && powerUps.Count != 0)
                         {
-                            if (p.Body.Position.X > levelSize.X * 0.5 - p.Size.X && p.Body.Position.Y < levelSize.Y * 0.5)
+
+                            foreach (PowerUp p in powerUps)
                             {
-                                
-                                InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex,a *  new Vector2(p.Body.Position.X - agent.ControlledPlayer.Body.Position.X, 0));
-                                break;
+                                if (p.Body.Position.X > levelSize.X * 0.5 - p.Size.X )
+                                {
+
+                                    InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * new Vector2(p.Body.Position.X - agent.ControlledPlayer.Body.Position.X, 0));
+                                    break;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
+                        else
+                        {
 
-                        InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex,a * getSmoothRandomMovementVec(levelSize.X * 0.625f, agent.ControlledPlayer.Body.Position.X));
+                            InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * getSmoothRandomMovementVec(levelSize.X * 0.625f, agent.ControlledPlayer.Body.Position.X));
+                        }
                     }
                 }
             }
