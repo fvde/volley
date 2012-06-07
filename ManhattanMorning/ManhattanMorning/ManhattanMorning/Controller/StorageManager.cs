@@ -126,6 +126,51 @@ namespace ManhattanMorning.Controller
             // Set allowed powerups
             PowerUpManager.Instance.setAllowedPowerUps(level.AllowedPowerUps);
 
+            #region EvilMayaLevelHack
+            if (levelName == "Maya")
+            {
+                Waterfall w1 = new Waterfall("Waterfall1");
+                w1.Position = new Vector2(130, 220);
+                w1.Size = new Vector2(55, 450);
+                // w.Position = new Vector2(450, 255);
+                // w.Size = new Vector2(100, 400);
+                w1.tWidth = 50;
+                w1.tHeight = 640;
+
+
+                Waterfall w2 = new Waterfall("Waterfall2");
+                w2.Position = new Vector2(340, 200);
+                w2.Size = new Vector2(100, 450);
+                w2.tWidth = 50;
+                w2.tHeight = 640;
+
+                Waterfall w3 = new Waterfall("Waterfall3");
+                w3.Position = new Vector2(660, 210);
+                w3.Size = new Vector2(80, 460);
+                w3.tWidth = 50;
+                w3.tHeight = 640;
+
+                Waterfall w4 = new Waterfall("Waterfall4");
+                w4.Position = new Vector2(880, 220);
+                w4.Size = new Vector2(60, 460);
+                w4.tWidth = 50;
+                w4.tHeight = 640;
+
+                gameInstance.WaterfallList.Add(w1);
+                gameInstance.WaterfallList.Add(w2);
+                gameInstance.WaterfallList.Add(w3);
+                gameInstance.WaterfallList.Add(w4);
+
+                gameInstance.GameObjects.Add(w1);
+                gameInstance.GameObjects.Add(w2);
+                gameInstance.GameObjects.Add(w3);
+                gameInstance.GameObjects.Add(w4);
+
+            }
+
+            #endregion
+
+
             #region Players
 
             Texture2D player1Texture = game1.Content.Load<Texture2D>(@"Textures\Levels\Default\Player_blue");
@@ -410,8 +455,8 @@ namespace ManhattanMorning.Controller
             float borderHeight = 4.0f;
             float magicNumber = 0.2f;
 
-            Border rightSideHandDistanceBorder = new Border("rightSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 + new Vector2(allowedHandDistance, 0), 50, Model.MeasurementUnit.Meter);
-            Border leftSideHandDistanceBorder = new Border("leftSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 5.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 - new Vector2(allowedHandDistance + magicNumber, 0), 50, Model.MeasurementUnit.Meter);
+            Border rightSideHandDistanceBorder = new Border("rightSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 10.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 + new Vector2(allowedHandDistance, 0), 50, Model.MeasurementUnit.Meter);
+            Border leftSideHandDistanceBorder = new Border("leftSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 10.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 - new Vector2(allowedHandDistance + magicNumber, 0), 50, Model.MeasurementUnit.Meter);
 
             SuperController.Instance.addGameObjectToGameInstance(leftBorder);
             SuperController.Instance.addGameObjectToGameInstance(rightBorder);
@@ -619,6 +664,16 @@ namespace ManhattanMorning.Controller
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light"), "light");
 
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/highlight_ball"), "highlight_ball");
+
+            #endregion
+
+            #region Waterfall
+
+            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures\Waterfall\Wasserfallthin"),"Waterfall-Tex-Main");
+            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures\Waterfall\Wasserfall-bottom"), "Waterfall-Tex-Bottom");
+            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures\Waterfall\Wasserfallthin-head"), "Waterfall-Tex-Head");
+            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures\Waterfall\Wasserfallthin-tip"), "Waterfall-Tex-Tip");
+            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures\Waterfall\stencil"), "Waterfall-Tex-Stencil");
 
             #endregion
 
