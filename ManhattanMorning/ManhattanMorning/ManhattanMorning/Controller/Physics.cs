@@ -1242,13 +1242,12 @@ namespace ManhattanMorning.Controller
             PassiveObject bomb_top = new PassiveObject("Bomb_top", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_top"), null, null,
                 size, position, 59, MeasurementUnit.Meter);
 
-            Vector2 offset = new Vector2(0f, -0.4f * bomb.Size.Y);
+            Vector2 offset = new Vector2(0.03f, -0.7f * bomb.Size.Y);
             bomb_top.Offset = offset;
+            bomb_top.RotateWithOffset = true;
 
-            //bomb.attachObject(bomb_top);
-            //SuperController.Instance.addGameObjectToGameInstance(bomb_top);
-
-
+            bomb.attachObject(bomb_top);
+            SuperController.Instance.addGameObjectToGameInstance(bomb_top);
 
             // Create the red background
             PassiveObject bomb_red = new PassiveObject("Bomb_red", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_red"), null, null,
@@ -1268,7 +1267,7 @@ namespace ManhattanMorning.Controller
 
             SuperController.Instance.addGameObjectToGameInstance(bomb);
             superBombList.Add(bomb);
-            ParticleSystemsManager.Instance.playBombFalling(bomb, -bomb.Size*0.4f, false);
+            ParticleSystemsManager.Instance.playSparclingBomb(bomb, offset + new Vector2(0.05f, -0.18f), false);
 
             // Collision
             disableCollisionBetweenActiveObjects(bomb, middleBorder);
@@ -1288,8 +1287,10 @@ namespace ManhattanMorning.Controller
                 createExplosionAtPoint(superBombList.First().Body.Position, (float)settingsManager.get("superBombRange"), (float)settingsManager.get("superBombImpact"), true);
                 SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First());
 
-                // Remove also attached objects
-                SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First().AttachedObjects.First());
+                while (superBombList.First().AttachedObjects.Count > 0)
+                {
+                    SuperController.Instance.removeGameObjectFromGameInstance(superBombList.First().AttachedObjects.First());
+                }
 
                 ParticleSystemsManager.Instance.stopBombFalling(superBombList.First());
                 superBombList.Remove(superBombList.First());

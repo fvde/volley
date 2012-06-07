@@ -28,6 +28,7 @@ namespace ManhattanMorning.Controller
         private ParticleSystem sandSystem;
         private ParticleSystem ballCollision;
         private ParticleSystem[] bombSystem; //holds emitters for fire, smoke and splash effects
+        private ParticleSystem[] sparclingSystem;
         private ParticleSystem[] explosionSystem; //holds emitters for smoke and fire
         private ParticleSystem[] windSystem;
         private ParticleSystem meteorBallSystem;
@@ -59,6 +60,11 @@ namespace ManhattanMorning.Controller
         /// Indicates which particle system has to be used to display a bomb falling.
         /// </summary>
         private int bombCount;
+
+        /// <summary>
+        /// Indicates which particle system has to be used to display a superbomb sparcling.
+        /// </summary>
+        private int superbombCount;
 
         /// <summary>
         /// Indicates which particle system has to be used to display a bomb exploding.
@@ -219,6 +225,30 @@ namespace ManhattanMorning.Controller
             e.InitialParticleSpeed = 0.3f;
             e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/smoke_particle");
             e.ParticleColor = Color.White;
+            e.initializeParticles();
+            e.Active = true;
+            e.Pause = true;
+            return e;
+        }
+
+        /// <summary>
+        /// Creates a new sparcling emitter for superbomb.
+        /// </summary>
+        /// <param name="size">Size of the Particles.</param>
+        /// <returns>The created Emitter.</returns>
+        private Emitter createSparclingEmitterForSuperbomb(Vector2 particleSize)
+        {
+            //Create new Emitter and Initialize Particles
+            EmitterExplosion e = new EmitterExplosion(Vector2.Zero, 16, 30f);
+            e.EmitterShape = new EmitterPointShape();
+            e.ParticleLifeTime = 0.25f;
+            e.ParticleGrowth = GrowthMode.Linear;
+            e.ParticleGrowthRate = 1.7f;
+            e.ParticleSize = particleSize;
+            e.InitialParticleSpeed = 1.65f;
+            e.MovingParticles = true;
+            e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/sparcles");
+            e.ParticleColor = Color.Yellow;
             e.initializeParticles();
             e.Active = true;
             e.Pause = true;
@@ -573,6 +603,28 @@ namespace ManhattanMorning.Controller
         }
 
         /// <summary>
+        /// Shows a bomb effect when the bomb is falling with an offset to the middle of the bomb.
+        /// </summary>
+        /// <param name="bomb">The object where the ParticleSystem is attached to.</param>
+        /// <param name="offset">Offset to the middle of the bomb.</param>
+        /// <param name="objectMovingFast">True if the emitter is attached to a fast moving object.</param>
+        public void playSparclingBomb(DrawableObject bomb, Vector2 offset, bool objectMovingFast)
+        {
+            ParticleSystem p = sparclingSystem[superbombCount];
+            foreach (Emitter e in p.EmitterList)
+            {
+                e.LinkedObjectOffset = offset;
+                e.LinkedObject = bomb;
+                e.Active = true;
+                e.Pause = false;
+                e.EmittingDuration = 0f;
+                e.RotateWithOffset = true;
+            }
+
+            superbombCount = (superbombCount + 1) % 2;
+        }
+
+        /// <summary>
         /// Stops the effect.
         /// </summary>
         /// <param name="bomb">The object where the ParticleSystem is attached to.</param>
@@ -826,6 +878,7 @@ namespace ManhattanMorning.Controller
             bombSystem = new ParticleSystem[6];
             explosionSystem = new ParticleSystem[6];
             orbitterPlayers = new ParticleSystem[SuperController.Instance.getPlayerOfTeam(1).Count * 2];
+            sparclingSystem = new ParticleSystem[2];
 
             for (int i = 0; i < bombSystem.Length; i++)
             {
@@ -833,6 +886,11 @@ namespace ManhattanMorning.Controller
                 bombSystem[i].SystemBlendState = BlendState.NonPremultiplied;
                 explosionSystem[i] = new ParticleSystem(55);
                 explosionSystem[i].SystemBlendState = BlendState.NonPremultiplied;
+            }
+            for (int i = 0; i < sparclingSystem.Length; i++)
+            {
+                sparclingSystem[i] = new ParticleSystem(55);
+                sparclingSystem[i].SystemBlendState = BlendState.NonPremultiplied;
             }
 
             //Add a StarOrbitter and JumpHighlightEmitter for every Player
@@ -843,7 +901,7 @@ namespace ManhattanMorning.Controller
 
                 orbitterPlayers[i] = new ParticleSystem(55);
                 orbitterPlayers[i].SystemBlendState = BlendState.AlphaBlend;
-                orbitterPlayers[i].addOrbitter(createParalysisOrbitter("Textures/Particles/question", new Vector2(0.2f, 0.2f), 8f, 1f, Color.Red));
+                orbitterPlayers[i].addOrbitter(createParalysisOrbitter("Textures/Particles/questionmark", new Vector2(0.2f, 0.2f), 8f, 1f, Color.White));
                 orbitterPlayers[i].addOrbitter(createParalysisOrbitter("Textures/Particles/star_particle", new Vector2(0.1f, 0.1f), (int)SettingsManager.Instance.get("lavaStunDuration") / 1000f, 0.125f, Color.Yellow));
 
                 addSystem(orbitterPlayers[i]);
@@ -904,6 +962,11 @@ namespace ManhattanMorning.Controller
                 explosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.5f, 0.45f), "BeamBlurred", Color.Yellow, 3.8f, 15, true, new Vector2(0f, 4.5f), 0.5f));
                 explosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.7f), "Flame", Color.OrangeRed, 1.9f, 13));
                 addSystem(explosionSystem[i]);
+            }
+            for (int i = 0; i < sparclingSystem.Length; i++)
+            {
+                sparclingSystem[i].addEmitter(createSparclingEmitterForSuperbomb(new Vector2(0.05f)));
+                addSystem(sparclingSystem[i]);
             }
 
             addSystem(highlightJumpSystem);
