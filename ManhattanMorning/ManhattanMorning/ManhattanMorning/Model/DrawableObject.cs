@@ -70,7 +70,14 @@ namespace ManhattanMorning.Model
         {
             get
             {
-                return (attachedTo == null) ? position + offset : attachedTo.Position - (size - attachedTo.Size) / 2 + offset; 
+                if (attachedTo != null)
+                {
+                    position = attachedTo.Position - (size - attachedTo.Size) / 2;
+
+                    if (rotateWithOffset)
+                        return position += Vector2.Transform(offset, Matrix.CreateRotationZ(attachedTo.Rotation));
+                }
+                return position += offset;
             }
             set { position = value; }
         }
@@ -85,9 +92,28 @@ namespace ManhattanMorning.Model
         }
 
         /// <summary>
+        /// True if the object rotates around the origin with its offset.
+        /// </summary>
+        public bool RotateWithOffset
+        {
+            get { return rotateWithOffset; }
+            set { rotateWithOffset = value; }
+        }
+
+        /// <summary>
         /// Rotation in radians.
         /// </summary>
-        public virtual float Rotation { get { return this.rotation; } set { rotation = value; } }
+        public virtual float Rotation { 
+            get
+            {
+                if (rotateWithOffset && attachedTo != null)
+                {
+                    return attachedTo.Rotation;
+                }
+                else
+                    return this.rotation; 
+            } 
+            set { rotation = value; } }
 
         /// <summary>
         /// Layer Position of this Object between 0 and 100. 100 being on top.
@@ -248,6 +274,11 @@ namespace ManhattanMorning.Model
         /// </summary>
         private Vector2 offset;
 
+        /// <summary>
+        /// True if the object rotates around the origin with its offset.
+        /// </summary>
+        private bool rotateWithOffset;
+        
         /// <summary>
         /// A Path the Object moves along
         /// </summary>

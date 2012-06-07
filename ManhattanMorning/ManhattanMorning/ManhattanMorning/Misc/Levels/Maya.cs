@@ -103,22 +103,7 @@ namespace ManhattanMorning.Misc.Levels
             levelObjectsList.Add(new PassiveObject("stone2", new Vector2(1.35f, 0.9f), new Vector2(6.25f, 1.425f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
             levelObjectsList.Add(new PassiveObject("stone3", new Vector2(0.95f, 0.95f), new Vector2(8.55f, 1.55f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
 
-            Waterfall w = new Waterfall();
-            //w.Position = new Vector2(230, 150);
-            //w.Size = new Vector2(25, 500);
-            w.Position = new Vector2(450, 255);
-            w.Size = new Vector2(100, 400);
-            w.Speed = 7;
-            w.tWidth = 50;
-            w.tHeight = 640;
-            w.Layer = 1;
-            w.waterfallTex = Game1.Instance.Content.Load<Texture2D>(@"Textures\Waterfall\Wasserfallthin");
-            w.waterfallBottomTex = Game1.Instance.Content.Load<Texture2D>(@"Textures\Waterfall\Wasserfall-bottom");
-            w.waterfallHeadTex = Game1.Instance.Content.Load<Texture2D>(@"Textures\Waterfall\Wasserfallthin-head");
-            w.waterfallTipTex = Game1.Instance.Content.Load<Texture2D>(@"Textures\Waterfall\Wasserfallthin-tip");
-            w.waterfallStencilTex = Game1.Instance.Content.Load<Texture2D>(@"Textures\Waterfall\stencil");
 
-            levelObjectsList.Add(w);
 
             #endregion
 
