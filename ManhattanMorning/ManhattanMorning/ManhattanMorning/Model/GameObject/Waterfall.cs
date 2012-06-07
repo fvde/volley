@@ -141,9 +141,13 @@ namespace ManhattanMorning.Model.GameObject
             this.paused = true;
         }
 
-        public Waterfall(String name)
+        public Waterfall(Vector2 pos, Vector2 size)
         {
-            this.name = name;
+            this.name = "Waterfall";
+            
+            this.Position = Graphics.Instance.convertUnits(pos, MeasurementUnit.Meter, MeasurementUnit.Pixel);
+            this.Size = Graphics.Instance.convertUnits(pos, MeasurementUnit.Meter, MeasurementUnit.Pixel);
+            this.start();
             this.waterfallTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Main");
             this.waterfallBottomTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Bottom");
             this.waterfallHeadTex = StorageManager.Instance.getTextureByName("Waterfall-Tex-Head");
@@ -153,28 +157,7 @@ namespace ManhattanMorning.Model.GameObject
             this.Speed = 7;
         }
 
-        /// <summary>
-        /// Create a new Waterfall and adds it to the GameObject list
-        /// </summary>
-        /// <param name="pos">Position in Meter</param>
-        /// <param name="size">Size in Meter</param>
-        static void createWaterfall(Vector2 pos, Vector2 size)
-        {
-            Waterfall w = new Waterfall("Waterfall");
-            w.Position = Graphics.Instance.convertUnits(pos,MeasurementUnit.Meter,MeasurementUnit.Pixel);
-            w.Size = Graphics.Instance.convertUnits(pos, MeasurementUnit.Meter, MeasurementUnit.Pixel);
-            w.start();
-            SuperController.Instance.GameInstance.GameObjects.Add(w);
-        }
-
-        /// <summary>
-        /// Removes a Waterfall from the GameObject List
-        /// </summary>
-        /// <param name="w">Waterfall to be removed</param>
-        static void deleteWaterfall(Waterfall w)
-        {
-            SuperController.Instance.GameInstance.GameObjects.Remove(w);
-        }
+    
 
     }
 }
