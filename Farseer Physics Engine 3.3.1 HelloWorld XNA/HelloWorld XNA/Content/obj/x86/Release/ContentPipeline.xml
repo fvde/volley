@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>circleSprite.png</Source>
+      <Name>circleSprite</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ferdinand\Documents\Visual Studio 2010\Projects\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Release\Content\circleSprite.xnb</Output>
+      <Time>2011-06-04T20:00:36.9970086+02:00</Time>
+    </Item>
+    <Item>
+      <Source>groundSprite.png</Source>
+      <Name>groundSprite</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ferdinand\Documents\Visual Studio 2010\Projects\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Release\Content\groundSprite.xnb</Output>
+      <Time>2011-06-04T18:26:04.6895712+02:00</Time>
+    </Item>
+    <Item>
+      <Source>font.spritefont</Source>
+      <Name>font</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ferdinand\Documents\Visual Studio 2010\Projects\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Release\Content\font.xnb</Output>
+      <Time>2011-06-04T18:26:04.6875711+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Bitmap1.bmp</Source>
+      <Name>Bitmap1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ferdinand\Documents\Visual Studio 2010\Projects\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Release\Content\Bitmap1.xnb</Output>
+      <Time>2011-06-04T20:00:56.3941181+02:00</Time>
+    </Item>
+    <Item>
+      <Source>bridgeSprite.bmp</Source>
+      <Name>bridgeSprite</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ferdinand\Documents\Visual Studio 2010\Projects\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Release\Content\bridgeSprite.xnb</Output>
+      <Time>2011-06-04T20:07:37.1390394+02:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>Reach</TargetProfile>
+      <BuildConfiguration>Release</BuildConfiguration>
+      <CompressContent>true</CompressContent>
+      <RootDirectory>C:\Users\Ferdinand\Documents\Visual Studio 2010\Projects\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\Content\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Ferdinand\Documents\Visual Studio 2010\Projects\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Ferdinand\Documents\Visual Studio 2010\Projects\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\Content\obj\x86\Release\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Ferdinand\Documents\Visual Studio 2010\Projects\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Release\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-05-30T22:56:48.9643007+02:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>
