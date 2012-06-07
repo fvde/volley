@@ -181,8 +181,8 @@ namespace ManhattanMorning.Controller
 
         private ParticleSystem createSandStormSystem()
         {
-            EmitterFountain e = new EmitterFountain(new Vector2(-1.0f, 7.0f), 800, 100);
-            e.EmitterShape = new EmitterRectangleShape(0.1f, 1.50f, new Vector2(0, 1));
+            EmitterFountain e = new EmitterFountain(new Vector2(-6.0f, 7.0f), 700, 100);
+            e.EmitterShape = new EmitterRectangleShape(5.0f, 1.50f, new Vector2(0, 1));
             e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/particle1");
             e.ParticleColor = Color.Beige;
             e.ParticleFadeOut = FadeMode.None;
@@ -193,6 +193,7 @@ namespace ManhattanMorning.Controller
             e.EmitterAngle = 0.05f;
             e.ParticleLifeTime = 7.0f;
             e.ParticleStartingAlpha = 0.1f;
+            
             e.initializeParticles(true);
 
 
