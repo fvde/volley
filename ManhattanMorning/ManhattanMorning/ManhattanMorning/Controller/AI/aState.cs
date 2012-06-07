@@ -10,15 +10,15 @@ using ManhattanMorning.Model.GameObject;
 using ManhattanMorning.View;
 
 namespace ManhattanMorning.Controller.AI
-{   
+{
 
-    
+
 
     /// <summary>
     /// model for a state. should be inherited by all states desinging the ai
     /// Every state inheriting from this class should be enlistet in the enum "StateName" in Agent.cs in order to be usable by the AI.
     /// </summary>
-    /// <typeparam name="entity_type"> agent-type that is handled by the state. e.g. player </typeparam>
+    /// <typeparam name="entity_type">agent-type that is handled by the state. e.g. player</typeparam>
    public abstract class aState<entity_type>
    {
 
@@ -256,6 +256,81 @@ namespace ManhattanMorning.Controller.AI
 
 
         /// <summary>
+        /// let the player move to the bomb and hit it (NO check if the bomb is in the players half, should be done before calling this method!)
+        /// Method only handles one bomb.
+        /// </summary>
+        /// <param name="a">factor for applying confusion (1 or -1)</param>
+        /// <returns> true if a bomb exists and is chased, false if no bomb exists</returns>
+        public bool chaseBomb(int a)
+        {
+            //search for a bomb in the Gameobjects
+            ActiveObject bomb = (ActiveObject) SuperController.Instance.GameInstance.GameObjects.GetObjectByName("Bomb");
+            if (bomb != null)
+            {
+
+                if ((Math.Abs(bomb.Body.Position.X - agent.ControlledPlayer.Body.Position.X) < 1) &&
+                (agent.ControlledPlayer.Body.Position.Y - bomb.Body.Position.Y < 2.5f))
+                {
+                    // let player jump
+                    jump();
+                }
+
+                //move towards the bomb
+                if (agent.ControlledPlayer.Team == 1)
+                {
+                    if (agent.ControlledPlayer.Body.Position.Y - bomb.Body.Position.Y < 0)
+                    {
+
+                        InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * new Vector2(bomb.Body.Position.X - bomb.Size.X - agent.ControlledPlayer.Body.Position.X, 0));
+
+                    }
+                    else
+                    {
+                        InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * new Vector2(bomb.Body.Position.X - agent.ControlledPlayer.Body.Position.X, 0));
+                        if (Math.Abs(bomb.Body.Position.X - agent.ControlledPlayer.Body.Position.X) < bomb.Size.X && (agent.ControlledPlayer.Body.Position.Y - bomb.Body.Position.Y < 1.5f))
+                        {
+
+                            InputManager.Instance.setHandAmplitude(agent.ControlledPlayer.PlayerIndex, bomb.Body.Position - agent.ControlledPlayer.HandBody.Position);
+
+                        }
+                    }
+
+                }
+                else
+                {
+
+                    if (agent.ControlledPlayer.Body.Position.Y - bomb.Body.Position.Y < 0 )
+                    {
+
+                        InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * new Vector2(bomb.Body.Position.X + bomb.Size.X - agent.ControlledPlayer.Body.Position.X, 0));
+
+                    }
+                    else
+                    {
+                        InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * new Vector2(bomb.Body.Position.X - agent.ControlledPlayer.Body.Position.X, 0));
+                        if (Math.Abs(bomb.Body.Position.X - agent.ControlledPlayer.Body.Position.X) < bomb.Size.X &&  (agent.ControlledPlayer.Body.Position.Y - bomb.Body.Position.Y < 1.5f))
+                        {
+
+                            InputManager.Instance.setHandAmplitude(agent.ControlledPlayer.PlayerIndex, bomb.Body.Position - agent.ControlledPlayer.HandBody.Position);
+
+                        }
+                    }
+
+                }
+
+
+                                
+                return true;
+
+            }else{
+                //no bomb in level
+                return false;
+
+            }
+        }
+
+
+        /// <summary>
         /// Handles movement of a AI player (running to estimated ball position)
         /// </summary>
         public virtual void handleMovement()
@@ -266,6 +341,7 @@ namespace ManhattanMorning.Controller.AI
             //used for confused movement; should be 1 or -1 (-1 for movement in wrong direction)
             int a = 1;
             a = confusionHandling();
+            List<PowerUp> powerUps = SuperController.Instance.getAllPowerups();
 
 
             //let the player run towards the estimated ball position (left team)
@@ -279,14 +355,14 @@ namespace ManhattanMorning.Controller.AI
                 else
                 {
                     //searching for powerups in the level which are on the players side
-                    if (SuperController.Instance.getAllPowerups() != null)
+                    if (!chaseBomb(a))
                     {
-                        if (SuperController.Instance.getAllPowerups().Count != 0)
+                        if (powerUps != null && powerUps.Count != 0)
                         {
 
-                            foreach (PowerUp p in SuperController.Instance.getAllPowerups())
+                            foreach (PowerUp p in powerUps)
                             {
-                                if (p.Body.Position.X < levelSize.X * 0.5 + p.Size.X && p.Body.Position.Y < levelSize.Y * 0.5)
+                                if (p.Body.Position.X < levelSize.X * 0.5 + p.Size.X)
                                 {
                                   
                                     InputManager.Instance.setMovement( agent.ControlledPlayer.PlayerIndex, a *  new Vector2(p.Body.Position.X - agent.ControlledPlayer.Body.Position.X, 0));
@@ -300,6 +376,9 @@ namespace ManhattanMorning.Controller.AI
 
                         }
                     }
+
+
+
 
                 }
             }
@@ -318,14 +397,14 @@ namespace ManhattanMorning.Controller.AI
                 else
                 {
                     //searching for powerups in the level which are on the players side
-                    if (SuperController.Instance.getAllPowerups() != null)
+                    if (!chaseBomb(a))
                     {
-                        if (SuperController.Instance.getAllPowerups().Count != 0)
+                        if (powerUps != null && powerUps.Count != 0)
                         {
                             
-                            foreach (PowerUp p in SuperController.Instance.getAllPowerups())
+                            foreach (PowerUp p in powerUps)
                             {
-                                if (p.Body.Position.X > levelSize.X * 0.5 - p.Size.X && p.Body.Position.Y < levelSize.Y * 0.5)
+                                if (p.Body.Position.X > levelSize.X * 0.5 - p.Size.X )
                                 {
                                   
                                     InputManager.Instance.setMovement(agent.ControlledPlayer.PlayerIndex, a * new Vector2(p.Body.Position.X - agent.ControlledPlayer.Body.Position.X, 0));
@@ -361,6 +440,7 @@ namespace ManhattanMorning.Controller.AI
 
                 // if the player is in the left half of the playing field,
                 // try to hit the ball from the left side (not yet implemented)
+                // currently handled via movement
                 if (agent.ControlledPlayer.Body.Position.X < (levelSize.X / 2))
                 {
                     // move the hand
@@ -377,7 +457,7 @@ namespace ManhattanMorning.Controller.AI
             // Reset hand position if it shouldn't be used
             else
             {
-                InputManager.Instance.setHandAmplitude(agent.ControlledPlayer.PlayerIndex, Vector2.Zero);
+                //InputManager.Instance.setHandAmplitude(agent.ControlledPlayer.PlayerIndex, Vector2.Zero);
             }
 
         }
