@@ -275,12 +275,19 @@ namespace ManhattanMorning.Controller
             }
         }
 
+        /// <summary>
+        /// Returns the duration of a powerup.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public int getDurationFromType(PowerUpType type)
         {
             switch (type)
             {
                 case PowerUpType.InvertedControl:
                     return 8000;
+                case PowerUpType.SwitchStones:
+                    return 10000;
                 case PowerUpType.Wind:
                     return 15000;
                 case PowerUpType.SunsetSunrise:
@@ -423,7 +430,7 @@ namespace ManhattanMorning.Controller
                     }
                 case PowerUpType.SwitchStones:
                     {                        
-                        setSwitchStonesPowerUp();
+                        setSwitchStonesPowerUp(true);
                         Logger.Instance.log(Sender.PowerupManager, "Started SwitchStones PowerUp.", PriorityLevel.Priority_1);
                         break;
                     }
@@ -487,6 +494,12 @@ namespace ManhattanMorning.Controller
                         ParticleSystemsManager.Instance.stopParalysis(powerUp.Owner.Team);
                         setInvertedControlPowerUp(powerUp, false);
                         Logger.Instance.log(Sender.PowerupManager, "Disposed of inverted control PowerUp.", PriorityLevel.Priority_1);
+                        break;
+                    }
+                case PowerUpType.SwitchStones:
+                    {
+                        setSwitchStonesPowerUp(false);
+                        Logger.Instance.log(Sender.PowerupManager, "Disposed of switch stones PowerUp.", PriorityLevel.Priority_1);
                         break;
                     }
                 default:
@@ -676,9 +689,9 @@ namespace ManhattanMorning.Controller
         /// </summary>
         /// <param name="powerUp"></param>
         /// <param name="on"></param>
-        private void setSwitchStonesPowerUp()
+        private void setSwitchStonesPowerUp(bool on)
         {
-            GameLogic.Instance.changeStonePositions(false);
+            GameLogic.Instance.changeStonePositions(on);
         }
 
         /// <summary>

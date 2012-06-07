@@ -268,6 +268,7 @@ namespace ManhattanMorning
         {
             videoPlayer.Stop();
             videoPlayer.Dispose();
+            Graphics.Instance.fadeColor(Color.White, 800);
         }
 
         #endregion
