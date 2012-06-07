@@ -193,11 +193,17 @@ namespace ManhattanMorning.Controller
             // Defines how fast the specialbar fills if you perform a positive action
             settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 1.0f, 10.0f });
 
+            // Default duration of powerUps. Required to display icons for a while.
+            settings.Add("defaultEffectDuration", new object[] { 0, 3000, 0 });
+
             #region Jumpheight
 
             // Increased jumpheight factor
             // Used in GameLogic
             settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.2f, 3.0f });
+
+            // Duration of this powerUp
+            settings.Add("jumpheightEffectDuration", new object[] { 0, 10000, 0 });
 
             #endregion
 
@@ -215,6 +221,15 @@ namespace ManhattanMorning.Controller
             // The stun duration of bombs in ms
             settings.Add("lavaStunDuration", new object[] { 100, 1000, 5000 });
 
+            // Number of lava stones that spawn during the powerup
+            settings.Add("lavaAmount", new object[] { 1, 5, 10 });
+
+            // Time between lava spawns
+            settings.Add("lavaTime", new object[] { 500, 1000, 5000 });
+
+            // Duration of this powerUp
+            settings.Add("volcanoEffectDuration", new object[] { 0, 6000, 20000 });
+
             #endregion
 
             #region SuperBomb
@@ -228,10 +243,10 @@ namespace ManhattanMorning.Controller
             // The impact of bombs
             settings.Add("superBombImpact", new object[] { 1.0f, 5.0f, 1000.0f });
 
-            // The stun duration of bombs in ms
+            // The time until the bomb explodes
             settings.Add("superBombDuration", new object[] { 100, 9000, 50000 });
 
-            // The stun duration of bombs in ms
+            // The bombs mass
             settings.Add("superBombMass", new object[] { 0.1f, 0.2f, 1000.0f });
 
             // The stun duration of bombs in ms
@@ -244,6 +259,30 @@ namespace ManhattanMorning.Controller
             // Strength of the wind
             settings.Add("windStrength", new object[] { new Vector2(0.5f, 0.0f), new Vector2(2.8f, 0.8f), new Vector2(5.0f, 5.0f) });
 
+            // Duration of this powerUp
+            settings.Add("windEffectDuration", new object[] { 0, 15000, 0 });
+
+            #endregion
+
+            #region InvertedControl
+
+            // Duration of this powerUp
+            settings.Add("invertedControlEffectDuration", new object[] { 0, 8000, 0 });
+
+            #endregion
+
+            #region SwitchStones
+
+            // Duration of this powerUp
+            settings.Add("switchStonesEffectDuration", new object[] { 0, 15000, 0 });
+
+            #endregion
+
+            #region SunsetSunrise
+
+            // Duration of this powerUp
+            settings.Add("sunsetSunriseEffectDuration", new object[] { 0, 30000, 0 });
+
             #endregion
 
             #region BallRain
@@ -254,15 +293,8 @@ namespace ManhattanMorning.Controller
             // Time between ballrain spawns
             settings.Add("ballRainTime", new object[] { 1000, 5000, 20000 });
 
-            #endregion
-
-            #region Lava
-
-            // Number of lava stones that spawn during the powerup
-            settings.Add("lavaAmount", new object[] { 1, 5, 10 });
-
-            // Time between lava spawns
-            settings.Add("lavaTime", new object[] { 500, 1000, 5000 });
+            // Duration of this powerUp
+            settings.Add("ballRainEffectDuration", new object[] { 0, 12000, 0 });
 
             #endregion
 
