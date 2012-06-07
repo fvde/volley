@@ -538,11 +538,16 @@ namespace ManhattanMorning.Misc
 
         }
 
-
+        /// <summary>
+        /// Triggers all necessary actions to show the intro
+        /// </summary>
         public void activateIntro()
         {
-
-
+            //((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).FadingAnimation = new FadingAnimation(false, true, 1000, true, 500);
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).Visible = false;
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).Visible = false;
+            //((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation = new FadingAnimation(false, true, 1000, false, 500);
+            //TaskManager.Instance.addTask(new Tasks.AnimationTask(2000, ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation));
 
         }
 
