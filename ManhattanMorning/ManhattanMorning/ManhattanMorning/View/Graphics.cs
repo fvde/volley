@@ -470,7 +470,13 @@ namespace ManhattanMorning.View
             {
                 float elapsed = (float)(gameTime.TotalGameTime.TotalMilliseconds - fadeTimeStart);
                 lerpC = Color.Lerp(startColor, endColor, elapsed / fadeTime);
-                if (elapsed > fadeTime) fadeTime = 0;
+                if (elapsed > fadeTime)
+                {
+                    if (fadeBack)
+                        fadeColor(endColor, startColor, fadeTime, false);
+                    else
+                        fadeTime = 0;
+                }
             }
         }
 
@@ -1164,6 +1170,10 @@ namespace ManhattanMorning.View
         /// Duration of the fading.
         /// </summary>
         private int fadeTime;
+        /// <summary>
+        /// True if you want to fade from start to end and back.
+        /// </summary>
+        private bool fadeBack;
 
         /// <summary>
         /// Fades the whole screen from starting color to ending color in the given time.
@@ -1171,12 +1181,24 @@ namespace ManhattanMorning.View
         /// <param name="startColor">Starting color.</param>
         /// <param name="endColor">Ending color.</param>
         /// <param name="fadeTime">Time of the fading in ms.</param>
-        public void fadeColor(Color startColor, Color endColor, int fadeTime)
+        /// <param name="fadeBack">True if you want to fade from start to end and back.</param>
+        public void fadeColor(Color startColor, Color endColor, int fadeTime, bool fadeBack)
         {
             this.startColor = startColor;
             this.endColor = endColor;
             this.fadeTime = fadeTime;
             this.fadeTimeStart = gameTime.TotalGameTime.TotalMilliseconds;
+            this.fadeBack = fadeBack;
+        }
+
+        /// <summary>
+        /// Fades from the currently active fading value to the assigned ending value.
+        /// </summary>
+        /// <param name="endColor">Color to which you want to fade.</param>
+        /// <param name="fadeTime">Duration of fading in ms.</param>
+        public void fadeColor(Color endColor, int fadeTime)
+        {
+            fadeColor(lerpC, endColor, fadeTime, false);
         }
 
         /// <summary>
