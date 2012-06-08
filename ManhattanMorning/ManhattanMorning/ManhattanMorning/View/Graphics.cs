@@ -996,23 +996,18 @@ namespace ManhattanMorning.View
 
         private void drawWaterfall(Waterfall w,GameTime time)
         {
-
-
             //Update Waterfall
              w.update(time);
 
              if (w.Active == false) return;
 
              spriteBatchAll.End();
-
             
             //Testpurpose
            //if (w.Counter >= 600) w.stop();
-
          
             Rectangle dest;
             Rectangle source;
-
 
             //Draw Fading Out Top
             if (w.IsStopped == true && w.StopCounter < w.Size.Y)
@@ -1026,7 +1021,6 @@ namespace ManhattanMorning.View
                 textureShader.Parameters["waterfallStencilHeight"].SetValue(50.0f);
 
                 textureShader.CurrentTechnique.Passes[0].Apply();
-
                 
                 Rectangle headDest = new Rectangle((int)w.Position.X, ((int)w.Position.Y + w.StopCounter - 50), (int)w.Size.X, 50);
 
@@ -1038,30 +1032,24 @@ namespace ManhattanMorning.View
 
             spriteBatchAll.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null);
 
-           
-
             //Draw Waterfall
             if (w.Counter < w.Size.Y - w.tipHeight && w.IsStopped!=true)
             {
                 //Draw Tip
                 spriteBatchAll.Draw(w.waterfallTipTex, new Rectangle((int)w.Position.X, (int)w.Position.Y + w.Counter, (int)w.Size.X, w.tipHeight), Color.White);
             
-
                 source = new Rectangle(0, (w.tHeight - w.Counter) %( w.tHeight + 1), w.tWidth, w.Counter % (w.tHeight + 1));
                 dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, w.Counter);
                 spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
-
             }
 
             else
             {
                 if (w.IsStopped==false)
                 {
-
                     //Draw Cloud
                     spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White);
               
-
                     source = new Rectangle(0, (w.tHeight - w.Counter) % (w.tHeight + 1), w.tWidth, (int)w.Size.Y);
                     dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, (int)w.Size.Y);
                     spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
@@ -1069,7 +1057,6 @@ namespace ManhattanMorning.View
                  }
                 else if (w.StopCounter < w.Size.Y)
                 {
-
                     //Draw Cloud
 
                     spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White);
@@ -1079,18 +1066,11 @@ namespace ManhattanMorning.View
                     dest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter, (int)w.Size.X, (int)w.Size.Y - w.StopCounter);
 
                     spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
-
                  }
-          
-
-
-            }
- 
+            } 
 
             spriteBatchAll.End();
             spriteBatchAll.Begin();
-
-
         }
 
         /// <summary>

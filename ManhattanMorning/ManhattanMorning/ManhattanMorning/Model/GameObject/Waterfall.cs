@@ -119,12 +119,7 @@ namespace ManhattanMorning.Model.GameObject
 
             if (this.paused == false && this.active == true)
             {
-                //16.7 Milliseconds eqals 60 Updates per second
-                if (delta > 16.7f)
-                {
-                    this.counter += (int)(this.speed * delta/16.7f);
-                }
-               
+                this.counter += (int)(this.speed * delta/16.7f);
             }
     
         }
