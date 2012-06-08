@@ -1295,7 +1295,6 @@ namespace ManhattanMorning.Controller
                         Vector2 waterfallPosition = newStone.Position + new Vector2(newStone.Size.X * 0.2f, newStone.Size.Y * 0.75f);
                         Vector2 waterFallSize = new Vector2(newStone.Size.X * 0.65f, SuperController.Instance.GameInstance.LevelSize.Y - newStone.Position.Y - newStone.Size.Y - leftSideOffset);
                         Waterfall w = new Waterfall(waterfallPosition, waterFallSize, i);
-
                         waterfalls.Add(w);
                         SuperController.Instance.addGameObjectToGameInstance(w);
                     }
