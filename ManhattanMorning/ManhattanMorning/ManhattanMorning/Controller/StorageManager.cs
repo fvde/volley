@@ -247,7 +247,7 @@ namespace ManhattanMorning.Controller
                 Physics.Instance.disableCollisionBetweenBodies(gameInstance.GameObjects.GetPlayer(playerLeftTeam[0].PlayerIndex).Body,
                     gameInstance.GameObjects.GetPlayer(playerLeftTeam[1].PlayerIndex).HandBody);
 
-                // Btween Player and Player
+                // Between Player and Player
                 Physics.Instance.disableCollisionBetweenActiveObjects(gameInstance.GameObjects.GetPlayer(playerRightTeam[0].PlayerIndex),
                     gameInstance.GameObjects.GetPlayer(playerRightTeam[1].PlayerIndex));
                 // Between Hand and Player
