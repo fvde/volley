@@ -376,7 +376,8 @@ namespace ManhattanMorning.Model
         }
 
         public DrawableObject()
-        {            
+        {
+            attachedObjects = new List<DrawableObject>();
         }
 
         #endregion

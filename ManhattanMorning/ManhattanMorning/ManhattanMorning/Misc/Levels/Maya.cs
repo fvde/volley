@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using ManhattanMorning.Controller;
 using ManhattanMorning.Misc.Curves;
 using ManhattanMorning.Model.GameObject;
+using ManhattanMorning.Model;
 using ManhattanMorning.View;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -107,6 +108,36 @@ namespace ManhattanMorning.Misc.Levels
 
             PassiveObject stone3 = new PassiveObject("stone3", "stone3", Graphics.Instance.convertUnits(new Vector2(98, 84), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), Graphics.Instance.convertUnits(new Vector2(852, 151), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), 25);
 
+            Light l0 = new Light("stoneL", StorageManager.Instance.getTextureByName("stone_light"), stone0.Size * 1.3f, stone0.Position - stone0.Size / 2, Color.DarkMagenta, true, null);
+            int time = (int)SettingsManager.Instance.get("switchStonesEffectDuration") - 2000;
+            FadingAnimation fading0 = new FadingAnimation(false, true, time, false, 1000);
+            l0.FadingAnimation = fading0;
+            l0.Visible = false;
+
+            Light l1 = new Light("stoneL", StorageManager.Instance.getTextureByName("stone_light"), stone1.Size * 1.3f, stone1.Position - stone1.Size / 2, Color.DarkMagenta, true, null);
+            FadingAnimation fading1 = new FadingAnimation(false, true, time, false, 1000);
+            l1.FadingAnimation = fading1;
+            l1.Visible = false;
+
+            Light l2 = new Light("stoneL", StorageManager.Instance.getTextureByName("stone_light"), stone2.Size * 1.3f, stone2.Position - stone2.Size / 2, Color.DarkMagenta, true, null);
+            FadingAnimation fading2 = new FadingAnimation(false, true, time, false, 1000);
+            l2.FadingAnimation = fading2;
+            l2.Visible = false;
+
+            Light l3 = new Light("stoneL", StorageManager.Instance.getTextureByName("stone_light"), stone3.Size * 1.3f, stone3.Position - stone3.Size / 2, Color.DarkMagenta, true, null);
+            FadingAnimation fading3 = new FadingAnimation(false, true, time, false, 1000);
+            l3.FadingAnimation = fading3;
+            l3.Visible = false;
+
+            stone0.attachObject(l0);
+            stone1.attachObject(l1);
+            stone2.attachObject(l2);
+            stone3.attachObject(l3);
+
+            levelObjectsList.Add(l0);
+            levelObjectsList.Add(l1);
+            levelObjectsList.Add(l2);
+            levelObjectsList.Add(l3);
 
             levelObjectsList.Add(stone0);
             levelObjectsList.Add(stone1);

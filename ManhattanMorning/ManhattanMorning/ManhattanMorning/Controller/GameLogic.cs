@@ -1270,12 +1270,17 @@ namespace ManhattanMorning.Controller
                         TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
 
                         // scalling up working... propably...
-                        newStone.Size = Graphics.Instance.convertUnits(new Vector2(96, 87), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter);
                         newStone.ScalingAnimation = new ScalingAnimation(false, false, 0, true, 2000);
                         newStone.ScalingAnimation.ScalingRange = new Vector2(1.0f, 1.25f);
 
                         activeMayaStones.Add(i);
                         stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
+
+                        //light
+                        Light l = newStone.AttachedObjects.First() as Light;
+                        l.FadingAnimation.TimeSinceFadingStarted = 0;
+                        l.Visible = true;
+                        l.FadingAnimation.Active = true;
 
                         // Start Waterfall
                         float leftSideOffset = 0.0f;
@@ -1316,9 +1321,14 @@ namespace ManhattanMorning.Controller
                     {
                         PassiveObject oldStone = SuperController.Instance.getObjectByName("stone" + i) as PassiveObject;
                         // tried to enlarge the size and scalling it down... does not work yet
-                        oldStone.Size = Graphics.Instance.convertUnits(new Vector2(96 * 1.25f, 87 * 1.25f), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter);
-                        oldStone.ScalingAnimation = new ScalingAnimation(false, true, 0, true, 2000);
-                        oldStone.ScalingAnimation.ScalingRange = new Vector2(0.8f, 1.0f);
+                        oldStone.ScalingAnimation.TimeSinceFadingStarted = 0;
+                        oldStone.ScalingAnimation.Active = true;
+                        oldStone.ScalingAnimation.ScalingRange = new Vector2(1.25f, 1f);
+
+                        Light l = oldStone.AttachedObjects.First() as Light;
+                        l.Visible = false;
+                        l.FadingAnimation.Active = false;
+                        l.FadingAnimation.DurationBeforeReverse = (int)SettingsManager.Instance.get("switchStonesEffectDuration") - 2000;
 
                         Physics.Instance.removeBodyFromPhysicSimulation(stoneBlocks[i]);
                         stoneBlocks[i] = null;
