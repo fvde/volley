@@ -65,7 +65,7 @@ float4 SobelEdgeFilterPS(float2 tex: TEXCOORD0) : COLOR0
 float4 GaussFilterPS(float2 tex: TEXCOORD0) : COLOR0
 {
 	float4 col = tex2D(TextureSampler, tex.xy);
-	
+
 	col = float4(0,0,0,0);
 	for (int i=0; i < NUM; i++) {
 		col += (tex2D(TextureSampler, tex.xy + c2[i]*0.4) * gaussW[i]);
@@ -90,13 +90,13 @@ float4 DarkenEdgesPS(float2 tex: TEXCOORD0) : COLOR0
 
 float4 InterpolateColorPS(float2 tex: TEXCOORD0) : COLOR0
 {
-	float4 col = tex2D(TextureSamplerY, tex.xy);
-
+	float4 col = tex2D(TextureSampler, tex.xy);
+	
 	if(dot(col,float4(1,1,1,0)) < 0.1) return float4(0,0,0,0);
 
 	float4 dest = float4(0,0,0,0);
 	for (int i=0; i < NUM; i++) {
-      dest += tex2D(TextureSamplerY, tex.xy + c2[i]*1);
+      dest += tex2D(TextureSampler, tex.xy + c2[i]*1);
     }
 
 	return dest / 9;
