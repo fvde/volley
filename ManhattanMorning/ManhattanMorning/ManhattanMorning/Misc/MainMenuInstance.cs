@@ -1540,7 +1540,7 @@ namespace ManhattanMorning.Misc
             // If there was an input, fade out the overlay
             if (timeSinceLastInput == 0)
             {
-                if (overlayObject.Visible == true)
+                if ((overlayObject.Visible == true) && (overlayObject.FadingAnimation.TimeSinceFadingStarted == 0))
                 {
                     overlayObject.FadingAnimation = new FadingAnimation(false, false, 0, true, 400);
                     overlayObject.FadingAnimation.Inverted = true;
