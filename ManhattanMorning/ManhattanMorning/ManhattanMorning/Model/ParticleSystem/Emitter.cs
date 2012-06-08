@@ -423,14 +423,18 @@ namespace ManhattanMorning.Model.ParticleSystem
                 }
             }
 
-            //Update the Time since the Emitter emitted for the last time
-            milliSecondsSinceLastEmit += (float)time.ElapsedGameTime.TotalMilliseconds;
+            int numberEmitParticles = 0;
+            if (active)
+            {
+                //Update the Time since the Emitter emitted for the last time
+                milliSecondsSinceLastEmit += (float)time.ElapsedGameTime.TotalMilliseconds;
 
-            //Calculate the number of Particles we have to emit
-            int numberEmitParticles = (int)((milliSecondsSinceLastEmit / 1000.0f) * particlesPerSecond);
+                //Calculate the number of Particles we have to emit
+                numberEmitParticles = (int)((milliSecondsSinceLastEmit / 1000.0f) * particlesPerSecond);
 
-            //Put the rest of the time back, so we don't lose Particles
-            milliSecondsSinceLastEmit = milliSecondsSinceLastEmit - particlesPerSecond / 1000.0f * numberEmitParticles;
+                //Put the rest of the time back, so we don't lose Particles
+                milliSecondsSinceLastEmit = milliSecondsSinceLastEmit - particlesPerSecond / 1000.0f * numberEmitParticles;
+            }
 
             //Update Particles  
             int count = 0;

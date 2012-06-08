@@ -32,6 +32,7 @@ namespace ManhattanMorning.Controller
         private ParticleSystem superbombExplosionSystem; //holds emitters for smoke and fire
         private ParticleSystem[] lavaExplosionSystem; //holds emitters for smoke and fire
         private ParticleSystem[] windSystem;
+        private ParticleSystem vulcanoSystem;
         private ParticleSystem meteorBallSystem;
         private ParticleSystem specialbarHighlight;
         private ParticleSystem highlightJumpSystem;
@@ -128,6 +129,38 @@ namespace ManhattanMorning.Controller
         #region Methods
 
         #region Create Emitters
+
+        private ParticleSystem createVulcanoEmitter(Vector2 pos)
+        {
+            //lava
+            EmitterFountain e = new EmitterFountain(pos, 7, 1.5f);
+            e.EmitterShape = new EmitterPointShape();
+            e.EmitterForcesList.Add(Vector2.UnitY * 3);
+            e.EmittingDuration = 7000f;
+            e.EmitterDirection = -Vector2.UnitY;
+            e.EmitterAngle = 0.38f;
+            e.ParticleLifeTime = 2.2f;
+            e.ParticleFadeOut = FadeMode.None;
+            e.ParticleSize = new Vector2(0.25f);
+            e.InitialParticleSpeed = 5.5f;
+            e.InitialParticleVelocityVariance = new Vector2(5.5f, 6.8f);
+            e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/PowerUps/powerup_lava");
+            e.initializeParticles();
+            e.Active = false;
+
+            vulcanoSystem = new ParticleSystem(8);
+            vulcanoSystem.SystemBlendState = BlendState.NonPremultiplied;
+            
+            vulcanoSystem.addEmitter(e);
+
+            //smoke
+            Emitter e1 = createSmokeEmitterVulcano(new Vector2(1.6f), pos, -Vector2.UnitY, Color.WhiteSmoke);
+            e1.Active = false;
+            vulcanoSystem.addEmitter(e1);
+            vulcanoSystem.addEmitter(e);
+
+            return vulcanoSystem;
+        }
 
         private Emitter createDustEmitter(Vector2 pos)
         {
@@ -232,7 +265,7 @@ namespace ManhattanMorning.Controller
             ParticleSystem p = new ParticleSystem(7);
             p.SystemBlendState = BlendState.AlphaBlend;
             //smoke
-            p.addEmitter(createSmokeEmitter(new Vector2(0.9f), pos, -Vector2.UnitY));
+            p.addEmitter(createSmokeEmitter(new Vector2(0.9f), pos, -Vector2.UnitY, Color.White));
             p.addEmitter(e);            
 
             return p;
@@ -318,7 +351,7 @@ namespace ManhattanMorning.Controller
         /// </summary>
         /// <param name="size">Size of the Particles.</param>
         /// <returns>The created Emitter.</returns>
-        private Emitter createSmokeEmitter(Vector2 particleSize, Vector2 position, Vector2 emitterDirection)
+        private Emitter createSmokeEmitter(Vector2 particleSize, Vector2 position, Vector2 emitterDirection, Color col)
         {
             //Create new Emitter and Initialize Particles
             EmitterFountain e = new EmitterFountain(position, 16, 1f);
@@ -333,7 +366,34 @@ namespace ManhattanMorning.Controller
             e.EmitterAngle = 0.30f;
             e.EmitterDirection = emitterDirection;
             e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/smoke_particle");
-            e.ParticleColor = Color.White;
+            e.ParticleColor = col;
+            e.initializeParticles();
+            e.Active = true;
+            return e;
+        }
+
+        /// <summary>
+        /// Creates a new smoke Emitter which emitts smoke in a given direction.
+        /// </summary>
+        /// <param name="size">Size of the Particles.</param>
+        /// <returns>The created Emitter.</returns>
+        private Emitter createSmokeEmitterVulcano(Vector2 particleSize, Vector2 position, Vector2 emitterDirection, Color col)
+        {
+            //Create new Emitter and Initialize Particles
+            EmitterFountain e = new EmitterFountain(position, 16, 2f);
+            e.EmitterShape = new EmitterPointShape();
+            e.IncludeMovingOffset = true;
+            e.ParticleLifeTime = 5f;
+            e.ParticleFadeOut = FadeMode.Quadratic;
+            e.ParticleGrowth = GrowthMode.Linear;
+            e.ParticleGrowthRate = 1.3f;
+            e.ParticleSize = particleSize;
+            e.InitialParticleSpeed = 1.3f;
+            e.EmitterAngle = 0.45f;
+            e.ParticleStartingAlpha = 0.85f;
+            e.EmitterDirection = emitterDirection;
+            e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/smoke_particle");
+            e.ParticleColor = col;
             e.initializeParticles();
             e.Active = true;
             return e;
@@ -745,6 +805,17 @@ namespace ManhattanMorning.Controller
         }
 
         /// <summary>
+        /// Play vulcano emit.
+        /// </summary>
+        public void playVulcano(bool start)
+        {
+            foreach (Emitter e in vulcanoSystem.EmitterList)
+            {
+                e.Active = start;
+            }
+        }
+
+        /// <summary>
         /// Changes the applied force for the falling particles.
         /// </summary>
         /// <param name="forceDirection">The force to apply.</param>
@@ -949,16 +1020,13 @@ namespace ManhattanMorning.Controller
             sandSystem.SystemBlendState = BlendState.Additive;
 
             ballCollision = new ParticleSystem(55);
-            ballCollision.SystemBlendState = BlendState.AlphaBlend;
 
             specialbarHighlight = new ParticleSystem(85);
-            specialbarHighlight.SystemBlendState = BlendState.AlphaBlend;
 
             meteorBallSystem = new ParticleSystem(55);
             meteorBallSystem.SystemBlendState = BlendState.NonPremultiplied;
 
             highlightJumpSystem = new ParticleSystem(55);
-            highlightJumpSystem.SystemBlendState = BlendState.AlphaBlend;
 
             bombSystem = new ParticleSystem[6];
             lavaExplosionSystem = new ParticleSystem[6];
@@ -1025,7 +1093,9 @@ namespace ManhattanMorning.Controller
                     sandStormSystem = createSandStormSystem(Color.Beige);
                     windSystem = new ParticleSystem[1];
                     windSystem[0] = createVulcanoSystem(new Vector2(9.7f, 4) * resizeFactor);
-                    addSystem(windSystem[0]);                   
+                    addSystem(windSystem[0]);
+                                        
+                    addSystem(createVulcanoEmitter(new Vector2(9.7f, 4) * resizeFactor));
                     break;
             }
 
