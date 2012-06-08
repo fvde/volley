@@ -1443,7 +1443,7 @@ namespace ManhattanMorning.View
             //only add a Light if the fading state differs from 0
             if (isNight)
             {
-                Light l = new Light("forestLight", game.Content.Load<Texture2D>("Textures/Light/light_smooth"), obj.Size*4, obj.Position, Color.WhiteSmoke, true, null);
+                Light l = new Light("forestLight", game.Content.Load<Texture2D>("Textures/Light/light"), obj.Size*4, obj.Position, Color.WhiteSmoke, true, null);
                 l.Alpha = 0.8f;
                 l.AttachedObject = obj;
                 obj.attachObject(l);

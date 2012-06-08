@@ -221,7 +221,7 @@ namespace ManhattanMorning.Controller
                         resetPosition, 50,
                         1, MeasurementUnit.Meter, playerRepresentation.PlayerIndex, team, status, playerRepresentation.InputDevice);
 
-                    PassiveObject playerHighlight = new PassiveObject("PlayerHighlight", true, StorageManager.Instance.getTextureByName("light"), null, null, player.Size / 1.4f, player.Position, 53,
+                    PassiveObject playerHighlight = new PassiveObject("PlayerHighlight", true, StorageManager.Instance.getTextureByName("light"), null, null, player.Size / 1.1f, player.Position, 53,
                         MeasurementUnit.Meter, null);
                     //playerHighlight.Offset = -player.Size / 8;
                     SuperController.Instance.addGameObjectToGameInstance(playerHighlight);
@@ -516,7 +516,7 @@ namespace ManhattanMorning.Controller
             #region BallIndicatorAfterScore
             PassiveObject ballDisplayAfterScore = new PassiveObject("BallAfterScore", false, getTextureByName("Ball"), null, null, (Vector2)SettingsManager.Instance.get("ballSize"), GameLogic.Instance.ballResetPosition, 52, MeasurementUnit.Meter, null);
             FadingAnimation fading = new FadingAnimation(false, false, 0, false, 1000);
-            Light light = new Light("", getTextureByName("light_smooth"), ballDisplayAfterScore.Size*2, ballDisplayAfterScore.Position, Color.White, false, null);
+            Light light = new Light("", getTextureByName("light"), ballDisplayAfterScore.Size*2, ballDisplayAfterScore.Position, Color.White, false, null);
 
             ballDisplayAfterScore.attachObject(light);
             ballDisplayAfterScore.FadingAnimation = fading;
@@ -654,9 +654,7 @@ namespace ManhattanMorning.Controller
 
             #region Lights
 
-            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light_large_highlight"), "light_large_highlight");
-            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light_small_highlight"), "light_small_highlight");
-            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light_smooth"), "light_smooth");
+            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light_large_highlight"), "light_large_highlight");            
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light"), "light");
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/stone_highlight"), "stone_light");
 
