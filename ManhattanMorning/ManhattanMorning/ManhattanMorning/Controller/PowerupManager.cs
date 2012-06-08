@@ -640,7 +640,7 @@ namespace ManhattanMorning.Controller
             else
             {
                 ParticleSystemsManager.Instance.removeForceFallingParticles();
-                if (SuperController.Instance.GameInstance.LevelName == "Beach") ParticleSystemsManager.Instance.deactivateSandStorm();
+                ParticleSystemsManager.Instance.deactivateSandStorm();
             }
         }
 
