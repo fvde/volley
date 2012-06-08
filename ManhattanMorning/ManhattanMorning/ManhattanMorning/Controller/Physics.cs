@@ -890,23 +890,21 @@ namespace ManhattanMorning.Controller
             Vector2 forceDirection = new Vector2(0, 0);
             float distance = 0.0f;
 
-            // Notify Graphics:
+            // play explosion
             ParticleSystemsManager.Instance.playBombExplosion(targetPoint, new Vector2(explosionRange*2), isSuperBomb);
-            if (isSuperBomb)
-            {
-                Vector2 size = new Vector2(explosionRange*2);
-                PassiveObject passive = new PassiveObject("exRad", true, StorageManager.Instance.getTextureByName("bomb_explosion"), null, null, size, targetPoint - size / 2, 56, MeasurementUnit.Meter);
-                passive.BlendColor = Color.Yellow;
-                FadingAnimation fading = new FadingAnimation(false, false, 250, true, 450);
-                fading.Inverted = true;
-                ScalingAnimation scaling = new ScalingAnimation(false, false, 0, true, 250);
-                scaling.ScalingRange = new Vector2(0.05f, 1);
-                passive.FadingAnimation = fading;
-                passive.ScalingAnimation = scaling;
+            //add light
+            Vector2 size = new Vector2(explosionRange*2);
+            PassiveObject passive = new PassiveObject("exRad", true, StorageManager.Instance.getTextureByName("bomb_explosion"), null, null, size, targetPoint - size / 2, 56, MeasurementUnit.Meter);
+            passive.BlendColor = Color.Yellow;
+            FadingAnimation fading = new FadingAnimation(false, false, 250, true, 450);
+            fading.Inverted = true;
+            ScalingAnimation scaling = new ScalingAnimation(false, false, 0, true, 250);
+            scaling.ScalingRange = new Vector2(0.05f, 1);
+            passive.FadingAnimation = fading;
+            passive.ScalingAnimation = scaling;
 
-                SuperController.Instance.addGameObjectToGameInstance(passive);
-                TaskManager.Instance.addTask(new GameLogicTask(400, passive));
-            }
+            SuperController.Instance.addGameObjectToGameInstance(passive);
+            TaskManager.Instance.addTask(new GameLogicTask(400, passive));
 
             foreach (Body body in getBodiesInCircle(targetPoint, explosionRange))
             {
@@ -1207,6 +1205,10 @@ namespace ManhattanMorning.Controller
             lava.Body.ApplyLinearImpulse(new Vector2((float)(2 * random.NextDouble()) - 1, (float)(2 * random.NextDouble()) - 1));
             lava.Body.ApplyTorque(10 * (float)random.NextDouble());
 
+            Light l = new Light("lavaL", StorageManager.Instance.getTextureByName("light"), lava.Size * 2, lava.Position, Color.OrangeRed, true, null);
+            lava.attachObject(l);
+
+            SuperController.Instance.addGameObjectToGameInstance(l);
             SuperController.Instance.addGameObjectToGameInstance(lava);
             ParticleSystemsManager.Instance.playBombFalling(lava);
             // Collision

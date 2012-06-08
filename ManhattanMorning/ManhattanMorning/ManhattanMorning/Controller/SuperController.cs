@@ -615,7 +615,12 @@ namespace ManhattanMorning.Controller
                 {
                     g.AttachedTo = null;
                 }
-            }           
+
+                foreach (DrawableObject d in g.AttachedObjects)
+                {
+                    gameInstance.GameObjects.remove(d);
+                }
+            }            
 
             gameInstance.GameObjects.remove(l);
             if (l is ActiveObject)

@@ -179,12 +179,12 @@ namespace ManhattanMorning.Controller
             }
         }
 
-        private ParticleSystem createSandStormSystem()
+        private ParticleSystem createSandStormSystem(Color tinting)
         {
             EmitterFountain e = new EmitterFountain(new Vector2(-6.0f, 7.0f), 700, 100);
             e.EmitterShape = new EmitterRectangleShape(5.0f, 1.50f, new Vector2(0, 1));
             e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/particle1");
-            e.ParticleColor = Color.Beige;
+            e.ParticleColor = tinting;
             e.ParticleFadeOut = FadeMode.None;
             e.ParticleSize = new Vector2(1.0f, 1.0f);
             e.Active = false;
@@ -204,8 +204,6 @@ namespace ManhattanMorning.Controller
 
             return p;
         }
-           
-
 
         /// <summary>
         /// Creates a vulcano particle system for beach level with lava and smoke.
@@ -284,7 +282,7 @@ namespace ManhattanMorning.Controller
             e.LinkedObjectOffset = new Vector2(0.2f, 0.2f);
             e.InitialParticleSpeed = 0.3f;
             e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/smoke_particle");
-            e.ParticleColor = Color.White;
+            e.ParticleColor = new Color(1f,1f,1f,0.7f);
             e.initializeParticles();
             e.Active = true;
             e.Pause = true;
@@ -348,7 +346,7 @@ namespace ManhattanMorning.Controller
         /// <param name="offset">Offset from center of the Emitter in meter.</param>        
         /// <param name="texture">Texture of the Particles.</param>
         /// <returns>The created Emitter.</returns>
-        private Emitter createFireEmitter(Vector2 size, Vector2 offset, String texture)
+        private Emitter createFireEmitter(Vector2 size, Vector2 offset, String texture, Color color)
         {
             //Create new Emitter and Initialize Particles
             EmitterFountain e = new EmitterFountain(Vector2.Zero, 16, 50);
@@ -361,7 +359,7 @@ namespace ManhattanMorning.Controller
             e.LinkedObjectOffset = offset;
             e.InitialParticleSpeed = 0.3f;
             e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/"+texture);
-            e.ParticleColor = Color.OrangeRed;
+            e.ParticleColor = color;
             e.initializeParticles();
             e.Active = true;
             e.Pause = true;
@@ -942,8 +940,6 @@ namespace ManhattanMorning.Controller
         /// </summary>
         public void initialize()
         {
-            sandStormSystem = createSandStormSystem();
-
             metertopixel = (float)SettingsManager.Instance.get("meterToPixel");
             viewportSize = new Vector2(Game1.Instance.GraphicsDevice.Viewport.Width, Game1.Instance.GraphicsDevice.Viewport.Height);
 
@@ -1008,8 +1004,10 @@ namespace ManhattanMorning.Controller
             switch (SuperController.Instance.GameInstance.LevelName)
             {
                 case "Maya":
+                    sandStormSystem = createSandStormSystem(Color.DarkKhaki);
                     break;
                 case "Forest":
+                    sandStormSystem = createSandStormSystem(new Color(125,130,34));
                     windSystem = new ParticleSystem[2];
                     windSystem[0] = new ParticleSystem(9);
                     windSystem[1] = new ParticleSystem(60);
@@ -1024,9 +1022,10 @@ namespace ManhattanMorning.Controller
                     addSystem(windSystem[1]);
                     break;
                 case "Beach":
+                    sandStormSystem = createSandStormSystem(Color.Beige);
                     windSystem = new ParticleSystem[1];
                     windSystem[0] = createVulcanoSystem(new Vector2(9.7f, 4) * resizeFactor);
-                    addSystem(windSystem[0]);
+                    addSystem(windSystem[0]);                   
                     break;
             }
 
@@ -1036,16 +1035,17 @@ namespace ManhattanMorning.Controller
 
             //create system for ball smoke and fire
             meteorBallSystem.addEmitter(createSmokeEmitterForTrail(new Vector2(1.0f, 1.0f)));
-            meteorBallSystem.addEmitter(createFireEmitter(new Vector2(1.65f, 1.65f), new Vector2(0.2f, 0.2f), "Particle001"));
-            meteorBallSystem.addEmitter(createFireEmitter(new Vector2(0.55f, 0.55f), new Vector2(0.25f, 0.25f), "Flame"));
+            meteorBallSystem.addEmitter(createFireEmitter(new Vector2(1.65f, 1.65f), new Vector2(0.2f, 0.2f), "Particle001", Color.Orange));
+            meteorBallSystem.addEmitter(createFireEmitter(new Vector2(0.55f, 0.55f), new Vector2(0.25f, 0.25f), "Flame", Color.Orange));
 
             float scale = (float)SettingsManager.Instance.get("lavaRange") / (float) SettingsManager.Instance.get("superBombRange");
 
             for (int i = 0; i < bombSystem.Length; i++)
             {
-                bombSystem[i].addEmitter(createSmokeEmitterForTrail(new Vector2(0.8f, 0.8f)));
-                bombSystem[i].addEmitter(createFireEmitter(new Vector2(1.3f, 1.3f), new Vector2(0.15f, 0.15f), "Particle001"));
-                bombSystem[i].addEmitter(createFireEmitter(new Vector2(0.45f, 0.45f), new Vector2(0.2f, 0.2f), "Flame"));
+                bombSystem[i].addEmitter(createSmokeEmitterForTrail(new Vector2(0.9f)));
+                bombSystem[i].addEmitter(createFireEmitter(new Vector2(1.4f, 1.4f), new Vector2(0.15f, 0.15f), "Particle001", Color.Orange));
+                //bombSystem[i].addEmitter(createFireEmitter(new Vector2(0.75f, 0.75f), new Vector2(0.2f, 0.2f), "Flame", Color.Orange));
+                bombSystem[i].addEmitter(createFireEmitter(new Vector2(0.75f, 0.75f), new Vector2(0.2f, 0.2f), "Flame", Color.Red));
                 addSystem(bombSystem[i]);
 
                 lavaExplosionSystem[i].addEmitter(createExplosionEmitter(new Vector2(0.3f) * scale, "FlowerBurst", Color.Red, 6.2f, 90, 0.5f * scale));
