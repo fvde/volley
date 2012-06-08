@@ -185,6 +185,10 @@ namespace ManhattanMorning.Controller
             // Create the levels instance
             levels = new Levels();
 
+            // Start necessary controllers
+            TaskManager.Instance.pause(false);
+            AnimationManager.Instance.pause(false);
+
             // Create the menu instance
             mainMenuInstance = new MainMenuInstance(levels);
             ingameMenuInstance = new IngameMenuInstance();
@@ -221,6 +225,7 @@ namespace ManhattanMorning.Controller
             }
 
             InputManager.Instance.update(gameTime);
+            TaskManager.Instance.update(gameTime);
 
             SoundManager.Instance.update(gameTime);
             Graphics.Instance.update(gameTime);
@@ -236,7 +241,7 @@ namespace ManhattanMorning.Controller
                 AnimationManager.Instance.update(gameTime, gameInstance.GameObjects);
                 ParticleSystemsManager.Instance.update(gameTime);
                 PowerUpManager.Instance.update(gameTime,gameInstance.GameObjects, gameInstance.ActivePowerUps);
-                TaskManager.Instance.update(gameTime);
+                
             }
 
             // Controllers which have to be updated when in MainMenu

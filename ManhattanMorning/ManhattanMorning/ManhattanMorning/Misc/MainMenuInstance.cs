@@ -547,7 +547,7 @@ namespace ManhattanMorning.Misc
             ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).Visible = false;
             ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).Visible = false;
             //((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation = new FadingAnimation(false, true, 1000, false, 500);
-            //TaskManager.Instance.addTask(new Tasks.AnimationTask(2000, ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation));
+            //TaskManager.Instance.addTask(new Tasks.AnimationTask(4000, ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation));
 
         }
 
