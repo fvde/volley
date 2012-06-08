@@ -181,6 +181,9 @@ namespace ManhattanMorning.Misc
         /// </summary>
         private List<int> activePlayers = new List<int>();
 
+
+        private Random rnd;
+
         #endregion
 
 
@@ -195,6 +198,8 @@ namespace ManhattanMorning.Misc
 
             // Save attributes
             this.levels = levels;
+
+            rnd = new Random();
 
             // Load the objects
             menuObjectList = StorageManager.Instance.LoadMainMenuObjects();
@@ -1144,6 +1149,58 @@ namespace ManhattanMorning.Misc
                 switchMenuState(previousMenuState);
                 timeSinceLastInput = 0;
 
+            }
+
+        }
+
+        /// <summary>
+        /// Triggers all necessary actions when the random team button is pressed
+        /// </summary>
+        public void randomTeamButtonPressed()
+        {
+
+
+
+            // When in 1vs1 or 2vs2 team menu
+            if ((menuState == 1) || (menuState == 2))
+            {
+
+                // Set the maximum players for one team
+                int limit = menuState;
+
+                // Reset all players first
+                for (int i = 0; i < playerArray.Length; i++)
+                    if (playerArray[i].Active)
+                        playerArray[i].Team = 0;
+
+                // Go through all players
+                for (int i = 0; i < playerArray.Length; i++)
+                {
+                    // if the player is active
+                    if (playerArray[i].Active)
+                    {
+                        // Get a random team
+                        int team = rnd.Next(1, 3);
+
+                        // Check if team is not already full
+                        if (getNumberOfTeamMembers(team) > (limit - 1))
+                        {
+                            // If so switch to the other team
+                            if (team == 1)
+                                team = 2;
+                            else
+                                team = 1;
+                        }
+
+                        // Set team
+                        playerArray[i].Team = team;
+                        // Set position
+                        if (team == 1)
+                            playerArray[i].setXPosition(xPositionLeftTeam);
+                        else
+                            playerArray[i].setXPosition(xPositionRightTeam);
+                    }
+                }
             }
 
         }

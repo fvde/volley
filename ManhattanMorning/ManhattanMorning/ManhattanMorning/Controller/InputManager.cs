@@ -764,7 +764,11 @@ namespace ManhattanMorning.Controller
                         (gamepad.PreviousGamePadState.Buttons.B != ButtonState.Pressed))
                         SuperController.Instance.MainMenuInstance.backButtonPressed();
 
-                    
+                    // "Y" pressed
+                    if ((gamepad.CurrentGamePadState.Buttons.Y == ButtonState.Pressed) &&
+                        (gamepad.PreviousGamePadState.Buttons.Y != ButtonState.Pressed))
+                        SuperController.Instance.MainMenuInstance.randomTeamButtonPressed();
+
                 }
             }
 
@@ -783,6 +787,10 @@ namespace ManhattanMorning.Controller
             // "Backspace" button pressed
             if (currentKeyboardState.IsKeyDown(Keys.Back) && (!previousKeyboardState.IsKeyDown(Keys.Back)))
                 SuperController.Instance.MainMenuInstance.backButtonPressed();
+
+            // "Y" button pressed
+            if (currentKeyboardState.IsKeyDown(Keys.Y) && (!previousKeyboardState.IsKeyDown(Keys.Y)))
+                SuperController.Instance.MainMenuInstance.randomTeamButtonPressed();
 
             #region Keyboard1 (Arrow-Keys)
 
