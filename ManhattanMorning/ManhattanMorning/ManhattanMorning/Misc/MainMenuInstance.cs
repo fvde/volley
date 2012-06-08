@@ -543,6 +543,10 @@ namespace ManhattanMorning.Misc
         /// </summary>
         public void activateIntro()
         {
+
+            // Play Music
+            SoundManager.Instance.playMusic(MusicState.Intro);
+
             //((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).FadingAnimation = new FadingAnimation(false, true, 1000, true, 500);
             ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).Visible = false;
             ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).Visible = false;
