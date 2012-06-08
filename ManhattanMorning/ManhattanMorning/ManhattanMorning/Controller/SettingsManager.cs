@@ -274,7 +274,7 @@ namespace ManhattanMorning.Controller
             #region SwitchStones
 
             // Duration of this powerUp
-            settings.Add("switchStonesEffectDuration", new object[] { 0, 15000, 0 });
+            settings.Add("switchStonesEffectDuration", new object[] { 0, 5000, 0 });
 
             #endregion
 

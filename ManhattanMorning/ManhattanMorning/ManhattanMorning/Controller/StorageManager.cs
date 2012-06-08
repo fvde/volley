@@ -408,8 +408,7 @@ namespace ManhattanMorning.Controller
                 else if (drawObj is Light)
                 {
                     Light tempObject = drawObj as Light;
-                    tempObject.Texture = game1.Content.Load<Texture2D>(@"Textures\Light\" + tempObject.TextureName);
-                    ((DrawableObject)drawObj).Visible = true;
+                    if(tempObject.Texture == null) tempObject.Texture = game1.Content.Load<Texture2D>(@"Textures\Light\" + tempObject.TextureName);
                     tempObject.Position *= resizeFactorLevelSize;
                     tempObject.Size *= resizeFactorLevelSize;
 
@@ -659,6 +658,7 @@ namespace ManhattanMorning.Controller
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light_small_highlight"), "light_small_highlight");
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light_smooth"), "light_smooth");
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/light"), "light");
+            saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/stone_highlight"), "stone_light");
 
             saveTextureByName(game1.Content.Load<Texture2D>(@"Textures/Light/highlight_ball"), "highlight_ball");
 
