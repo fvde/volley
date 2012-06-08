@@ -532,6 +532,9 @@ namespace ManhattanMorning.Controller
                         Logger.Instance.log(Sender.PowerupManager, "Disposed of sunset sunrise PowerUp.", PriorityLevel.Priority_1);
                         break;
                     }
+                case PowerUpType.Volcano:
+                    ParticleSystemsManager.Instance.playVulcano(false);
+                    break;
                 default:
                     {
                         break;
@@ -754,8 +757,9 @@ namespace ManhattanMorning.Controller
         {
             for (int x = (int)settingsManager.get("lavaAmount") - 1; x >= 0; x--)
             {
-                TaskManager.Instance.addTask(new PhysicsTask(x * (int)settingsManager.get("lavaTime"), PhysicsTask.PhysicTaskType.CreateLava));
+                TaskManager.Instance.addTask(new PhysicsTask(3000 + x * (int)settingsManager.get("lavaTime"), PhysicsTask.PhysicTaskType.CreateLava));
             }
+            ParticleSystemsManager.Instance.playVulcano(true);
         }
 
         #endregion

@@ -570,6 +570,7 @@ namespace ManhattanMorning.View
                 {
                    
                     drawWaterfall((Waterfall)l, gameTime);
+                    continue;
                 }
                 //check if object is DrawableObject or ParticleSystem
                 if (l is DrawableObject)
