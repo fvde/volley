@@ -403,11 +403,6 @@ namespace ManhattanMorning.Controller
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Game1.Instance.QuitGame();
 
-            // Allow gamepad input when no human player is involved
-            foreach (Gamepad gamepad in gamepadArray)
-                if (gamepad.IsConnected && (gamepad.CurrentGamePadState.Buttons.Back == ButtonState.Pressed))
-                    Game1.Instance.QuitGame();
-
             #endregion
 
             // go through all players in Level and process input if it's a human player
@@ -420,10 +415,6 @@ namespace ManhattanMorning.Controller
                     if (player.InputDevice.Device == InputDevice.Gamepad)
                     {
                         #region Gamepad
-
-                        // QuitGame
-                        if (player.InputDevice.CurrentGamePadState.Buttons.Back == ButtonState.Pressed)
-                            quitGame();
 
                         // Open ingame menu
                         if ((player.InputDevice.CurrentGamePadState.Buttons.Start == ButtonState.Pressed) &&
@@ -633,11 +624,6 @@ namespace ManhattanMorning.Controller
             {
                 if (gamepad.IsConnected)
                 {
-
-                    // Quit game
-                    if ((gamepad.CurrentGamePadState.Buttons.Back == ButtonState.Pressed) &&
-                        (gamepad.PreviousGamePadState.Buttons.Back != ButtonState.Pressed))
-                        Game1.Instance.QuitGame();
 
                     // "Up" on DPad or left/right analog stick pressed
 
@@ -913,11 +899,6 @@ namespace ManhattanMorning.Controller
             {
                 if (gamepad.IsConnected)
                 {
-
-                    // Quit game
-                    if ((gamepad.CurrentGamePadState.Buttons.Back == ButtonState.Pressed) &&
-                        (gamepad.PreviousGamePadState.Buttons.Back != ButtonState.Pressed))
-                        Game1.Instance.QuitGame();
 
                     // Back button pressed
                     if ((gamepad.CurrentGamePadState.Buttons.B == ButtonState.Pressed) &&
