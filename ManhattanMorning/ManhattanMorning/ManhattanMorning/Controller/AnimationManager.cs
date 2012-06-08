@@ -269,7 +269,7 @@ namespace ManhattanMorning.Controller
                 }
 
                 //if we want to fade out then negate the alpha value
-                obj.Alpha = (fanim.AnimationDirection == 1) ? 0 + tempAlpha : 1 - tempAlpha;
+                obj.Alpha = (fanim.AnimationDirection == 1) ? 0 + tempAlpha : 1 - tempAlpha;                    
 
                 //fading is over, set clip alpha and set fadingMode to do nothing
                 if (fanim.TimeSinceFadingStarted >= fanim.FadingTime)

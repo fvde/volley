@@ -39,6 +39,7 @@ Texture yTexture;
 int waterfallYPos;
 float waterfallTextureHeight;
 float waterfallStencilHeight;
+float alpha;
 
 sampler TextureSampler = sampler_state { texture = <xTexture>; magfilter = LINEAR; minfilter = LINEAR; mipfilter=LINEAR; AddressU = Wrap; AddressV = Wrap;};
 sampler TextureSamplerY : register(s1) = sampler_state { texture = <yTexture>; magfilter = LINEAR; minfilter = LINEAR; mipfilter=LINEAR; AddressU = Wrap; AddressV = Wrap;};
@@ -110,7 +111,7 @@ float4 FadeOutWaterPS(float2 tex: TEXCOORD0, float4 col:COLOR0) : COLOR0
 	float4 light = tex2D(TextureSampler, tex);
 
 
-	return color*light.a;
+	return color*(light.a*alpha);
 
 }
 

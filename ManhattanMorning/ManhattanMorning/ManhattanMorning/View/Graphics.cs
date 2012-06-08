@@ -1016,6 +1016,7 @@ namespace ManhattanMorning.View
 
                 textureShader.CurrentTechnique = textureShader.Techniques["WaterFadeOut"];
                 textureShader.Parameters["yTexture"].SetValue(w.waterfallTex);
+                textureShader.Parameters["alpha"].SetValue(w.alpha);
                 textureShader.Parameters["waterfallYPos"].SetValue((w.tHeight - w.Counter + w.StopCounter - 50) % (w.tHeight + 1));
                 textureShader.Parameters["waterfallTextureHeight"].SetValue((float)w.tHeight);
                 textureShader.Parameters["waterfallStencilHeight"].SetValue(50.0f);
@@ -1026,7 +1027,7 @@ namespace ManhattanMorning.View
 
                 //Draw Head
 
-                spriteBatchAll.Draw(w.waterfallStencilTex, headDest, null, Color.White);
+                spriteBatchAll.Draw(w.waterfallStencilTex, headDest, null, Color.White * w.alpha);
                 spriteBatchAll.End();
             }
 
@@ -1036,11 +1037,11 @@ namespace ManhattanMorning.View
             if (w.Counter < w.Size.Y - w.tipHeight && w.IsStopped!=true)
             {
                 //Draw Tip
-                spriteBatchAll.Draw(w.waterfallTipTex, new Rectangle((int)w.Position.X, (int)w.Position.Y + w.Counter, (int)w.Size.X, w.tipHeight), Color.White);
+                spriteBatchAll.Draw(w.waterfallTipTex, new Rectangle((int)w.Position.X, (int)w.Position.Y + w.Counter, (int)w.Size.X, w.tipHeight), Color.White*w.alpha);
             
                 source = new Rectangle(0, (w.tHeight - w.Counter) %( w.tHeight + 1), w.tWidth, w.Counter % (w.tHeight + 1));
                 dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, w.Counter);
-                spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
+                spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White * w.alpha);
             }
 
             else
@@ -1048,24 +1049,24 @@ namespace ManhattanMorning.View
                 if (w.IsStopped==false)
                 {
                     //Draw Cloud
-                    spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White);
+                    spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White * w.alpha);
               
                     source = new Rectangle(0, (w.tHeight - w.Counter) % (w.tHeight + 1), w.tWidth, (int)w.Size.Y);
                     dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, (int)w.Size.Y);
-                    spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
+                    spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White * w.alpha);
 
                  }
                 else if (w.StopCounter < w.Size.Y)
                 {
                     //Draw Cloud
 
-                    spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White);
+                    spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White * w.alpha);
           
 
                     source = new Rectangle(0, (w.tHeight - w.Counter + w.StopCounter) % (w.tHeight + 1), w.tWidth, ((int)w.Size.Y - w.StopCounter) % (w.tHeight + 1));
                     dest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter, (int)w.Size.X, (int)w.Size.Y - w.StopCounter);
 
-                    spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White);
+                    spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White * w.alpha);
                  }
             } 
 
@@ -1119,7 +1120,7 @@ namespace ManhattanMorning.View
                         {
                             Light l = p as Light;
                             spriteBatchLight.Draw(l.Texture,
-                                new Rectangle((int)(objectPosition.X + objectSize.X * 0.5f), (int)(objectPosition.Y + objectSize.Y * 0.5f), (int)(objectSize.X), (int)(objectSize.Y)),
+                                new Rectangle((int)(objectPosition.X + objectSize.X * 0.5f), (int)(objectPosition.Y + objectSize.Y * 0.5f), (int)(objectSize.X * scale), (int)(objectSize.Y * scale)),
                                 null, l.BlendColor * l.Alpha, l.Rotation, new Vector2(l.Texture.Width * 0.5f, l.Texture.Height * 0.5f), flipHorizontally, 0.0f);
                         }
                         else
