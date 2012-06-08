@@ -49,6 +49,31 @@ namespace ManhattanMorning.Controller
         SelectBack
     };
 
+    /// <summary>
+    /// This is used to simplify playing songs. You don't have to know every number of the files,
+    /// just use this enum to identify the right song.
+    /// </summary>
+    public enum MusicTitle
+    {
+        Intro,
+        MainMenu,
+        Beach,
+        Forest,
+        Maya
+    };
+
+    /// <summary>
+    /// The MusicState tells the SoundManager which music has to be played
+    /// </summary>
+    public enum MusicState
+    {
+        Intro,
+        MainMenu,
+        Beach,
+        Forest,
+        Maya
+    }
+
 
     /// <summary>
     /// Sound Engine responsible of
@@ -150,14 +175,9 @@ namespace ManhattanMorning.Controller
         int menuSoundInstanceUsage;
 
         /// <summary>
-        /// Indicates the number of the song that is currently played.
-        /// </summary>
-        int currentSong;
-
-        /// <summary>
         /// Stores all of our Background music.
         /// </summary>
-        SoundEffect[] backgroundMusic = new SoundEffect[11];
+        SoundEffect[] Music = new SoundEffect[11];
 
         /// <summary>
         /// Stores all the ingameSound effects.
@@ -178,12 +198,6 @@ namespace ManhattanMorning.Controller
         /// Time till next menu sound of the given effect im ms
         /// </summary>
         int[] timeTillNextMenuSound = new int[10];
-
-        /// <summary>
-        /// Stores the order of the songs so that every song is played before the lists repeats
-        /// in different order.
-        /// </summary>
-        int[] playlist = new int[11];
 
         /// <summary>
         /// Stores the music volume.
@@ -318,17 +332,11 @@ namespace ManhattanMorning.Controller
             notify(settingsManager);
 
             //load soundeffects
-            backgroundMusic[0] = game.Content.Load<SoundEffect>(@"Audio\Music\Murloc");
-            backgroundMusic[1] = game.Content.Load<SoundEffect>(@"Audio\Music\1");
-            backgroundMusic[2] = game.Content.Load<SoundEffect>(@"Audio\Music\2");
-            backgroundMusic[3] = game.Content.Load<SoundEffect>(@"Audio\Music\3");
-            backgroundMusic[4] = game.Content.Load<SoundEffect>(@"Audio\Music\4");
-            backgroundMusic[5] = game.Content.Load<SoundEffect>(@"Audio\Music\5");
-            backgroundMusic[6] = game.Content.Load<SoundEffect>(@"Audio\Music\Suspense1");
-            backgroundMusic[7] = game.Content.Load<SoundEffect>(@"Audio\Music\Suspense2");
-            backgroundMusic[8] = game.Content.Load<SoundEffect>(@"Audio\Music\Suspense3");
-            backgroundMusic[9] = game.Content.Load<SoundEffect>(@"Audio\Music\Suspense4");
-            backgroundMusic[10] = game.Content.Load<SoundEffect>(@"Audio\Music\Dreh_den_Swag_auf_Indie_Version");
+            Music[0] = game.Content.Load<SoundEffect>(@"Audio\Music\Intro");
+            Music[1] = game.Content.Load<SoundEffect>(@"Audio\Music\MainMenu");
+            Music[2] = game.Content.Load<SoundEffect>(@"Audio\Music\Music_Beach");
+            Music[3] = game.Content.Load<SoundEffect>(@"Audio\Music\Music_Forest");
+            Music[4] = game.Content.Load<SoundEffect>(@"Audio\Music\Music_Maya");
 
             ingameSoundEffects[(int)IngameSound.Jump] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\jump");
             ingameSoundEffects[(int)IngameSound.HitBall] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\hitBall");
@@ -355,12 +363,10 @@ namespace ManhattanMorning.Controller
             menuSoundEffects[(int)MenuSound.Warning] = game.Content.Load<SoundEffect>(@"Audio\Effects\Menu\Warning");
             menuSoundEffects[(int)MenuSound.SelectBack] = game.Content.Load<SoundEffect>(@"Audio\Effects\Menu\SelectBack");
 
-            musicInstance = backgroundMusic[0].CreateInstance();
+            musicInstance = null;
             menuSoundInstanceUsage = 0;
             ingameSoundInstanceUsage = 0;
-            disableMusic = true;
-
-            currentSong = -1;
+            disableMusic = false;
 
         }
         
@@ -397,14 +403,16 @@ namespace ManhattanMorning.Controller
                 }
             }
 
+            // Check if Intro is over (the only one that isn't looped)
+            if (musicInstance != null)
+                if (musicInstance.IsLooped == false)
+                    if (musicInstance.State == SoundState.Stopped)
+                        // Then play the MainMenu Music
+                        playMusic(MusicState.MainMenu);
+
             updateLoopingSounds(gameTime);
 
             updateCompleteFading(gameTime);
-
-            //after a song is played its state will be stopped so that this clause plays the next song
-            if (musicInstance.State == SoundState.Stopped && !disableMusic)
-                nextSong();
-
 
         }
 
@@ -762,6 +770,29 @@ namespace ManhattanMorning.Controller
             menuSoundInstanceUsage = (menuSoundInstanceUsage + 1) % menuSoundInstance.Length;
         }
 
+        /// <summary>
+        /// Plays the song for the given state
+        /// </summary>
+        /// <param name="musicState">The state indicates which song has to be played</param>
+        public void playMusic(MusicState musicState)
+        {
+
+            // Throw old instance away if there is one
+            if (musicInstance != null)
+            {
+                musicInstance.Dispose();
+                musicInstance = null;
+            }
+
+            musicInstance = Music[(int)musicState].CreateInstance();
+
+            // Loop all except intro
+            if (musicState != MusicState.Intro)
+                musicInstance.IsLooped = true;
+
+            musicInstance.Play();
+
+        }
 
         /// <summary>
         /// You can change the SoundState of the musicInstance with this function so that the music
@@ -785,42 +816,6 @@ namespace ManhattanMorning.Controller
                     musicInstance.Stop();
                     break;
             }
-        }
-
-        /// <summary>
-        /// Plays the next song in the playlist.
-        /// </summary>
-        public void nextSong()
-        {
-            //creates a new playlist order if every song is played once
-            if (currentSong == playlist.Length || currentSong == -1) createPlaylistOrder();
-
-            //sets the musicInstance to new song
-            musicInstance = backgroundMusic[playlist[currentSong]].CreateInstance();
-            musicInstance.Volume = musicVolume;
-            musicInstance.Play();
-
-            currentSong++;
-        }
-
-        /// <summary>
-        /// Plays the song in the playlist which corresponds to the given number.
-        /// </summary>
-        /// <param name="number">Song number that you want to Play</param>
-        public void nextSong(int number)
-        {
-            if (number >= playlist.Length) number = playlist.Length - 1;
-            currentSong = number;
-
-            //creates a new playlist order if every song is played once
-            if (currentSong == playlist.Length) createPlaylistOrder();
-
-            //sets the musicInstance to new song
-            musicInstance = backgroundMusic[playlist[currentSong]].CreateInstance();
-            musicInstance.Volume = musicVolume;
-            musicInstance.Play();
-
-            currentSong++;
         }
 
         /// <summary>
@@ -873,7 +868,7 @@ namespace ManhattanMorning.Controller
         }
 
         /// <summary>
-        /// Pauses all ingame sounds immediately and throws the sound instances away
+        /// Pauses all ingame sounds and the music
         /// </summary>
         /// <param name="pause">True: Sounds will be paused, False: Sounds will continue</param>
         public void pauseIngameSounds(bool pause)
@@ -891,6 +886,14 @@ namespace ManhattanMorning.Controller
                         ingameSoundInstance[i].Resume();
                 }
 
+                // Pause music
+                if (musicInstance != null)
+                {
+                    if (pause)
+                        musicInstance.Pause();
+                    else
+                        musicInstance.Resume();
+                }
             }
 
         }
@@ -902,7 +905,7 @@ namespace ManhattanMorning.Controller
         {
 
             // Set time
-            remainingFadingDurationCompleteFadeOutIn = fadingDurationCompleteFadeOutIn;
+            //remainingFadingDurationCompleteFadeOutIn = fadingDurationCompleteFadeOutIn;
 
         }
 
@@ -929,41 +932,6 @@ namespace ManhattanMorning.Controller
             // Clear list after executing all tasks
             TaskManager.Instance.SoundTasks.Clear();
         }
-        
-
-        /// <summary>
-        /// Creates a new Playlist for the background music. Result is storred in "playlist[]".
-        /// </summary>
-        private void createPlaylistOrder()
-        {
-            currentSong = 0;
-            Random rand = new Random();
-            int temp;
-
-            //init with invalid song numbers
-            for (int i = 0; i < playlist.Length; i++)
-            {
-                playlist[i] = -1;
-            }
-
-            //fill array of songs with numbers that don't appear twice
-            for (int i = 0; i < playlist.Length; i++)
-            {
-                //insert number at random position
-                temp = rand.Next(playlist.Length-1);
-
-                //search next availible position from the random position
-                for (int j = 0; j < playlist.Length; j++)
-                {
-                    if (playlist[ (temp+j) % playlist.Length] == -1)
-                    {
-                        playlist[(temp + j) % playlist.Length] = i;
-                        break;
-                    }
-                }
-            }
-        }
-
 
         /// <summary>
         /// Has to be Implemented to Listen to the SettingsManager
@@ -1016,8 +984,6 @@ namespace ManhattanMorning.Controller
             disableMusic = true;
 
             ingameSoundInstanceDuration = new int[13, 2];
-
-            currentSong = -1;
 
             TaskManager.Instance.SoundTasks.Clear();
         }

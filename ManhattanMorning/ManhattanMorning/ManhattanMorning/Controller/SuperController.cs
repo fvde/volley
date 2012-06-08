@@ -392,6 +392,9 @@ namespace ManhattanMorning.Controller
             SoundManager.Instance.discardMenuSounds();
             SoundManager.Instance.discardIngameSounds();
 
+            // Play Music
+            SoundManager.Instance.playMusic(MusicState.MainMenu);
+
             // Fade
             SoundManager.Instance.completeyFadeOutIn();
 
@@ -539,6 +542,14 @@ namespace ManhattanMorning.Controller
             AI.AI.Instance.initialize(gameInstance.GameObjects.GetPlayer(), gameInstance.LevelSize);
             AnimationManager.Instance.initialize();
             PowerUpManager.Instance.initialize();
+
+            // Play Music
+            if (levelName == "Beach")
+                SoundManager.Instance.playMusic(MusicState.Beach);
+            else if (levelName == "Forest")
+                SoundManager.Instance.playMusic(MusicState.Forest);
+            else if (levelName == "Maya")
+                SoundManager.Instance.playMusic(MusicState.Maya);
 
         }
 
