@@ -492,13 +492,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Light\light_smooth.png">
-      <Name>light_smooth</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\PowerUps\powerup_lava.png">
       <Name>powerup_lava</Name>
       <Importer>TextureImporter</Importer>
@@ -544,11 +537,6 @@
   <ItemGroup>
     <Compile Include="Textures\Light\light_large_highlight.png">
       <Name>light_large_highlight</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Light\light_small_highlight.png">
-      <Name>light_small_highlight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
