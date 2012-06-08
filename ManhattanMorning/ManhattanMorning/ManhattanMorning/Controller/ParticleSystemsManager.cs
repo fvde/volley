@@ -268,7 +268,7 @@ namespace ManhattanMorning.Controller
         /// </summary>
         /// <param name="size">Size of the Particles.</param>
         /// <returns>The created Emitter.</returns>
-        private Emitter createSmokeEmitterForTrail(Vector2 particleSize, float pps, float lifeTime)
+        private Emitter createSmokeEmitterForTrail(Vector2 particleSize, float pps, float lifeTime, Vector2 offset)
         {
             //Create new Emitter and Initialize Particles
             EmitterFountain e = new EmitterFountain(Vector2.Zero, (int) Math.Ceiling(lifeTime*pps), pps);
@@ -279,7 +279,7 @@ namespace ManhattanMorning.Controller
             e.ParticleGrowth = GrowthMode.Linear;
             e.ParticleGrowthRate = 0.5f;
             e.ParticleSize = particleSize;
-            e.LinkedObjectOffset = new Vector2(0.2f, 0.2f);
+            e.LinkedObjectOffset = offset;
             e.InitialParticleSpeed = 0.3f;
             e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/smoke_particle");
             e.ParticleColor = new Color(1f,1f,1f,0.7f);
@@ -1034,20 +1034,15 @@ namespace ManhattanMorning.Controller
             specialbarHighlight.addEmitter(createSpecialbarEmitter());
 
             //create system for ball smoke and fire
-            meteorBallSystem.addEmitter(createSmokeEmitterForTrail(new Vector2(1.1f), 40, 1));
-            meteorBallSystem.addEmitter(createFireEmitter(new Vector2(1.5f), Vector2.Zero, "Particle001", Color.OrangeRed));
-            meteorBallSystem.addEmitter(createFireEmitter(new Vector2(0.8f, 0.8f), Vector2.Zero, "Flame", Color.Orange));
-            foreach (Emitter e in meteorBallSystem.EmitterList)
-            {
-                e.IncludeMovingOffset = false;
-                e.MovingParticles = true;
-            }
+            meteorBallSystem.addEmitter(createSmokeEmitterForTrail(new Vector2(1.1f), 40, 0.25f,Vector2.Zero));
+            meteorBallSystem.addEmitter(createFireEmitter(new Vector2(1.3f), Vector2.Zero, "Particle001", Color.OrangeRed));
+            meteorBallSystem.addEmitter(createFireEmitter(new Vector2(0.9f, 0.9f), Vector2.Zero, "Flame", Color.Orange));
 
             float scale = (float)SettingsManager.Instance.get("lavaRange") / (float) SettingsManager.Instance.get("superBombRange");
 
             for (int i = 0; i < bombSystem.Length; i++)
             {
-                bombSystem[i].addEmitter(createSmokeEmitterForTrail(new Vector2(0.9f), 40, 0.3f));
+                bombSystem[i].addEmitter(createSmokeEmitterForTrail(new Vector2(0.9f), 40, 0.3f, new Vector2(0.2f, 0.2f)));
                 bombSystem[i].addEmitter(createFireEmitter(new Vector2(1.4f, 1.4f), new Vector2(0.15f, 0.15f), "Particle001", Color.Orange));
                 bombSystem[i].addEmitter(createFireEmitter(new Vector2(0.75f, 0.75f), new Vector2(0.2f, 0.2f), "Flame", Color.Red));
                 addSystem(bombSystem[i]);

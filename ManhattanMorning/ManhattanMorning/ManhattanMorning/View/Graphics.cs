@@ -873,12 +873,12 @@ namespace ManhattanMorning.View
                             objectPosition += o.Position;
 
                             spriteBatchAll.Draw(o.ParticleTexture,
-                                new Rectangle((int)((objectPosition.X - o.ParticleSize.X * 0.5f) * meterToPixel), (int)((objectPosition.Y - o.ParticleSize.Y * 0.5f) * meterToPixel),
+                                new Rectangle((int)((objectPosition.X ) * meterToPixel), (int)((objectPosition.Y ) * meterToPixel),
                                 (int)(o.ParticleSize.X * meterToPixel), (int)(o.ParticleSize.Y * meterToPixel)),
                                 null, o.Color * p.Alpha, p.Rotation, new Vector2(o.ParticleTexture.Width, o.ParticleTexture.Height) / 2, SpriteEffects.None, 0);
                             if(particleSystem.Layer >= 70)
                                 spriteBatchHUD.Draw(o.ParticleTexture,
-                                    new Rectangle((int)((objectPosition.X - o.ParticleSize.X * 0.5f) * meterToPixel), (int)((objectPosition.Y - o.ParticleSize.Y * 0.5f) * meterToPixel),
+                                    new Rectangle((int)((objectPosition.X) * meterToPixel), (int)((objectPosition.Y) * meterToPixel),
                                     (int)(o.ParticleSize.X * meterToPixel), (int)(o.ParticleSize.Y * meterToPixel)),
                                     null, o.Color * p.Alpha, p.Rotation, new Vector2(o.ParticleTexture.Width, o.ParticleTexture.Height) / 2, SpriteEffects.None, 0);
                         }
