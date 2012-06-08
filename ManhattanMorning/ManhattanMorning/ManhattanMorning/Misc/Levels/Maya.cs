@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using ManhattanMorning.Controller;
 using ManhattanMorning.Misc.Curves;
 using ManhattanMorning.Model.GameObject;
+using ManhattanMorning.View;
 using Microsoft.Xna.Framework.Graphics;
 
 
@@ -72,12 +73,12 @@ namespace ManhattanMorning.Misc.Levels
 
             // Set allowed powerups
 
-            AllowedPowerUps.Add(PowerUpType.BallRain);
-            AllowedPowerUps.Add(PowerUpType.SuperBomb);
-            AllowedPowerUps.Add(PowerUpType.DoubleBall);
+            //AllowedPowerUps.Add(PowerUpType.BallRain);
+            //AllowedPowerUps.Add(PowerUpType.SuperBomb);
+            //AllowedPowerUps.Add(PowerUpType.DoubleBall);
             AllowedPowerUps.Add(PowerUpType.InvertedControl);
-            AllowedPowerUps.Add(PowerUpType.Jumpheight);
-            AllowedPowerUps.Add(PowerUpType.Wind);
+            //AllowedPowerUps.Add(PowerUpType.Jumpheight);
+            //AllowedPowerUps.Add(PowerUpType.Wind);
 
             //AllowedPowerUps.Add(PowerUpType.Volcano);
             //AllowedPowerUps.Add(PowerUpType.SunsetSunrise);
@@ -98,10 +99,19 @@ namespace ManhattanMorning.Misc.Levels
             levelObjectsList.Add(new PassiveObject("Front", "front", levelSize, Vector2.Zero, 60));
 
             // add stone objects. they don't have any collision, this functionality is added by active stoneBlockers
-            levelObjectsList.Add(new PassiveObject("stone0", new Vector2(0.95f, 0.95f), new Vector2(1.2f, 1.45f), 0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
-            levelObjectsList.Add(new PassiveObject("stone1", new Vector2(1.35f, 0.9f), new Vector2(3.05f, 1.425f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
-            levelObjectsList.Add(new PassiveObject("stone2", new Vector2(1.35f, 0.9f), new Vector2(6.25f, 1.425f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
-            levelObjectsList.Add(new PassiveObject("stone3", new Vector2(0.95f, 0.95f), new Vector2(8.55f, 1.55f), -0.06f, 25, new SpriteAnimation("stone_animation", 60, 10, 150, 75, 5, 2, false, true, false)));
+            PassiveObject stone0 = new PassiveObject("stone0", "stone0", Graphics.Instance.convertUnits(new Vector2(96, 87), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), Graphics.Instance.convertUnits(new Vector2(120, 148), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), 25);
+
+            PassiveObject stone1 = new PassiveObject("stone1", "stone1", Graphics.Instance.convertUnits(new Vector2(88, 81), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), Graphics.Instance.convertUnits(new Vector2(357, 138), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), 25);
+
+            PassiveObject stone2 = new PassiveObject("stone2", "stone2", Graphics.Instance.convertUnits(new Vector2(69, 72), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), Graphics.Instance.convertUnits(new Vector2(685, 146), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), 25);
+
+            PassiveObject stone3 = new PassiveObject("stone3", "stone3", Graphics.Instance.convertUnits(new Vector2(98, 84), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), Graphics.Instance.convertUnits(new Vector2(852, 151), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), 25);
+
+
+            levelObjectsList.Add(stone0);
+            levelObjectsList.Add(stone1);
+            levelObjectsList.Add(stone2);
+            levelObjectsList.Add(stone3);
              
 
             #endregion

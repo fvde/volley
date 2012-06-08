@@ -1269,10 +1269,12 @@ namespace ManhattanMorning.Controller
                         // Create sound
                         TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
 
+                        // scalling up working... propably...
+                        newStone.Size = Graphics.Instance.convertUnits(new Vector2(96, 87), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter);
+                        newStone.ScalingAnimation = new ScalingAnimation(false, false, 0, true, 2000);
+                        newStone.ScalingAnimation.ScalingRange = new Vector2(1.0f, 1.25f);
+
                         activeMayaStones.Add(i);
-                        newStone.Animation.CurrentFrame = 0;
-                        newStone.Animation.Active = true;
-                        newStone.Animation.WaitOnReverse = true;
                         stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
 
                         // Start Waterfall
@@ -1281,11 +1283,11 @@ namespace ManhattanMorning.Controller
                         if (i == 0)
                         {
                             leftSideOffset = 0.5f;
-                        } 
+                        }
                         else if (i == 1)
                         {
                             leftSideOffset = 0.45f;
-                        } 
+                        }
                         else if (i == 2)
                         {
                             leftSideOffset = 0.3f;
@@ -1314,7 +1316,10 @@ namespace ManhattanMorning.Controller
                     if (activeMayaStones.Contains(i))
                     {
                         PassiveObject oldStone = SuperController.Instance.getObjectByName("stone" + i) as PassiveObject;
-                        oldStone.Animation.Active = true;
+                        // tried to enlarge the size and scalling it down... does not work yet
+                        oldStone.Size = Graphics.Instance.convertUnits(new Vector2(96 * 1.25f, 87 * 1.25f), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter);
+                        oldStone.ScalingAnimation = new ScalingAnimation(false, true, 0, true, 2000);
+                        oldStone.ScalingAnimation.ScalingRange = new Vector2(0.8f, 1.0f);
 
                         Physics.Instance.removeBodyFromPhysicSimulation(stoneBlocks[i]);
                         stoneBlocks[i] = null;
@@ -1341,7 +1346,7 @@ namespace ManhattanMorning.Controller
 
                 activeMayaStones.Clear();
             }
-           
+
         }
 
         /// <summary>
