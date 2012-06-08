@@ -1377,7 +1377,8 @@ namespace ManhattanMorning.Controller
                 {
                     //take actions because a powerup task was created
                     case GameLogicTask.GameLogicTaskType.RemoveStone:
-                        SuperController.Instance.removeGameObjectFromGameInstance(task.ObjectToRemove);
+                        if(SuperController.Instance.GameInstance.GameObjects.Contains(task.ObjectToRemove))
+                            SuperController.Instance.removeGameObjectFromGameInstance(task.ObjectToRemove);
                         break;
                 }
             }
