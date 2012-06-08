@@ -1244,7 +1244,7 @@ namespace ManhattanMorning.Controller
             PassiveObject bomb_top = new PassiveObject("Bomb_top", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_top"), null, null,
                 size, position, 59, MeasurementUnit.Meter);
 
-            Vector2 offset = new Vector2(0.03f, -0.7f * bomb.Size.Y);
+            Vector2 offset = new Vector2(0.07f, -0.7f * bomb.Size.Y);
             bomb_top.Offset = offset;
             bomb_top.RotateWithOffset = true;
 
