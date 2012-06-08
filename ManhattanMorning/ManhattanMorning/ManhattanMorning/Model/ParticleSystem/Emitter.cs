@@ -493,6 +493,7 @@ namespace ManhattanMorning.Model.ParticleSystem
                     //We found a hidden Particle. Can we emit it again?
                     if (active && numberEmitParticles > 0)
                     {
+                        
                         //Logger.Instance.log(Sender.ParticleSystem, "Emitted Particle", PriorityLevel.Priority_5);
                         numberEmitParticles--;
                         p.Visible = true;

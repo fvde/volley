@@ -31,6 +31,8 @@ namespace ManhattanMorning.Model.ParticleSystem
         //Vector Orthogonal to the emitter Direction
         private Vector2 orthogonalDirection;
 
+        private bool offsetEmit;
+
         #endregion
 
         #region Properties
@@ -66,6 +68,14 @@ namespace ManhattanMorning.Model.ParticleSystem
                 else this.emitterAngle = value;
             } 
         }
+
+        public bool OffsetEmit
+        {
+            get { return offsetEmit; }
+            set { offsetEmit = value; }
+        }
+        
+
         #endregion
 
         #region Initialization
@@ -85,7 +95,8 @@ namespace ManhattanMorning.Model.ParticleSystem
         /// <returns>Velocity as Vector2</returns>
         protected override Vector2 getStartVelocity()
         {
-            
+            if (offsetEmit)
+                emitterDirection = MovingOffset * -1;
             Vector2 vel = new Vector2();
             float precision = 100000f;
 
