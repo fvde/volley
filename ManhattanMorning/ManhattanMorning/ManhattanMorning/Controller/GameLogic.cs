@@ -1269,9 +1269,9 @@ namespace ManhattanMorning.Controller
                         // Create sound
                         TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
 
-                        // scalling up working... propably...
-                        newStone.ScalingAnimation = new ScalingAnimation(false, false, 0, true, 2000);
+                        // highlighting
                         newStone.ScalingAnimation.ScalingRange = new Vector2(1.0f, 1.25f);
+                        newStone.ScalingAnimation.Active = true;
 
                         activeMayaStones.Add(i);
                         stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
@@ -1279,26 +1279,33 @@ namespace ManhattanMorning.Controller
                         //light
                         Light l = newStone.AttachedObjects.First() as Light;
                         l.FadingAnimation.TimeSinceFadingStarted = 0;
-                        l.Visible = true;
+                        l.FadingAnimation.DurationBeforeReverse = (int)SettingsManager.Instance.get("switchStonesEffectDuration") - 2000;
                         l.FadingAnimation.Active = true;
+                        l.ScalingAnimation.ScalingRange = new Vector2(1.0f, 1.25f);
+                        l.ScalingAnimation.Active = true;
 
                         // Start Waterfall
                         float leftSideOffset = 0.0f;
-
+                        Vector2 waterfallPosition = newStone.Position + new Vector2(newStone.Size.X * 0.2f, newStone.Size.Y * 0.75f - 0.1f);
                         if (i == 0)
                         {
                             leftSideOffset = 0.5f;
+                            waterfallPosition += new Vector2(0, 0.25f);
                         }
                         else if (i == 1)
                         {
                             leftSideOffset = 0.45f;
+                            waterfallPosition += new Vector2(0, 0.25f);
                         }
                         else if (i == 2)
                         {
                             leftSideOffset = 0.3f;
+                            waterfallPosition += new Vector2(0, 0.1f);
                         }
-                        Vector2 waterfallPosition = newStone.Position + new Vector2(newStone.Size.X * 0.2f, newStone.Size.Y * 0.75f);
-                        Vector2 waterFallSize = new Vector2(newStone.Size.X * 0.65f, SuperController.Instance.GameInstance.LevelSize.Y - newStone.Position.Y - newStone.Size.Y - leftSideOffset);
+                        float xpos = (float)random.NextDouble() / 5;
+                        waterfallPosition -= new Vector2(xpos / 2, 0);
+                        Vector2 waterFallSize = new Vector2(newStone.Size.X * 0.65f + xpos, 
+                            SuperController.Instance.GameInstance.LevelSize.Y - newStone.Position.Y - newStone.Size.Y - leftSideOffset);
                         Waterfall w = new Waterfall(waterfallPosition, waterFallSize, i);
                         waterfalls.Add(w);
                         SuperController.Instance.addGameObjectToGameInstance(w);
@@ -1326,9 +1333,8 @@ namespace ManhattanMorning.Controller
                         oldStone.ScalingAnimation.ScalingRange = new Vector2(1.25f, 1f);
 
                         Light l = oldStone.AttachedObjects.First() as Light;
-                        l.Visible = false;
-                        l.FadingAnimation.Active = false;
-                        l.FadingAnimation.DurationBeforeReverse = (int)SettingsManager.Instance.get("switchStonesEffectDuration") - 2000;
+                        l.ScalingAnimation.Active = true;
+                        l.ScalingAnimation.ScalingRange = new Vector2(1.25f, 1f);
 
                         Physics.Instance.removeBodyFromPhysicSimulation(stoneBlocks[i]);
                         stoneBlocks[i] = null;

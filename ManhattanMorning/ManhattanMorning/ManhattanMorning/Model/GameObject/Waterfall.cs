@@ -38,7 +38,7 @@ namespace ManhattanMorning.Model.GameObject
         private String name = "Waterfall";
         public int Laufzeit = 0;
         public int mayaLevelPosition;
-
+        public float alpha;
 
 
         public bool IsStopped
@@ -106,6 +106,12 @@ namespace ManhattanMorning.Model.GameObject
             {
                 this.stopCounter = this.counter - this.Laufzeit;
 
+                if (this.stopCounter + 175 > this.Size.Y)
+                {
+                    this.alpha = (this.Size.Y - this.stopCounter) / 175;
+                    this.alpha *= alpha;
+                }
+
                 if (this.stopCounter + 50 > this.Size.Y)
                 {
 
@@ -134,6 +140,7 @@ namespace ManhattanMorning.Model.GameObject
             this.stopCounter = 0;
             this.Laufzeit = 0;
             this.active = true;
+            this.alpha = 1;
         }
 
         /// <summary>
