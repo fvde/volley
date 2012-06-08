@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 
+using ManhattanMorning.Misc;
+
 namespace ManhattanMorning.Model.ParticleSystem
 {
     /// <summary>
@@ -30,8 +32,6 @@ namespace ManhattanMorning.Model.ParticleSystem
 
         //Vector Orthogonal to the emitter Direction
         private Vector2 orthogonalDirection;
-
-        private bool offsetEmit;
 
         #endregion
 
@@ -67,14 +67,7 @@ namespace ManhattanMorning.Model.ParticleSystem
                 //else if (value > 1) this.emitterAngle = 1;
                 else this.emitterAngle = value;
             } 
-        }
-
-        public bool OffsetEmit
-        {
-            get { return offsetEmit; }
-            set { offsetEmit = value; }
-        }
-        
+        }        
 
         #endregion
 
@@ -95,8 +88,6 @@ namespace ManhattanMorning.Model.ParticleSystem
         /// <returns>Velocity as Vector2</returns>
         protected override Vector2 getStartVelocity()
         {
-            if (offsetEmit)
-                emitterDirection = MovingOffset * -1;
             Vector2 vel = new Vector2();
             float precision = 100000f;
 
