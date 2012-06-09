@@ -654,9 +654,10 @@ namespace ManhattanMorning.Controller
         {
             Bomb b = (Bomb)fixtureA.Body.LinkedActiveObject;
 
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)IngameSound.ExplosionSmall));
+
             if (b.Exploded || b.IsSuperBomb)
             {
-                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)IngameSound.ExplosionSmall));
                 return true;
             }
             else if (fixtureB.Body.LinkedActiveObject != null)
@@ -942,7 +943,6 @@ namespace ManhattanMorning.Controller
                     else
                     {
                         duration = (int)SettingsManager.Instance.get("lavaStunDuration");
-                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)IngameSound.ExplosionSmall));
                         TaskManager.Instance.addTask(new PhysicsTask(duration, p, PhysicsTask.PhysicTaskType.RemoveStun));
                     }
                     ParticleSystemsManager.Instance.playStun(p, duration);
