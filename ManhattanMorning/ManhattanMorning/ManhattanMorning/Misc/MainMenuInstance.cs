@@ -86,12 +86,6 @@ namespace ManhattanMorning.Misc
         private WinCondition winCondition;
 
         /// <summary>
-        /// Value of the win condition
-        /// Represents be either the points or the minutes
-        /// </summary>
-        private int timePointsValue;
-
-        /// <summary>
         /// Reference to the levels class
         /// Needed for levelpreviews which are stored in that class
         /// </summary>
@@ -232,10 +226,7 @@ namespace ManhattanMorning.Misc
 
             levelName = "";
 
-            // Play Intro
-            activateIntro();
-
-            activateMenu();
+            activateMenu(true);
         }
 
         #endregion
@@ -245,7 +236,8 @@ namespace ManhattanMorning.Misc
         /// <summary>
         /// Displays the wright screen
         /// </summary>
-        public void activateMenu()
+        /// <param name="isGameStart">true if it's the launch of the game</param>
+        public void activateMenu(bool isGameStart)
         {
 
             // First, make all objects invisible
@@ -261,16 +253,21 @@ namespace ManhattanMorning.Misc
                 ((MenuButtonObject)levels.LevelPreviews[i]).FadingAnimation = null;
             }
 
-            menuState = 0;
+            // If it's the launch of the game, show help/intro otherwise show mainscreen (when coming back from ingame)
+            if (isGameStart)
+                menuState = 6;
+            else
+                menuState = 0;
+
             selectedItem = 0;
             overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
 
             // Make all necessary menu objects visible
             for (int i = 0; i < menuStructure.GetLength(1); i++)
             {
-                if (menuStructure[0, i] != null)
+                if (menuStructure[menuState, i] != null)
                 {
-                    foreach (LayerInterface menuObject in menuStructure[0, i])
+                    foreach (LayerInterface menuObject in menuStructure[menuState, i])
                     {
                         ((DrawableObject)menuObject).Visible = true;
                         // Unhighlight all buttons
@@ -279,6 +276,8 @@ namespace ManhattanMorning.Misc
                     }
                 }
             }
+
+            animateIntro();
 
         }
 
@@ -542,23 +541,6 @@ namespace ManhattanMorning.Misc
             }
 
             #endregion
-
-        }
-
-        /// <summary>
-        /// Triggers all necessary actions to show the intro
-        /// </summary>
-        public void activateIntro()
-        {
-
-            // Play Music
-            SoundManager.Instance.playMusic(MusicState.Intro);
-
-            //((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).FadingAnimation = new FadingAnimation(false, true, 1000, true, 500);
-            ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).Visible = false;
-            ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).Visible = false;
-            //((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation = new FadingAnimation(false, true, 1000, false, 500);
-            //TaskManager.Instance.addTask(new Tasks.AnimationTask(2000, ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation));
 
         }
 
@@ -859,7 +841,13 @@ namespace ManhattanMorning.Misc
                         ((MenuObject)menuObjectList.GetObjectByName("Help_Box3")).Visible = true;
                         break;
                     case 4:
-                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox")).Visible = true;
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_Box4")).Visible = true;
+                        break;
+                    case 5:
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox1")).Visible = true;
+                        break;
+                    case 6:
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox2")).Visible = true;
                         break;
                 }
 
@@ -949,8 +937,8 @@ namespace ManhattanMorning.Misc
 
                 // select left button item
                 selectedItem++;
-                if (selectedItem > 4)
-                    selectedItem = 4;
+                if (selectedItem > 6)
+                    selectedItem = 6;
 
                 // highlight first item of the new selected button
                 ((MenuButtonObject)menuStructure[menuState, selectedItem][0]).Selected = true;
@@ -975,7 +963,13 @@ namespace ManhattanMorning.Misc
                         ((MenuObject)menuObjectList.GetObjectByName("Help_Box3")).Visible = true;
                         break;
                     case 4:
-                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox")).Visible = true;
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_Box4")).Visible = true;
+                        break;
+                    case 5:
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox1")).Visible = true;
+                        break;
+                    case 6:
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox2")).Visible = true;
                         break;
                 }
 
@@ -1087,6 +1081,14 @@ namespace ManhattanMorning.Misc
                 startGame();
 
                 timeSinceLastInput = 0;
+            }
+            // When in intro
+            else if (menuState == 6)
+            {
+
+                // Go to mainscreen
+                switchMenuState(0);
+
             }
 
         }
@@ -1222,7 +1224,7 @@ namespace ManhattanMorning.Misc
             // 1.Index: Menu state
             // 2.Index: 0: List of Menu_PassiveObjects which are always shown/never highlighted (e.g. background)
             //          all other indexes: List of Menu_Buttons which belong to a single selectable item
-            menuStructure = new List<LayerInterface>[6, 6];
+            menuStructure = new List<LayerInterface>[8, 7];
 
             // Main screen
             menuStructure[0, 0] = new List<LayerInterface>();
@@ -1280,7 +1282,9 @@ namespace ManhattanMorning.Misc
             menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_Box1"));
             menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_Box2"));
             menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_Box3"));
-            menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_CreditsBox"));
+            menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_Box4"));
+            menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_CreditsBox1"));
+            menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_CreditsBox2"));
             menuStructure[3, 1] = new List<LayerInterface>();
             menuStructure[3, 1].Add(menuObjectList.GetObjectByName("Help_Button1"));
             menuStructure[3, 2] = new List<LayerInterface>();
@@ -1289,6 +1293,10 @@ namespace ManhattanMorning.Misc
             menuStructure[3, 3].Add(menuObjectList.GetObjectByName("Help_Button3"));
             menuStructure[3, 4] = new List<LayerInterface>();
             menuStructure[3, 4].Add(menuObjectList.GetObjectByName("Help_Button4"));
+            menuStructure[3, 5] = new List<LayerInterface>();
+            menuStructure[3, 5].Add(menuObjectList.GetObjectByName("Help_Button5"));
+            menuStructure[3, 6] = new List<LayerInterface>();
+            menuStructure[3, 6].Add(menuObjectList.GetObjectByName("Help_Button6"));
 
             // ReallyQuit
             menuStructure[4, 0] = new List<LayerInterface>();
@@ -1315,6 +1323,14 @@ namespace ManhattanMorning.Misc
 
             foreach (String levelName in levels.ImplementedLevels().Keys)
                 menuStructure[5, 0].Add(menuObjectList.GetObjectByName(levelName));
+
+            // Intro
+            menuStructure[6, 0] = new List<LayerInterface>();
+            menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_GlassboxGames"));
+
+            // First help
+            menuStructure[7, 0] = new List<LayerInterface>();
+            menuStructure[7, 0].Add(menuObjectList.GetObjectByName("Intro_IvorySound"));
 
 
         }
@@ -1371,8 +1387,9 @@ namespace ManhattanMorning.Misc
                 {
                     selectedItem = previousMainScreenSelectedItem;
 
-                    foreach (LayerInterface menuObject in menuStructure[newState, selectedItem])
-                        ((MenuButtonObject)menuObject).Selected = true;
+                    if (selectedItem > 0)
+                        foreach (LayerInterface menuObject in menuStructure[newState, selectedItem])
+                            ((MenuButtonObject)menuObject).Selected = true;
                 }
                 else
                 {
@@ -1513,6 +1530,14 @@ namespace ManhattanMorning.Misc
             animateTransition(menuState, newState);
 
             menuState = newState;
+
+        }
+
+        // Fades screen in/out
+        private void animateIntro()
+        {
+
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 1000);
 
         }
 

@@ -405,7 +405,7 @@ namespace ManhattanMorning.Controller
             clearControllers();
             gameInstance = null;
 
-            mainMenuInstance.activateMenu();
+            mainMenuInstance.activateMenu(false);
         }
 
         /// <summary>
