@@ -188,7 +188,7 @@ namespace ManhattanMorning.Controller
 
             // Defines after how much time a new neutral Powerups spawns (in ms)
             // Used in GameLogic
-            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 10000, 60000 });
+            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 30000, 60000 });
 
             // Defines how fast the specialbar fills if you perform a positive action
             settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 4.0f, 10.0f });
@@ -386,8 +386,20 @@ namespace ManhattanMorning.Controller
             //Sound volume of player touching the bottom
             settings.Add("bottomTouchSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
+            //Sound volume of player touching the bottom
+            settings.Add("bombTickSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+
+            //Sound volume of player touching the bottom
+            settings.Add("volcanoEruptionSoundVolume", new object[] { 0.0f, 0.8f, 1.0f });
+
+            //Sound volume of player touching the bottom
+            settings.Add("countdownSoundVolume", new object[] { 0.0f, 0.4f, 1.0f });
+
+            //Sound volume of menubuttons
+            settings.Add("menuSoundsSoundVolume", new object[] { 0.0f, 0.75f, 1.0f });
+
             //Sound volume of music
-            settings.Add("musicVolume", new object[] { 0.0f, 0.5f, 1.0f });
+            settings.Add("musicVolume", new object[] { 0.0f, 0.2f, 1.0f });
             
             #endregion
 
