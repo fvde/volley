@@ -58,6 +58,8 @@ namespace ManhattanMorning.Misc
         /// 3: help
         /// 4: really quit
         /// 5: select level
+        /// 6: intro
+        /// 7: help first start (is just shown when the game starts for the first time
         /// </summary>
         private int menuState;
 
@@ -224,7 +226,7 @@ namespace ManhattanMorning.Misc
 
             // set all necessary members
             selectedItem = 0;
-            menuState = 0;
+            menuState = 6;
             previousMenuState = 0;
             previousMainScreenSelectedItem = 0;
 

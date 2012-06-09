@@ -325,7 +325,7 @@ namespace ManhattanMorning.Model.ParticleSystem
         /// <param name="particlesPerSecond">Emitted Partikels per Second</param>
         protected Emitter(Vector2 position, int numberOfParticles, float particlesPerSecond)
         {
-            this.rng = new Random((int)particlesPerSecond);
+            this.rng = new Random(/*(int)particlesPerSecond*/);
             this.lastPosition = position;
             this.position = position;
             this.ParticleColor = Color.White;

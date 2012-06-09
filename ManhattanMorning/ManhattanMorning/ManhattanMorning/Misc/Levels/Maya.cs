@@ -77,8 +77,8 @@ namespace ManhattanMorning.Misc.Levels
             //AllowedPowerUps.Add(PowerUpType.BallRain);
             //AllowedPowerUps.Add(PowerUpType.SuperBomb);
             //AllowedPowerUps.Add(PowerUpType.DoubleBall);
-            AllowedPowerUps.Add(PowerUpType.InvertedControl);
-            //AllowedPowerUps.Add(PowerUpType.Jumpheight);
+            //AllowedPowerUps.Add(PowerUpType.InvertedControl);
+            AllowedPowerUps.Add(PowerUpType.Jumpheight);
             //AllowedPowerUps.Add(PowerUpType.Wind);
 
             //AllowedPowerUps.Add(PowerUpType.Volcano);

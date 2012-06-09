@@ -905,7 +905,7 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_MainScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_select");
             Texture2D Texture_ReallyQuit_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_select_back");
             Texture2D Texture_Help_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_browse_back");
-            Texture2D Texture_TeamMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_continue_back");
+            Texture2D Texture_TeamMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_random");
             Texture2D Texture_TeamMenuWarning1_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_noTeam");
             Texture2D Texture_TeamMenuWarning2_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_tooManyTeam");
             Texture2D Texture_SelectLevel_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_startGame_back");
