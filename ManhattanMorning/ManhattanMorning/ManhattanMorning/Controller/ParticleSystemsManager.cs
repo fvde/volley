@@ -35,7 +35,7 @@ namespace ManhattanMorning.Controller
         private ParticleSystem vulcanoSystem;
         private ParticleSystem meteorBallSystem;
         private ParticleSystem specialbarHighlight;
-        private ParticleSystem highlightJumpSystem;
+        private ParticleSystem[] highlightJumpSystem;
         private ParticleSystem[] orbitterPlayers; //all orbitters for the player. paralysis is 0th, stun is 1st element
         private ParticleSystem sandStormSystem;
         
@@ -275,21 +275,32 @@ namespace ManhattanMorning.Controller
         /// Creates emitter for highlighting special jump.
         /// </summary>
         /// <returns>Created Emitter./returns>
-        private Emitter createJumpEmitter()
+        private Emitter createJumpEmitter(int playerIndex, String textureName, Vector2 size, int particles)
         {
-            EmitterFountain e = new EmitterFountain(Vector2.Zero, 29, 14);
-            e.EmitterShape = new EmitterRectangleShape(0.7f, 0.1f, -Vector2.UnitY);
+            Color c = Color.DarkOrange;
+            switch (playerIndex)
+            {
+                case 1: c = Color.Blue; break;
+                case 2: c = Color.Red; break;
+                case 3: c = Color.DarkGreen; break;
+                case 4: c = Color.Orange; break;
+            }
+
+            EmitterFountain e = new EmitterFountain(Vector2.Zero, 15, particles);
+            e.EmitterShape = new EmitterRectangleShape(1.02f, 0.1f, Vector2.UnitY);
             e.EmitterDirection = new Vector2(0, 1f);
-            e.ParticleLifeTime = 0.5f;
-            e.ParticleFadeOut = FadeMode.Quadratic;
-            e.ParticleSize = new Vector2(0.10f, 0.10f);
-            e.InitialParticleSpeed = 0.95f;
-            e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/Particle1");
-            e.ParticleColor = Color.DarkGreen;
+            e.ParticleLifeTime = 0.65f;
+            e.ParticleFadeOut = FadeMode.Linear;
+            e.ParticleStartingAlpha = 0.8f;
+            e.ParticleSize = size;
+            e.InitialParticleSpeed = 1.05f;
+            e.ParticleColor = c;
+            e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/" + textureName);
             e.EmittingDuration = 0f;
-            e.EmitterAngle = 0.5f;
+            e.EmitterAngle = 0.6f;
+            e.LinkedObjectOffset = new Vector2(0, 0.15f);
+            e.MovingParticles = true;
             e.initializeParticles();
-            e.LinkedObjectOffset = new Vector2(0f, 0.3f);
             e.Active = false;
             e.Pause = true;
 
@@ -937,12 +948,21 @@ namespace ManhattanMorning.Controller
         {
             foreach (Player p in SuperController.Instance.getPlayerOfTeam(team))
             {
-                Emitter e = highlightJumpSystem.EmitterList[p.PlayerIndex - 1];
+                Emitter e = highlightJumpSystem[0].EmitterList[p.PlayerIndex - 1];                
+
                 e.LinkedObject = p;
                 e.Position = p.Position + p.Size * 0.5f;
                 e.EmittingDuration = 0f;
                 e.Pause = false;
                 e.Active = true;
+
+                Emitter e1 = highlightJumpSystem[1].EmitterList[p.PlayerIndex - 1];
+
+                e1.LinkedObject = p;
+                e1.Position = p.Position + p.Size * 0.5f;
+                e1.EmittingDuration = 0f;
+                e1.Pause = false;
+                e1.Active = true;
             }
         }
 
@@ -954,7 +974,11 @@ namespace ManhattanMorning.Controller
         {
             foreach (Player p in SuperController.Instance.getPlayerOfTeam(team))
             {
-                Emitter e = highlightJumpSystem.EmitterList[p.PlayerIndex - 1];
+                Emitter e = highlightJumpSystem[0].EmitterList[p.PlayerIndex - 1];
+                e.Active = false;
+                e.EmittingDuration = float.Epsilon;
+
+                e = highlightJumpSystem[1].EmitterList[p.PlayerIndex - 1];
                 e.Active = false;
                 e.EmittingDuration = float.Epsilon;
             }
@@ -1026,7 +1050,9 @@ namespace ManhattanMorning.Controller
             meteorBallSystem = new ParticleSystem(55);
             meteorBallSystem.SystemBlendState = BlendState.NonPremultiplied;
 
-            highlightJumpSystem = new ParticleSystem(55);
+            highlightJumpSystem = new ParticleSystem[2];
+            highlightJumpSystem[0] = new ParticleSystem(55);
+            highlightJumpSystem[1] = new ParticleSystem(55);
 
             bombSystem = new ParticleSystem[6];
             lavaExplosionSystem = new ParticleSystem[6];
@@ -1050,7 +1076,8 @@ namespace ManhattanMorning.Controller
             for (int i = 0; i < SuperController.Instance.getPlayerOfTeam(1).Count * 2; i++)
             {
                 sandSystem.addEmitter(createSandFountainEmitter());
-                highlightJumpSystem.addEmitter(createJumpEmitter());
+                highlightJumpSystem[0].addEmitter(createJumpEmitter(i + 1, "particle1", new Vector2(0.20f), 18));
+                highlightJumpSystem[1].addEmitter(createJumpEmitter(i + 1, "star_particle",new Vector2(0.10f), 21));
 
                 orbitterPlayers[i] = new ParticleSystem(55);
                 orbitterPlayers[i].SystemBlendState = BlendState.AlphaBlend;
@@ -1137,8 +1164,9 @@ namespace ManhattanMorning.Controller
                 sparclingSystem[i].addEmitter(createSparclingEmitterForSuperbomb(new Vector2(0.05f)));
                 addSystem(sparclingSystem[i]);
             }
-
-            addSystem(highlightJumpSystem);
+            
+            addSystem(highlightJumpSystem[0]);
+            addSystem(highlightJumpSystem[1]);
             addSystem(sandSystem);
             addSystem(ballCollision);
             addSystem(specialbarHighlight);
