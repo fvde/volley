@@ -679,6 +679,8 @@ namespace ManhattanMorning.Controller
         private void setSuperBombPowerUp()
         {
             TaskManager.Instance.addTask(new PhysicsTask(1000, PhysicsTask.PhysicTaskType.CreateSuperBomb));
+            TaskManager.Instance.addTask(new SoundTask(1000, SoundIndicator.sunsetPowerup, (int)IngameSound.BombTick, (int)settingsManager.get("superBombDuration")));
+                
         }
 
         /// <summary>
@@ -755,6 +757,7 @@ namespace ManhattanMorning.Controller
         /// <param name="on"></param>
         private void setVolcanoPowerUp()
         {
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.volcanoEruption, (int)IngameSound.VolcanoEruption));
             for (int x = (int)settingsManager.get("lavaAmount") - 1; x >= 0; x--)
             {
                 TaskManager.Instance.addTask(new PhysicsTask(3000 + x * (int)settingsManager.get("lavaTime"), PhysicsTask.PhysicTaskType.CreateLava));

@@ -31,10 +31,13 @@ namespace ManhattanMorning.Controller
         SpecialbarFull,
         ApplauseGameEnd,
         PowerUpSpawn,
-        MatchballHeartbeat,
+        MatchballSignal,
         BottomTouchBeach,
         BottomTouchMaya,
-        BottomTouchForest
+        BottomTouchForest,
+        BombTick,
+        Countdown,
+        VolcanoEruption
     };
 
     /// <summary>
@@ -295,6 +298,28 @@ namespace ManhattanMorning.Controller
         float bottomTouchEffectVolume;
 
         /// <summary>
+        /// Stores the bomb tick effect volume.
+        /// </summary>
+        float bombTickEffectVolume;
+
+        /// <summary>
+        /// Stores the bomb tick effect volume.
+        /// </summary>
+        float countdownEffectVolume;
+
+        /// <summary>
+        /// Stores the bomb tick effect volume.
+        /// </summary>
+        float volcanoEruptionEffectVolume;
+
+        /// <summary>
+        /// Stores the bomb tick effect volume.
+        /// </summary>
+        float menueButtonsVolume;
+        
+
+
+        /// <summary>
         /// The time (in MS) for a loop sound to fade in and out
         /// </summary>
         int fadingTimeLoopSounds = 1500;
@@ -353,10 +378,13 @@ namespace ManhattanMorning.Controller
             ingameSoundEffects[(int)IngameSound.SpecialbarFull] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\specialbarFull");
             ingameSoundEffects[(int)IngameSound.ApplauseGameEnd] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\applauseGameEnd");
             ingameSoundEffects[(int)IngameSound.PowerUpSpawn] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\powerUpSpawn");
-            ingameSoundEffects[(int)IngameSound.MatchballHeartbeat] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\matchballHeartbeat");
+            ingameSoundEffects[(int)IngameSound.MatchballSignal] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\matchballSignal");
             ingameSoundEffects[(int)IngameSound.BottomTouchBeach] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\bottomTouchBeach");
             ingameSoundEffects[(int)IngameSound.BottomTouchMaya] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\bottomTouchMaya");
             ingameSoundEffects[(int)IngameSound.BottomTouchForest] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\bottomTouchForest");
+            ingameSoundEffects[(int)IngameSound.BombTick] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\bombtick");
+            ingameSoundEffects[(int)IngameSound.Countdown] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\countdown");
+            ingameSoundEffects[(int)IngameSound.VolcanoEruption] = game.Content.Load<SoundEffect>(@"Audio\Effects\Ingame\volcanoEruption");
 
             menuSoundEffects[(int)MenuSound.Select] = game.Content.Load<SoundEffect>(@"Audio\Effects\Menu\Select");
             menuSoundEffects[(int)MenuSound.Switch] = game.Content.Load<SoundEffect>(@"Audio\Effects\Menu\Switch");
@@ -652,7 +680,7 @@ namespace ManhattanMorning.Controller
                case (int)IngameSound.PowerUpSpawn:
                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = powerUpSpawnEffectVolume;
                    break;
-               case (int)IngameSound.MatchballHeartbeat:
+               case (int)IngameSound.MatchballSignal:
                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = matchballHeartbeatEffectVolume;
                    break;
                case (int)IngameSound.BottomTouchBeach:
@@ -663,6 +691,15 @@ namespace ManhattanMorning.Controller
                    break;
                case (int)IngameSound.BottomTouchForest:
                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = bottomTouchEffectVolume;
+                   break;
+               case (int)IngameSound.BombTick:
+                   ingameSoundInstance[ingameSoundInstanceUsage].Volume = bombTickEffectVolume;
+                   break;
+               case (int)IngameSound.Countdown:
+                   ingameSoundInstance[ingameSoundInstanceUsage].Volume = countdownEffectVolume;
+                   break;
+               case (int)IngameSound.VolcanoEruption:
+                   ingameSoundInstance[ingameSoundInstanceUsage].Volume = volcanoEruptionEffectVolume;
                    break;
                default:
                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = soundEffectVolume;
@@ -721,11 +758,71 @@ namespace ManhattanMorning.Controller
 
             switch (n)
             {
+                case (int)IngameSound.Jump:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = jumpPowerUpEffectVolume;
+                    break;
+                case (int)IngameSound.HitBall:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = hitBallEffectVolume;
+                    break;
+                case (int)IngameSound.HitNet:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = hitNetEffectVolume;
+                    break;
+                case (int)IngameSound.PickupPowerup:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = pickUpPowerUpEffectVolume;
+                    break;
                 case (int)IngameSound.ExplosionSmall:
                     ingameSoundInstance[ingameSoundInstanceUsage].Volume = smallExplosionSoundEffectVolume;
                     break;
                 case (int)IngameSound.ExplosionBig:
                     ingameSoundInstance[ingameSoundInstanceUsage].Volume = bigExplosionSoundEffectVolume;
+                    break;
+                case (int)IngameSound.InvertedControl:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = invertedControlEffectVolume;
+                    break;
+                case (int)IngameSound.SmashBall:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = smashballEffectVolume;
+                    break;
+                case (int)IngameSound.SunsetPowerUp:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = sunsetEffectVolume;
+                    break;
+                case (int)IngameSound.WindPowerUp:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = windEffectVolume;
+                    break;
+                case (int)IngameSound.MayaStongeChange:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = mayaStoneChangeEffectVolume;
+                    break;
+                case (int)IngameSound.StartWhistle:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = startWhistleEffectVolume;
+                    break;
+                case (int)IngameSound.SpecialbarFull:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = specialbarFullUpEffectVolume;
+                    break;
+                case (int)IngameSound.ApplauseGameEnd:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = applauseEffectVolume;
+                    break;
+                case (int)IngameSound.PowerUpSpawn:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = powerUpSpawnEffectVolume;
+                    break;
+                case (int)IngameSound.MatchballSignal:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = matchballHeartbeatEffectVolume;
+                    break;
+                case (int)IngameSound.BottomTouchBeach:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = bottomTouchEffectVolume;
+                    break;
+                case (int)IngameSound.BottomTouchMaya:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = bottomTouchEffectVolume;
+                    break;
+                case (int)IngameSound.BottomTouchForest:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = bottomTouchEffectVolume;
+                    break;
+                case (int)IngameSound.BombTick:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = bombTickEffectVolume;
+                    break;
+                case (int)IngameSound.Countdown:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = countdownEffectVolume;
+                    break;
+                case (int)IngameSound.VolcanoEruption:
+                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = volcanoEruptionEffectVolume;
                     break;
                 default:
                     ingameSoundInstance[ingameSoundInstanceUsage].Volume = soundEffectVolume;
@@ -760,7 +857,7 @@ namespace ManhattanMorning.Controller
 
             menuSoundInstance[menuSoundInstanceUsage] = menuSoundEffects[n].CreateInstance();
 
-            menuSoundInstance[menuSoundInstanceUsage].Volume = soundEffectVolume;
+            menuSoundInstance[menuSoundInstanceUsage].Volume = menueButtonsVolume;
 
 
 
@@ -785,6 +882,7 @@ namespace ManhattanMorning.Controller
             }
 
             musicInstance = Music[(int)musicState].CreateInstance();
+            musicInstance.Volume = musicVolume;
 
             // Loop all except intro
             if (musicState != MusicState.Intro)
@@ -953,7 +1051,7 @@ namespace ManhattanMorning.Controller
                 pickUpPowerUpEffectVolume = (float)((SettingsManager)o).get("pickupPowerUpSoundVolume");
                 invertedControlEffectVolume = (float)((SettingsManager)o).get("invertedControlSoundVolume");
                 smashballEffectVolume = (float)((SettingsManager)o).get("smashBallSoundVolume");
-                smashballEffectVolume = (float)((SettingsManager)o).get("sunsetPowerUpSoundVolume");
+                sunsetEffectVolume = (float)((SettingsManager)o).get("sunsetPowerUpSoundVolume");
                 windEffectVolume = (float)((SettingsManager)o).get("windPowerUpSoundVolume");
                 mayaStoneChangeEffectVolume = (float)((SettingsManager)o).get("mayaStoneChangeSoundVolume");
                 startWhistleEffectVolume = (float)((SettingsManager)o).get("startWhistleSoundVolume");
@@ -962,7 +1060,12 @@ namespace ManhattanMorning.Controller
                 powerUpSpawnEffectVolume = (float)((SettingsManager)o).get("powerUpSpawnSoundVolume");
                 matchballHeartbeatEffectVolume = (float)((SettingsManager)o).get("matchballHeartbeatSoundVolume");
                 bottomTouchEffectVolume = (float)((SettingsManager)o).get("bottomTouchSoundVolume");
+                bombTickEffectVolume = (float)((SettingsManager)o).get("bombTickSoundVolume");
+                countdownEffectVolume = (float)((SettingsManager)o).get("countdownSoundVolume");
+                volcanoEruptionEffectVolume = (float)((SettingsManager)o).get("volcanoEruptionSoundVolume");
 
+
+                menueButtonsVolume = (float)((SettingsManager)o).get("menuSoundsSoundVolume");
                 musicVolume = (float)((SettingsManager)o).get("musicVolume");
  
             }

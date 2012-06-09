@@ -22,10 +22,13 @@ namespace ManhattanMorning.Misc.Tasks
         startWhistle,
         applauseGameEnd,
         powerUpSpawn,
-        matchballHeartbeat,
+        matchballSignal,
         bottomTouchBeach,
         bottomTouchMaya,
-        bottomTouchForest
+        bottomTouchForest,
+        bombTick,
+        countdown,
+        volcanoEruption
     }
 
     /// <summary>
