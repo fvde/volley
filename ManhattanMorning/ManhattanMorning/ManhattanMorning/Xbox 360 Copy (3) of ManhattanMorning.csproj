@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{E055881D-6BA7-4ADD-BF38-DED495EA5391}</ProjectGuid>
+    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ManhattanMorning</RootNamespace>
+    <AssemblyName>ManhattanMorning</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
+    <XnaPlatform>Xbox 360</XnaPlatform>
+    <XnaProfile>HiDef</XnaProfile>
+    <XnaCrossPlatformGroupID>8e5f0a91-d43d-464f-bf11-f6a2ebef2e2a</XnaCrossPlatformGroupID>
+    <XnaOutputType>Game</XnaOutputType>
+    <ApplicationIcon>Game.ico</ApplicationIcon>
+    <Thumbnail>GameThumbnail.png</Thumbnail>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Xbox 360' ">
+    <OutputPath>bin\Xbox 360\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
+    <XnaCompressContent>true</XnaCompressContent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Xbox 360' ">
+    <OutputPath>bin\Xbox 360\Debug</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;XBOX;XBOX360</DefineConstants>
+    <XnaCompressContent>true</XnaCompressContent>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ManhattanMorningContent\ManhattanMorningContent.contentproj">
+      <Name>ManhattanMorningContent</Name>
+      <XnaReferenceType>Content</XnaReferenceType>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controller\AI\Agent.cs" />
+    <Compile Include="Controller\AI\aState.cs" />
+    <Compile Include="Controller\AI\StateMachine.cs" />
+    <Compile Include="Controller\AI\States\CommitStates\AIDefault.cs" />
+    <Compile Include="Controller\AI\States\TestStates\TeamplayActivePlayer.cs" />
+    <Compile Include="Controller\AI\States\TestStates\TeamplayBackPlayer.cs" />
+    <Compile Include="Controller\AI\States\TestStates\TeamplayFrontPlayer.cs" />
+    <Compile Include="Controller\AI\States\TestStates\TeamplayPassivePlayer.cs" />
+    <Compile Include="Controller\AI\States\TestStates\AIOidle.cs" />
+    <Compile Include="Controller\AI\States\TestStates\testState.cs" />
+    <Compile Include="Controller\AI\States\CommitStates\MasterAImadeByBoss.cs" />
+    <Compile Include="Controller\AnimationManager.cs" />
+    <Compile Include="Controller\GameLogic.cs" />
+    <Compile Include="Controller\InputManager.cs" />
+    <Compile Include="Controller\AI\AI.cs" />
+    <Compile Include="Controller\ParticleSystemsManager.cs" />
+    <Compile Include="Controller\Physics.cs" />
+    <Compile Include="Controller\PowerUpManager.cs" />
+    <Compile Include="Controller\SettingsManager.cs" />
+    <Compile Include="Controller\SoundManager.cs" />
+    <Compile Include="Controller\StorageManager.cs" />
+    <Compile Include="Controller\SuperController.cs" />
+    <Compile Include="Controller\TaskManager.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\Collision.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\Distance.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\DynamicTree.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\DynamicTreeBroadPhase.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\IBroadPhase.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\QuadTree.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\QuadTreeBroadPhase.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\Shapes\CircleShape.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\Shapes\EdgeShape.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\Shapes\LoopShape.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\Shapes\PolygonShape.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\Shapes\Shape.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Collision\TimeOfImpact.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\ConvexHull\ChainHull.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\ConvexHull\GiftWrap.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\ConvexHull\Melkman.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\BayazitDecomposer.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDTDecomposer.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Delaunay\DelaunayTriangle.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Delaunay\Sweep\AdvancingFront.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Delaunay\Sweep\AdvancingFrontNode.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Delaunay\Sweep\DTSweep.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Delaunay\Sweep\DTSweepConstraint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Delaunay\Sweep\DTSweepContext.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Delaunay\Sweep\DTSweepPointComparator.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Delaunay\Sweep\PointOnEdgeException.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\ITriangulatable.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Orientation.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Polygon\Polygon.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Polygon\PolygonPoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Polygon\PolygonSet.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Sets\ConstrainedPointSet.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Sets\PointSet.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\TriangulationConstraint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\TriangulationContext.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\TriangulationMode.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\TriangulationPoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\TriangulationUtil.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Util\FixedArray3.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Util\FixedBitArray3.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Util\PointGenerator.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\CDT\Util\PolygonGenerator.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\EarclipDecomposer.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\FlipcodeDecomposer.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Decomposition\SeidelDecomposer.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\FixedArray.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\HashSet.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\LineTools.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Math.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Path.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\PathManager.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\PhysicsLogic\Explosion.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\PhysicsLogic\PhysicsLogic.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\PolygonManipulation\CuttingTools.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\PolygonManipulation\SimplifyTools.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\PolygonManipulation\YuPengClipper.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\PolygonTools.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Serialization.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\TextureTools\MarchingSquares.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\TextureTools\MSTerrain.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\TextureTools\TextureConverter.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Common\Vertices.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Controllers\AbstractForceController.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Controllers\BuoyancyController.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Controllers\Controller.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Controllers\GravityController.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Controllers\SimpleWindForce.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Controllers\VelocityLimitController.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\DebugView.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Body.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\BreakableBody.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\ContactManager.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Contacts\Contact.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Contacts\ContactSolver.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Fixture.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Island.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\AngleJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\DistanceJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\FixedAngleJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\FixedDistanceJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\FixedFrictionJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\FixedLineJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\FixedMouseJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\FixedPrismaticJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\FixedRevoluteJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\FrictionJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\GearJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\Joint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\LineJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\PrismaticJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\PulleyJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\RevoluteJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\RopeJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\SliderJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\Joints\WeldJoint.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\TimeStep.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\World.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Dynamics\WorldCallbacks.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Factories\BodyFactory.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Factories\FixtureFactory.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Factories\JointFactory.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Factories\LinkFactory.cs" />
+    <Compile Include="Farseer Physics Engine 3.3 XNA\Settings.cs" />
+    <Compile Include="Misc\Animation\Animation.cs" />
+    <Compile Include="Misc\Animation\SpriteAnimation.cs" />
+    <Compile Include="Misc\Curves\Bezier.cs" />
+    <Compile Include="Misc\Curves\BezierBatch.cs" />
+    <Compile Include="Misc\Curves\BezierManipulator.cs" />
+    <Compile Include="Misc\Curves\Curve2D.cs" />
+    <Compile Include="Misc\Curves\Curve2DManipulator.cs" />
+    <Compile Include="Misc\Curves\Manipulator.cs" />
+    <Compile Include="Misc\Curves\Path.cs" />
+    <Compile Include="Misc\Animation\FadingAnimation.cs" />
+    <Compile Include="Misc\GameInstance.cs" />
+    <Compile Include="Misc\IngameMenuInstance.cs" />
+    <Compile Include="Misc\LayerList.cs" />
+    <Compile Include="Misc\Levels\Beach.cs" />
+    <Compile Include="Misc\Levels\Forest.cs" />
+    <Compile Include="Misc\Levels\Maya.cs" />
+    <Compile Include="Misc\Levels\Level.cs" />
+    <Compile Include="Misc\Levels\Levels.cs" />
+    <Compile Include="Misc\Levels\SampleLevel.cs" />
+    <Compile Include="Model\GameObject\Light.cs" />
+    <Compile Include="Misc\Logic\ScoreLimit_WinCondition.cs" />
+    <Compile Include="Misc\Logic\TimeLimit_WinCondition.cs" />
+    <Compile Include="Misc\MainMenuInstance.cs" />
+    <Compile Include="Misc\Interfaces.cs" />
+    <Compile Include="Misc\ObservableObject.cs" />
+    <Compile Include="Misc\Logger.cs" />
+    <Compile Include="Misc\Animation\PathAnimation.cs" />
+    <Compile Include="Misc\Tasks\GameLogicTask.cs" />
+    <Compile Include="Misc\Tasks\GraphicsTask.cs" />
+    <Compile Include="Misc\Tasks\InputManagerTask.cs" />
+    <Compile Include="Misc\Tasks\ParticleSystemTask.cs" />
+    <Compile Include="Misc\Tasks\SoundTask.cs" />
+    <Compile Include="Misc\Tasks\PhysicsTask.cs" />
+    <Compile Include="Misc\Tasks\PowerUpManagerTask.cs" />
+    <Compile Include="Misc\Tasks\Task.cs" />
+    <Compile Include="Misc\Waypoints.cs" />
+    <Compile Include="Misc\Logic\WinCondition.cs" />
+    <Compile Include="Model\DrawableObject.cs" />
+    <Compile Include="Model\GameObject\ActiveObject.cs" />
+    <Compile Include="Model\GameObject\Ball.cs" />
+    <Compile Include="Model\GameObject\BlobElements.cs" />
+    <Compile Include="Model\GameObject\Border.cs" />
+    <Compile Include="Model\GameObject\GameObject.cs" />
+    <Compile Include="Model\GameObject\Gamepad.cs" />
+    <Compile Include="Model\GameObject\Net.cs" />
+    <Compile Include="Model\GameObject\PassiveObject.cs" />
+    <Compile Include="Model\GameObject\Player.cs" />
+    <Compile Include="Model\GameObject\PowerUp.cs" />
+    <Compile Include="Model\GameObject\PowerUpObjects\Bomb.cs" />
+    <Compile Include="Model\GameObject\PowerUpObjects\Lava.cs" />
+    <Compile Include="Model\GameObject\PowerUpObjects\PowerUpObject.cs" />
+    <Compile Include="Model\HUD\Specialbar.cs" />
+    <Compile Include="Model\LayerInterface.cs" />
+    <Compile Include="Model\Menu\MenuButtonObject.cs" />
+    <Compile Include="Model\Menu\MenuObject.cs" />
+    <Compile Include="Model\ParticleSystem\RibbonParticle.cs" />
+    <Compile Include="Model\GameObject\TextObject.cs" />
+    <Compile Include="Model\HUD\HUD.cs" />
+    <Compile Include="Model\ParticleSystem\Emitter.cs" />
+    <Compile Include="Model\ParticleSystem\EmitterExplosion.cs" />
+    <Compile Include="Model\ParticleSystem\EmitterFountain.cs" />
+    <Compile Include="Model\ParticleSystem\EmitterShape.cs" />
+    <Compile Include="Model\ParticleSystem\Orbitter.cs" />
+    <Compile Include="Model\ParticleSystem\Particle.cs" />
+    <Compile Include="Model\ParticleSystem\ParticleSystem.cs" />
+    <Compile Include="Model\ParticleSystem\EmitterPointShape.cs" />
+    <Compile Include="Model\ParticleSystem\EmitterRectangleShape.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Game1.cs" />
+    <Compile Include="View\Camera.cs" />
+    <Compile Include="View\Graphics.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Farseer Physics Engine 3.3 XNA\Background.png" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\bin\x86\Debug\FarseerPhysicsXNA.dll" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\bin\x86\Debug\FarseerPhysicsXNA.pdb" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\bin\x86\Debug\FarseerPhysicsXNA.XML" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\bin\x86\Release\FarseerPhysicsXNA.dll" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\bin\x86\Release\FarseerPhysicsXNA.pdb" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\bin\x86\Release\FarseerPhysicsXNA.XML" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\Farseer Physics XNA WP7.csproj" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\Farseer Physics XNA Xbox360.csproj" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\Farseer Physics XNA.csproj" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\obj\x86\Debug\Farseer Physics XNA.csproj.FileListAbsolute.txt" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\obj\x86\Debug\FarseerPhysicsXNA.dll" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\obj\x86\Debug\FarseerPhysicsXNA.pdb" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\obj\x86\Release\Farseer Physics XNA.csproj.FileListAbsolute.txt" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\obj\x86\Release\FarseerPhysicsXNA.dll" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\obj\x86\Release\FarseerPhysicsXNA.pdb" />
+    <Content Include="Farseer Physics Engine 3.3 XNA\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt" />
+    <Content Include="Game.ico" />
+    <Content Include="GameThumbnail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Farseer Physics Engine 3.3 XNA\obj\x86\Debug\TempPE\" />
+    <Folder Include="Farseer Physics Engine 3.3 XNA\obj\x86\Release\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Xna.Framework.4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Farseer Physics Engine 3.3 XNA\obj\x86\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="Farseer Physics Engine 3.3 XNA\obj\x86\Debug\ResolveAssemblyReference.cache" />
+    <None Include="Farseer Physics Engine 3.3 XNA\obj\x86\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="Farseer Physics Engine 3.3 XNA\obj\x86\Release\ResolveAssemblyReference.cache" />
+    <None Include="GameThumbnail.png">
+      <XnaPlatformSpecific>true</XnaPlatformSpecific>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="Microsoft.Xna.Framework.Avatar" />
+    <Reference Include="Microsoft.Xna.Framework.Game" />
+    <Reference Include="Microsoft.Xna.Framework.GamerServices" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics" />
+    <Reference Include="Microsoft.Xna.Framework.Net" />
+    <Reference Include="Microsoft.Xna.Framework.Storage" />
+    <Reference Include="Microsoft.Xna.Framework.Video" />
+    <Reference Include="Microsoft.Xna.Framework.Xact" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <!--
+      To modify your build process, add your task inside one of the targets below and uncomment it. 
+      Other similar extension points exist, see Microsoft.Common.targets.
+      <Target Name="BeforeBuild">
+      </Target>
+      <Target Name="AfterBuild">
+      </Target>
+    -->
+</Project>
