@@ -177,8 +177,15 @@ namespace ManhattanMorning.Misc
         /// </summary>
         private List<int> activePlayers = new List<int>();
 
-
+        /// <summary>
+        /// Reference to a random object
+        /// </summary>
         private Random rnd;
+
+        /// <summary>
+        /// Stores the remaining intro time so that the intro switches to the main menu at the right time
+        /// </summary>
+        private int introTimeCounter = 6000;
 
         #endregion
 
@@ -255,12 +262,18 @@ namespace ManhattanMorning.Misc
 
             // If it's the launch of the game, show help/intro otherwise show mainscreen (when coming back from ingame)
             if (isGameStart)
+            {
                 menuState = 6;
+                overlayObject = (MenuObject)menuObjectList.GetObjectByName("Intro_Overlay");
+            }
             else
+            {
                 menuState = 0;
+                overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
+            }
 
             selectedItem = 0;
-            overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
+            
 
             // Make all necessary menu objects visible
             for (int i = 0; i < menuStructure.GetLength(1); i++)
@@ -289,6 +302,17 @@ namespace ManhattanMorning.Misc
         /// being connected or disconnected</param>
         public void update(GameTime gameTime, Gamepad[] gamepadArray)
         {
+
+            // Update intro time
+            if (menuState == 6)
+            {
+
+                introTimeCounter -= gameTime.ElapsedGameTime.Milliseconds;
+
+                // If the time is over, switch to main screen
+                if (introTimeCounter < 0)
+                    switchMenuState(0);
+            }
 
             if ((menuState == 1) || (menuState == 2))
             {
@@ -1326,11 +1350,13 @@ namespace ManhattanMorning.Misc
 
             // Intro
             menuStructure[6, 0] = new List<LayerInterface>();
+            menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_Background"));
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_GlassboxGames"));
+            menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_IvorySound"));
 
             // First help
             menuStructure[7, 0] = new List<LayerInterface>();
-            menuStructure[7, 0].Add(menuObjectList.GetObjectByName("Intro_IvorySound"));
+            menuStructure[7, 0].Add(menuObjectList.GetObjectByName("Help_Box1"));
 
 
         }
@@ -1536,9 +1562,15 @@ namespace ManhattanMorning.Misc
         // Fades screen in/out
         private void animateIntro()
         {
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).Visible = false;
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).FadingAnimation = new FadingAnimation(false, true, 1000, true, 500);
 
-            ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).FadingAnimation = new FadingAnimation(false, true, 2000, true, 1000);
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).Visible = false;
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation = new FadingAnimation(false, true, 1000, false, 500);
+            TaskManager.Instance.addTask(new Tasks.AnimationTask(3200, ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation));
 
+            // Play sound
+            SoundManager.Instance.playMusic(MusicState.Intro);
         }
 
         /// <summary>
@@ -1624,12 +1656,13 @@ namespace ManhattanMorning.Misc
             // If there was an input, fade out the overlay
             if (timeSinceLastInput == 0)
             {
-                if ((overlayObject.Visible == true) && (overlayObject.FadingAnimation.TimeSinceFadingStarted == 0))
-                {
-                    overlayObject.FadingAnimation = new FadingAnimation(false, false, 0, true, 400);
-                    overlayObject.FadingAnimation.Inverted = true;
-                    timeSinceLastInput = 1;
-                }
+                if (overlayObject != null)
+                    if ((overlayObject.Visible == true) && (overlayObject.FadingAnimation.TimeSinceFadingStarted == 0))
+                    {
+                        overlayObject.FadingAnimation = new FadingAnimation(false, false, 0, true, 400);
+                        overlayObject.FadingAnimation.Inverted = true;
+                        timeSinceLastInput = 1;
+                    }
             }
 
             // Increment time since last input
@@ -1638,8 +1671,9 @@ namespace ManhattanMorning.Misc
             // Check if an overlay should be shown
             if (timeSinceLastInput > timeTillOverlayAppears)
             {
-                if (overlayObject.Visible == false)
-                    overlayObject.FadingAnimation = new FadingAnimation(false, false, 0, true, 400);
+                if (overlayObject != null)
+                    if (overlayObject.Visible == false)
+                        overlayObject.FadingAnimation = new FadingAnimation(false, false, 0, true, 400);
 
             }
 

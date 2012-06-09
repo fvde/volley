@@ -850,6 +850,7 @@ namespace ManhattanMorning.Controller
             // Load textures
             Texture2D Texture_Intro_GlassboxGames = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\intro_GlassboxGames");
             Texture2D Texture_Intro_IvorySound = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\intro_IvorySound");
+            Texture2D Texture_Intro_Background = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\intro_Background");
 
             Texture2D Texture_MainMenu_Background = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\MainMenu_Background");
             Texture2D Texture_MainMenu_Background_Ball = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\MainMenu_Background_Ball");
@@ -916,11 +917,14 @@ namespace ManhattanMorning.Controller
             LayerList<LayerInterface> objectList = new LayerList<LayerInterface>();
 
             // Intro
+            MenuObject Passive_Intro_Background = new MenuObject("Intro_Background", true,
+                Texture_Intro_Background, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_Intro_Background);
             MenuObject Passive_Intro_GlassboxGames = new MenuObject("Intro_GlassboxGames", true,
-                Texture_Intro_GlassboxGames, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
+                Texture_Intro_GlassboxGames, null, new Vector2(1, 1), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_Intro_GlassboxGames);
             MenuObject Passive_Intro_IvorySound = new MenuObject("Intro_IvorySound", true,
-                Texture_Intro_IvorySound, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
+                Texture_Intro_IvorySound, null, new Vector2(1, 1), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_Intro_IvorySound);
 
             // Main Screen
@@ -1118,6 +1122,10 @@ namespace ManhattanMorning.Controller
 
 
             // Overlays
+
+            MenuObject Intro_Overlay = new MenuObject("Intro_Overlay", false,
+                null, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Intro_Overlay);
 
             MenuObject MainScreen_Overlay = new MenuObject("MainScreen_Overlay", false,
                 Texture_MainScreen_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
