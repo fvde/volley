@@ -1253,62 +1253,66 @@ namespace ManhattanMorning.Controller
 
             if (on)
             {
-                // Find new random stones to switch on
-                for (int i = 0; i < stoneBlocks.Length; i++)
+
+                while (activeMayaStones.Count == 0)
                 {
-                    if (random.NextDouble() > 0.5f)
+                    // Find new random stones to switch on
+                    for (int i = 0; i < stoneBlocks.Length; i++)
                     {
-                        PassiveObject newStone = SuperController.Instance.getObjectByName("stone" + i) as PassiveObject;
-
-                        // Go to the next stone if this one is blocked by objects
-                        if (Physics.Instance.getBodiesInCircle(newStone.Position + newStone.Size / 2, Math.Max(newStone.Size.X, newStone.Size.Y) / 1.5f).Count > 0)
+                        if (random.NextDouble() > 0.5f)
                         {
-                            continue;
+                            PassiveObject newStone = SuperController.Instance.getObjectByName("stone" + i) as PassiveObject;
+
+                            // Go to the next stone if this one is blocked by objects
+                            if (Physics.Instance.getBodiesInCircle(newStone.Position + newStone.Size / 2, Math.Max(newStone.Size.X, newStone.Size.Y) / 1.5f).Count > 0)
+                            {
+                                continue;
+                            }
+
+                            // Create sound
+                            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
+
+                            // highlighting
+                            newStone.ScalingAnimation.ScalingRange = new Vector2(1.0f, 1.25f);
+                            newStone.ScalingAnimation.Active = true;
+
+                            activeMayaStones.Add(i);
+                            stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
+
+                            //light
+                            Light l = newStone.AttachedObjects.First() as Light;
+                            l.FadingAnimation.TimeSinceFadingStarted = 0;
+                            l.FadingAnimation.DurationBeforeReverse = (int)SettingsManager.Instance.get("switchStonesEffectDuration") - 2000;
+                            l.FadingAnimation.Active = true;
+                            l.ScalingAnimation.ScalingRange = new Vector2(1.0f, 1.25f);
+                            l.ScalingAnimation.Active = true;
+
+                            // Start Waterfall
+                            float leftSideOffset = 0.0f;
+                            Vector2 waterfallPosition = newStone.Position + new Vector2(newStone.Size.X * 0.2f, newStone.Size.Y * 0.75f - 0.1f);
+                            if (i == 0)
+                            {
+                                leftSideOffset = 0.5f;
+                                waterfallPosition += new Vector2(0, 0.25f);
+                            }
+                            else if (i == 1)
+                            {
+                                leftSideOffset = 0.45f;
+                                waterfallPosition += new Vector2(0, 0.25f);
+                            }
+                            else if (i == 2)
+                            {
+                                leftSideOffset = 0.3f;
+                                waterfallPosition += new Vector2(0, 0.1f);
+                            }
+                            float xpos = (float)random.NextDouble() / 5;
+                            waterfallPosition -= new Vector2(xpos / 2, 0);
+                            Vector2 waterFallSize = new Vector2(newStone.Size.X * 0.65f + xpos,
+                                SuperController.Instance.GameInstance.LevelSize.Y - newStone.Position.Y - newStone.Size.Y - leftSideOffset);
+                            Waterfall w = new Waterfall(waterfallPosition, waterFallSize, i);
+                            waterfalls.Add(w);
+                            SuperController.Instance.addGameObjectToGameInstance(w);
                         }
-
-                        // Create sound
-                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.mayaStoneChange, (int)IngameSound.MayaStongeChange));
-
-                        // highlighting
-                        newStone.ScalingAnimation.ScalingRange = new Vector2(1.0f, 1.25f);
-                        newStone.ScalingAnimation.Active = true;
-
-                        activeMayaStones.Add(i);
-                        stoneBlocks[i] = Physics.Instance.createStaticRectangleObject(newStone.Size * 0.75f, newStone.Position + newStone.Size / 2 + new Vector2(0f, newStone.Size.Y * 0.1f), newStone.Rotation);
-
-                        //light
-                        Light l = newStone.AttachedObjects.First() as Light;
-                        l.FadingAnimation.TimeSinceFadingStarted = 0;
-                        l.FadingAnimation.DurationBeforeReverse = (int)SettingsManager.Instance.get("switchStonesEffectDuration") - 2000;
-                        l.FadingAnimation.Active = true;
-                        l.ScalingAnimation.ScalingRange = new Vector2(1.0f, 1.25f);
-                        l.ScalingAnimation.Active = true;
-
-                        // Start Waterfall
-                        float leftSideOffset = 0.0f;
-                        Vector2 waterfallPosition = newStone.Position + new Vector2(newStone.Size.X * 0.2f, newStone.Size.Y * 0.75f - 0.1f);
-                        if (i == 0)
-                        {
-                            leftSideOffset = 0.5f;
-                            waterfallPosition += new Vector2(0, 0.25f);
-                        }
-                        else if (i == 1)
-                        {
-                            leftSideOffset = 0.45f;
-                            waterfallPosition += new Vector2(0, 0.25f);
-                        }
-                        else if (i == 2)
-                        {
-                            leftSideOffset = 0.3f;
-                            waterfallPosition += new Vector2(0, 0.1f);
-                        }
-                        float xpos = (float)random.NextDouble() / 5;
-                        waterfallPosition -= new Vector2(xpos / 2, 0);
-                        Vector2 waterFallSize = new Vector2(newStone.Size.X * 0.65f + xpos, 
-                            SuperController.Instance.GameInstance.LevelSize.Y - newStone.Position.Y - newStone.Size.Y - leftSideOffset);
-                        Waterfall w = new Waterfall(waterfallPosition, waterFallSize, i);
-                        waterfalls.Add(w);
-                        SuperController.Instance.addGameObjectToGameInstance(w);
                     }
                 }
             }
