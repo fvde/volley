@@ -887,10 +887,12 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_TeamMenu_KI = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_KI");
             Texture2D Texture_TeamMenu_Gamepad_Deactivated = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_Gamepad_Deactivated");
 
-            Texture2D Texture_Help_Box1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_Box1");
-            Texture2D Texture_Help_Box2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_Box2");
-            Texture2D Texture_Help_Box3 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_Box3");
-            Texture2D Texture_Help_CreditsBox = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_creditsBox");
+            Texture2D Texture_Help_Box1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_gameplay");
+            Texture2D Texture_Help_Box2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_specialbar");
+            Texture2D Texture_Help_Box3 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_powerups");
+            Texture2D Texture_Help_Box4 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_levelmenu");
+            Texture2D Texture_Help_CreditsBox1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_creditsBox1");
+            Texture2D Texture_Help_CreditsBox2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_creditsBox2");
             Texture2D Texture_Help_RoundButton = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_roundButton");
             Texture2D Texture_Help_RoundButton_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_roundButton_s");
 
@@ -905,7 +907,7 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_MainScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_select");
             Texture2D Texture_ReallyQuit_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_select_back");
             Texture2D Texture_Help_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_browse_back");
-            Texture2D Texture_TeamMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_continue_back");
+            Texture2D Texture_TeamMenu_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_random");
             Texture2D Texture_TeamMenuWarning1_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_noTeam");
             Texture2D Texture_TeamMenuWarning2_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_tooManyTeam");
             Texture2D Texture_SelectLevel_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_startGame_back");
@@ -1062,22 +1064,36 @@ namespace ManhattanMorning.Controller
                 Texture_Help_Box3, null, new Vector2(1000f / 1280f, 563f / 720f), new Vector2(140f / 1280f, 50f / 720f), 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_MainMenu_Help_Box3);
 
-            MenuObject Passive_MainMenu_Help_CreditsBox = new MenuObject("Help_CreditsBox", false,
-                Texture_Help_CreditsBox, null, new Vector2(1000f / 1280f, 563f / 720f), new Vector2(140f / 1280f, 50f / 720f), 92, MeasurementUnit.PercentOfScreen);
-            objectList.Add(Passive_MainMenu_Help_CreditsBox);
+            MenuObject Passive_MainMenu_Help_Box4 = new MenuObject("Help_Box4", false,
+                Texture_Help_Box4, null, new Vector2(1000f / 1280f, 563f / 720f), new Vector2(140f / 1280f, 50f / 720f), 92, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_Help_Box4);
+
+            MenuObject Passive_MainMenu_Help_CreditsBox1 = new MenuObject("Help_CreditsBox1", false,
+                Texture_Help_CreditsBox1, null, new Vector2(1000f / 1280f, 563f / 720f), new Vector2(140f / 1280f, 50f / 720f), 92, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_Help_CreditsBox1);
+
+            MenuObject Passive_MainMenu_Help_CreditsBox2 = new MenuObject("Help_CreditsBox2", false,
+                Texture_Help_CreditsBox2, null, new Vector2(1000f / 1280f, 563f / 720f), new Vector2(140f / 1280f, 50f / 720f), 92, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_Help_CreditsBox2);
 
             MenuButtonObject Button_MainMenu_Help_Button1 = new MenuButtonObject("Help_Button1", false, Texture_Help_RoundButton,
-                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.35f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.25f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button1);
             MenuButtonObject Button_MainMenu_Help_Button2 = new MenuButtonObject("Help_Button2", false, Texture_Help_RoundButton,
-                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.45f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.35f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button2);
             MenuButtonObject Button_MainMenu_Help_Button3 = new MenuButtonObject("Help_Button3", false, Texture_Help_RoundButton,
-                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.55f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.45f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button3);
             MenuButtonObject Button_MainMenu_Help_Button4 = new MenuButtonObject("Help_Button4", false, Texture_Help_RoundButton,
-                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.65f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.55f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button4);
+            MenuButtonObject Button_MainMenu_Help_Button5 = new MenuButtonObject("Help_Button5", false, Texture_Help_RoundButton,
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.65f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Button_MainMenu_Help_Button5);
+            MenuButtonObject Button_MainMenu_Help_Button6 = new MenuButtonObject("Help_Button6", false, Texture_Help_RoundButton,
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.75f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Button_MainMenu_Help_Button6);
 
 
             // Really Quit

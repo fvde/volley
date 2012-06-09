@@ -826,9 +826,11 @@ namespace ManhattanMorning.View
                 frameCounter++;
             }
 
+            /*
             spriteBatchAll.Begin();
             spriteBatchAll.DrawString(font1, Convert.ToString(framesPerSecond), new Vector2(viewPortWidth - 170, 10), Color.IndianRed);
             spriteBatchAll.End();
+             * */
         }
 
         /// <summary>
