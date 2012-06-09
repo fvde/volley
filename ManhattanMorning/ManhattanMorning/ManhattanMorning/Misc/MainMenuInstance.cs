@@ -12,6 +12,7 @@ using ManhattanMorning.Controller;
 using ManhattanMorning.Model.Menu;
 using ManhattanMorning.Model.GameObject;
 using ManhattanMorning.Misc.Logic;
+using ManhattanMorning.Misc.Curves;
 
 namespace ManhattanMorning.Misc
 {
@@ -1353,6 +1354,7 @@ namespace ManhattanMorning.Misc
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_Background"));
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_GlassboxGames"));
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_IvorySound"));
+            menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_VolleyLogo"));
 
             // First help
             menuStructure[7, 0] = new List<LayerInterface>();
@@ -1568,6 +1570,12 @@ namespace ManhattanMorning.Misc
             ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).Visible = false;
             ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation = new FadingAnimation(false, true, 1000, false, 500);
             TaskManager.Instance.addTask(new Tasks.AnimationTask(3200, ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation));
+
+            Curve2D curve = new Curve2D();
+            curve.addPoint(0f, new Vector2(0, 0));
+            curve.addPoint(0.2f, new Vector2(1, 1));
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_VolleyLogo")).PathAnimation = new PathAnimation(curve, 1000);
+            TaskManager.Instance.addTask(new Tasks.AnimationTask(3200, ((MenuObject)menuObjectList.GetObjectByName("Intro_VolleyLogo")).PathAnimation));
 
             // Play sound
             SoundManager.Instance.playMusic(MusicState.Intro);
