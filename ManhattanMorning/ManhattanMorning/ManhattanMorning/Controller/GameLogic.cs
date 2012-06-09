@@ -540,12 +540,18 @@ namespace ManhattanMorning.Controller
 
                 ((HUD)relevantHUDObjects.GetObjectByName("Clock_highlightedHalf")).Rotation = rotation;
 
+                
 
                 // Display countdown for the last 10 seconds
                 for (int i = 10; i > 0; i--)
                 {
                     if ((levelTime.TotalMilliseconds < i*1000) && (activatedCountdowns[i-1] == false))
                     {
+
+                        if (i == 10)
+                        {
+                            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.countdown, (int)IngameSound.Countdown));
+                        }
 
                         FadingAnimation fadingAnimation = new FadingAnimation(false, false, 0, true, 900, Model.ParticleSystem.FadeMode.Quadratic);
                         fadingAnimation.Inverted = true;
@@ -1418,7 +1424,7 @@ namespace ManhattanMorning.Controller
         private void activateMatchballFlag(Vector2 score)
         {
 
-            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.matchballHeartbeat, (int)IngameSound.MatchballHeartbeat));
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.matchballSignal, (int)IngameSound.MatchballSignal));
 
 
             if (this.winCondition is TimeLimit_WinCondition)

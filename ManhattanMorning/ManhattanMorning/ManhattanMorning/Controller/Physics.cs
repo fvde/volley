@@ -654,6 +654,8 @@ namespace ManhattanMorning.Controller
         {
             Bomb b = (Bomb)fixtureA.Body.LinkedActiveObject;
 
+            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)IngameSound.ExplosionSmall));
+
             if (b.Exploded || b.IsSuperBomb)
             {
                 return true;
@@ -942,7 +944,6 @@ namespace ManhattanMorning.Controller
                     {
                         duration = (int)SettingsManager.Instance.get("lavaStunDuration");
                         TaskManager.Instance.addTask(new PhysicsTask(duration, p, PhysicsTask.PhysicTaskType.RemoveStun));
-                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)IngameSound.ExplosionSmall));
                     }
                     ParticleSystemsManager.Instance.playStun(p, duration);
                 }
@@ -1261,7 +1262,7 @@ namespace ManhattanMorning.Controller
 
             // Save the created bomb.
             TaskManager.Instance.addTask(new PhysicsTask((int)SettingsManager.Instance.get("superBombDuration"), PhysicsTask.PhysicTaskType.DetonateSuperBomb));
-
+            
             bomb.Body.Mass = (float)SettingsManager.Instance.get("superBombMass");
 
             bomb.Body.ApplyLinearImpulse(new Vector2((float)(2 * random.NextDouble()) - 1, (float)(2 * random.NextDouble()) - 1));

@@ -579,7 +579,6 @@ namespace ManhattanMorning.Misc
             // When in main screen
             if (menuState == 0)
             {
-
                 SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
                 // unhighlight all previous selected button items
