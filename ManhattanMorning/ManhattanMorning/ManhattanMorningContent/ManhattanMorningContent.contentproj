@@ -815,11 +815,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Menu\MainMenu\help_creditsBox1.png">
-      <Name>help_creditsBox1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Textures\Menu\MainMenu\help_roundButton.png">
       <Name>help_roundButton</Name>
       <Importer>TextureImporter</Importer>
@@ -1523,13 +1518,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Menu\MainMenu\help_creditsBox2.png">
-      <Name>help_creditsBox2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\Menu\MainMenu\help_levelmenu.png">
       <Name>help_levelmenu</Name>
       <Importer>TextureImporter</Importer>
@@ -1539,6 +1527,18 @@
   <ItemGroup>
     <Compile Include="Textures\Menu\MainMenu\intro_Background.png">
       <Name>intro_Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\help_credits1.png">
+      <Name>help_credits1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\help_credits2.png">
+      <Name>help_credits2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
