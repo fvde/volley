@@ -98,7 +98,7 @@ namespace ManhattanMorning.Misc.Levels
 
             
             PassiveObject sea = new PassiveObject("Sea", null, levelSize, Vector2.Zero, 9);
-            sea.Animation = new SpriteAnimation("sea", 80, 12, 1280, 720, 3, 4, true);
+            sea.Animation = new SpriteAnimation("sea", 60, 12, 1280, 720, 3, 4, true);
             sea.Animation.Active = true;
             levelObjectsList.Add(sea);
             
