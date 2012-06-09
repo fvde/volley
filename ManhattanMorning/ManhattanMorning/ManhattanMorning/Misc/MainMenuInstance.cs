@@ -186,7 +186,7 @@ namespace ManhattanMorning.Misc
         /// <summary>
         /// Stores the remaining intro time so that the intro switches to the main menu at the right time
         /// </summary>
-        private int introTimeCounter = 6000;
+        private int introTimeCounter = 8000;
 
         #endregion
 
@@ -261,18 +261,6 @@ namespace ManhattanMorning.Misc
                 ((MenuButtonObject)levels.LevelPreviews[i]).FadingAnimation = null;
             }
 
-            // If it's the launch of the game, show help/intro otherwise show mainscreen (when coming back from ingame)
-            if (isGameStart)
-            {
-                menuState = 6;
-                overlayObject = (MenuObject)menuObjectList.GetObjectByName("Intro_Overlay");
-                animateIntro();
-            }
-            else
-            {
-                menuState = 0;
-                overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
-            }
 
             selectedItem = 0;
             
@@ -292,7 +280,19 @@ namespace ManhattanMorning.Misc
                 }
             }
 
-            
+
+            // If it's the launch of the game, show help/intro otherwise show mainscreen (when coming back from ingame)
+            if (isGameStart)
+            {
+                menuState = 6;
+                overlayObject = (MenuObject)menuObjectList.GetObjectByName("Intro_Overlay");
+                animateIntro();
+            }
+            else
+            {
+                menuState = 0;
+                overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
+            }
 
         }
 
@@ -1355,6 +1355,7 @@ namespace ManhattanMorning.Misc
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_Background"));
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_GlassboxGames"));
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_IvorySound"));
+            menuStructure[6, 0].Add(menuObjectList.GetObjectByName("MainMenu_Background"));
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_VolleyLogo"));
 
             // First help
@@ -1565,6 +1566,10 @@ namespace ManhattanMorning.Misc
         // Fades screen in/out
         private void animateIntro()
         {
+
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_Background")).Visible = false;
+            ((MenuObject)menuObjectList.GetObjectByName("MainMenu_Background")).Visible = true;
+
             ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).Visible = false;
             ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).FadingAnimation = new FadingAnimation(false, true, 1000, true, 500);
 
@@ -1572,12 +1577,13 @@ namespace ManhattanMorning.Misc
             ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation = new FadingAnimation(false, true, 1000, false, 500);
             TaskManager.Instance.addTask(new Tasks.AnimationTask(3200, ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation));
 
+            MenuObject volleyLogo = (MenuObject)menuObjectList.GetObjectByName("Intro_VolleyLogo");
             Curve2D curve = new Curve2D();
-            curve.addPoint(0f, new Vector2(0, 0.4f));
-            curve.addPoint(0.2f, new Vector2(0.4f, 0.4f));
-            ((MenuObject)menuObjectList.GetObjectByName("Intro_VolleyLogo")).PathAnimation = new PathAnimation(curve, 1000);
-            ((MenuObject)menuObjectList.GetObjectByName("Intro_VolleyLogo")).PathAnimation.Active = false;
-            TaskManager.Instance.addTask(new Tasks.AnimationTask(3200, ((MenuObject)menuObjectList.GetObjectByName("Intro_VolleyLogo")).PathAnimation));
+            curve.addPoint(0f, (new Vector2(-500f / 1280f, 213f / 720f) + 0.5f * volleyLogo.Size));
+            curve.addPoint(1.0f, (new Vector2(416f / 1280f, 213f / 720f) + 0.5f * volleyLogo.Size));
+            volleyLogo.PathAnimation = new PathAnimation(curve, 2000);
+            volleyLogo.PathAnimation.Active = false;
+            TaskManager.Instance.addTask(new Tasks.AnimationTask(5200, volleyLogo.PathAnimation));
 
             // Play sound
             SoundManager.Instance.playMusic(MusicState.Intro);

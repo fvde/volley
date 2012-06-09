@@ -928,7 +928,7 @@ namespace ManhattanMorning.Controller
                 Texture_Intro_IvorySound, null, new Vector2(1, 1), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_Intro_IvorySound);
             MenuObject Passive_Intro_VolleyLogo = new MenuObject("Intro_VolleyLogo", true,
-                Texture_Intro_VolleyLogo, null, new Vector2(711f / 1280f, 296f / 720f), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
+                Texture_Intro_VolleyLogo, null, new Vector2(711f / 1280f, 296f / 720f), new Vector2(-1f, -1f), 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_Intro_VolleyLogo);
 
             // Main Screen
