@@ -266,6 +266,7 @@ namespace ManhattanMorning.Misc
             {
                 menuState = 6;
                 overlayObject = (MenuObject)menuObjectList.GetObjectByName("Intro_Overlay");
+                animateIntro();
             }
             else
             {
@@ -291,7 +292,7 @@ namespace ManhattanMorning.Misc
                 }
             }
 
-            animateIntro();
+            
 
         }
 
@@ -1572,9 +1573,10 @@ namespace ManhattanMorning.Misc
             TaskManager.Instance.addTask(new Tasks.AnimationTask(3200, ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation));
 
             Curve2D curve = new Curve2D();
-            curve.addPoint(0f, new Vector2(0, 0));
-            curve.addPoint(0.2f, new Vector2(1, 1));
+            curve.addPoint(0f, new Vector2(0, 0.4f));
+            curve.addPoint(0.2f, new Vector2(0.4f, 0.4f));
             ((MenuObject)menuObjectList.GetObjectByName("Intro_VolleyLogo")).PathAnimation = new PathAnimation(curve, 1000);
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_VolleyLogo")).PathAnimation.Active = false;
             TaskManager.Instance.addTask(new Tasks.AnimationTask(3200, ((MenuObject)menuObjectList.GetObjectByName("Intro_VolleyLogo")).PathAnimation));
 
             // Play sound
