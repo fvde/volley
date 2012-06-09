@@ -772,7 +772,6 @@ namespace ManhattanMorning.View
         public void drawMenu(GameTime gameTime, LayerList<LayerInterface> menuObjects)
         {
             // Draw Layer 85-100 (Menu)
-
             spriteBatchAll.Begin();
 
             foreach (DrawableObject drawableObject in menuObjects)
