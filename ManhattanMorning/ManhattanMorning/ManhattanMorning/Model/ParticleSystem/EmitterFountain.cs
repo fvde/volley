@@ -28,7 +28,7 @@ namespace ManhattanMorning.Model.ParticleSystem
             get { return initialParticleVelocityVariance; }
             set { initialParticleVelocityVariance = value; }
         }
-        private Random random = new Random();
+        private Random random;
 
         //Vector Orthogonal to the emitter Direction
         private Vector2 orthogonalDirection;
@@ -75,6 +75,7 @@ namespace ManhattanMorning.Model.ParticleSystem
         public EmitterFountain(Vector2 position, int numberOfParticles, float particlesPerSecond) 
             : base(position, numberOfParticles, particlesPerSecond)
         {
+            random = new Random((int) particlesPerSecond);
             orthogonalDirection = new Vector2();
             this.EmitterDirection = new Vector2(0f,-1.0f);
         }

@@ -429,7 +429,8 @@ namespace ManhattanMorning.Controller
                 case PowerUpType.Jumpheight:
                     {
                         setJumpheightPowerUp(powerUp, true);
-                        Graphics.Instance.playJumpHighlight(powerUp.Owner.Team);
+                        //Graphics.Instance.playJumpHighlight(powerUp.Owner.Team);
+                        ParticleSystemsManager.Instance.playJumpHighlight(powerUp.Owner.Team);
                         Logger.Instance.log(Sender.PowerupManager, "Started jumpheight PowerUp.", PriorityLevel.Priority_1);
                         break;
                     }

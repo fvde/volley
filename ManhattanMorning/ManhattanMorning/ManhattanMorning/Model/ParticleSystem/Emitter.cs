@@ -114,7 +114,7 @@ namespace ManhattanMorning.Model.ParticleSystem
         /// <summary>
         /// Random number generator.
         /// </summary>
-        private Random rng = new Random();
+        private Random rng;
 
         /// <summary>
         /// Position Offset relative to the Center of the Object
@@ -324,7 +324,8 @@ namespace ManhattanMorning.Model.ParticleSystem
         /// <param name="numberOfParticles">Total number of Particles</param>
         /// <param name="particlesPerSecond">Emitted Partikels per Second</param>
         protected Emitter(Vector2 position, int numberOfParticles, float particlesPerSecond)
-        {            
+        {
+            this.rng = new Random((int)particlesPerSecond);
             this.lastPosition = position;
             this.position = position;
             this.ParticleColor = Color.White;
