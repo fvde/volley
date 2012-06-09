@@ -892,8 +892,8 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_Help_Box2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_specialbar");
             Texture2D Texture_Help_Box3 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_powerups");
             Texture2D Texture_Help_Box4 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_levelmenu");
-            Texture2D Texture_Help_CreditsBox1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_creditsBox1");
-            Texture2D Texture_Help_CreditsBox2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_creditsBox2");
+            Texture2D Texture_Help_CreditsBox1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_credits1");
+            Texture2D Texture_Help_CreditsBox2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_credits2");
             Texture2D Texture_Help_RoundButton = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_roundButton");
             Texture2D Texture_Help_RoundButton_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_roundButton_s");
 
