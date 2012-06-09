@@ -75,7 +75,7 @@ namespace ManhattanMorning.Model.ParticleSystem
         public EmitterFountain(Vector2 position, int numberOfParticles, float particlesPerSecond) 
             : base(position, numberOfParticles, particlesPerSecond)
         {
-            random = new Random((int) particlesPerSecond);
+            random = new Random(/*(int) particlesPerSecond*/);
             orthogonalDirection = new Vector2();
             this.EmitterDirection = new Vector2(0f,-1.0f);
         }

@@ -815,23 +815,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Menu\MainMenu\help_Box1.png">
-      <Name>help_Box1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\help_Box2.png">
-      <Name>help_Box2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\help_Box3.png">
-      <Name>help_Box3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Menu\MainMenu\help_creditsBox.png">
-      <Name>help_creditsBox</Name>
+    <Compile Include="Textures\Menu\MainMenu\help_creditsBox1.png">
+      <Name>help_creditsBox1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1507,6 +1492,46 @@
   <ItemGroup>
     <Compile Include="Textures\PowerUps\powerup_bomb_top_old.png">
       <Name>powerup_bomb_top_old</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\Overlay_choose_random.png">
+      <Name>Overlay_choose_random</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\help_gameplay.png">
+      <Name>help_gameplay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\help_powerups.png">
+      <Name>help_powerups</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Menu\MainMenu\help_specialbar.png">
+      <Name>help_specialbar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\help_creditsBox2.png">
+      <Name>help_creditsBox2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\MainMenu\help_levelmenu.png">
+      <Name>help_levelmenu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
