@@ -191,7 +191,7 @@ namespace ManhattanMorning.Controller
             settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 30000, 60000 });
 
             // Defines how fast the specialbar fills if you perform a positive action
-            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 3.0f, 10.0f });
+            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 1.0f, 10.0f });
 
             // Default duration of powerUps. Required to display icons for a while.
             settings.Add("defaultEffectDuration", new object[] { 0, 3000, 0 });
@@ -274,7 +274,7 @@ namespace ManhattanMorning.Controller
             #region SwitchStones
 
             // Duration of this powerUp
-            settings.Add("switchStonesEffectDuration", new object[] { 0, 5000, 0 });
+            settings.Add("switchStonesEffectDuration", new object[] { 0, 15000, 0 });
 
             #endregion
 
@@ -390,7 +390,7 @@ namespace ManhattanMorning.Controller
             settings.Add("bombTickSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
             //Sound volume of player touching the bottom
-            settings.Add("volcanoEruptionSoundVolume", new object[] { 0.0f, 0.8f, 1.0f });
+            settings.Add("volcanoEruptionSoundVolume", new object[] { 0.0f, 1.0f, 1.0f });
 
             //Sound volume of player touching the bottom
             settings.Add("countdownSoundVolume", new object[] { 0.0f, 0.4f, 1.0f });
