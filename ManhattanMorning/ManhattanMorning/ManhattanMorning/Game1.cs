@@ -20,6 +20,11 @@ using ManhattanMorning.Misc.Logic;
 using ManhattanMorning.View;
 using ManhattanMorning.Model.Menu;
 
+using System.IO.IsolatedStorage;
+
+using System.IO;
+
+
 namespace ManhattanMorning
 {
 
@@ -139,6 +144,7 @@ namespace ManhattanMorning
             // Game1.Instance
             instance = this;
 
+            determineIfFirstTimePlaying();
             SuperController.Instance.initialize();
              
             Logger.Instance.log(Sender.Game1, "Initialize() done successfully",PriorityLevel.Priority_2);
@@ -148,7 +154,7 @@ namespace ManhattanMorning
             if((bool)SettingsManager.Instance.get("IntroVideo"))
                 playVideo(video);
 
-            determineIfFirstTimePlaying();
+            
         }
 
 
@@ -243,6 +249,32 @@ namespace ManhattanMorning
         /// </summary>
         private void determineIfFirstTimePlaying()
         {
+            FirstTimePlaying = true;
+            //load save file
+            using (IsolatedStorageFile file = IsolatedStorageFile.GetUserStoreForAssembly())
+            {
+                using (BinaryReader reader = new BinaryReader(file.OpenFile("saveFirstStart", FileMode.OpenOrCreate)))
+                {
+                    for (int i = 0; i < reader.BaseStream.Length; i++)
+                    {
+                        FirstTimePlaying = reader.ReadBoolean();
+                        Console.WriteLine("reading " + FirstTimePlaying);
+
+                    }
+                    Console.WriteLine("notreading " + FirstTimePlaying);
+                }
+
+
+
+                if (FirstTimePlaying)
+                {
+                    using (BinaryWriter writer = new BinaryWriter(file.CreateFile("saveFirstStart")))
+                    {
+                        writer.Write(false);
+                    }
+                }
+            }
+                    
             /*
             StorageDevice device = new StorageDevice();
 
@@ -270,7 +302,8 @@ namespace ManhattanMorning
                 FirstTimePlaying = true;
             }
              */
-        }
+
+            }
 
 
         #region Videos
