@@ -763,6 +763,9 @@ namespace ManhattanMorning.Controller
                 TaskManager.Instance.addTask(new PhysicsTask(3000 + x * (int)settingsManager.get("lavaTime"), PhysicsTask.PhysicTaskType.CreateLava));
             }
             ParticleSystemsManager.Instance.playVulcano(true);
+
+            // Set rumble
+            InputManager.Instance.setRumble((int)settingsManager.get("volcanoEffectDuration"), new Vector2(0.2f, 0.2f));
         }
 
         #endregion

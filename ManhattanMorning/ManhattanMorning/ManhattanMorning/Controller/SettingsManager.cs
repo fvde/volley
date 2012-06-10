@@ -188,10 +188,10 @@ namespace ManhattanMorning.Controller
 
             // Defines after how much time a new neutral Powerups spawns (in ms)
             // Used in GameLogic
-            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 3000, 60000 });
+            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 30000, 60000 });
 
             // Defines how fast the specialbar fills if you perform a positive action
-            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 1.0f, 10.0f });
+            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 3.0f, 10.0f });
 
             // Default duration of powerUps. Required to display icons for a while.
             settings.Add("defaultEffectDuration", new object[] { 0, 3000, 0 });
@@ -213,7 +213,7 @@ namespace ManhattanMorning.Controller
             settings.Add("lavaSize", new object[] { new Vector2(0.1f, 0.1f), new Vector2(0.8f, 0.8f), new Vector2(5f, 5f) });
 
             // The range of bombs
-            settings.Add("lavaRange", new object[] { 0.0f, 3.0f, 30.0f });
+            settings.Add("lavaRange", new object[] { 0.0f, 2.0f, 30.0f });
 
             // The impact of bombs
             settings.Add("lavaImpact", new object[] { 1.0f, 2.0f, 1000.0f });

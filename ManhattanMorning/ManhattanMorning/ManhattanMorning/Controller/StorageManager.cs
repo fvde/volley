@@ -945,7 +945,7 @@ namespace ManhattanMorning.Controller
             objectList.Add(Button_MainMenu_MainScreen_1vs1);
 
             MenuButtonObject Button_MainMenu_MainScreen_2vs2 = new MenuButtonObject("MainScreen_2vs2", true, Texture_MainScreen_2vs2,
-                Texture_MainScreen_2vs2_s, null, new Vector2(504f/1280f, 702f/720f), new Vector2(783f/1280f, 30f/720f), 92, MeasurementUnit.PercentOfScreen);// 783 - 17
+                Texture_MainScreen_2vs2_s, null, new Vector2(481f/1280f, 693f/720f), new Vector2(783f/1280f, 31f/720f), 92, MeasurementUnit.PercentOfScreen);// 783 - 17
             objectList.Add(Button_MainMenu_MainScreen_2vs2);
 
             MenuButtonObject Button_MainMenu_MainScreen_Help = new MenuButtonObject("MainScreen_Help", true, Texture_MainScreen_Help,
