@@ -365,8 +365,8 @@ namespace ManhattanMorning.Model.HUD
 
             // Set new max filling value
             // -1.5f * fillingValuePerTile, because otherwise the new MaxValue would be too big
-            float newMaxFillingValueX = (size.X / originalSpecialbarSize.X) * initialMaxFillingValue - 1.5f * fillingValuePerTile;
-            float newMaxFillingValueY = (size.Y / originalSpecialbarSize.Y) * initialMaxFillingValue - 1.5f * fillingValuePerTile;
+            float newMaxFillingValueX = (size.X / originalSpecialbarSize.X) * initialMaxFillingValue - 1.7f * fillingValuePerTile;
+            float newMaxFillingValueY = (size.Y / originalSpecialbarSize.Y) * initialMaxFillingValue - 1.7f * fillingValuePerTile;
             setSpecialbarMaxFillingValue(new Vector2(newMaxFillingValueX, newMaxFillingValueY));
 
         }

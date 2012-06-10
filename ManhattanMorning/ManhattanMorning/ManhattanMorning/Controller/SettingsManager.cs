@@ -218,7 +218,7 @@ namespace ManhattanMorning.Controller
             settings.Add("lavaSize", new object[] { new Vector2(0.1f, 0.1f), new Vector2(0.8f, 0.8f), new Vector2(5f, 5f) });
 
             // The range of bombs
-            settings.Add("lavaRange", new object[] { 0.0f, 3.0f, 30.0f });
+            settings.Add("lavaRange", new object[] { 0.0f, 2.0f, 30.0f });
 
             // The impact of bombs
             settings.Add("lavaImpact", new object[] { 1.0f, 2.0f, 1000.0f });
@@ -395,7 +395,7 @@ namespace ManhattanMorning.Controller
             settings.Add("bombTickSoundVolume", new object[] { 0.0f, 0.15f, 1.0f });
 
             //Sound volume of player touching the bottom
-            settings.Add("volcanoEruptionSoundVolume", new object[] { 0.0f, 0.8f, 1.0f });
+            settings.Add("volcanoEruptionSoundVolume", new object[] { 0.0f, 1.0f, 1.0f });
 
             //Sound volume of player touching the bottom
             settings.Add("countdownSoundVolume", new object[] { 0.0f, 0.4f, 1.0f });
