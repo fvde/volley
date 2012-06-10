@@ -279,7 +279,7 @@ namespace ManhattanMorning.Controller
             #region SwitchStones
 
             // Duration of this powerUp
-            settings.Add("switchStonesEffectDuration", new object[] { 0, 20000, 0 });
+            settings.Add("switchStonesEffectDuration", new object[] { 0, 12000, 0 });
 
             #endregion
 
@@ -389,7 +389,7 @@ namespace ManhattanMorning.Controller
             settings.Add("matchballHeartbeatSoundVolume", new object[] { 0.0f, 0.0f, 1.0f });
 
             //Sound volume of player touching the bottom
-            settings.Add("bottomTouchSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("bottomTouchSoundVolume", new object[] { 0.0f, 0.15f, 1.0f });
 
             //Sound volume of player touching the bottom
             settings.Add("bombTickSoundVolume", new object[] { 0.0f, 0.15f, 1.0f });
