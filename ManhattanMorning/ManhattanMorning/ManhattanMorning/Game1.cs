@@ -251,7 +251,15 @@ namespace ManhattanMorning
         {
             FirstTimePlaying = true;
             //load save file
-            using (IsolatedStorageFile file = IsolatedStorageFile.GetUserStoreForAssembly())
+
+#if WINDOWS
+            
+            IsolatedStorageFile file = IsolatedStorageFile.GetUserStoreForAssembly();
+#else
+            IsolatedStorageFile file = IsolatedStorageFile.GetUserStoreForApplication();
+#endif
+
+
             {
                 using (BinaryReader reader = new BinaryReader(file.OpenFile("saveFirstStart", FileMode.OpenOrCreate)))
                 {
