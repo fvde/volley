@@ -254,6 +254,7 @@
     <Compile Include="Misc\Levels\Levels.cs" />
     <Compile Include="Misc\Levels\SampleLevel.cs" />
     <Compile Include="Misc\Tasks\AnimationTask.cs" />
+    <Compile Include="Misc\VolleySound.cs" />
     <Compile Include="Model\GameObject\Light.cs" />
     <Compile Include="Misc\Logic\ScoreLimit_WinCondition.cs" />
     <Compile Include="Misc\Logic\TimeLimit_WinCondition.cs" />

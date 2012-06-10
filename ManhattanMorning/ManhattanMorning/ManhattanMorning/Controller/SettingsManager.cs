@@ -279,7 +279,7 @@ namespace ManhattanMorning.Controller
             #region SwitchStones
 
             // Duration of this powerUp
-            settings.Add("switchStonesEffectDuration", new object[] { 0, 5000, 0 });
+            settings.Add("switchStonesEffectDuration", new object[] { 0, 20000, 0 });
 
             #endregion
 
@@ -341,19 +341,19 @@ namespace ManhattanMorning.Controller
             settings.Add("soundVolume", new object[] { 0.0f, 0.75f, 1.0f });
 
             //Sound volume of extra jump height effects
-            settings.Add("jumpPowerUpSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("jumpPowerUpSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of extra jump height effects
-            settings.Add("hitBallSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("hitBallSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
             
             //Sound volume of hitNet sound effects
-            settings.Add("hitNetSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("hitNetSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of picking up powerUp
-            settings.Add("pickupPowerUpSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("pickupPowerUpSoundVolume", new object[] { 0.0f, 0.2f, 1.0f });
 
             //Sound volume of BigExplosion sound effects
-            settings.Add("bigExplosionSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("bigExplosionSoundVolume", new object[] { 0.0f, 0.4f, 1.0f });
 
             //Sound volume of small Explosion sound effects
             settings.Add("smallExplosionSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
@@ -362,37 +362,37 @@ namespace ManhattanMorning.Controller
             settings.Add("invertedControlSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of smash ball sound effects
-            settings.Add("smashBallSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("smashBallSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
             //Sound volume of Sunset sound effects
-            settings.Add("sunsetPowerUpSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("sunsetPowerUpSoundVolume", new object[] { 0.0f, 0.2f, 1.0f });
 
             //Sound volume of wind sound effects
-            settings.Add("windPowerUpSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("windPowerUpSoundVolume", new object[] { 0.0f, 0.2f, 1.0f });
 
             //Sound volume of stone change sound effects
-            settings.Add("mayaStoneChangeSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("mayaStoneChangeSoundVolume", new object[] { 0.0f, 0.3f, 1.0f });
 
             //Sound volume of start whistle
             settings.Add("startWhistleSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of specialbar -> full sound effects
-            settings.Add("specialbarFullSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("specialbarFullSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
             //Sound volume of applause -> GameEnd
             settings.Add("applauseGameEndSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of spawing powerUp effect
-            settings.Add("powerUpSpawnSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("powerUpSpawnSoundVolume", new object[] { 0.0f, 0.15f, 1.0f });
 
-            //Sound volume of heartbeat -> Matchball
-            settings.Add("matchballHeartbeatSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            //Sound volume of heartbeat -> Matchball (Not very good, so disabled for now)
+            settings.Add("matchballHeartbeatSoundVolume", new object[] { 0.0f, 0.0f, 1.0f });
 
             //Sound volume of player touching the bottom
             settings.Add("bottomTouchSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
             //Sound volume of player touching the bottom
-            settings.Add("bombTickSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("bombTickSoundVolume", new object[] { 0.0f, 0.15f, 1.0f });
 
             //Sound volume of player touching the bottom
             settings.Add("volcanoEruptionSoundVolume", new object[] { 0.0f, 0.8f, 1.0f });
