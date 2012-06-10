@@ -263,7 +263,19 @@ namespace ManhattanMorning.Misc
 
 
             selectedItem = 0;
-            
+
+            // If it's the launch of the game, show help/intro otherwise show mainscreen (when coming back from ingame)
+            if (isGameStart)
+            {
+                menuState = 6;
+                overlayObject = (MenuObject)menuObjectList.GetObjectByName("Intro_Overlay");
+                animateIntro();
+            }
+            else
+            {
+                menuState = 0;
+                overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
+            }
 
             // Make all necessary menu objects visible
             for (int i = 0; i < menuStructure.GetLength(1); i++)
@@ -281,19 +293,8 @@ namespace ManhattanMorning.Misc
             }
 
 
-            // If it's the launch of the game, show help/intro otherwise show mainscreen (when coming back from ingame)
             if (isGameStart)
-            {
-                menuState = 6;
-                overlayObject = (MenuObject)menuObjectList.GetObjectByName("Intro_Overlay");
                 animateIntro();
-            }
-            else
-            {
-                menuState = 0;
-                overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
-            }
-
         }
 
         /// <summary>

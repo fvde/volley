@@ -451,8 +451,8 @@ namespace ManhattanMorning.Controller
             float borderHeight = 4.0f;
             float magicNumber = 0.2f;
 
-            Border rightSideHandDistanceBorder = new Border("rightSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 10.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 + new Vector2(allowedHandDistance, 0), 50, Model.MeasurementUnit.Meter);
-            Border leftSideHandDistanceBorder = new Border("leftSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 10.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 - new Vector2(allowedHandDistance + magicNumber, 0), 50, Model.MeasurementUnit.Meter);
+            Border rightSideHandDistanceBorder = new Border("rightSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 30.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 + new Vector2(allowedHandDistance, 0), 50, Model.MeasurementUnit.Meter);
+            Border leftSideHandDistanceBorder = new Border("leftSideHandDistanceBorder", false, test, null, null, new Vector2(0.2f, 30.0f), tempNet.Position + new Vector2(tempNetSize.X, -borderHeight * 2) / 2 - new Vector2(allowedHandDistance + magicNumber, 0), 50, Model.MeasurementUnit.Meter);
 
             SuperController.Instance.addGameObjectToGameInstance(leftBorder);
             SuperController.Instance.addGameObjectToGameInstance(rightBorder);
