@@ -1048,6 +1048,10 @@ namespace ManhattanMorning.Controller
                 Texture_Help_CreditsBox2, null, new Vector2(1000f / 1280f, 563f / 720f), new Vector2(140f / 1280f, 50f / 720f), 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_MainMenu_Help_CreditsBox2);
 
+            MenuObject Passive_MainMenu_Help_FirstHelp = new MenuObject("Help_FirstHelp", false,
+                Texture_Help_CreditsBox2, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_Help_FirstHelp);
+
             MenuButtonObject Button_MainMenu_Help_Button1 = new MenuButtonObject("Help_Button1", false, Texture_Help_RoundButton,
                 Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.25f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button1);
