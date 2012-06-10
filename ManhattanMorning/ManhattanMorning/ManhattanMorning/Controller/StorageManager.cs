@@ -855,6 +855,7 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_Help_CreditsBox2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_credits2");
             Texture2D Texture_Help_RoundButton = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_roundButton");
             Texture2D Texture_Help_RoundButton_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_roundButton_s");
+            Texture2D Texture_Help_FirstStart = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_firstStart");
 
             Texture2D Texture_ReallyQuit_Frame = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_Frame");
             Texture2D Texture_ReallyQuit_Frame2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_Frame2");
@@ -1049,7 +1050,7 @@ namespace ManhattanMorning.Controller
             objectList.Add(Passive_MainMenu_Help_CreditsBox2);
 
             MenuObject Passive_MainMenu_Help_FirstHelp = new MenuObject("Help_FirstHelp", false,
-                Texture_Help_CreditsBox2, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
+                Texture_Help_FirstStart, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_MainMenu_Help_FirstHelp);
 
             MenuButtonObject Button_MainMenu_Help_Button1 = new MenuButtonObject("Help_Button1", false, Texture_Help_RoundButton,
