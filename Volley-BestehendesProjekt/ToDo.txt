@@ -1,0 +1,2 @@
+1. implement safe area
+2. reorganize classes
