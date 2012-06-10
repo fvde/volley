@@ -130,6 +130,11 @@ namespace ManhattanMorning.Controller
             // Gravity. Vector2. Used in Physics.cs.
             settings.Add("gravity", new object[] {new Vector2(-10f, -10f), new Vector2(0.0f, 9.0f), new Vector2(10f, 15f)});
 
+            // Maximal Y Velocity when bouncing off the ground. The point of this value is to prevent players from adding up jump forces.
+            // 0.0f: No bounce
+            // 15.0f: Nearly no restriction
+            settings.Add("maximumYBounceVelocity", new object[] { 0f, 3.0f, 15.0f });
+
             // Scalar that determines the maximum moving-speed of the player in meters/second (triggered through gamepad events). Float. Used in Physics.cs.
             settings.Add("movementSpeedScalar", new object[] {0f, 8.0f, 20f});
 
@@ -188,7 +193,7 @@ namespace ManhattanMorning.Controller
 
             // Defines after how much time a new neutral Powerups spawns (in ms)
             // Used in GameLogic
-            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 3000, 60000 });
+            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 30000, 60000 });
 
             // Defines how fast the specialbar fills if you perform a positive action
             settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 1.0f, 10.0f });
