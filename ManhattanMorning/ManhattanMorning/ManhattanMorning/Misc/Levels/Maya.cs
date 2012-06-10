@@ -100,10 +100,10 @@ namespace ManhattanMorning.Misc.Levels
             levelObjectsList.Add(new PassiveObject("Front", "front", levelSize, Vector2.Zero, 60));
 
             // add stone objects. they don't have any collision, this functionality is added by active stoneBlockers
-            PassiveObject stone0 = new PassiveObject("stone0", "stone0", Graphics.Instance.convertUnits(new Vector2(96, 87), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), Graphics.Instance.convertUnits(new Vector2(120, 148), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), 25);
-            PassiveObject stone1 = new PassiveObject("stone1", "stone1", Graphics.Instance.convertUnits(new Vector2(88, 81), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), Graphics.Instance.convertUnits(new Vector2(357, 138), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), 25);
-            PassiveObject stone2 = new PassiveObject("stone2", "stone2", Graphics.Instance.convertUnits(new Vector2(69, 72), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), Graphics.Instance.convertUnits(new Vector2(685, 146), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), 25);
-            PassiveObject stone3 = new PassiveObject("stone3", "stone3", Graphics.Instance.convertUnits(new Vector2(98, 84), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), Graphics.Instance.convertUnits(new Vector2(852, 151), Model.MeasurementUnit.Pixel, Model.MeasurementUnit.Meter), 25);
+            PassiveObject stone0 = new PassiveObject("stone0", "stone0", new Vector2(96, 87) / 100, new Vector2(120, 148) / 100, 25);
+            PassiveObject stone1 = new PassiveObject("stone1", "stone1", new Vector2(88, 81) / 100, new Vector2(357, 138) / 100, 25);
+            PassiveObject stone2 = new PassiveObject("stone2", "stone2", new Vector2(69, 72) / 100, new Vector2(685, 146) / 100, 25);
+            PassiveObject stone3 = new PassiveObject("stone3", "stone3", new Vector2(98, 84) / 100, new Vector2(852, 151) / 100, 25);
 
             Light l0 = new Light("stoneL", StorageManager.Instance.getTextureByName("stone_light"), stone0.Size * 1.1f, stone0.Position - stone0.Size / 2, Color.Moccasin, true, null);
             int time = (int)SettingsManager.Instance.get("switchStonesEffectDuration") - 2000;
