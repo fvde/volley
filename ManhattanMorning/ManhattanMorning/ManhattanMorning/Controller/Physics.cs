@@ -63,6 +63,11 @@ namespace ManhattanMorning.Controller
         private Logger logger;
 
         /// <summary>
+        /// Maximal Y Velocity when bouncing off the ground. The point of this value is to prevent players from adding up jump forces.
+        /// </summary>
+        float maximalYForce;
+
+        /// <summary>
         /// instance of the
         /// </summary>
         private SettingsManager settingsManager;
@@ -140,6 +145,8 @@ namespace ManhattanMorning.Controller
             internalRemoveList = new List<Body>();
             superBombList = new List<Bomb>();
             random = new Random();
+
+            maximalYForce = (float)settingsManager.get("maximumYBounceVelocity");
         }
 
 
@@ -609,6 +616,12 @@ namespace ManhattanMorning.Controller
             {
                 GameLogic.Instance.addCollision(fixtureA.Body.LinkedActiveObject, fixtureB.Body.LinkedActiveObject);
                 logger.log(Sender.Physics, "Player collided", PriorityLevel.Priority_1);
+
+                // Cap jump force, to prevent jump additions
+                if (fixtureB.Body.LinkedActiveObject is Border && String.Equals(fixtureB.Body.LinkedActiveObject.Name, "bottomBorder"))
+                {
+                    fixtureA.Body.LinearVelocity = new Vector2(fixtureA.Body.LinearVelocity.X, Math.Min(fixtureA.Body.LinearVelocity.Y, maximalYForce));
+                }
             }
 
             // Stun the player hand if its touching the net
@@ -653,8 +666,6 @@ namespace ManhattanMorning.Controller
         bool Bomb_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
         {
             Bomb b = (Bomb)fixtureA.Body.LinkedActiveObject;
-
-            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)IngameSound.ExplosionSmall));
 
             if (b.Exploded || b.IsSuperBomb)
             {
@@ -892,21 +903,23 @@ namespace ManhattanMorning.Controller
             Vector2 forceDirection = new Vector2(0, 0);
             float distance = 0.0f;
 
-            // play explosion
+            // Notify Graphics:
             ParticleSystemsManager.Instance.playBombExplosion(targetPoint, new Vector2(explosionRange*2), isSuperBomb);
-            //add light
-            Vector2 size = new Vector2(explosionRange*2);
-            PassiveObject passive = new PassiveObject("exRad", true, StorageManager.Instance.getTextureByName("bomb_explosion"), null, null, size, targetPoint - size / 2, 56, MeasurementUnit.Meter);
-            passive.BlendColor = Color.Yellow;
-            FadingAnimation fading = new FadingAnimation(false, false, 250, true, 450);
-            fading.Inverted = true;
-            ScalingAnimation scaling = new ScalingAnimation(false, false, 0, true, 250);
-            scaling.ScalingRange = new Vector2(0.05f, 1);
-            passive.FadingAnimation = fading;
-            passive.ScalingAnimation = scaling;
+            if (isSuperBomb)
+            {
+                Vector2 size = new Vector2(explosionRange*2);
+                PassiveObject passive = new PassiveObject("exRad", true, StorageManager.Instance.getTextureByName("bomb_explosion"), null, null, size, targetPoint - size / 2, 56, MeasurementUnit.Meter);
+                passive.BlendColor = Color.Yellow;
+                FadingAnimation fading = new FadingAnimation(false, false, 250, true, 450);
+                fading.Inverted = true;
+                ScalingAnimation scaling = new ScalingAnimation(false, false, 0, true, 250);
+                scaling.ScalingRange = new Vector2(0.05f, 1);
+                passive.FadingAnimation = fading;
+                passive.ScalingAnimation = scaling;
 
-            SuperController.Instance.addGameObjectToGameInstance(passive);
-            TaskManager.Instance.addTask(new GameLogicTask(400, passive));
+                SuperController.Instance.addGameObjectToGameInstance(passive);
+                TaskManager.Instance.addTask(new GameLogicTask(400, passive));
+            }
 
             foreach (Body body in getBodiesInCircle(targetPoint, explosionRange))
             {
@@ -944,6 +957,7 @@ namespace ManhattanMorning.Controller
                     {
                         duration = (int)SettingsManager.Instance.get("lavaStunDuration");
                         TaskManager.Instance.addTask(new PhysicsTask(duration, p, PhysicsTask.PhysicTaskType.RemoveStun));
+                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)IngameSound.ExplosionSmall));
                     }
                     ParticleSystemsManager.Instance.playStun(p, duration);
                 }
@@ -1076,15 +1090,27 @@ namespace ManhattanMorning.Controller
         /// </summary>
         /// <param name="player"></param>
         /// <param name="on"></param>
-        public void setJumpheightPowerUpForPlayer(Player player, bool on)
+        public void setJumpheightPowerUpForTeam(int team, bool on)
         {
             if (on)
             {
-                player.Flags.Add(PlayerFlag.DoubleJump);
+                foreach (Player p in SuperController.Instance.getAllPlayers())
+                {
+                    if (p.Team == team)
+                    {
+                        p.Flags.Add(PlayerFlag.DoubleJump);
+                    }
+                }
             }
             else
             {
-                player.Flags.Remove(PlayerFlag.DoubleJump);
+                foreach (Player p in SuperController.Instance.getAllPlayers())
+                {
+                    if (p.Team == team)
+                    {
+                        p.Flags.Remove(PlayerFlag.DoubleJump);
+                    }
+                }
             }
         }
 
@@ -1206,10 +1232,6 @@ namespace ManhattanMorning.Controller
             lava.Body.ApplyLinearImpulse(new Vector2((float)(2 * random.NextDouble()) - 1, (float)(2 * random.NextDouble()) - 1));
             lava.Body.ApplyTorque(10 * (float)random.NextDouble());
 
-            Light l = new Light("lavaL", StorageManager.Instance.getTextureByName("light"), lava.Size * 2, lava.Position, Color.OrangeRed, true, null);
-            lava.attachObject(l);
-
-            SuperController.Instance.addGameObjectToGameInstance(l);
             SuperController.Instance.addGameObjectToGameInstance(lava);
             ParticleSystemsManager.Instance.playBombFalling(lava);
             // Collision
@@ -1245,7 +1267,7 @@ namespace ManhattanMorning.Controller
             PassiveObject bomb_top = new PassiveObject("Bomb_top", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_top"), null, null,
                 size, position, 59, MeasurementUnit.Meter);
 
-            Vector2 offset = new Vector2(0.07f, -0.7f * bomb.Size.Y);
+            Vector2 offset = new Vector2(0.03f, -0.7f * bomb.Size.Y);
             bomb_top.Offset = offset;
             bomb_top.RotateWithOffset = true;
 
@@ -1263,7 +1285,7 @@ namespace ManhattanMorning.Controller
 
             // Save the created bomb.
             TaskManager.Instance.addTask(new PhysicsTask((int)SettingsManager.Instance.get("superBombDuration"), PhysicsTask.PhysicTaskType.DetonateSuperBomb));
-            
+
             bomb.Body.Mass = (float)SettingsManager.Instance.get("superBombMass");
 
             bomb.Body.ApplyLinearImpulse(new Vector2((float)(2 * random.NextDouble()) - 1, (float)(2 * random.NextDouble()) - 1));

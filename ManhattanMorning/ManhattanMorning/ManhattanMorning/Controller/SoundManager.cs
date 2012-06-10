@@ -155,7 +155,7 @@ namespace ManhattanMorning.Controller
         /// <summary>
         /// Holds the current sound effects that can be played ingame
         /// </summary>
-        SoundEffectInstance[] ingameSoundInstance = new SoundEffectInstance[13];
+        VolleySound[] ingameSoundInstance = new VolleySound[13];
 
         /// <summary>
         /// Holds the duration and the remaining time in MS if a sound is looped
@@ -316,6 +316,11 @@ namespace ManhattanMorning.Controller
         /// Stores the bomb tick effect volume.
         /// </summary>
         float menueButtonsVolume;
+
+        /// <summary>
+        /// The maximum Volume for each sound
+        /// </summary>
+        float[] maximumSoundVolumes;
         
 
 
@@ -395,6 +400,8 @@ namespace ManhattanMorning.Controller
             menuSoundInstanceUsage = 0;
             ingameSoundInstanceUsage = 0;
             disableMusic = false;
+            maximumSoundVolumes = new float[30];
+
 
         }
         
@@ -440,7 +447,7 @@ namespace ManhattanMorning.Controller
 
             updateLoopingSounds(gameTime);
 
-            updateCompleteFading(gameTime);
+            //updateCompleteFading(gameTime);
 
         }
 
@@ -457,7 +464,7 @@ namespace ManhattanMorning.Controller
             {
 
                 // If the sound is null or paused, do nothing
-                if ((ingameSoundInstance[i] == null) || (ingameSoundInstance[i].State == SoundState.Paused))
+                if ((ingameSoundInstance[i] == null) || (ingameSoundInstance[i].SoundEffect.State == SoundState.Paused))
                     continue;
 
                 // Check if it has a looping
@@ -468,7 +475,7 @@ namespace ManhattanMorning.Controller
                     ingameSoundInstanceDuration[i, 1] -= gameTime.ElapsedGameTime.Milliseconds;
 
                     // Set sound volume
-                    ingameSoundInstance[i].Volume = soundEffectVolume;
+                    ingameSoundInstance[i].SoundEffect.Volume = ingameSoundInstance[i].MaximumVolume;
 
                     // If the time is over, stop the sound and remove it
                     if (ingameSoundInstanceDuration[i, 1] < 0)
@@ -477,8 +484,8 @@ namespace ManhattanMorning.Controller
                         ingameSoundInstanceDuration[i, 0] = 0;
                         ingameSoundInstanceDuration[i, 1] = 0;
 
-                        ingameSoundInstance[i].Stop();
-                        ingameSoundInstance[i].Dispose();
+                        ingameSoundInstance[i].SoundEffect.Stop();
+                        ingameSoundInstance[i].SoundEffect.Dispose();
                         ingameSoundInstance[i] = null;
 
                     }
@@ -490,7 +497,7 @@ namespace ManhattanMorning.Controller
                         float percentOfFading = ((float)(ingameSoundInstanceDuration[i, 0] - ingameSoundInstanceDuration[i, 1])) / ((float)fadingTimeLoopSounds);
 
                         // apply to sound
-                        ingameSoundInstance[i].Volume = percentOfFading * soundEffectVolume;
+                        ingameSoundInstance[i].SoundEffect.Volume = percentOfFading * ingameSoundInstance[i].MaximumVolume;
 
                     }
                     else if (ingameSoundInstanceDuration[i, 1] < fadingTimeLoopSounds)
@@ -500,7 +507,7 @@ namespace ManhattanMorning.Controller
                         float percentOfFading = ((float)ingameSoundInstanceDuration[i, 1]) / ((float)fadingTimeLoopSounds);
 
                         // apply to sound
-                        ingameSoundInstance[i].Volume = percentOfFading * soundEffectVolume;
+                        ingameSoundInstance[i].SoundEffect.Volume = percentOfFading * ingameSoundInstance[i].MaximumVolume;
                     
                     }
                 }
@@ -540,7 +547,7 @@ namespace ManhattanMorning.Controller
                     for (int i = 0; i < ingameSoundInstance.Length; i++)
                     {
                         if (ingameSoundInstance[i] != null)
-                            ingameSoundInstance[i].Volume = newVolume;
+                            ingameSoundInstance[i].SoundEffect.Volume = newVolume;
                     }
 
                     for (int i = 0; i < menuSoundInstance.Length; i++)
@@ -569,7 +576,7 @@ namespace ManhattanMorning.Controller
                     for (int i = 0; i < ingameSoundInstance.Length; i++)
                     {
                         if (ingameSoundInstance[i] != null)
-                            ingameSoundInstance[i].Volume = newVolume;
+                            ingameSoundInstance[i].SoundEffect.Volume = newVolume;
                     }
 
                     for (int i = 0; i < menuSoundInstance.Length; i++)
@@ -608,7 +615,7 @@ namespace ManhattanMorning.Controller
 
             }
 
-            // Make sure that at the position in the array is not a looped sound which is stil be player
+            // Make sure that at the position in the array is not a looped sound which is still be played
             int temp_ingameSoundInstanceUsage = ingameSoundInstanceUsage;
 
             while (ingameSoundInstanceDuration[ingameSoundInstanceUsage, 1] > 0)
@@ -621,18 +628,20 @@ namespace ManhattanMorning.Controller
             }
 
             if (ingameSoundInstance[ingameSoundInstanceUsage] != null)
-                ingameSoundInstance[ingameSoundInstanceUsage].Dispose();
+                ingameSoundInstance[ingameSoundInstanceUsage].SoundEffect.Dispose();
 
             // Create instance
-            ingameSoundInstance[ingameSoundInstanceUsage] = ingameSoundEffects[n].CreateInstance();
+            ingameSoundInstance[ingameSoundInstanceUsage] = new VolleySound(ingameSoundEffects[n].CreateInstance(), (IngameSound)n, maximumSoundVolumes[n]) ;
 
             // Set duration time to 0
             ingameSoundInstanceDuration[ingameSoundInstanceUsage, 0] = 0;
             ingameSoundInstanceDuration[ingameSoundInstanceUsage, 1] = 0;
 
             // Disable looping
-            ingameSoundInstance[ingameSoundInstanceUsage].IsLooped = false;
+            ingameSoundInstance[ingameSoundInstanceUsage].SoundEffect.IsLooped = false;
 
+
+            /*
            switch (n)
            {
                case (int)IngameSound.Jump:
@@ -705,8 +714,10 @@ namespace ManhattanMorning.Controller
                    ingameSoundInstance[ingameSoundInstanceUsage].Volume = soundEffectVolume;
                    break;
            }
+            */
+            ingameSoundInstance[ingameSoundInstanceUsage].SoundEffect.Volume = maximumSoundVolumes[n];
 
-           ingameSoundInstance[ingameSoundInstanceUsage].Play();
+            ingameSoundInstance[ingameSoundInstanceUsage].SoundEffect.Play();
 
 
            ingameSoundInstanceUsage = (ingameSoundInstanceUsage + 1) % ingameSoundInstance.Length;
@@ -744,18 +755,19 @@ namespace ManhattanMorning.Controller
             }
 
             if (ingameSoundInstance[ingameSoundInstanceUsage] != null)
-                ingameSoundInstance[ingameSoundInstanceUsage].Dispose();
+                ingameSoundInstance[ingameSoundInstanceUsage].SoundEffect.Dispose();
 
             // Create instance
-            ingameSoundInstance[ingameSoundInstanceUsage] = ingameSoundEffects[n].CreateInstance();
+            ingameSoundInstance[ingameSoundInstanceUsage] = new VolleySound(ingameSoundEffects[n].CreateInstance(), (IngameSound)n, maximumSoundVolumes[n]);
             
             // Save time
             ingameSoundInstanceDuration[ingameSoundInstanceUsage, 0] = loopingDuration;
             ingameSoundInstanceDuration[ingameSoundInstanceUsage, 1] = loopingDuration;
 
             // Enable looping
-            ingameSoundInstance[ingameSoundInstanceUsage].IsLooped = true;
+            ingameSoundInstance[ingameSoundInstanceUsage].SoundEffect.IsLooped = true;
 
+            /*
             switch (n)
             {
                 case (int)IngameSound.Jump:
@@ -828,8 +840,10 @@ namespace ManhattanMorning.Controller
                     ingameSoundInstance[ingameSoundInstanceUsage].Volume = soundEffectVolume;
                     break;
             }
+            */
 
-            ingameSoundInstance[ingameSoundInstanceUsage].Play();
+            ingameSoundInstance[ingameSoundInstanceUsage].SoundEffect.Volume = maximumSoundVolumes[n];
+            ingameSoundInstance[ingameSoundInstanceUsage].SoundEffect.Play();
 
 
             ingameSoundInstanceUsage = (ingameSoundInstanceUsage + 1) % ingameSoundInstance.Length;
@@ -952,8 +966,8 @@ namespace ManhattanMorning.Controller
                 // Release instance
                 if (ingameSoundInstance[i] != null)
                 {
-                    ingameSoundInstance[i].Stop();
-                    ingameSoundInstance[i].Dispose();
+                    ingameSoundInstance[i].SoundEffect.Stop();
+                    ingameSoundInstance[i].SoundEffect.Dispose();
                 }
 
                 ingameSoundInstance[i] = null;
@@ -976,12 +990,12 @@ namespace ManhattanMorning.Controller
             {
 
                 // Check if it's a SoundInstance. If so, pause/continue
-                if ((ingameSoundInstance[i] != null) && (ingameSoundInstance[i].State != SoundState.Stopped))
+                if ((ingameSoundInstance[i] != null) && (ingameSoundInstance[i].SoundEffect.State != SoundState.Stopped))
                 {
                     if (pause)
-                        ingameSoundInstance[i].Pause();
+                        ingameSoundInstance[i].SoundEffect.Pause();
                     else
-                        ingameSoundInstance[i].Resume();
+                        ingameSoundInstance[i].SoundEffect.Resume();
                 }
 
                 // Pause music
@@ -1063,6 +1077,31 @@ namespace ManhattanMorning.Controller
                 bombTickEffectVolume = (float)((SettingsManager)o).get("bombTickSoundVolume");
                 countdownEffectVolume = (float)((SettingsManager)o).get("countdownSoundVolume");
                 volcanoEruptionEffectVolume = (float)((SettingsManager)o).get("volcanoEruptionSoundVolume");
+
+                maximumSoundVolumes = new float[30];
+
+                maximumSoundVolumes[(int)IngameSound.ExplosionBig] = bigExplosionSoundEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.ExplosionSmall] = smallExplosionSoundEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.Jump] = jumpPowerUpEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.HitBall] = hitBallEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.HitNet] = hitNetEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.PickupPowerup] = pickUpPowerUpEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.InvertedControl] = invertedControlEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.SmashBall] = smashballEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.SunsetPowerUp] = sunsetEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.WindPowerUp] = windEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.MayaStongeChange] = mayaStoneChangeEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.StartWhistle] = startWhistleEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.SpecialbarFull] = specialbarFullUpEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.ApplauseGameEnd] = applauseEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.PowerUpSpawn] = powerUpSpawnEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.MatchballSignal] = matchballHeartbeatEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.BottomTouchBeach] = bottomTouchEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.BottomTouchForest] = bottomTouchEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.BottomTouchMaya] = bottomTouchEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.BombTick] = bombTickEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.Countdown] = countdownEffectVolume;
+                maximumSoundVolumes[(int)IngameSound.VolcanoEruption] = volcanoEruptionEffectVolume;
 
 
                 menueButtonsVolume = (float)((SettingsManager)o).get("menuSoundsSoundVolume");

@@ -429,7 +429,6 @@ namespace ManhattanMorning.Controller
                 case PowerUpType.Jumpheight:
                     {
                         setJumpheightPowerUp(powerUp, true);
-                        //Graphics.Instance.playJumpHighlight(powerUp.Owner.Team);
                         ParticleSystemsManager.Instance.playJumpHighlight(powerUp.Owner.Team);
                         Logger.Instance.log(Sender.PowerupManager, "Started jumpheight PowerUp.", PriorityLevel.Priority_1);
                         break;
@@ -690,7 +689,7 @@ namespace ManhattanMorning.Controller
         /// <param name="on"></param>
         private void setJumpheightPowerUp(PowerUp powerUp, bool on)
         {
-            Physics.Instance.setJumpheightPowerUpForPlayer(powerUp.Owner, on);
+            Physics.Instance.setJumpheightPowerUpForTeam(powerUp.Owner.Team, on);
         }
 
         /// <summary>
@@ -763,6 +762,9 @@ namespace ManhattanMorning.Controller
                 TaskManager.Instance.addTask(new PhysicsTask(3000 + x * (int)settingsManager.get("lavaTime"), PhysicsTask.PhysicTaskType.CreateLava));
             }
             ParticleSystemsManager.Instance.playVulcano(true);
+
+            // Set rumble
+            InputManager.Instance.setRumble((int)settingsManager.get("volcanoEffectDuration"), new Vector2(0.2f, 0.2f));
         }
 
         #endregion

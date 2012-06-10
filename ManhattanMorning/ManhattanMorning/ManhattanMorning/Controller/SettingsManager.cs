@@ -130,6 +130,11 @@ namespace ManhattanMorning.Controller
             // Gravity. Vector2. Used in Physics.cs.
             settings.Add("gravity", new object[] {new Vector2(-10f, -10f), new Vector2(0.0f, 9.0f), new Vector2(10f, 15f)});
 
+            // Maximal Y Velocity when bouncing off the ground. The point of this value is to prevent players from adding up jump forces.
+            // 0.0f: No bounce
+            // 15.0f: Nearly no restriction
+            settings.Add("maximumYBounceVelocity", new object[] { 0f, 3.0f, 15.0f });
+
             // Scalar that determines the maximum moving-speed of the player in meters/second (triggered through gamepad events). Float. Used in Physics.cs.
             settings.Add("movementSpeedScalar", new object[] {0f, 8.0f, 20f});
 
@@ -188,10 +193,10 @@ namespace ManhattanMorning.Controller
 
             // Defines after how much time a new neutral Powerups spawns (in ms)
             // Used in GameLogic
-            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 3000, 60000 });
+            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 30000, 60000 });
 
             // Defines how fast the specialbar fills if you perform a positive action
-            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 1.0f, 10.0f });
+            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 5.0f, 10.0f });
 
             // Default duration of powerUps. Required to display icons for a while.
             settings.Add("defaultEffectDuration", new object[] { 0, 3000, 0 });
@@ -200,10 +205,10 @@ namespace ManhattanMorning.Controller
 
             // Increased jumpheight factor
             // Used in GameLogic
-            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.2f, 3.0f });
+            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.25f, 3.0f });
 
             // Duration of this powerUp
-            settings.Add("jumpheightEffectDuration", new object[] { 0, 10000, 0 });
+            settings.Add("jumpheightEffectDuration", new object[] { 0, 15000, 0 });
 
             #endregion
 
@@ -213,7 +218,7 @@ namespace ManhattanMorning.Controller
             settings.Add("lavaSize", new object[] { new Vector2(0.1f, 0.1f), new Vector2(0.8f, 0.8f), new Vector2(5f, 5f) });
 
             // The range of bombs
-            settings.Add("lavaRange", new object[] { 0.0f, 3.0f, 30.0f });
+            settings.Add("lavaRange", new object[] { 0.0f, 2.0f, 30.0f });
 
             // The impact of bombs
             settings.Add("lavaImpact", new object[] { 1.0f, 2.0f, 1000.0f });
@@ -274,7 +279,7 @@ namespace ManhattanMorning.Controller
             #region SwitchStones
 
             // Duration of this powerUp
-            settings.Add("switchStonesEffectDuration", new object[] { 0, 5000, 0 });
+            settings.Add("switchStonesEffectDuration", new object[] { 0, 20000, 0 });
 
             #endregion
 
@@ -336,19 +341,19 @@ namespace ManhattanMorning.Controller
             settings.Add("soundVolume", new object[] { 0.0f, 0.75f, 1.0f });
 
             //Sound volume of extra jump height effects
-            settings.Add("jumpPowerUpSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("jumpPowerUpSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of extra jump height effects
-            settings.Add("hitBallSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("hitBallSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
             
             //Sound volume of hitNet sound effects
-            settings.Add("hitNetSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("hitNetSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of picking up powerUp
-            settings.Add("pickupPowerUpSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("pickupPowerUpSoundVolume", new object[] { 0.0f, 0.2f, 1.0f });
 
             //Sound volume of BigExplosion sound effects
-            settings.Add("bigExplosionSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("bigExplosionSoundVolume", new object[] { 0.0f, 0.4f, 1.0f });
 
             //Sound volume of small Explosion sound effects
             settings.Add("smallExplosionSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
@@ -357,40 +362,40 @@ namespace ManhattanMorning.Controller
             settings.Add("invertedControlSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of smash ball sound effects
-            settings.Add("smashBallSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("smashBallSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
             //Sound volume of Sunset sound effects
-            settings.Add("sunsetPowerUpSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("sunsetPowerUpSoundVolume", new object[] { 0.0f, 0.2f, 1.0f });
 
             //Sound volume of wind sound effects
-            settings.Add("windPowerUpSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("windPowerUpSoundVolume", new object[] { 0.0f, 0.2f, 1.0f });
 
             //Sound volume of stone change sound effects
-            settings.Add("mayaStoneChangeSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("mayaStoneChangeSoundVolume", new object[] { 0.0f, 0.3f, 1.0f });
 
             //Sound volume of start whistle
             settings.Add("startWhistleSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of specialbar -> full sound effects
-            settings.Add("specialbarFullSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("specialbarFullSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
             //Sound volume of applause -> GameEnd
             settings.Add("applauseGameEndSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
 
             //Sound volume of spawing powerUp effect
-            settings.Add("powerUpSpawnSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            settings.Add("powerUpSpawnSoundVolume", new object[] { 0.0f, 0.15f, 1.0f });
 
-            //Sound volume of heartbeat -> Matchball
-            settings.Add("matchballHeartbeatSoundVolume", new object[] { 0.0f, 0.25f, 1.0f });
+            //Sound volume of heartbeat -> Matchball (Not very good, so disabled for now)
+            settings.Add("matchballHeartbeatSoundVolume", new object[] { 0.0f, 0.0f, 1.0f });
 
             //Sound volume of player touching the bottom
             settings.Add("bottomTouchSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
 
             //Sound volume of player touching the bottom
-            settings.Add("bombTickSoundVolume", new object[] { 0.0f, 0.35f, 1.0f });
+            settings.Add("bombTickSoundVolume", new object[] { 0.0f, 0.15f, 1.0f });
 
             //Sound volume of player touching the bottom
-            settings.Add("volcanoEruptionSoundVolume", new object[] { 0.0f, 0.8f, 1.0f });
+            settings.Add("volcanoEruptionSoundVolume", new object[] { 0.0f, 1.0f, 1.0f });
 
             //Sound volume of player touching the bottom
             settings.Add("countdownSoundVolume", new object[] { 0.0f, 0.4f, 1.0f });
