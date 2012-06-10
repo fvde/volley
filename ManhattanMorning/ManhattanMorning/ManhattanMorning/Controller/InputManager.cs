@@ -429,11 +429,15 @@ namespace ManhattanMorning.Controller
                             player.MovingImpulse.Y != -player.InputDevice.CurrentGamePadState.ThumbSticks.Left.Y)
                         {
                             if (!player.Flags.Contains(PlayerFlag.InvertedControl))
+                            {
                                 setMovement(player.PlayerIndex, new Vector2(player.InputDevice.CurrentGamePadState.ThumbSticks.Left.X,
                                     -player.InputDevice.CurrentGamePadState.ThumbSticks.Left.Y));
+                            }
                             else
+                            {
                                 setMovement(player.PlayerIndex, new Vector2(-player.InputDevice.CurrentGamePadState.ThumbSticks.Left.X,
                                     player.InputDevice.CurrentGamePadState.ThumbSticks.Left.Y));
+                            }
 
                         }
 
@@ -441,9 +445,16 @@ namespace ManhattanMorning.Controller
                         if (player.HandAmplitude.X != player.InputDevice.CurrentGamePadState.ThumbSticks.Right.X ||
                             player.HandAmplitude.Y != -player.InputDevice.CurrentGamePadState.ThumbSticks.Right.Y)
                         {
-
-                            setHandAmplitude(player.PlayerIndex, new Vector2(player.InputDevice.CurrentGamePadState.ThumbSticks.Right.X,
-                                -player.InputDevice.CurrentGamePadState.ThumbSticks.Right.Y));
+                            if (!player.Flags.Contains(PlayerFlag.InvertedControl))
+                            {
+                                setHandAmplitude(player.PlayerIndex, new Vector2(player.InputDevice.CurrentGamePadState.ThumbSticks.Right.X,
+                                    -player.InputDevice.CurrentGamePadState.ThumbSticks.Right.Y));
+                            }
+                            else
+                            {
+                                setHandAmplitude(player.PlayerIndex, new Vector2(-player.InputDevice.CurrentGamePadState.ThumbSticks.Right.X,
+                                    player.InputDevice.CurrentGamePadState.ThumbSticks.Right.Y));
+                            }
 
                         }
 
