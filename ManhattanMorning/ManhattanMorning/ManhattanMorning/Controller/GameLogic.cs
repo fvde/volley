@@ -201,6 +201,11 @@ namespace ManhattanMorning.Controller
         /// </summary>
         private bool matchBallTimeWinningCondition = false;
 
+        /// <summary>
+        /// Indicates if the matchballSound is played already, when there is a matchball!
+        private bool matchBallSound = false;
+
+
         #endregion
 
 
@@ -744,6 +749,8 @@ namespace ManhattanMorning.Controller
             // if border is bottom border -> score
             if (String.Equals(border.Name, "bottomBorder"))
             {
+                matchBallSound = false;
+
                 // if ball is in the left half
                 if (ball.Position.X < (levelSize.X / 2))
                 {
@@ -1424,8 +1431,11 @@ namespace ManhattanMorning.Controller
         private void activateMatchballFlag(Vector2 score)
         {
 
-            TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.matchballSignal, (int)IngameSound.MatchballSignal));
-
+            if (!matchBallSound)
+            {
+                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.matchballSignal, (int)IngameSound.MatchballSignal));
+                matchBallSound = true;
+            }
 
             if (this.winCondition is TimeLimit_WinCondition)
             {
