@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Storage;
 
 using ManhattanMorning.Controller;
 using ManhattanMorning.Controller.AI;
@@ -37,6 +38,11 @@ namespace ManhattanMorning
         /// (kind of Singleton Pattern)
         /// </summary>
         public static Game1 Instance { get { return instance; } }
+
+        /// <summary>
+        /// True if the game is started for the first time
+        /// </summary>
+        public static bool FirstTimePlaying = true;
 
         /// <summary>
         /// Necessary for accessing XNA's Graphics Interface
@@ -141,6 +147,8 @@ namespace ManhattanMorning
             //play IntroVideo on game start
             if((bool)SettingsManager.Instance.get("IntroVideo"))
                 playVideo(video);
+
+            determineIfFirstTimePlaying();
         }
 
 
@@ -229,6 +237,39 @@ namespace ManhattanMorning
             Logger.Instance.log(Sender.Game1, "Game exited properly",PriorityLevel.Priority_2);
             this.Exit();
         }
+
+        /// <summary>
+        /// Determines whether a player is starting the game for the first time or not.
+        /// </summary>
+        private void determineIfFirstTimePlaying()
+        {
+            StorageDevice device = new StorageDevice();
+
+            // Open a storage container.
+            IAsyncResult result = device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            string filename = "volleytest.sav";
+
+            // Check to see whether the save exists.
+            if (container.FileExists(filename))
+            {
+                FirstTimePlaying = false;
+            }
+            else
+            {
+                container.CreateFile(filename);
+                FirstTimePlaying = true;
+            }
+        }
+
 
         #region Videos
 
