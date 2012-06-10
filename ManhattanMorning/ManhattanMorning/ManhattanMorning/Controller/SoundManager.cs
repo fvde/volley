@@ -608,7 +608,7 @@ namespace ManhattanMorning.Controller
 
             }
 
-            // Make sure that at the position in the array is not a looped sound which is stil be player
+            // Make sure that at the position in the array is not a looped sound which is still be played
             int temp_ingameSoundInstanceUsage = ingameSoundInstanceUsage;
 
             while (ingameSoundInstanceDuration[ingameSoundInstanceUsage, 1] > 0)

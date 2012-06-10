@@ -124,49 +124,6 @@ namespace ManhattanMorning.Controller
 
             // Set allowed powerups
             PowerUpManager.Instance.setAllowedPowerUps(level.AllowedPowerUps);
-          
-          /*
-            #region EvilMayaLevelHack
-            if (levelName == "Maya")
-            {
-                
-                Waterfall w1 = new Waterfall("Waterfall1");
-                w1.Position = new Vector2(130, 220);
-                w1.Size = new Vector2(55, 450);
-                // w.Position = new Vector2(450, 255);
-                // w.Size = new Vector2(100, 400);
-                w1.tWidth = 50;
-                w1.tHeight = 640;
-                w1.Active = true;
-
-
-                Waterfall w2 = new Waterfall("Waterfall2");
-                w2.Position = new Vector2(340, 200);
-                w2.Size = new Vector2(100, 450);
-                w2.tWidth = 50;
-                w2.tHeight = 640;
-
-                Waterfall w3 = new Waterfall("Waterfall3");
-                w3.Position = new Vector2(660, 210);
-                w3.Size = new Vector2(80, 460);
-                w3.tWidth = 50;
-                w3.tHeight = 640;
-
-                Waterfall w4 = new Waterfall("Waterfall4");
-                w4.Position = new Vector2(880, 220);
-                w4.Size = new Vector2(60, 460);
-                w4.tWidth = 50;
-                w4.tHeight = 640;
-
-
-                gameInstance.GameObjects.Add(w1);
-                gameInstance.GameObjects.Add(w2);
-                gameInstance.GameObjects.Add(w3);
-                gameInstance.GameObjects.Add(w4);
-            }
-
-            #endregion
-           * */
 
             #region Players
 
@@ -852,6 +809,7 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_Intro_IvorySound = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\intro_IvorySound");
             Texture2D Texture_Intro_Background = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\intro_Background");
             Texture2D Texture_Intro_VolleyLogo = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\intro_VolleyLogo");
+            Texture2D Texture_Intro_Ball = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\intro_Ball");
 
             Texture2D Texture_MainMenu_Background = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\MainMenu_Background");
             Texture2D Texture_MainMenu_Background_Ball = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\MainMenu_Background_Ball");
@@ -919,17 +877,20 @@ namespace ManhattanMorning.Controller
 
             // Intro
             MenuObject Passive_Intro_Background = new MenuObject("Intro_Background", true,
-                Texture_Intro_Background, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
+                Texture_Intro_Background, null, new Vector2(1, 1), Vector2.Zero, 90, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_Intro_Background);
             MenuObject Passive_Intro_GlassboxGames = new MenuObject("Intro_GlassboxGames", true,
-                Texture_Intro_GlassboxGames, null, new Vector2(1, 1), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
+                Texture_Intro_GlassboxGames, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_Intro_GlassboxGames);
             MenuObject Passive_Intro_IvorySound = new MenuObject("Intro_IvorySound", true,
                 Texture_Intro_IvorySound, null, new Vector2(1, 1), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_Intro_IvorySound);
             MenuObject Passive_Intro_VolleyLogo = new MenuObject("Intro_VolleyLogo", true,
-                Texture_Intro_VolleyLogo, null, new Vector2(711f / 1280f, 296f / 720f), new Vector2(-1f, -1f), 92, MeasurementUnit.PercentOfScreen);
+                Texture_Intro_VolleyLogo, null, new Vector2(711f / 1280f, 296f / 720f), new Vector2(416f / 1280f, 213f / 720f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_Intro_VolleyLogo);
+            MenuObject Passive_Intro_Ball = new MenuObject("Intro_Ball", true,
+                Texture_Intro_Ball, null, new Vector2(1f, 1f), Vector2.Zero, 94, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_Intro_Ball);
 
             // Main Screen
             MenuObject Passive_MainMenu_Background = new MenuObject("MainMenu_Background", true,
