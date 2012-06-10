@@ -196,7 +196,7 @@ namespace ManhattanMorning.Controller
             settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 30000, 60000 });
 
             // Defines how fast the specialbar fills if you perform a positive action
-            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 1.0f, 10.0f });
+            settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 5.0f, 10.0f });
 
             // Default duration of powerUps. Required to display icons for a while.
             settings.Add("defaultEffectDuration", new object[] { 0, 3000, 0 });
@@ -205,10 +205,10 @@ namespace ManhattanMorning.Controller
 
             // Increased jumpheight factor
             // Used in GameLogic
-            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.2f, 3.0f });
+            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.25f, 3.0f });
 
             // Duration of this powerUp
-            settings.Add("jumpheightEffectDuration", new object[] { 0, 10000, 0 });
+            settings.Add("jumpheightEffectDuration", new object[] { 0, 15000, 0 });
 
             #endregion
 

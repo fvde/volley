@@ -1090,15 +1090,27 @@ namespace ManhattanMorning.Controller
         /// </summary>
         /// <param name="player"></param>
         /// <param name="on"></param>
-        public void setJumpheightPowerUpForPlayer(Player player, bool on)
+        public void setJumpheightPowerUpForTeam(int team, bool on)
         {
             if (on)
             {
-                player.Flags.Add(PlayerFlag.DoubleJump);
+                foreach (Player p in SuperController.Instance.getAllPlayers())
+                {
+                    if (p.Team == team)
+                    {
+                        p.Flags.Add(PlayerFlag.DoubleJump);
+                    }
+                }
             }
             else
             {
-                player.Flags.Remove(PlayerFlag.DoubleJump);
+                foreach (Player p in SuperController.Instance.getAllPlayers())
+                {
+                    if (p.Team == team)
+                    {
+                        p.Flags.Remove(PlayerFlag.DoubleJump);
+                    }
+                }
             }
         }
 
