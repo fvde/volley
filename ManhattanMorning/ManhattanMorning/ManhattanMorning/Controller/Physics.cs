@@ -1255,6 +1255,7 @@ namespace ManhattanMorning.Controller
             // Create the red background
             PassiveObject bomb_red = new PassiveObject("Bomb_red", true, StorageManager.Instance.getTextureByName("PowerUp_Bomb_red"), null, null,
                 (Vector2)SettingsManager.Instance.get("superBombSize"), position, 57, MeasurementUnit.Meter);
+            bomb_red.RotateWithOffset = true;
 
             // Attach it to the bomb
             bomb.attachObject(bomb_red);
