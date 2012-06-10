@@ -891,6 +891,9 @@ namespace ManhattanMorning.Controller
             MenuObject Passive_Intro_Ball = new MenuObject("Intro_Ball", true,
                 Texture_Intro_Ball, null, new Vector2(1f, 1f), Vector2.Zero, 94, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_Intro_Ball);
+            MenuObject Passive_Intro_Background2 = new MenuObject("Intro_Background2", true,
+                Texture_MainMenu_Background, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_Intro_Background2);
 
             // Main Screen
             MenuObject Passive_MainMenu_Background = new MenuObject("MainMenu_Background", true,
