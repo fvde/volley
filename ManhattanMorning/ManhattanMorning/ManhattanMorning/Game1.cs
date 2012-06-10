@@ -243,6 +243,7 @@ namespace ManhattanMorning
         /// </summary>
         private void determineIfFirstTimePlaying()
         {
+            /*
             StorageDevice device = new StorageDevice();
 
             // Open a storage container.
@@ -268,6 +269,7 @@ namespace ManhattanMorning
                 container.CreateFile(filename);
                 FirstTimePlaying = true;
             }
+             */
         }
 
 

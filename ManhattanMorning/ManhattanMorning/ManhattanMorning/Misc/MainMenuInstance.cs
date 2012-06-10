@@ -234,6 +234,12 @@ namespace ManhattanMorning.Misc
 
             levelName = "";
 
+            // Check if the first help has to be shown
+            if (Game1.FirstTimePlaying)
+                menuState = 7;
+            else
+                menuState = 6;
+
             activateMenu(true);
         }
 
@@ -264,19 +270,22 @@ namespace ManhattanMorning.Misc
 
             selectedItem = 0;
 
-            // If it's the launch of the game, show help/intro otherwise show mainscreen (when coming back from ingame)
-            if (isGameStart)
+            // If it's not the first start
+            if (menuState != 7)
             {
-                menuState = 6;
-                overlayObject = (MenuObject)menuObjectList.GetObjectByName("Intro_Overlay");
-                animateIntro();
+                // If it's the launch of the game, show help/intro otherwise show mainscreen (when coming back from ingame)
+                if (isGameStart)
+                {
+                    menuState = 6;
+                    overlayObject = (MenuObject)menuObjectList.GetObjectByName("Intro_Overlay");
+                    animateIntro();
+                }
+                else
+                {
+                    menuState = 0;
+                    overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
+                }
             }
-            else
-            {
-                menuState = 0;
-                overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
-            }
-
             // Make all necessary menu objects visible
             for (int i = 0; i < menuStructure.GetLength(1); i++)
             {
@@ -293,7 +302,7 @@ namespace ManhattanMorning.Misc
             }
 
 
-            if (isGameStart)
+            if (isGameStart && (menuState != 7))
                 animateIntro();
         }
 
@@ -1115,6 +1124,14 @@ namespace ManhattanMorning.Misc
                 // Do nothing
 
             }
+            // When in first start help
+            else if (menuState == 7)
+            {
+
+                menuState = 6;
+                activateMenu(true);
+
+            }
 
         }
 
@@ -1177,6 +1194,21 @@ namespace ManhattanMorning.Misc
                 // Go back to the right team menu
                 switchMenuState(previousMenuState);
                 timeSinceLastInput = 0;
+
+            }
+            // When in intro
+            else if (menuState == 6)
+            {
+
+                // Do nothing
+
+            }
+            // When in first start help
+            else if (menuState == 7)
+            {
+
+                menuState = 6;
+                activateMenu(true);
 
             }
 
@@ -1360,7 +1392,7 @@ namespace ManhattanMorning.Misc
 
             // First help
             menuStructure[7, 0] = new List<LayerInterface>();
-            menuStructure[7, 0].Add(menuObjectList.GetObjectByName("Help_Box1"));
+            menuStructure[7, 0].Add(menuObjectList.GetObjectByName("Help_FirstHelp"));
 
 
         }
