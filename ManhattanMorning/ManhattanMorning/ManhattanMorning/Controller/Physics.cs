@@ -921,6 +921,16 @@ namespace ManhattanMorning.Controller
                 TaskManager.Instance.addTask(new GameLogicTask(400, passive));
             }
 
+            //play sound
+            if (isSuperBomb)
+            {
+                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombBig, (int)IngameSound.ExplosionBig));
+            }
+            else
+            {
+                TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)IngameSound.ExplosionSmall));
+            }
+
             foreach (Body body in getBodiesInCircle(targetPoint, explosionRange))
             {
                 if (body.LinkedActiveObject is Bomb || body.BodyType == BodyType.Static)
@@ -951,19 +961,15 @@ namespace ManhattanMorning.Controller
                     {
                         duration = (int)SettingsManager.Instance.get("superBombStunDuration");
                         TaskManager.Instance.addTask(new PhysicsTask(duration, p, PhysicsTask.PhysicTaskType.RemoveStun));
-                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombBig, (int)IngameSound.ExplosionBig));
                     }
                     else
                     {
                         duration = (int)SettingsManager.Instance.get("lavaStunDuration");
                         TaskManager.Instance.addTask(new PhysicsTask(duration, p, PhysicsTask.PhysicTaskType.RemoveStun));
-                        TaskManager.Instance.addTask(new SoundTask(0, SoundIndicator.bombSmall, (int)IngameSound.ExplosionSmall));
                     }
                     ParticleSystemsManager.Instance.playStun(p, duration);
                 }
             }
-
-
         }
 
         /// <summary>
