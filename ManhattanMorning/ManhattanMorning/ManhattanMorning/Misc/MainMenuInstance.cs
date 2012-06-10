@@ -1112,8 +1112,7 @@ namespace ManhattanMorning.Misc
             else if (menuState == 6)
             {
 
-                // Go to mainscreen
-                switchMenuState(0);
+                // Do nothing
 
             }
 
@@ -1355,7 +1354,7 @@ namespace ManhattanMorning.Misc
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_Background"));
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_GlassboxGames"));
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_IvorySound"));
-            menuStructure[6, 0].Add(menuObjectList.GetObjectByName("MainMenu_Background"));
+            menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_Background2"));
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_VolleyLogo"));
             menuStructure[6, 0].Add(menuObjectList.GetObjectByName("Intro_Ball"));
 
@@ -1406,6 +1405,7 @@ namespace ManhattanMorning.Misc
                     }
                 }
             }
+
 
             // Save selected item when leaving main screen
             if (menuState == 0)
@@ -1611,11 +1611,10 @@ namespace ManhattanMorning.Misc
             TaskManager.Instance.addTask(new Tasks.AnimationTask(4200, ball.FadingAnimation));
 
             // 5. Fade in MainMenu Background
-            MenuObject mainMenuBackground = (MenuObject)menuObjectList.GetObjectByName("MainMenu_Background");
-            mainMenuBackground.Visible = false;
-            mainMenuBackground.FadingAnimation = new FadingAnimation(false, false, 0, false, 10);
-            mainMenuBackground.FadingAnimation.Inverted = true;
-            TaskManager.Instance.addTask(new Tasks.AnimationTask(4500, mainMenuBackground.FadingAnimation));
+            MenuObject introBackground2 = (MenuObject)menuObjectList.GetObjectByName("Intro_Background2");
+            introBackground2.Visible = false;
+            introBackground2.FadingAnimation = new FadingAnimation(false, false, 0, false, 300);
+            TaskManager.Instance.addTask(new Tasks.AnimationTask(6000, introBackground2.FadingAnimation));
 
             // Play sound
             SoundManager.Instance.playMusic(MusicState.Intro);
