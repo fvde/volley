@@ -1,0 +1,6 @@
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\Farseer Physics Engine 3.3 XNA\bin\x86\Debug\FarseerPhysicsXNA.dll
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\Farseer Physics Engine 3.3 XNA\bin\x86\Debug\FarseerPhysicsXNA.pdb
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\Farseer Physics Engine 3.3 XNA\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\Farseer Physics Engine 3.3 XNA\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\Farseer Physics Engine 3.3 XNA\obj\x86\Debug\FarseerPhysicsXNA.dll
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\Farseer Physics Engine 3.3 XNA\obj\x86\Debug\FarseerPhysicsXNA.pdb
