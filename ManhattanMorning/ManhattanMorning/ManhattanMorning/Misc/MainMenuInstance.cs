@@ -1622,18 +1622,18 @@ namespace ManhattanMorning.Misc
 
             // 1. Fade in GlassboxGames Logo
             ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).Visible = false;
-            ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).FadingAnimation = new FadingAnimation(false, true, 1500, true, 300);
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_GlassboxGames")).FadingAnimation = new FadingAnimation(false, true, 1300, true, 400);
 
 
             // 2. Fade in IvorySound Logo
             ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).Visible = false;
-            ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation = new FadingAnimation(false, true, 1500, false, 300);
+            ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation = new FadingAnimation(false, true, 1300, false, 400);
             TaskManager.Instance.addTask(new Tasks.AnimationTask(2100, ((MenuObject)menuObjectList.GetObjectByName("Intro_IvorySound")).FadingAnimation));
 
             // 3. Show Volley Logo
             MenuObject volleyLogo = (MenuObject)menuObjectList.GetObjectByName("Intro_VolleyLogo");
             volleyLogo.Visible = false;
-            volleyLogo.FadingAnimation = new FadingAnimation(false, true, 1500, false, 300);
+            volleyLogo.FadingAnimation = new FadingAnimation(false, true, 1300, false, 400);
             TaskManager.Instance.addTask(new Tasks.AnimationTask(4200, volleyLogo.FadingAnimation));
 
             // 4. Show Ball
