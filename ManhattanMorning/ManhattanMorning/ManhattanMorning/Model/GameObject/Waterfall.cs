@@ -33,7 +33,7 @@ namespace ManhattanMorning.Model.GameObject
         public Texture2D waterfallHeadTex;
         public Texture2D waterfallStencilTex;
         public int tipHeight = 40;
-        private int layer = 1;
+        private int layer = 20;
         private bool isStopped = false;
         private String name = "Waterfall";
         public int Laufzeit = 0;

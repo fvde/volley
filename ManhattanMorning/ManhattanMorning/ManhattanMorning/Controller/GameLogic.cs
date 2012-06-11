@@ -1306,17 +1306,17 @@ namespace ManhattanMorning.Controller
                             if (i == 0)
                             {
                                 leftSideOffset = 0.5f;
-                                waterfallPosition += new Vector2(0, 0.25f);
+                                waterfallPosition += new Vector2(0, 0.43f);
                             }
                             else if (i == 1)
                             {
                                 leftSideOffset = 0.45f;
-                                waterfallPosition += new Vector2(0, 0.25f);
+                                waterfallPosition += new Vector2(0, 0.37f);
                             }
                             else if (i == 2)
                             {
                                 leftSideOffset = 0.3f;
-                                waterfallPosition += new Vector2(0, 0.1f);
+                                waterfallPosition += new Vector2(0, 0.2f);
                             }
                             float xpos = (float)random.NextDouble() / 5;
                             waterfallPosition -= new Vector2(xpos / 2, 0);

@@ -162,7 +162,7 @@ namespace ManhattanMorning.Controller
             // Ball object attributes
             settings.Add("ballRestitution", new object[] { 0f, 0.3f, 1.0f }); 
             settings.Add("ballFriction", new object[] { 0f, 0.5f, 1.0f }); //0.5f
-            settings.Add("ballMass", new object[] {0f, 0.16f, 5f}); 
+            settings.Add("ballMass", new object[] {0f, 0.22f, 5f}); 
 
             // Net object attributes (Static, no mass needed)
             settings.Add("netRestitution", new object[] { 0f, 0.3f, 1.0f }); // 0.8f
