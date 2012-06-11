@@ -366,7 +366,7 @@ namespace ManhattanMorning.Controller
                 {
                     Light tempObject = drawObj as Light;
                     if(tempObject.Texture == null) tempObject.Texture = game1.Content.Load<Texture2D>(@"Textures\Light\" + tempObject.TextureName);
-                    tempObject.Position *= resizeFactorLevelSize;
+                    tempObject.Visible = (tempObject.FadingAnimation == null) ? true : false;
                     tempObject.Size *= resizeFactorLevelSize;
 
                     SuperController.Instance.addGameObjectToGameInstance(tempObject);
