@@ -1000,7 +1000,10 @@ namespace ManhattanMorning.View
             //Update Waterfall
              w.update(time);
 
-             if (w.Active == false) return;
+             if (w.Active == false){
+                 ParticleSystemsManager.Instance.stopWaterfall(w.mayaLevelPosition);
+                 return;
+             }
 
              spriteBatchAll.End();
             
@@ -1056,18 +1059,20 @@ namespace ManhattanMorning.View
                     dest = new Rectangle((int)w.Position.X, (int)w.Position.Y, (int)w.Size.X, (int)w.Size.Y);
                     spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White * w.alpha);
 
+                    ParticleSystemsManager.Instance.playWaterfall(w.mayaLevelPosition, w.Position/meterToPixel, w.Size/meterToPixel);
                  }
                 else if (w.StopCounter < w.Size.Y)
                 {
                     //Draw Cloud
 
-                    spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White * w.alpha);
-          
+                    spriteBatchAll.Draw(w.waterfallBottomTex, new Rectangle((int)w.Position.X - 10, (int)w.Position.Y + (int)w.Size.Y - 35, (int)w.Size.X + 20, 40), Color.White * w.alpha);          
 
                     source = new Rectangle(0, (w.tHeight - w.Counter + w.StopCounter) % (w.tHeight + 1), w.tWidth, ((int)w.Size.Y - w.StopCounter) % (w.tHeight + 1));
                     dest = new Rectangle((int)w.Position.X, (int)w.Position.Y + w.StopCounter, (int)w.Size.X, (int)w.Size.Y - w.StopCounter);
 
                     spriteBatchAll.Draw(w.waterfallTex, dest, source, Color.White * w.alpha);
+
+                    ParticleSystemsManager.Instance.playWaterfall(w.mayaLevelPosition, w.Position / meterToPixel, w.Size / meterToPixel);
                  }
             } 
 
