@@ -680,7 +680,7 @@ namespace ManhattanMorning.Controller
         {
             foreach (Emitter e in meteorBallSystem.EmitterList)
             {
-                e.LinkedObjectOffset = ball.Size / 4.5f; //little bit smaller than half the radius
+                e.LinkedObjectOffset = ball.Size / 6f; //little bit smaller than half the radius
                 e.LinkedObject = ball;
                 e.EmittingDuration = 0f;
                 e.Active = true;
@@ -1208,9 +1208,9 @@ namespace ManhattanMorning.Controller
             specialbarHighlight.addEmitter(createSpecialbarEmitter());
 
             //create system for ball smoke and fire
-            meteorBallSystem.addEmitter(createSmokeEmitterForTrail(new Vector2(1.1f), 40, 0.25f,Vector2.Zero));
+            meteorBallSystem.addEmitter(createSmokeEmitterForTrail(new Vector2(1.35f), 40, 0.25f,Vector2.Zero));
             meteorBallSystem.addEmitter(createFireEmitter(new Vector2(1.3f), Vector2.Zero, "Particle001", Color.OrangeRed));
-            meteorBallSystem.addEmitter(createFireEmitter(new Vector2(0.9f, 0.9f), Vector2.Zero, "Flame", Color.Orange));
+            meteorBallSystem.addEmitter(createFireEmitter(new Vector2(1f), Vector2.Zero, "Flame", Color.Orange));
 
             float scale = (float)SettingsManager.Instance.get("lavaRange") / (float) SettingsManager.Instance.get("superBombRange");
 
