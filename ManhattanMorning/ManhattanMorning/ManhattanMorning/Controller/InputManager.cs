@@ -386,6 +386,18 @@ namespace ManhattanMorning.Controller
 
         }
 
+
+        /// <summary>
+        /// Stops rumbling for every connected gamepad
+        /// </summary>
+        public void stopRumble()
+        {
+
+            rumbling_intensity = new Vector2(0, 0);
+            rumbling_remainingDuration = 0;
+
+        }
+
         #endregion
 
 
@@ -1203,7 +1215,7 @@ namespace ManhattanMorning.Controller
         public void clear()
         {
             playerList = null;
-            
+            stopRumble();
         }
 
         /// <summary>

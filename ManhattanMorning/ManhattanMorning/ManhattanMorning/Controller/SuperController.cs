@@ -355,6 +355,9 @@ namespace ManhattanMorning.Controller
             // Display menu
             ingameMenuInstance.activateMenu(winner);
 
+            // Stop rumbling
+            InputManager.Instance.stopRumble();
+
             // Pause controller
             pauseControllers(true);
         }
