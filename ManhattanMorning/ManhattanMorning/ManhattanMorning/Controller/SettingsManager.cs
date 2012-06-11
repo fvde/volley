@@ -145,7 +145,10 @@ namespace ManhattanMorning.Controller
             settings.Add("handImpulseScalar", new object[] {0f, 1.6f, 10.0f});
 
             // Jump-force of Player. Vector2. Influences how high a player can jump. y-part has to be < 0 for jumping upwards.
-            settings.Add("jumpForce", new object[] {new Vector2(0, -50.0f), new Vector2(0, -12.2f), new Vector2(0, 0)}); //-4.2f
+            settings.Add("jumpForce1vs1", new object[] {new Vector2(0, -50.0f), new Vector2(0, -13.2f), new Vector2(0, 0)});
+
+            // Jump-force of Player. Vector2. Influences how high a player can jump. y-part has to be < 0 for jumping upwards.
+            settings.Add("jumpForce2vs2", new object[] { new Vector2(0, -50.0f), new Vector2(0, -14.8f), new Vector2(0, 0) });
 
             // Restitution determines how great the counteracting force on collision is. (Restitution = Rückgabe)
             // Friction determines the changes to an objects attributes when colliding. (Friction = Reibung)
