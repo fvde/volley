@@ -192,7 +192,12 @@ namespace ManhattanMorning.Controller
                             // Just apply jump if there isn't already a big enough velocity in jump direction
                             if (player.Body.LinearVelocity.Y > -5f)
                             {
-                                player.Body.ApplyLinearImpulse(jumpHeightModifier * (Vector2)settingsManager.get("jumpForce"));
+
+                                // In 2vs2 you have to jump higher because the level is bigger
+                                if (SuperController.Instance.getAllPlayers().Count < 3)
+                                    player.Body.ApplyLinearImpulse(jumpHeightModifier * (Vector2)settingsManager.get("jumpForce1vs1"));
+                                else
+                                    player.Body.ApplyLinearImpulse(jumpHeightModifier * (Vector2)settingsManager.get("jumpForce2vs2"));
                             }
 
                             player.SimpleJump = false;
