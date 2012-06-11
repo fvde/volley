@@ -145,10 +145,10 @@ namespace ManhattanMorning.Controller
             settings.Add("handImpulseScalar", new object[] {0f, 1.6f, 10.0f});
 
             // Jump-force of Player. Vector2. Influences how high a player can jump. y-part has to be < 0 for jumping upwards.
-            settings.Add("jumpForce1vs1", new object[] {new Vector2(0, -50.0f), new Vector2(0, -13.2f), new Vector2(0, 0)});
+            settings.Add("jumpForce1vs1", new object[] {new Vector2(0, -50.0f), new Vector2(0, -11.9f), new Vector2(0, 0)}); //13.2
 
             // Jump-force of Player. Vector2. Influences how high a player can jump. y-part has to be < 0 for jumping upwards.
-            settings.Add("jumpForce2vs2", new object[] { new Vector2(0, -50.0f), new Vector2(0, -14.8f), new Vector2(0, 0) });
+            settings.Add("jumpForce2vs2", new object[] { new Vector2(0, -50.0f), new Vector2(0, -13.7f), new Vector2(0, 0) }); //14.8
 
             // Restitution determines how great the counteracting force on collision is. (Restitution = Rückgabe)
             // Friction determines the changes to an objects attributes when colliding. (Friction = Reibung)
@@ -208,7 +208,7 @@ namespace ManhattanMorning.Controller
 
             // Increased jumpheight factor
             // Used in GameLogic
-            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.25f, 3.0f });
+            settings.Add("increasedJumpHeight", new object[] { 1.0f, 1.17f, 3.0f });
 
             // Duration of this powerUp
             settings.Add("jumpheightEffectDuration", new object[] { 0, 15000, 0 });
