@@ -457,16 +457,21 @@ namespace ManhattanMorning.Controller
                         if (player.HandAmplitude.X != player.InputDevice.CurrentGamePadState.ThumbSticks.Right.X ||
                             player.HandAmplitude.Y != -player.InputDevice.CurrentGamePadState.ThumbSticks.Right.Y)
                         {
+                            //commented out because inverted hand control is way too hard to handle.
+                            /*
                             if (!player.Flags.Contains(PlayerFlag.InvertedControl))
                             {
+                             * */
                                 setHandAmplitude(player.PlayerIndex, new Vector2(player.InputDevice.CurrentGamePadState.ThumbSticks.Right.X,
                                     -player.InputDevice.CurrentGamePadState.ThumbSticks.Right.Y));
-                            }
+                        /*   
+                        }
                             else
                             {
                                 setHandAmplitude(player.PlayerIndex, new Vector2(-player.InputDevice.CurrentGamePadState.ThumbSticks.Right.X,
                                     player.InputDevice.CurrentGamePadState.ThumbSticks.Right.Y));
                             }
+                         */
 
                         }
 
