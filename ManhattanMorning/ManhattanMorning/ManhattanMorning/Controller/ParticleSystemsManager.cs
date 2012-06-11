@@ -241,25 +241,44 @@ namespace ManhattanMorning.Controller
 
         private ParticleSystem createWaterfallSystem(Color tinting)
         {
-            ParticleSystem p = new ParticleSystem(65);
+            ParticleSystem p = new ParticleSystem(19);
             p.SystemBlendState = BlendState.AlphaBlend;
 
             for (int i = 0; i < 4; i++)
             {
-                EmitterFountain e = new EmitterFountain(Vector2.Zero, 20, 10);
-                e.EmitterShape = new EmitterRectangleShape(5.0f, 1.50f, new Vector2(0, 1));
-                e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/particle1");
-                e.ParticleColor = tinting;
-                e.ParticleFadeOut = FadeMode.None;
-                e.ParticleSize = new Vector2(1.0f, 1.0f);
+                EmitterFountain e = new EmitterFountain(Vector2.Zero, 10, (i != 2 && i != 1) ? 10 : 7);
+                e.EmitterShape = new EmitterRectangleShape(1f,0.1f,Vector2.UnitY);
+                e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/particle005");
+                e.ParticleColor = Color.WhiteSmoke;
+                e.ParticleFadeOut = FadeMode.Linear;
+                e.ParticleSize = new Vector2(1.25f);
+                e.InitialParticleSpeed = 1.0f;
+                e.EmitterDirection = -Vector2.UnitY;
+                e.EmitterAngle = 0.9f;
+                e.ParticleLifeTime = 0.7f;
+                e.ParticleStartingAlpha = 0.9f;
+                                
+                e.initializeParticles();
                 e.Active = false;
-                e.InitialParticleSpeed = 3.8f;
-                e.EmitterDirection = Vector2.UnitX;
-                e.EmitterAngle = 0.05f;
-                e.ParticleLifeTime = 7.0f;
-                e.ParticleStartingAlpha = 0.1f;
+                p.addEmitter(e);
+            }
 
-                e.initializeParticles(true);
+            for (int i = 0; i < 4; i++)
+            {
+                EmitterFountain e = new EmitterFountain(Vector2.Zero, 4, (i != 2 && i != 1) ? 4 : 3);
+                e.EmitterShape = new EmitterPointShape();
+                e.ParticleTexture = Game1.Instance.Content.Load<Texture2D>(@"Textures/Particles/particle005");
+                e.ParticleColor = new Color(130,190,210);
+                e.ParticleFadeOut = FadeMode.Linear;
+                e.ParticleSize = new Vector2(0.85f);
+                e.InitialParticleSpeed = 0.85f;
+                e.EmitterDirection = -Vector2.UnitY;
+                e.EmitterAngle = 1.0f;
+                e.ParticleLifeTime = 0.6f;
+                e.ParticleStartingAlpha = 0.9f;
+
+                e.initializeParticles();
+                e.Active = false;
                 p.addEmitter(e);
             }
             return p;
@@ -714,6 +733,35 @@ namespace ManhattanMorning.Controller
             }
         }
 
+        private bool[] activeW;
+        public void playWaterfall(int id, Vector2 position, Vector2 size)
+        {
+            if (activeW[id]) return;
+            activeW[id] = true;
+
+            Emitter e = waterfallSystem.EmitterList.ElementAt(id);
+            e.Position = (position) + new Vector2(size.X / 2, size.Y -0.1f);
+            e.EmitterShape = new EmitterRectangleShape(size.X * 0.9f, size.Y * 0.9f, Vector2.UnitY);
+            e.EmittingDuration = 0;
+            e.Active = true;
+
+            Emitter e1 = waterfallSystem.EmitterList.ElementAt(4 + id);
+            e1.Position = (position) + new Vector2(size.X / 2, size.Y);
+            e1.EmittingDuration = 0;
+            e1.Active = true;
+        }
+
+        public void stopWaterfall(int id)
+        {
+            if (!activeW[id]) return;
+            activeW[id] = false;
+            Emitter e = waterfallSystem.EmitterList.ElementAt(id);
+            e.EmittingDuration = float.Epsilon;
+
+            Emitter e1 = waterfallSystem.EmitterList.ElementAt(4 + id);
+            e1.EmittingDuration = float.Epsilon;
+        }
+
         /// <summary>
         /// Shows a bomb effect when the bomb is falling.
         /// </summary>
@@ -1063,6 +1111,7 @@ namespace ManhattanMorning.Controller
         {
             metertopixel = (float)SettingsManager.Instance.get("meterToPixel");
             viewportSize = new Vector2(Game1.Instance.GraphicsDevice.Viewport.Width, Game1.Instance.GraphicsDevice.Viewport.Height);
+            activeW = new bool[4];
 
             particleSystems = new List<ParticleSystem>();
 
@@ -1127,6 +1176,7 @@ namespace ManhattanMorning.Controller
                 case "Maya":
                     sandStormSystem = createSandStormSystem(Color.DarkKhaki);
                     waterfallSystem = createWaterfallSystem(Color.DarkBlue);
+                    addSystem(waterfallSystem);
                     break;
                 case "Forest":
                     sandStormSystem = createSandStormSystem(new Color(125,130,34));
