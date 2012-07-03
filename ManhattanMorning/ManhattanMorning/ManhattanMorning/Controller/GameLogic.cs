@@ -561,7 +561,7 @@ namespace ManhattanMorning.Controller
                         FadingAnimation fadingAnimation = new FadingAnimation(false, false, 0, true, 900, Model.ParticleSystem.FadeMode.Quadratic);
                         fadingAnimation.Inverted = true;
                         HUD countdownTexture = new HUD("CountdownTexture", true, StorageManager.Instance.getTextureByName("texture_countdown_" + i), null, new Vector2(0.06f, 0.06f * 1.7778f),
-                            new Vector2(0.47f, 0.01f), 79, MeasurementUnit.PercentOfScreen);
+                            new Vector2(0.47f, 0.03f), 79, MeasurementUnit.PercentOfScreen);
                         countdownTexture.FadingAnimation = fadingAnimation;
                         SuperController.Instance.addGameObjectToGameInstance(countdownTexture);
 
