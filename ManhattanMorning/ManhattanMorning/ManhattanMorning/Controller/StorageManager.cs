@@ -654,24 +654,24 @@ namespace ManhattanMorning.Controller
             HUD scoreboard = new HUD("Scoreboard", true, scoreboardTexture, null, new Vector2(0.30f, (0.30f * 0.2511f * 1.7778f)), new Vector2(0.35f, -0.02f), 73, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(scoreboard);
 
-            HUD digit_left_1 = new HUD("Digit_left_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.026f), 75, MeasurementUnit.PercentOfScreen);
+            HUD digit_left_1 = new HUD("Digit_left_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.034f), 75, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_left_1);
-            HUD digit_left_1_blank = new HUD("Digit_left_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.026f), 74, MeasurementUnit.PercentOfScreen);
+            HUD digit_left_1_blank = new HUD("Digit_left_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.034f), 74, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_left_1_blank);
 
-            HUD digit_left_2 = new HUD("Digit_left_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.026f), 75, MeasurementUnit.PercentOfScreen);
+            HUD digit_left_2 = new HUD("Digit_left_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.034f), 75, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_left_2);
-            HUD digit_left_2_blank = new HUD("Digit_left_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.026f), 74, MeasurementUnit.PercentOfScreen);
+            HUD digit_left_2_blank = new HUD("Digit_left_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.034f), 74, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_left_2_blank);
 
-            HUD digit_right_1 = new HUD("Digit_right_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.026f), 75, MeasurementUnit.PercentOfScreen);
+            HUD digit_right_1 = new HUD("Digit_right_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.034f), 75, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_right_1);
-            HUD digit_right_1_blank = new HUD("Digit_right_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.026f), 74, MeasurementUnit.PercentOfScreen);
+            HUD digit_right_1_blank = new HUD("Digit_right_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.034f), 74, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_right_1_blank);
 
-            HUD digit_right_2 = new HUD("Digit_right_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.026f), 75, MeasurementUnit.PercentOfScreen);
+            HUD digit_right_2 = new HUD("Digit_right_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.034f), 75, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_right_2);
-            HUD digit_right_2_blank = new HUD("Digit_right_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.026f), 74, MeasurementUnit.PercentOfScreen);
+            HUD digit_right_2_blank = new HUD("Digit_right_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.034f), 74, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_right_2_blank);
 
 
@@ -707,11 +707,11 @@ namespace ManhattanMorning.Controller
                 Texture2D scoreRect_highlightedTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\scoreRect_highlighted");
                 Texture2D scoreRect_borderTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\scoreRect_border");
 
-                HUD scoreRect_unhighlighted = new HUD("ScoreRect_unhighlighted", true, scoreRect_unhighlightedTexture, null, new Vector2(0.055f, 0.05f * 1.7778f), new Vector2(0.471f, 0.020f), 75, 
+                HUD scoreRect_unhighlighted = new HUD("ScoreRect_unhighlighted", true, scoreRect_unhighlightedTexture, null, new Vector2(0.055f, 0.05f * 1.7778f), new Vector2(0.471f, 0.040f), 75, 
                     MeasurementUnit.PercentOfScreen);
                 SuperController.Instance.addGameObjectToGameInstance(scoreRect_unhighlighted);
 
-                HUD scoreRect_highlighted = new HUD("ScoreRect_highlighted", true, scoreRect_highlightedTexture, null, new Vector2(0.055f, 0.05f * 1.7778f), new Vector2(0.471f, 0.020f), 76,
+                HUD scoreRect_highlighted = new HUD("ScoreRect_highlighted", true, scoreRect_highlightedTexture, null, new Vector2(0.055f, 0.05f * 1.7778f), new Vector2(0.471f, 0.040f), 76,
                     MeasurementUnit.PercentOfScreen);
                 SuperController.Instance.addGameObjectToGameInstance(scoreRect_highlighted);
 
@@ -740,11 +740,11 @@ namespace ManhattanMorning.Controller
             Texture2D specialbar_leftTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\specialbar_left");
             Texture2D specialbar_rightTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\specialbar_right");
 
-            HUD specialbar_left = new HUD("specialbarBar_Left", true, specialbar_leftTexture, null, new Vector2(0.2f, 0.06f), new Vector2(0.23f, 0.011f), 72, MeasurementUnit.PercentOfScreen);
+            HUD specialbar_left = new HUD("specialbarBar_Left", true, specialbar_leftTexture, null, new Vector2(0.2f, 0.06f), new Vector2(0.23f, 0.036f), 72, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(specialbar_left);
             returnList.Add(specialbar_left);
 
-            HUD specialbar_right = new HUD("specialbarBar_Right", true, specialbar_leftTexture, null, new Vector2(0.2f, 0.06f), new Vector2(0.60f, 0.011f), 72, MeasurementUnit.PercentOfScreen);
+            HUD specialbar_right = new HUD("specialbarBar_Right", true, specialbar_leftTexture, null, new Vector2(0.2f, 0.06f), new Vector2(0.60f, 0.036f), 72, MeasurementUnit.PercentOfScreen);
             specialbar_right.FlipHorizontally = true;
             SuperController.Instance.addGameObjectToGameInstance(specialbar_right);
             returnList.Add(specialbar_right);
