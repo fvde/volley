@@ -651,27 +651,27 @@ namespace ManhattanMorning.Controller
             Texture2D texture_digit_blank = game1.Content.Load<Texture2D>(@"Textures\HUD\Digits\digit_blank");
 
             // Explanation for y-Size: X-Size * proportion texture * proportion Screen
-            HUD scoreboard = new HUD("Scoreboard", true, scoreboardTexture, null, new Vector2(0.27f, (0.27f * 0.2185f * 1.7778f)), new Vector2(0.365f, -0.02f), 73, MeasurementUnit.PercentOfScreen);
+            HUD scoreboard = new HUD("Scoreboard", true, scoreboardTexture, null, new Vector2(0.30f, (0.30f * 0.2511f * 1.7778f)), new Vector2(0.35f, -0.02f), 73, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(scoreboard);
 
-            HUD digit_left_1 = new HUD("Digit_left_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
+            HUD digit_left_1 = new HUD("Digit_left_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.026f), 75, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_left_1);
-            HUD digit_left_1_blank = new HUD("Digit_left_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            HUD digit_left_1_blank = new HUD("Digit_left_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.42f, 0.026f), 74, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_left_1_blank);
 
-            HUD digit_left_2 = new HUD("Digit_left_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
+            HUD digit_left_2 = new HUD("Digit_left_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.026f), 75, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_left_2);
-            HUD digit_left_2_blank = new HUD("Digit_left_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            HUD digit_left_2_blank = new HUD("Digit_left_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.44f, 0.026f), 74, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_left_2_blank);
 
-            HUD digit_right_1 = new HUD("Digit_right_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
+            HUD digit_right_1 = new HUD("Digit_right_1", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.026f), 75, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_right_1);
-            HUD digit_right_1_blank = new HUD("Digit_right_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            HUD digit_right_1_blank = new HUD("Digit_right_1_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.54f, 0.026f), 74, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_right_1_blank);
 
-            HUD digit_right_2 = new HUD("Digit_right_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.006f), 75, MeasurementUnit.PercentOfScreen);
+            HUD digit_right_2 = new HUD("Digit_right_2", true, texture_digit_0, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.026f), 75, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_right_2);
-            HUD digit_right_2_blank = new HUD("Digit_right_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.006f), 74, MeasurementUnit.PercentOfScreen);
+            HUD digit_right_2_blank = new HUD("Digit_right_2_blank", true, texture_digit_blank, null, new Vector2(0.02f, 0.06f), new Vector2(0.561f, 0.026f), 74, MeasurementUnit.PercentOfScreen);
             SuperController.Instance.addGameObjectToGameInstance(digit_right_2_blank);
 
 
@@ -683,20 +683,20 @@ namespace ManhattanMorning.Controller
                 Texture2D clock_unhighlightedHalfTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\clock_unhighlighted_Half");
                 Texture2D clock_borderTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\IngameHUD\clock_border");
 
-                HUD clock_background = new HUD("Clock_background", true, clock_backgroundTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.01f), 75, MeasurementUnit.PercentOfScreen);
+                HUD clock_background = new HUD("Clock_background", true, clock_backgroundTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.03f), 75, MeasurementUnit.PercentOfScreen);
                 SuperController.Instance.addGameObjectToGameInstance(clock_background);
 
-                HUD clock_highlightedHalf = new HUD("Clock_highlightedHalf", true, clock_highlightedHalfTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.01f), 76, MeasurementUnit.PercentOfScreen);
+                HUD clock_highlightedHalf = new HUD("Clock_highlightedHalf", true, clock_highlightedHalfTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.03f), 76, MeasurementUnit.PercentOfScreen);
                 SuperController.Instance.addGameObjectToGameInstance(clock_highlightedHalf);
 
-                HUD clock_highlightedRightHalf = new HUD("Clock_highlightedRightHalf", true, clock_highlightedHalfTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.01f), 77, MeasurementUnit.PercentOfScreen);
+                HUD clock_highlightedRightHalf = new HUD("Clock_highlightedRightHalf", true, clock_highlightedHalfTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.03f), 77, MeasurementUnit.PercentOfScreen);
                 clock_highlightedRightHalf.Rotation = (float)(Math.PI);
                 SuperController.Instance.addGameObjectToGameInstance(clock_highlightedRightHalf);
 
-                HUD clock_unhighlightedHalf = new HUD("Clock_unhighlightedHalf", true, clock_unhighlightedHalfTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.01f), 77, MeasurementUnit.PercentOfScreen);
+                HUD clock_unhighlightedHalf = new HUD("Clock_unhighlightedHalf", true, clock_unhighlightedHalfTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.03f), 77, MeasurementUnit.PercentOfScreen);
                 SuperController.Instance.addGameObjectToGameInstance(clock_unhighlightedHalf);
 
-                HUD clock_border = new HUD("Clock_border", true, clock_borderTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.01f), 78, MeasurementUnit.PercentOfScreen);
+                HUD clock_border = new HUD("Clock_border", true, clock_borderTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.03f), 78, MeasurementUnit.PercentOfScreen);
                 SuperController.Instance.addGameObjectToGameInstance(clock_border);
 
             }
@@ -715,7 +715,7 @@ namespace ManhattanMorning.Controller
                     MeasurementUnit.PercentOfScreen);
                 SuperController.Instance.addGameObjectToGameInstance(scoreRect_highlighted);
 
-                HUD scoreRect_border = new HUD("ScoreRect_border", true, scoreRect_borderTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.01f), 77,
+                HUD scoreRect_border = new HUD("ScoreRect_border", true, scoreRect_borderTexture, null, new Vector2(0.06f, 0.06f * 1.7778f), new Vector2(0.47f, 0.03f), 77,
                     MeasurementUnit.PercentOfScreen);
                 SuperController.Instance.addGameObjectToGameInstance(scoreRect_border);
 
@@ -1097,34 +1097,34 @@ namespace ManhattanMorning.Controller
             // Overlays
 
             MenuObject Intro_Overlay = new MenuObject("Intro_Overlay", false,
-                null, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                null, null, new Vector2(1280f / 1280f, 92f / 720f), new Vector2(0f / 1280f, 628f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(Intro_Overlay);
 
             MenuObject MainScreen_Overlay = new MenuObject("MainScreen_Overlay", false,
-                Texture_MainScreen_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_MainScreen_Overlay, null, new Vector2(1280f / 1280f, 92f / 720f), new Vector2(0f / 1280f, 628f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(MainScreen_Overlay);
 
             MenuObject ReallyQuit_Overlay = new MenuObject("ReallyQuit_Overlay", false,
-                Texture_ReallyQuit_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_ReallyQuit_Overlay, null, new Vector2(1280f / 1280f, 92f / 720f), new Vector2(0f / 1280f, 628f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(ReallyQuit_Overlay);
 
             MenuObject Help_Overlay = new MenuObject("Help_Overlay", false,
-                Texture_Help_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_Help_Overlay, null, new Vector2(1280f / 1280f, 92f / 720f), new Vector2(0f / 1280f, 628f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(Help_Overlay);
 
             MenuObject TeamMenu_Overlay = new MenuObject("TeamMenu_Overlay", false,
-                Texture_TeamMenu_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_TeamMenu_Overlay, null, new Vector2(1280f / 1280f, 92f / 720f), new Vector2(0f / 1280f, 628f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(TeamMenu_Overlay);
 
             MenuObject TeamMenuWarning1_Overlay = new MenuObject("TeamMenuWarning1_Overlay", false,
-                Texture_TeamMenuWarning1_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_TeamMenuWarning1_Overlay, null, new Vector2(1280f / 1280f, 92f / 720f), new Vector2(0f / 1280f, 628f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(TeamMenuWarning1_Overlay);
             MenuObject TeamMenuWarning2_Overlay = new MenuObject("TeamMenuWarning2_Overlay", false,
-                Texture_TeamMenuWarning2_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_TeamMenuWarning2_Overlay, null, new Vector2(1280f / 1280f, 92f / 720f), new Vector2(0f / 1280f, 628f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(TeamMenuWarning2_Overlay);
 
             MenuObject SelectLevel_Overlay = new MenuObject("SelectLevel_Overlay", false,
-                Texture_SelectLevel_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_SelectLevel_Overlay, null, new Vector2(1280f / 1280f, 92f / 720f), new Vector2(0f / 1280f, 628f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(SelectLevel_Overlay);
 
             // return list with all objects
@@ -1215,11 +1215,11 @@ namespace ManhattanMorning.Controller
             // Create Overlays
 
             MenuObject IngameMenu_Overlay = new MenuObject("IngameMenu_Overlay", false,
-                Texture_IngameMenu_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_IngameMenu_Overlay, null, new Vector2(1280f / 1280f, 92f / 720f), new Vector2(0f / 1280f, 628f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(IngameMenu_Overlay);
 
             MenuObject WinnerScreen_Overlay = new MenuObject("WinnerScreen_Overlay", false,
-                Texture_WinnerScreen_Overlay, null, new Vector2(1280f / 1280f, 71f / 720f), new Vector2(0f / 1280f, 649f / 720f), 95, MeasurementUnit.PercentOfScreen);
+                Texture_WinnerScreen_Overlay, null, new Vector2(1280f / 1280f, 92f / 720f), new Vector2(0f / 1280f, 628f / 720f), 95, MeasurementUnit.PercentOfScreen);
             objectList.Add(WinnerScreen_Overlay);
 
             // Return list with all objects
