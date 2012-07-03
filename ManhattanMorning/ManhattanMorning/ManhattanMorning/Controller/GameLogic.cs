@@ -590,7 +590,7 @@ namespace ManhattanMorning.Controller
                 Vector2 size = new Vector2(0.055f, (0.05f * 1.7778f * percentage));
 
                 ((HUD)relevantHUDObjects.GetObjectByName("ScoreRect_highlighted")).Size = size;
-                ((HUD)relevantHUDObjects.GetObjectByName("ScoreRect_highlighted")).Position = new Vector2(0.471f, (0.0198f + (0.05f * 1.7778f - size.Y)));
+                ((HUD)relevantHUDObjects.GetObjectByName("ScoreRect_highlighted")).Position = new Vector2(0.471f, (0.0398f + (0.05f * 1.7778f - size.Y)));
 
             }
 
