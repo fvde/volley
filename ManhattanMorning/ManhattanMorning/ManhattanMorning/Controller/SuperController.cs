@@ -862,7 +862,14 @@ namespace ManhattanMorning.Controller
         /// <param name="playerIndex"> Index of the controller calling the dialog</param>
         public void open_MarketplaceWindow(PlayerIndex playerIndex)
         {
-            Guide.ShowMarketplace(playerIndex);
+            try
+            {
+                Guide.ShowMarketplace(playerIndex);
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         #endregion

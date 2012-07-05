@@ -59,6 +59,11 @@ namespace ManhattanMorning.Controller
             /// </summary>            
             settings.Add("AllowKIOnlyGame", new object[] { false, false, false });
 
+            /// <summary>
+            /// True if the game runs as trial (is set in game1 initialize)
+            /// </summary>                  
+            settings.Add("IsTrialMode", new object[] { false, false, true });
+
             #endregion
 
 
