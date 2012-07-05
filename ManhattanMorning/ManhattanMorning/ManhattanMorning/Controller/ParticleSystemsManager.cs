@@ -1146,11 +1146,15 @@ namespace ManhattanMorning.Controller
                 sparclingSystem[i] = new ParticleSystem(55);
                 sparclingSystem[i].SystemBlendState = BlendState.NonPremultiplied;
             }
-
+            //Add a sandsystem for each Player (4 max)
+            for (int i = 0; i < 4; i++)
+            {
+                sandSystem.addEmitter(createSandFountainEmitter());
+            }
             //Add a StarOrbitter and JumpHighlightEmitter for every Player
             for (int i = 0; i < SuperController.Instance.getPlayerOfTeam(1).Count * 2; i++)
             {
-                sandSystem.addEmitter(createSandFountainEmitter());
+              
                 highlightJumpSystem[0].addEmitter(createJumpEmitter(0, "star_particle", new Vector2(0.20f), 30, new Vector2(0.52f, 0.1f), 0.45f, 2.5f));
                 highlightJumpSystem[1].addEmitter(createJumpEmitter(i + 1, "star_particle",new Vector2(0.15f), 38, new Vector2(1.02f, 0.1f), 0.75f, 1.15f));
 

@@ -833,6 +833,7 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_SelectLevel_classic = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_Classic");
             Texture2D Texture_SelectLevel_15pts = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_15pts");
             Texture2D Texture_SelectLevel_30pts = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_30pts");
+            Texture2D Texture_SelectLevel_1min = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_3min");
             Texture2D Texture_SelectLevel_3min = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_3min");
             Texture2D Texture_SelectLevel_5min = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_5min");
 
@@ -958,6 +959,9 @@ namespace ManhattanMorning.Controller
             MenuObject Passive_SelectLevel_30pts = new MenuObject("SelectLevel_30pts", true,
                 Texture_SelectLevel_30pts, null, new Vector2(405f / 1280f, 161f / 720f), new Vector2(435f / 1280f, 507f / 720f), 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_SelectLevel_30pts);
+            MenuObject Passive_SelectLevel_1min = new MenuObject("SelectLevel_1min", true,
+                Texture_SelectLevel_3min, null, new Vector2(405f / 1280f, 161f / 720f), new Vector2(435f / 1280f, 507f / 720f), 92, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_SelectLevel_1min);
             MenuObject Passive_SelectLevel_3min = new MenuObject("SelectLevel_3min", true,
                 Texture_SelectLevel_3min, null, new Vector2(405f / 1280f, 161f / 720f), new Vector2(435f / 1280f, 507f / 720f), 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_SelectLevel_3min);
