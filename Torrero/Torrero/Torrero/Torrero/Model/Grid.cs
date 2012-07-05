@@ -57,6 +57,7 @@ namespace Torrero.Model
         /// </summary>
         public Tile NearestCrossing
         {
+            set { nearestCrossing = value; }
             get { return nearestCrossing; }
         }
 
@@ -345,7 +346,6 @@ namespace Torrero.Model
         public void discardLowestRow()
         {
             tiles.Dequeue();
-            GameLogic.Instance.checkForNextCrossing(true);
         }
 
         public Tile findNextPathTile(Tile currentTile, Tile lastTile)
@@ -370,12 +370,14 @@ namespace Torrero.Model
         /// <param name="y">Y value of the Tile you want to check.</param>
         /// <param name="direction">Search direction. 0 = right, 1 = left, 2 = top, 3 = bottom. This is necessary to avoid infinite loops.</param>
         public void findNearestCrossing(int x, int y, int direction)
-        {
-            if (!isStreet(x, y)) return;
+        {            
+            if (!isStreet(x, y) || nearestCrossing != null) return;
+            System.Diagnostics.Debug.WriteLine("check " + x + " " + y);
 
             //check if there are 3 streets around the current tile => current tile is a crossing
             if (isCrossing(x, y))
             {
+                System.Diagnostics.Debug.WriteLine("found " + x + " " + y);
                 nearestCrossing = getTile(x, y);
                 return;
             }
