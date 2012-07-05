@@ -16,6 +16,7 @@ using ManhattanMorning.Model.HUD;
 using ManhattanMorning.Misc.Logic;
 using ManhattanMorning.Misc.Levels;
 using ManhattanMorning.Misc.Tasks;
+using Microsoft.Xna.Framework.GamerServices;
 
 namespace ManhattanMorning.Controller
 {
@@ -841,6 +842,19 @@ namespace ManhattanMorning.Controller
         public List<Light> getLightsByName(String name)
         {
             return gameInstance.GameObjects.GetLightsByName(name);
+        }
+
+        #endregion
+
+        #region Links To Xbox Market
+
+        /// <summary>
+        /// Call this method to open the xbox marketdialog to buy the full version
+        /// </summary>
+        /// <param name="playerIndex"> Index of the controller calling the dialog</param>
+        public void open_MarketplaceWindow(PlayerIndex playerIndex)
+        {
+            Guide.ShowMarketplace(playerIndex);
         }
 
         #endregion
