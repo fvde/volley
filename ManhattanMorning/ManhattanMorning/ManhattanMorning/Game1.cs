@@ -154,7 +154,8 @@ namespace ManhattanMorning
             if((bool)SettingsManager.Instance.get("IntroVideo"))
                 playVideo(video);
 
-            
+            // Enable/Disable trial mode
+            Guide.SimulateTrialMode = true;
         }
 
 

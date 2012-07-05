@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
@@ -1375,6 +1376,7 @@ namespace ManhattanMorning.Misc
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_classic"));
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_15pts"));
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_30pts"));
+            menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_1min"));
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_3min"));
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_5min"));
 
@@ -1423,16 +1425,11 @@ namespace ManhattanMorning.Misc
                     foreach (LayerInterface menuObject in menuStructure[newState, i])
                     {
 
-                        // Special case select level menu: The different points options aren't
-                        // visible in the beginning
-                        if (!((menuObject.Name == "SelectLevel_15pts") || (menuObject.Name == "SelectLevel_30pts")
-                            || (menuObject.Name == "SelectLevel_50pts")))
-                        {
-                            ((DrawableObject)menuObject).Visible = true;
-                            // Unhighlight all buttons
-                            if (i > 0)
-                                ((MenuButtonObject)menuObject).Selected = false;
-                        }
+                        ((DrawableObject)menuObject).Visible = true;
+                        // Unhighlight all buttons
+                        if (i > 0)
+                            ((MenuButtonObject)menuObject).Selected = false;
+
 
                     }
                 }
@@ -1469,12 +1466,24 @@ namespace ManhattanMorning.Misc
                     selectedItem = 1;
 
                     // Make all MenuObjects that aren't selected invisible
-                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_15pts")).Visible = true;
+                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_15pts")).Visible = false;
                     ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_30pts")).Visible = false;
+                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_1min")).Visible = false;
                     ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_3min")).Visible = false;
                     ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_5min")).Visible = false;
-
+                    
                     ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_classic")).Visible = false;
+
+                    // In DemoMode just make 1min Button visible
+                    if (Guide.IsTrialMode)
+                    {
+                        ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_1min")).Visible = true;
+                    }
+                    // In FullVersion 15pts Button
+                    else
+                    {
+                        ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_15pts")).Visible = true;
+                    }
 
 
                 }
