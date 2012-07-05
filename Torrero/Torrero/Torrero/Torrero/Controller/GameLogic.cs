@@ -163,7 +163,7 @@ namespace Torrero.Controller
             {
                 //player left crossing => calculate new one
                 reachedCrossingTile = null;
-                reachedCrossing = false;
+                reachedCrossing = false;                
             }
 
             if (isCompletelyOnTile(g.Player, g.Player.NextTile) && !reachedCrossing)
@@ -175,6 +175,8 @@ namespace Torrero.Controller
                     yMovement = 0;
                     reachedCrossing = true;
                     reachedCrossingTile = g.Grid.NearestCrossing;
+                    g.Grid.NearestCrossing = null;
+                    System.Diagnostics.Debug.WriteLine("reached "+reachedCrossingTile.X +" " +reachedCrossingTile.Y);
                 }
                 //calculate next tile because player is not on a crossing
                 if (!reachedCrossing)
@@ -182,6 +184,10 @@ namespace Torrero.Controller
                     Tile temp = g.Player.NextTile;
                     g.Player.NextTile = g.Grid.findNextPathTile(g.Player.NextTile, g.Player.CurrentTile);
                     g.Player.CurrentTile = temp;
+                    if (g.Grid.NearestCrossing == null)
+                        checkForNextCrossing(false,2);
+                    if (g.Grid.NearestCrossing == null)
+                        checkForNextCrossing(false, 3);
                 }
             }
             else
@@ -202,43 +208,61 @@ namespace Torrero.Controller
 
             if (reachedCrossing && g.Player.DirectionAtCrossing != MovingDirection.None)
             {
+                g.Player.CurrentTile = reachedCrossingTile;
+                Tile nextTile = null;
+                int direction = 0;
                 switch (g.Player.DirectionAtCrossing)
                 {
                     case MovingDirection.Left:
-                        g.Player.NextTile = g.Grid.getNeighborLeft(reachedCrossingTile.X, reachedCrossingTile.Y);
+                        nextTile = g.Grid.getNeighborLeft(reachedCrossingTile.X, reachedCrossingTile.Y);
+                        direction = 1;
                         break;
                     case MovingDirection.Top:
-                        g.Player.NextTile = g.Grid.getNeighborAbove(reachedCrossingTile.X, reachedCrossingTile.Y);
+                        nextTile = g.Grid.getNeighborAbove(reachedCrossingTile.X, reachedCrossingTile.Y);
+                        direction = 2;
                         break;
                     case MovingDirection.Right:
-                        g.Player.NextTile = g.Grid.getNeighborRight(reachedCrossingTile.X, reachedCrossingTile.Y);
+                        nextTile = g.Grid.getNeighborRight(reachedCrossingTile.X, reachedCrossingTile.Y);
+                        direction = 0;                            
                         break;
                 }
 
-                g.Player.CurrentTile = reachedCrossingTile;
-                checkForNextCrossing(false, g.Player.NextTile.X, g.Player.NextTile.Y);
-
-                g.Player.DirectionAtCrossing = MovingDirection.None;
+                if(nextTile is Street)
+                {
+                    g.Player.NextTile = nextTile;
+                    checkForNextCrossing(false, g.Player.NextTile.X, g.Player.NextTile.Y, direction);
+                    g.Player.DirectionAtCrossing = MovingDirection.None;
+                }
             }
 
             // 3) Calculate score
             g.Score = (int)g.Distance;
         }
 
-        public void checkForNextCrossing(bool stepUpdate)
+        private int movementToDirection()
         {
-            checkForNextCrossing(stepUpdate, g.Player.CurrentTile.X, g.Player.CurrentTile.Y);
+            if (xMovement > 0) return 0; //right
+            if (xMovement < 0) return 1; //left
+            if (yMovement < 0) return 3; //bottom
+
+            return 2; //top
+        }
+
+        public void checkForNextCrossing(bool stepUpdate, int direction)
+        {
+                checkForNextCrossing(stepUpdate, g.Player.CurrentTile.X, g.Player.CurrentTile.Y, direction);
         }
 
         /// <summary>
         /// Finds the next crossing.
         /// </summary>
-        public void checkForNextCrossing(bool stepUpdate, int x, int y)
+        public void checkForNextCrossing(bool stepUpdate, int x, int y, int direction)
         {
             if ((stepUpdate && g.Grid.NearestCrossing == null) || (!stepUpdate))
             {
                 // check for next crossing in moving direction
-                g.Grid.findNearestCrossing(x, y, 2);
+                System.Diagnostics.Debug.WriteLine("search next");
+                g.Grid.findNearestCrossing(x, y, direction);
 
                 if(g.Grid.NearestCrossing != null)
                 {
