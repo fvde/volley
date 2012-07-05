@@ -1423,6 +1423,8 @@ namespace ManhattanMorning.Misc
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_1min"));
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_3min"));
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_5min"));
+            menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_ForestDemo"));
+            menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_MayaDemo"));
 
             foreach (String levelName in levels.ImplementedLevels().Keys)
                 menuStructure[5, 0].Add(menuObjectList.GetObjectByName(levelName));
@@ -1498,9 +1500,18 @@ namespace ManhattanMorning.Misc
                 else
                 {
 
-                    // Select a default level randomly
-                    Random random = new Random();
-                    selectedLevelPreviewIndex = random.Next(levels.ImplementedLevels().Count);
+                    // In TrialMode, select beachlevel
+                    if (((bool)SettingsManager.Instance.get("IsTrialMode")) == true)
+                    {
+                        selectedLevelPreviewIndex = 2;
+                    }
+                    // In Fullversion, select a default level randomly
+                    else
+                    {
+                        Random random = new Random();
+                        selectedLevelPreviewIndex = random.Next(levels.ImplementedLevels().Count);
+                    }
+
                     selectLevelPreview(selectedLevelPreviewIndex);
 
                     // Highlight multiple options as default and set these options
@@ -1517,6 +1528,9 @@ namespace ManhattanMorning.Misc
                     ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_5min")).Visible = false;
                     
                     ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_classic")).Visible = false;
+
+                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_ForestDemo")).Visible = false;
+                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_MayaDemo")).Visible = false;
 
                     // In DemoMode just make 1min Button visible
                     if (((bool)SettingsManager.Instance.get("IsTrialMode")) == true)
@@ -1713,6 +1727,10 @@ namespace ManhattanMorning.Misc
         private void selectLevelPreview(int levelIndex)
         {
 
+            // First make all DemoMode Previews invisible
+            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_ForestDemo")).Visible = false;
+            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_MayaDemo")).Visible = false;
+
             for (int i = 0; i < levels.LevelPreviews.Count; i++)
             {
                 // Is selected level
@@ -1725,6 +1743,15 @@ namespace ManhattanMorning.Misc
 
                     ((MenuButtonObject)levels.LevelPreviews[i]).FadingAnimation =
                         new FadingAnimation(false, false, 0, true, 500);
+                    
+                    // When in TrialMode, show stamps on previews
+                    if ((bool)SettingsManager.Instance.get("IsTrialMode"))
+                    {
+                        if (levelName == "Forest")
+                            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_ForestDemo")).Visible = true;
+                        if (levelName == "Maya")
+                            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_MayaDemo")).Visible = true;
+                    }
                 }
                 // Every other level
                 else

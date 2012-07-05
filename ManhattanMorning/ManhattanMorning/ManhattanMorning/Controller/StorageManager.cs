@@ -836,6 +836,8 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_SelectLevel_1min = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_1min");
             Texture2D Texture_SelectLevel_3min = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_3min");
             Texture2D Texture_SelectLevel_5min = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_5min");
+            Texture2D Texture_SelectLevel_ForestDemo = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_Forest_Demo");
+            Texture2D Texture_SelectLevel_MayaDemo = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_Maya_Demo");
 
             Texture2D Texture_TeamMenu_Background2_1vs1 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_1vs1");
             Texture2D Texture_TeamMenu_Background2_2vs2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\TeamMenu_2vs2");
@@ -968,6 +970,12 @@ namespace ManhattanMorning.Controller
             MenuObject Passive_SelectLevel_5min = new MenuObject("SelectLevel_5min", true,
                 Texture_SelectLevel_5min, null, new Vector2(405f / 1280f, 161f / 720f), new Vector2(435f / 1280f, 507f / 720f), 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_SelectLevel_5min);
+            MenuObject Passive_SelectLevel_ForestDemo = new MenuObject("SelectLevel_ForestDemo", true,
+                Texture_SelectLevel_ForestDemo, null, new Vector2(300f / 1280f, 300f / 720f), new Vector2(490f / 1280f, 210f / 720f), 95, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_SelectLevel_ForestDemo);
+            MenuObject Passive_SelectLevel_MayaDemo = new MenuObject("SelectLevel_MayaDemo", true,
+                Texture_SelectLevel_MayaDemo, null, new Vector2(300f / 1280f, 300f / 720f), new Vector2(490f / 1280f, 210f / 720f), 95, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_SelectLevel_MayaDemo);
 
             // Team Menu
 
