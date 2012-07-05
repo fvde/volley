@@ -1,0 +1,15 @@
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\Content\font.xnb
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\Content\circleSprite.xnb
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\Content\groundSprite.xnb
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\HelloWorld XNA.exe
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\HelloWorld XNA.pdb
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\DebugViewXNA.dll
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\FarseerPhysicsXNA.dll
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\FarseerPhysicsXNA.pdb
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\FarseerPhysicsXNA.xml
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\DebugViewXNA.pdb
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\bin\x86\Debug\DebugViewXNA.xml
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\obj\x86\Debug\HelloWorld XNA.exe
+C:\Daten\ManhattanMorning\Farseer\Farseer Physics Engine 3.3.1 HelloWorld XNA\HelloWorld XNA\obj\x86\Debug\HelloWorld XNA.pdb
