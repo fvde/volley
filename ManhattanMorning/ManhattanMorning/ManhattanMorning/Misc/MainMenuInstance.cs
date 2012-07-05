@@ -1126,10 +1126,27 @@ namespace ManhattanMorning.Misc
             else if (menuState == 5)
             {
 
-                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
-                // Start game
-                startGame();
-
+                // When in trial just start beach level
+                if (((bool)SettingsManager.Instance.get("IsTrialMode")) == true)
+                {
+                    if (levelName == "Beach")
+                    {
+                        SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
+                        startGame();
+                    }
+                    else
+                    {
+                        // Otherwise play warning
+                        SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
+                    }
+                }
+                // In FullVersion full functionality
+                else
+                {
+                    SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Warning);
+                    // Start game
+                    startGame();
+                }
                 timeSinceLastInput = 0;
             }
             // When in intro
