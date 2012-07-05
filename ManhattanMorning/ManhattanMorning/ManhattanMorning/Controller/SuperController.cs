@@ -267,8 +267,16 @@ namespace ManhattanMorning.Controller
         {
             if (gameState == GameState.MainMenu)
             {
-                // if program is in MainMenu
-                Graphics.Instance.drawMenu(gameTime, mainMenuInstance.MenuObjectList);
+                if (Game1.VideoPlaying)
+                {
+                    Graphics.Instance.drawVideo(gameTime);
+                    return;
+                }
+                else
+                {
+                    // if program is in MainMenu
+                    Graphics.Instance.drawMenu(gameTime, mainMenuInstance.MenuObjectList);
+                }
             }
             else if (gameState == GameState.Ingame)
             {
