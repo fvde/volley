@@ -31,11 +31,6 @@ namespace Torrero.Controller
         /// </summary>
         private Random random;
 
-        /// <summary>
-        /// Counts rows that passed without having a next crossing.
-        /// </summary>
-        private int counter;
-
         private List<int> previousExitsXPositions;
 
         #endregion

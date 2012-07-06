@@ -47,6 +47,24 @@ namespace Torrero.Model
             set { directionAtCrossing = value; }
         }
 
+        /// <summary>
+        /// Vertical speed of the player.
+        /// </summary>
+        public float VerticalSpeed
+        {
+            get { return verticalSpeed; }
+            set { verticalSpeed = value; }
+        }
+
+        /// <summary>
+        /// Horizontal speed of the player.
+        /// </summary>
+        public float HorizontalSpeed
+        {
+            get { return horizontalSpeed; }
+            set { horizontalSpeed = value; }
+        }
+
         #endregion
 
         // All members. They should always be private and provide a getter/setter if necessary.
@@ -65,8 +83,18 @@ namespace Torrero.Model
         /// <summary>
         /// Direction in which the player moves at the next crossing.
         /// </summary>
-        private MovingDirection directionAtCrossing;        
+        private MovingDirection directionAtCrossing;
 
+        /// <summary>
+        /// Horizontal speed of the player.
+        /// </summary>
+        private float horizontalSpeed;
+
+        /// <summary>
+        /// Vertical speed of the player.
+        /// </summary>
+        private float verticalSpeed;
+        
         #endregion
 
         // Object constructors.
@@ -75,6 +103,8 @@ namespace Torrero.Model
         public Player(Vector2 position, Vector2 size, Texture2D texture)
             : base(position, size, texture)
         {
+            horizontalSpeed = TorreroConstants.HorizontalSpeed;
+            verticalSpeed = TorreroConstants.VerticalSpeed;
         }
 
         #endregion

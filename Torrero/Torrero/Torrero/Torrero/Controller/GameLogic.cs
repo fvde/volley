@@ -78,6 +78,11 @@ namespace Torrero.Controller
         /// </summary>
         private float timeSinceLastDifficultyUpdate = 0.0f;
 
+        /// <summary>
+        /// Counts rows that passed without having a next crossing.
+        /// </summary>
+        private int counter;
+
         #endregion
 
         // Object constructors.
@@ -144,8 +149,12 @@ namespace Torrero.Controller
                 TorreroConstants.ContinueSidePathProbability += (1 - TorreroConstants.ContinueSidePathProbability) * TorreroConstants.DifficultyGrowthFactor;
 
                 //Scalars
-                TorreroConstants.HorizontalMaximumSpeed *= (1 + TorreroConstants.DifficultyGrowthFactor);
-                TorreroConstants.VerticalSpeed *= (1 + TorreroConstants.DifficultyGrowthFactor);
+                if (g.Player.HorizontalSpeed < TorreroConstants.HorizontalMaximumSpeed)
+                    g.Player.HorizontalSpeed *= (1 + TorreroConstants.DifficultyGrowthFactor);
+                else
+                    System.Diagnostics.Debug.WriteLine("max speed reached");
+                if (g.Player.VerticalSpeed < TorreroConstants.VerticalMaximumSpeed)
+                    g.Player.VerticalSpeed *= (1 + TorreroConstants.DifficultyGrowthFactor);
             }
 
         }
@@ -181,13 +190,21 @@ namespace Torrero.Controller
                 //calculate next tile because player is not on a crossing
                 if (!reachedCrossing)
                 {
+                    counter--;
                     Tile temp = g.Player.NextTile;
                     g.Player.NextTile = g.Grid.findNextPathTile(g.Player.NextTile, g.Player.CurrentTile);
                     g.Player.CurrentTile = temp;
-                    if (g.Grid.NearestCrossing == null)
-                        checkForNextCrossing(false,2);
-                    if (g.Grid.NearestCrossing == null)
-                        checkForNextCrossing(false, 3);
+                    if (counter < 0)
+                    {
+                        if (g.Grid.NearestCrossing == null)
+                            checkForNextCrossing(false, 2);
+                        if (g.Grid.NearestCrossing == null)
+                            checkForNextCrossing(false, 3);
+                        if (g.Grid.NearestCrossing == null)
+                        {
+                            counter = 300;
+                        }
+                    }
                 }
             }
             else
@@ -284,7 +301,7 @@ namespace Torrero.Controller
             if (Math.Abs(diff) < TorreroConstants.movingTreshhold)
                 return diff;
 
-            return TorreroConstants.VerticalSpeed * (milliseconds / 1000.0f) * Math.Sign(diff);
+            return g.Player.VerticalSpeed * (milliseconds / 1000.0f) * Math.Sign(diff);
         }
 
         /// <summary>
@@ -301,7 +318,7 @@ namespace Torrero.Controller
             if (Math.Abs(diff) < TorreroConstants.movingTreshhold)
                 return diff;
 
-            return TorreroConstants.HorizontalMaximumSpeed * (milliseconds / 1000.0f) * Math.Sign(diff);
+            return g.Player.HorizontalSpeed * (milliseconds / 1000.0f) * Math.Sign(diff);
         }
 
         /// <summary>
