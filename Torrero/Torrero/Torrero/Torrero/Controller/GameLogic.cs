@@ -184,26 +184,17 @@ namespace Torrero.Controller
                     yMovement = 0;
                     reachedCrossing = true;
                     reachedCrossingTile = g.Grid.NearestCrossing;
-                    g.Grid.NearestCrossing = null;
-                    System.Diagnostics.Debug.WriteLine("reached "+reachedCrossingTile.X +" " +reachedCrossingTile.Y);
                 }
                 //calculate next tile because player is not on a crossing
                 if (!reachedCrossing)
                 {
-                    counter--;
                     Tile temp = g.Player.NextTile;
                     g.Player.NextTile = g.Grid.findNextPathTile(g.Player.NextTile, g.Player.CurrentTile);
                     g.Player.CurrentTile = temp;
-                    if (counter < 0)
+
+                    if (g.Grid.NearestCrossing == null)
                     {
-                        if (g.Grid.NearestCrossing == null)
-                            checkForNextCrossing(false, 2);
-                        if (g.Grid.NearestCrossing == null)
-                            checkForNextCrossing(false, 3);
-                        if (g.Grid.NearestCrossing == null)
-                        {
-                            counter = 300;
-                        }
+                        checkForNextCrossing(g.Player.CurrentTile, g.Player.NextTile);
                     }
                 }
             }
@@ -227,27 +218,23 @@ namespace Torrero.Controller
             {
                 g.Player.CurrentTile = reachedCrossingTile;
                 Tile nextTile = null;
-                int direction = 0;
                 switch (g.Player.DirectionAtCrossing)
                 {
                     case MovingDirection.Left:
                         nextTile = g.Grid.getNeighborLeft(reachedCrossingTile.X, reachedCrossingTile.Y);
-                        direction = 1;
                         break;
                     case MovingDirection.Top:
                         nextTile = g.Grid.getNeighborAbove(reachedCrossingTile.X, reachedCrossingTile.Y);
-                        direction = 2;
                         break;
                     case MovingDirection.Right:
                         nextTile = g.Grid.getNeighborRight(reachedCrossingTile.X, reachedCrossingTile.Y);
-                        direction = 0;                            
                         break;
                 }
 
                 if(nextTile is Street)
                 {
                     g.Player.NextTile = nextTile;
-                    checkForNextCrossing(false, g.Player.NextTile.X, g.Player.NextTile.Y, direction);
+                    checkForNextCrossing(g.Player.CurrentTile, g.Player.NextTile);
                     g.Player.DirectionAtCrossing = MovingDirection.None;
                 }
             }
@@ -256,35 +243,18 @@ namespace Torrero.Controller
             g.Score = (int)g.Distance;
         }
 
-        private int movementToDirection()
-        {
-            if (xMovement > 0) return 0; //right
-            if (xMovement < 0) return 1; //left
-            if (yMovement < 0) return 3; //bottom
-
-            return 2; //top
-        }
-
-        public void checkForNextCrossing(bool stepUpdate, int direction)
-        {
-                checkForNextCrossing(stepUpdate, g.Player.CurrentTile.X, g.Player.CurrentTile.Y, direction);
-        }
-
         /// <summary>
         /// Finds the next crossing.
         /// </summary>
-        public void checkForNextCrossing(bool stepUpdate, int x, int y, int direction)
+        /// <param name="currentTile">Starting tile</param>
+        /// <param name="nextTile">First tile in search direction</param>
+        public void checkForNextCrossing(Tile currentTile, Tile nextTile)
         {
-            if ((stepUpdate && g.Grid.NearestCrossing == null) || (!stepUpdate))
-            {
-                // check for next crossing in moving direction
-                System.Diagnostics.Debug.WriteLine("search next");
-                g.Grid.findNearestCrossing(x, y, direction);
+            g.Grid.findNearestCrossing(currentTile, nextTile);
 
-                if(g.Grid.NearestCrossing != null)
-                {
-                    g.GameObjects.Add(new Senorita(g.Grid.NearestCrossing.BottomLeftPosition, new Vector2(TorreroConstants.TileSize), StorageManager.getTextureByName("senorita")));
-                }
+            if (g.Grid.NearestCrossing != null)
+            {
+                g.GameObjects.Add(new Senorita(g.Grid.NearestCrossing.BottomLeftPosition, new Vector2(TorreroConstants.TileSize), StorageManager.getTextureByName("senorita")));
             }
         }
 
