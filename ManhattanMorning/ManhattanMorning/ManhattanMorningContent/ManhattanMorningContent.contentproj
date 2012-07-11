@@ -111,13 +111,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\HUD\BallIndicator.png">
-      <Name>BallIndicator</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="SoftShadow.fx">
       <Name>SoftShadow</Name>
       <Importer>EffectImporter</Importer>
@@ -1616,6 +1609,23 @@
   <ItemGroup>
     <Compile Include="Textures\Menu\MainMenu\help_tutorialVideo.png">
       <Name>help_tutorialVideo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\HUD\BallIndicator_center.PNG">
+      <Name>BallIndicator_center</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\BallIndicator_left.PNG">
+      <Name>BallIndicator_left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\HUD\BallIndicator_right.PNG">
+      <Name>BallIndicator_right</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
