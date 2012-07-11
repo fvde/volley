@@ -143,7 +143,7 @@ namespace ManhattanMorning
         /// </summary>
         protected override void Initialize()
         {
-            Guide.SimulateTrialMode = true;
+            
             // Set instance so that every class can get it by calling
             // Game1.Instance
             instance = this;
