@@ -899,6 +899,9 @@ namespace ManhattanMorning.Misc
                     case 6:
                         ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox2")).Visible = true;
                         break;
+                    case 7:
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_TutorialVideo")).Visible = true;
+                        break;
                 }
 
                 timeSinceLastInput = 0;
@@ -987,8 +990,8 @@ namespace ManhattanMorning.Misc
 
                 // select left button item
                 selectedItem++;
-                if (selectedItem > 6)
-                    selectedItem = 6;
+                if (selectedItem > 7)
+                    selectedItem = 7;
 
                 // highlight first item of the new selected button
                 ((MenuButtonObject)menuStructure[menuState, selectedItem][0]).Selected = true;
@@ -1020,6 +1023,9 @@ namespace ManhattanMorning.Misc
                         break;
                     case 6:
                         ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox2")).Visible = true;
+                        break;
+                    case 7:
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_TutorialVideo")).Visible = true;
                         break;
                 }
 
@@ -1326,7 +1332,7 @@ namespace ManhattanMorning.Misc
             // 1.Index: Menu state
             // 2.Index: 0: List of Menu_PassiveObjects which are always shown/never highlighted (e.g. background)
             //          all other indexes: List of Menu_Buttons which belong to a single selectable item
-            menuStructure = new List<LayerInterface>[8, 7];
+            menuStructure = new List<LayerInterface>[8, 8];
 
             // Main screen
             menuStructure[0, 0] = new List<LayerInterface>();
@@ -1387,6 +1393,7 @@ namespace ManhattanMorning.Misc
             menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_Box4"));
             menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_CreditsBox1"));
             menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_CreditsBox2"));
+            menuStructure[3, 0].Add(menuObjectList.GetObjectByName("Help_TutorialVideo"));
             menuStructure[3, 1] = new List<LayerInterface>();
             menuStructure[3, 1].Add(menuObjectList.GetObjectByName("Help_Button1"));
             menuStructure[3, 2] = new List<LayerInterface>();
@@ -1399,6 +1406,8 @@ namespace ManhattanMorning.Misc
             menuStructure[3, 5].Add(menuObjectList.GetObjectByName("Help_Button5"));
             menuStructure[3, 6] = new List<LayerInterface>();
             menuStructure[3, 6].Add(menuObjectList.GetObjectByName("Help_Button6"));
+            menuStructure[3, 7] = new List<LayerInterface>();
+            menuStructure[3, 7].Add(menuObjectList.GetObjectByName("Help_Button7"));
 
             // ReallyQuit
             menuStructure[4, 0] = new List<LayerInterface>();
@@ -1515,7 +1524,11 @@ namespace ManhattanMorning.Misc
                     selectLevelPreview(selectedLevelPreviewIndex);
 
                     // Highlight multiple options as default and set these options
-                    winCondition = new ScoreLimit_WinCondition(15);
+                    if ((bool)SettingsManager.Instance.get("IsTrialMode"))
+                        winCondition = new TimeLimit_WinCondition(new TimeSpan(0, 1, 0));
+                    else
+                        winCondition = new ScoreLimit_WinCondition(15);
+
                     SettingsManager.Instance.set("enablePowerups", true);
 
                     selectedItem = 1;

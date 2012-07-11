@@ -859,6 +859,7 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_Help_RoundButton = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_roundButton");
             Texture2D Texture_Help_RoundButton_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_roundButton_s");
             Texture2D Texture_Help_FirstStart = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_firstStart");
+            Texture2D Texture_Help_TutorialVideo = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\help_tutorialVideo");
 
             Texture2D Texture_ReallyQuit_Frame = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_Frame");
             Texture2D Texture_ReallyQuit_Frame2 = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_Frame2");
@@ -1035,6 +1036,8 @@ namespace ManhattanMorning.Controller
                 Texture_TeamMenu_KI, null, new Vector2(0.10f, 0.15f), new Vector2(0.45f, 0.24f), 93, MeasurementUnit.PercentOfScreen);
             Passive_MainMenu_TeamMenu_KI4.Alpha = 0.5f;
             objectList.Add(Passive_MainMenu_TeamMenu_KI4);
+
+
             // Help
 
             MenuObject Passive_MainMenu_Help_Box1 = new MenuObject("Help_Box1", false,
@@ -1061,28 +1064,35 @@ namespace ManhattanMorning.Controller
                 Texture_Help_CreditsBox2, null, new Vector2(1000f / 1280f, 563f / 720f), new Vector2(140f / 1280f, 50f / 720f), 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_MainMenu_Help_CreditsBox2);
 
+            MenuObject Passive_MainMenu_Help_TutorialVideo = new MenuObject("Help_TutorialVideo", false,
+                Texture_Help_TutorialVideo, null, new Vector2(1000f / 1280f, 563f / 720f), new Vector2(140f / 1280f, 50f / 720f), 92, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_Help_TutorialVideo);
+
             MenuObject Passive_MainMenu_Help_FirstHelp = new MenuObject("Help_FirstHelp", false,
                 Texture_Help_FirstStart, null, new Vector2(1, 1), Vector2.Zero, 91, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_MainMenu_Help_FirstHelp);
 
             MenuButtonObject Button_MainMenu_Help_Button1 = new MenuButtonObject("Help_Button1", false, Texture_Help_RoundButton,
-                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.25f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.2f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button1);
             MenuButtonObject Button_MainMenu_Help_Button2 = new MenuButtonObject("Help_Button2", false, Texture_Help_RoundButton,
-                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.35f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.3f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button2);
             MenuButtonObject Button_MainMenu_Help_Button3 = new MenuButtonObject("Help_Button3", false, Texture_Help_RoundButton,
-                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.45f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.4f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button3);
             MenuButtonObject Button_MainMenu_Help_Button4 = new MenuButtonObject("Help_Button4", false, Texture_Help_RoundButton,
-                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.55f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.5f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button4);
             MenuButtonObject Button_MainMenu_Help_Button5 = new MenuButtonObject("Help_Button5", false, Texture_Help_RoundButton,
-                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.65f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.6f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button5);
             MenuButtonObject Button_MainMenu_Help_Button6 = new MenuButtonObject("Help_Button6", false, Texture_Help_RoundButton,
-                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.75f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.7f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_Help_Button6);
+            MenuButtonObject Button_MainMenu_Help_Button7 = new MenuButtonObject("Help_Button7", false, Texture_Help_RoundButton,
+                Texture_Help_RoundButton_s, null, new Vector2(0.03f, 0.05f), new Vector2(0.8f - 0.015f, 0.92f), 93, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Button_MainMenu_Help_Button7);
 
 
             // Really Quit
