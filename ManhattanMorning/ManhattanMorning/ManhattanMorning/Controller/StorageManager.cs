@@ -397,7 +397,7 @@ namespace ManhattanMorning.Controller
             Border middleBorder = new Border("middleBorder", false, null, null, null, new Vector2(tempNetSize.X, (4 * gameInstance.LevelSize.Y)),
                 new Vector2(gameInstance.LevelSize.X / 2.0f - (0.5f * tempNetSize.X), (-3 * gameInstance.LevelSize.Y)), 50, Model.MeasurementUnit.Meter);            
             
-            Texture2D test = game1.Content.Load<Texture2D>(@"Textures\HUD\BallIndicator");
+            Texture2D test = game1.Content.Load<Texture2D>(@"Textures\HUD\BallIndicator_center");
             
             // Borders to prevent lifting at the net
             Border rightSideNetHandBorder = new Border("rightSideNetHandBorder", false, test, null, null, new Vector2(1.0f, 0.2f), tempNet.Position + new Vector2(tempNetSize.X, 0), 50, Model.MeasurementUnit.Meter);
@@ -562,8 +562,12 @@ namespace ManhattanMorning.Controller
             saveTextureByName(specialbar_fillingRectTexture_right, "specialbar_fillingRectTexture_right");
 
 
-            Texture2D ballIndicatorTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\BallIndicator");
-            saveTextureByName(ballIndicatorTexture, "BallIndicator");
+            Texture2D ballIndicatorTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\BallIndicator_center");
+            Texture2D ballIndicatorLeftTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\BallIndicator_left");
+            Texture2D ballIndicatorRightTexture = game1.Content.Load<Texture2D>(@"Textures\HUD\BallIndicator_right");
+            saveTextureByName(ballIndicatorTexture, "BallIndicator_center");
+            saveTextureByName(ballIndicatorLeftTexture, "BallIndicator_left");
+            saveTextureByName(ballIndicatorRightTexture, "BallIndicator_right");
 
             #endregion
 

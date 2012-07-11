@@ -1131,7 +1131,7 @@ namespace ManhattanMorning.Controller
 
             bombSystem = new ParticleSystem[6];
             lavaExplosionSystem = new ParticleSystem[6];
-            orbitterPlayers = new ParticleSystem[SuperController.Instance.getPlayerOfTeam(1).Count * 2];
+            orbitterPlayers = new ParticleSystem[4];
             sparclingSystem = new ParticleSystem[2];
 
             for (int i = 0; i < bombSystem.Length; i++)
@@ -1152,7 +1152,7 @@ namespace ManhattanMorning.Controller
                 sandSystem.addEmitter(createSandFountainEmitter());
             }
             //Add a StarOrbitter and JumpHighlightEmitter for every Player
-            for (int i = 0; i < SuperController.Instance.getPlayerOfTeam(1).Count * 2; i++)
+            for (int i = 0; i < 4; i++)
             {
               
                 highlightJumpSystem[0].addEmitter(createJumpEmitter(0, "star_particle", new Vector2(0.20f), 30, new Vector2(0.52f, 0.1f), 0.45f, 2.5f));

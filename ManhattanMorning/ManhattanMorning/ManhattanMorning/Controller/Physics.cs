@@ -1168,10 +1168,18 @@ namespace ManhattanMorning.Controller
         {
             // Get ball size
             Vector2 ballSize = (Vector2)SettingsManager.Instance.get("ballSize");
+            Vector2 edgeSize = new Vector2(0.02f * Graphics.Instance.viewportRatio(), 0.02f);
 
             // Create ballIndicator
-            HUD ballIndicator = new HUD("BallIndicator", false, StorageManager.Instance.getTextureByName("BallIndicator"), null, new Vector2(Graphics.Instance.convertUnits(ballSize,
-                MeasurementUnit.Meter, MeasurementUnit.PercentOfScreen).X, 0.02f), new Vector2(0.5f, 0.009f), 84, MeasurementUnit.PercentOfScreen);
+            HUD ballIndicator = new HUD("BallIndicator", false, StorageManager.Instance.getTextureByName("BallIndicator_center"), null, new Vector2(Graphics.Instance.convertUnits(ballSize,
+                MeasurementUnit.Meter, MeasurementUnit.PercentOfScreen).X, 0.02f), new Vector2(0.5f, 0.14f), 84, MeasurementUnit.PercentOfScreen);
+            HUD ballIndicator_left = new HUD("BallIndicator_left", false, StorageManager.Instance.getTextureByName("BallIndicator_left"), null, edgeSize,
+                new Vector2(ballIndicator.Position.X - edgeSize.X, ballIndicator.Position.Y), 84, MeasurementUnit.PercentOfScreen);
+            HUD ballIndicator_right = new HUD("BallIndicator_right", false, StorageManager.Instance.getTextureByName("BallIndicator_right"), null, edgeSize,
+                new Vector2(ballIndicator.Position.X + ballIndicator.Size.X, ballIndicator.Position.Y), 84, MeasurementUnit.PercentOfScreen);
+
+            ballIndicator.attachObject(ballIndicator_left);
+            ballIndicator.attachObject(ballIndicator_right);
             SuperController.Instance.addGameObjectToGameInstance(ballIndicator);
 
             // Add ball

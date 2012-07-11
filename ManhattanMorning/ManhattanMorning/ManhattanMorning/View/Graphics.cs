@@ -1097,12 +1097,6 @@ namespace ManhattanMorning.View
              //draw HUD in seperate spritebatch beacuse of color mixing with mood            
             if (p is HUD)
             {
-                if (p.Name == "BallIndicator")
-                {
-                    spriteBatchHUD.Draw(p.Texture,
-                            new Rectangle((int)(objectPosition.X + objectSize.X * 0.5f), (int)(objectPosition.Y + objectSize.Y * 0.5f), (int)(objectSize.X), (int)(objectSize.Y)),
-                            null, Color.Red * 0.85f, p.Rotation, new Vector2(p.Texture.Width * 0.5f, p.Texture.Height * 0.5f), flipHorizontally, 0.0f);
-                }
                 if (p.Texture != null)
                 {
                     //texture, dest rect, source rect,  color, rotation, origin, effect, depth
@@ -1113,6 +1107,19 @@ namespace ManhattanMorning.View
 
                     spriteBatchHUD.Draw(p.Texture, new Rectangle((int)(objectPosition.X + objectSize.X * 0.5f), (int)(objectPosition.Y + objectSize.Y * 0.5f), (int)(objectSize.X * scale), (int)(objectSize.Y * scale)),
                         source, p.BlendColor * p.Alpha, p.Rotation, origin, flipHorizontally, 0.0f);
+
+                    if (p.Name == "BallIndicator")
+                    {                        
+                        foreach (DrawableObject d in p.AttachedObjects)
+                        {
+                            origin = new Vector2(d.Texture.Width * 0.5f, d.Texture.Height * 0.5f);
+
+                            Vector2 convert = convertUnits(d.Size, MeasurementUnit.PercentOfScreen, MeasurementUnit.Pixel);
+                            spriteBatchHUD.Draw(d.Texture, new Rectangle((int)(objectPosition.X) + ((int) ((d.Name == "BallIndicator_left") ? -convert.X / 2 + 2 : objectSize.X + convert.X / 2 - 2)),
+                                (int)(objectPosition.Y + objectSize.Y * 0.5f ), (int)(convert.X * scale), (int)(convert.Y * scale)),
+                                source, d.BlendColor * d.Alpha, d.Rotation, origin, flipHorizontally, 0.0f);
+                        }
+                    }
                 }
             }
             else
@@ -1277,6 +1284,15 @@ namespace ManhattanMorning.View
                                 fadingState = 0;
                             }
             }
+        }
+
+        /// <summary>
+        /// Viewport ratio.
+        /// </summary>
+        /// <returns></returns>
+        public float viewportRatio()
+        {
+            return viewPortHeight / viewPortWidth;
         }
 
         /// <summary>

@@ -497,15 +497,17 @@ namespace ManhattanMorning.Controller
                     // check if ball isn't visible
                     if (transformedBallPosition.Y < 0)
                     {
-                        ball.BallIndicator.Visible = true;
+                        ball.BallIndicator.Visible = true;                        
 
                         // set position
-                        ball.BallIndicator.Position = new Vector2(Graphics.Instance.convertUnits(transformedBallPosition,
-                            MeasurementUnit.Pixel, MeasurementUnit.PercentOfScreen).X, 0);
-
+                        ball.BallIndicator.Position = new Vector2(Graphics.Instance.convertUnits(transformedBallPosition, MeasurementUnit.Pixel, MeasurementUnit.PercentOfScreen).X, 0.014f);
                     }
                     else
                     {
+                        foreach (DrawableObject d in ball.BallIndicator.AttachedObjects)
+                        {
+                            d.Visible = false;
+                        }
                         // ball is visible at the moment, so no  ballIndicator is necessary
                         ball.BallIndicator.Visible = false;
                     }

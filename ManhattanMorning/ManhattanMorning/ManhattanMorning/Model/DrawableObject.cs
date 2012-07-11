@@ -77,7 +77,7 @@ namespace ManhattanMorning.Model
                     if (rotateWithOffset)
                         return position += Vector2.Transform(offset, Matrix.CreateRotationZ(attachedTo.Rotation));
                 }
-                return position += offset;
+               return position + offset;
             }
             set { position = value; }
         }
