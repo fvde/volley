@@ -244,7 +244,7 @@ namespace ManhattanMorning.Controller
                     }
                 case PowerUpType.InvertedControl:
                     {
-                        return PowerUpBehaviour.NonExclusive;
+                        return PowerUpBehaviour.TeamExclusive;
                     }
                 case PowerUpType.Jumpheight:
                     {

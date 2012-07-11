@@ -56,24 +56,19 @@ namespace Torrero
         public const int MaximumBlockSize = 4;
 
         /// <summary>
-        /// Horizontal maximum speed of the player.
+        /// Horizontal minimum speed of the player.
         /// </summary>
-        public const float HorizontalMaximumSpeed = 250;
-
-        /// <summary>
-        /// Vertical maximum speed of the player.
-        /// </summary>
-        public const float VerticalMaximumSpeed = 250f;
+        public const float HorizontalMinimumSpeed = 1.0f;
 
         /// <summary>
         /// Horizontal maximum speed of the player.
         /// </summary>
-        public const float HorizontalSpeed = 120.0f;
+        public static float HorizontalMaximumSpeed = 120.0f;
 
         /// <summary>
         /// Vertical speed of the player.
         /// </summary>
-        public const float VerticalSpeed = 120.0f;
+        public static float VerticalSpeed = 120.0f;
 
         /// <summary>
         /// When the touch location is closer then this value to the player, the player will move forward.
@@ -96,7 +91,7 @@ namespace Torrero
         public static float ContinueSidePathProbability = 0.7f;
 
         /// <summary>
-        /// Every interval the difficulty is increased by (1-Probability) * DifficultyGrowthFactor for all probabilities and directly for all speedsss.
+        /// Every interval the difficulty is increased by (1-Probability) * DifficultyGrowthFactor for all probabilities and directly for all speeds.
         /// </summary>
         public const float DifficultyGrowthFactor = 0.05f;
 

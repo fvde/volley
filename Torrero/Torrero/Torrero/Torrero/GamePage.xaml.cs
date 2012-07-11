@@ -15,7 +15,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Torrero.Controller;
 using Torrero.Model;
 using Microsoft.Xna.Framework.Input.Touch;
-using System.Diagnostics;
 
 namespace Torrero
 {
@@ -120,39 +119,36 @@ namespace Torrero
                 switch (gesture.GestureType)
                 {
                     case GestureType.Flick:
-                        if (Math.Abs(gesture.Delta.Y - gesture.Delta2.Y) < 250)
+                        if (Math.Abs(gesture.Delta.Y - gesture.Delta2.Y) < 150)
                         {
-                            if (gesture.Delta.X - gesture.Delta2.X < -100)
+                            if (gesture.Delta.X - gesture.Delta2.X < -150)
                             {
                                 gameInstance.Player.DirectionAtCrossing = MovingDirection.Left;
-                                Debug.WriteLine("LEFT!");
                                 break;
                             }
-                            if (gesture.Delta.X - gesture.Delta2.X > 100)
+                            if (gesture.Delta.X - gesture.Delta2.X > 150)
                             {
                                 gameInstance.Player.DirectionAtCrossing = MovingDirection.Right;
-                                Debug.WriteLine("RIGHT!");
                                 break;
                             }
                         }
-                        else if (Math.Abs(gesture.Delta.X - gesture.Delta2.X) < 300)
+                        else if (Math.Abs(gesture.Delta.X - gesture.Delta2.X) < 150)
                         {
-                            if (gesture.Delta.Y - gesture.Delta2.Y < -250)
+                            if (gesture.Delta.Y - gesture.Delta2.Y < -150)
                             {
                                 gameInstance.Player.DirectionAtCrossing = MovingDirection.Top;
-                                Debug.WriteLine("TOP!");
                                 break;
                             }
-                            
+                            //if (gesture.Delta.Y - gesture.Delta2.Y > 150)
+                            //{
+                            //    MessageBox.Show("FLICK -> down");
+                            //    break;
+                            //}
                         }
-
-                        Debug.WriteLine("FLICK GESTURE NOT KNOWN!");
 
                         break;
 
                     default:
-
-                        Debug.WriteLine("OTHER GESTURE!");
                         break;
                 }
             }

@@ -116,12 +116,12 @@ namespace ManhattanMorning.Model.HUD
         /// <summary>
         /// Moves starting point of left/right specialbar to right position
         /// </summary>
-        private float specialbar_offset = 0.056f;
+        private float specialbar_offset = 0.043f;
 
         /// <summary>
         /// The y-Position of every filling tile (in percent of screen)
         /// </summary>
-        private float fillingTile_yPosition = 0.049f;
+        private float fillingTile_yPosition = 0.024f;
 
         #endregion
 

@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel x:Name="Swipesteering" Grid.Row="1" Height="700" Visibility="Visible">
-            <Button Height="700" VerticalAlignment="Center" Width="480" ManipulationCompleted="StackPanel_ManipulationCompleted" ></Button>
+            <Button Height="700" VerticalAlignment="Center" BorderThickness="2" Width="480" ManipulationCompleted="StackPanel_ManipulationCompleted" ></Button>
         </StackPanel>
         <!-- Arrange buttons in a horizontal line by using StackPanel. -->
         <StackPanel x:Name="Steering" Grid.Row="2"  Height="80" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Visible">

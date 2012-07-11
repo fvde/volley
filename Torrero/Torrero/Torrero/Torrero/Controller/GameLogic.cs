@@ -78,11 +78,6 @@ namespace Torrero.Controller
         /// </summary>
         private float timeSinceLastDifficultyUpdate = 0.0f;
 
-        /// <summary>
-        /// Counts rows that passed without having a next crossing.
-        /// </summary>
-        private int counter;
-
         #endregion
 
         // Object constructors.
@@ -149,12 +144,8 @@ namespace Torrero.Controller
                 TorreroConstants.ContinueSidePathProbability += (1 - TorreroConstants.ContinueSidePathProbability) * TorreroConstants.DifficultyGrowthFactor;
 
                 //Scalars
-                if (g.Player.HorizontalSpeed < TorreroConstants.HorizontalMaximumSpeed)
-                    g.Player.HorizontalSpeed *= (1 + TorreroConstants.DifficultyGrowthFactor);
-                else
-                    System.Diagnostics.Debug.WriteLine("max speed reached");
-                if (g.Player.VerticalSpeed < TorreroConstants.VerticalMaximumSpeed)
-                    g.Player.VerticalSpeed *= (1 + TorreroConstants.DifficultyGrowthFactor);
+                TorreroConstants.HorizontalMaximumSpeed *= (1 + TorreroConstants.DifficultyGrowthFactor);
+                TorreroConstants.VerticalSpeed *= (1 + TorreroConstants.DifficultyGrowthFactor);
             }
 
         }
@@ -172,7 +163,7 @@ namespace Torrero.Controller
             {
                 //player left crossing => calculate new one
                 reachedCrossingTile = null;
-                reachedCrossing = false;                
+                reachedCrossing = false;
             }
 
             if (isCompletelyOnTile(g.Player, g.Player.NextTile) && !reachedCrossing)
@@ -191,11 +182,6 @@ namespace Torrero.Controller
                     Tile temp = g.Player.NextTile;
                     g.Player.NextTile = g.Grid.findNextPathTile(g.Player.NextTile, g.Player.CurrentTile);
                     g.Player.CurrentTile = temp;
-
-                    if (g.Grid.NearestCrossing == null)
-                    {
-                        checkForNextCrossing(g.Player.CurrentTile, g.Player.NextTile);
-                    }
                 }
             }
             else
@@ -216,45 +202,48 @@ namespace Torrero.Controller
 
             if (reachedCrossing && g.Player.DirectionAtCrossing != MovingDirection.None)
             {
-                g.Player.CurrentTile = reachedCrossingTile;
-                Tile nextTile = null;
                 switch (g.Player.DirectionAtCrossing)
                 {
                     case MovingDirection.Left:
-                        nextTile = g.Grid.getNeighborLeft(reachedCrossingTile.X, reachedCrossingTile.Y);
+                        g.Player.NextTile = g.Grid.getNeighborLeft(reachedCrossingTile.X, reachedCrossingTile.Y);
                         break;
                     case MovingDirection.Top:
-                        nextTile = g.Grid.getNeighborAbove(reachedCrossingTile.X, reachedCrossingTile.Y);
+                        g.Player.NextTile = g.Grid.getNeighborAbove(reachedCrossingTile.X, reachedCrossingTile.Y);
                         break;
                     case MovingDirection.Right:
-                        nextTile = g.Grid.getNeighborRight(reachedCrossingTile.X, reachedCrossingTile.Y);
+                        g.Player.NextTile = g.Grid.getNeighborRight(reachedCrossingTile.X, reachedCrossingTile.Y);
                         break;
                 }
 
-                if(nextTile is Street)
-                {
-                    g.Player.NextTile = nextTile;
-                    checkForNextCrossing(g.Player.CurrentTile, g.Player.NextTile);
-                    g.Player.DirectionAtCrossing = MovingDirection.None;
-                }
+                g.Player.CurrentTile = reachedCrossingTile;
+                checkForNextCrossing(false, g.Player.NextTile.X, g.Player.NextTile.Y);
+
+                g.Player.DirectionAtCrossing = MovingDirection.None;
             }
 
             // 3) Calculate score
             g.Score = (int)g.Distance;
         }
 
+        public void checkForNextCrossing(bool stepUpdate)
+        {
+            checkForNextCrossing(stepUpdate, g.Player.CurrentTile.X, g.Player.CurrentTile.Y);
+        }
+
         /// <summary>
         /// Finds the next crossing.
         /// </summary>
-        /// <param name="currentTile">Starting tile</param>
-        /// <param name="nextTile">First tile in search direction</param>
-        public void checkForNextCrossing(Tile currentTile, Tile nextTile)
+        public void checkForNextCrossing(bool stepUpdate, int x, int y)
         {
-            g.Grid.findNearestCrossing(currentTile, nextTile);
-
-            if (g.Grid.NearestCrossing != null)
+            if ((stepUpdate && g.Grid.NearestCrossing == null) || (!stepUpdate))
             {
-                g.GameObjects.Add(new Senorita(g.Grid.NearestCrossing.BottomLeftPosition, new Vector2(TorreroConstants.TileSize), StorageManager.getTextureByName("senorita")));
+                // check for next crossing in moving direction
+                g.Grid.findNearestCrossing(x, y, 2);
+
+                if(g.Grid.NearestCrossing != null)
+                {
+                    g.GameObjects.Add(new Senorita(g.Grid.NearestCrossing.BottomLeftPosition, new Vector2(TorreroConstants.TileSize), StorageManager.getTextureByName("senorita")));
+                }
             }
         }
 
@@ -271,7 +260,7 @@ namespace Torrero.Controller
             if (Math.Abs(diff) < TorreroConstants.movingTreshhold)
                 return diff;
 
-            return g.Player.VerticalSpeed * (milliseconds / 1000.0f) * Math.Sign(diff);
+            return TorreroConstants.VerticalSpeed * (milliseconds / 1000.0f) * Math.Sign(diff);
         }
 
         /// <summary>
@@ -288,7 +277,7 @@ namespace Torrero.Controller
             if (Math.Abs(diff) < TorreroConstants.movingTreshhold)
                 return diff;
 
-            return g.Player.HorizontalSpeed * (milliseconds / 1000.0f) * Math.Sign(diff);
+            return TorreroConstants.HorizontalMaximumSpeed * (milliseconds / 1000.0f) * Math.Sign(diff);
         }
 
         /// <summary>

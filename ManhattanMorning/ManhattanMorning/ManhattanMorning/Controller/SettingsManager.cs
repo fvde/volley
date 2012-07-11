@@ -59,11 +59,6 @@ namespace ManhattanMorning.Controller
             /// </summary>            
             settings.Add("AllowKIOnlyGame", new object[] { false, false, false });
 
-            /// <summary>
-            /// True if the game runs as trial (is set in game1 initialize)
-            /// </summary>                  
-            settings.Add("IsTrialMode", new object[] { false, false, true });
-
             #endregion
 
 
@@ -201,7 +196,7 @@ namespace ManhattanMorning.Controller
 
             // Defines after how much time a new neutral Powerups spawns (in ms)
             // Used in GameLogic
-            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 35000, 60000 });
+            settings.Add("averageSpawnTime_neutralPowerup", new object[] { 1000, 30000, 60000 });
 
             // Defines how fast the specialbar fills if you perform a positive action
             settings.Add("PositivePowerupsMultiplier", new object[] { 1.0f, 1.0f, 10.0f });

@@ -797,11 +797,6 @@ namespace ManhattanMorning.Controller
                         (gamepad.PreviousGamePadState.Buttons.Y != ButtonState.Pressed))
                         SuperController.Instance.MainMenuInstance.randomTeamButtonPressed();
 
-                    // "X" pressed
-                    if ((gamepad.CurrentGamePadState.Buttons.X == ButtonState.Pressed) &&
-                        (gamepad.PreviousGamePadState.Buttons.X != ButtonState.Pressed))
-                        SuperController.Instance.MainMenuInstance.buyGameButtonPressed(gamepad.Index);
-
                 }
             }
 
