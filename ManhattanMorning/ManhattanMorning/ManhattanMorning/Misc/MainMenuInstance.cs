@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
@@ -654,33 +655,46 @@ namespace ManhattanMorning.Misc
                 // Make all winning conditions invisible
                 ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_15pts")).Visible = false;
                 ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_30pts")).Visible = false;
+                ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_1min")).Visible = false;
                 ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_3min")).Visible = false;
                 ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_5min")).Visible = false;
 
-                // select next item
-                selectedItem++;
-                if (selectedItem > 4)
-                    selectedItem = 1;
-
-                // Make correct condition visible
-                switch (selectedItem)
+                // In trialMode set Button to 1min
+                if (((bool)SettingsManager.Instance.get("IsTrialMode")) == true)
                 {
-                    case 1:
-                        ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_15pts")).Visible = true;
-                        winCondition = new ScoreLimit_WinCondition(15);
-                        break;
-                    case 2:
-                        ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_30pts")).Visible = true;
-                        winCondition = new ScoreLimit_WinCondition(30);
-                        break;
-                    case 3:
-                        ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_3min")).Visible = true;
-                        winCondition = new TimeLimit_WinCondition(new TimeSpan(0, 3, 0));
-                        break;
-                    case 4:
-                        ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_5min")).Visible = true;
-                        winCondition = new TimeLimit_WinCondition(new TimeSpan(0, 5, 0));
-                        break;
+                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_1min")).Visible = true;
+                    winCondition = new TimeLimit_WinCondition(new TimeSpan(0, 1, 0));
+                }
+
+                // In fullVersion full functionality
+                else
+                {
+                    // select next item
+                    selectedItem++;
+                    if (selectedItem > 4)
+                        selectedItem = 1;
+
+                    // Make correct condition visible
+                    switch (selectedItem)
+                    {
+                        case 1:
+                            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_15pts")).Visible = true;
+                            winCondition = new ScoreLimit_WinCondition(15);
+                            break;
+                        case 2:
+                            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_30pts")).Visible = true;
+                            winCondition = new ScoreLimit_WinCondition(30);
+                            break;
+                        case 3:
+                            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_3min")).Visible = true;
+                            winCondition = new TimeLimit_WinCondition(new TimeSpan(0, 3, 0));
+                            break;
+                        case 4:
+                            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_5min")).Visible = true;
+                            winCondition = new TimeLimit_WinCondition(new TimeSpan(0, 5, 0));
+                            break;
+                    }
+
                 }
 
                 // Animate
@@ -688,6 +702,7 @@ namespace ManhattanMorning.Misc
                     new FadingAnimation(false, true, 0, true, 200);
 
                 timeSinceLastInput = 0;
+
             }
 
 
@@ -1111,10 +1126,27 @@ namespace ManhattanMorning.Misc
             else if (menuState == 5)
             {
 
-                SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
-                // Start game
-                startGame();
-
+                // When in trial just start beach level
+                if (((bool)SettingsManager.Instance.get("IsTrialMode")) == true)
+                {
+                    if (levelName == "Beach")
+                    {
+                        SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
+                        startGame();
+                    }
+                    else
+                    {
+                        // Otherwise play warning
+                        SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
+                    }
+                }
+                // In FullVersion full functionality
+                else
+                {
+                    SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Warning);
+                    // Start game
+                    startGame();
+                }
                 timeSinceLastInput = 0;
             }
             // When in intro
@@ -1265,7 +1297,20 @@ namespace ManhattanMorning.Misc
             }
 
         }
+    
 
+        /// <summary>
+        /// When in trialMode the method opens the Xbox Marketplace dialogue
+        /// </summary>
+        /// <param name="playerIndex">The index of the gamepad that pressed the button</param>
+        public void buyGameButtonPressed(PlayerIndex playerIndex)
+        {
+            // If it's the trialMode
+            if (((bool)SettingsManager.Instance.get("IsTrialMode")) == true)
+            {
+                SuperController.Instance.open_MarketplaceWindow(playerIndex);
+            }
+        }
 
         #endregion
 
@@ -1375,8 +1420,11 @@ namespace ManhattanMorning.Misc
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_classic"));
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_15pts"));
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_30pts"));
+            menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_1min"));
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_3min"));
             menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_5min"));
+            menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_ForestDemo"));
+            menuStructure[5, 0].Add(menuObjectList.GetObjectByName("SelectLevel_MayaDemo"));
 
             foreach (String levelName in levels.ImplementedLevels().Keys)
                 menuStructure[5, 0].Add(menuObjectList.GetObjectByName(levelName));
@@ -1423,16 +1471,11 @@ namespace ManhattanMorning.Misc
                     foreach (LayerInterface menuObject in menuStructure[newState, i])
                     {
 
-                        // Special case select level menu: The different points options aren't
-                        // visible in the beginning
-                        if (!((menuObject.Name == "SelectLevel_15pts") || (menuObject.Name == "SelectLevel_30pts")
-                            || (menuObject.Name == "SelectLevel_50pts")))
-                        {
-                            ((DrawableObject)menuObject).Visible = true;
-                            // Unhighlight all buttons
-                            if (i > 0)
-                                ((MenuButtonObject)menuObject).Selected = false;
-                        }
+                        ((DrawableObject)menuObject).Visible = true;
+                        // Unhighlight all buttons
+                        if (i > 0)
+                            ((MenuButtonObject)menuObject).Selected = false;
+
 
                     }
                 }
@@ -1457,9 +1500,18 @@ namespace ManhattanMorning.Misc
                 else
                 {
 
-                    // Select a default level randomly
-                    Random random = new Random();
-                    selectedLevelPreviewIndex = random.Next(levels.ImplementedLevels().Count);
+                    // In TrialMode, select beachlevel
+                    if (((bool)SettingsManager.Instance.get("IsTrialMode")) == true)
+                    {
+                        selectedLevelPreviewIndex = 2;
+                    }
+                    // In Fullversion, select a default level randomly
+                    else
+                    {
+                        Random random = new Random();
+                        selectedLevelPreviewIndex = random.Next(levels.ImplementedLevels().Count);
+                    }
+
                     selectLevelPreview(selectedLevelPreviewIndex);
 
                     // Highlight multiple options as default and set these options
@@ -1469,12 +1521,27 @@ namespace ManhattanMorning.Misc
                     selectedItem = 1;
 
                     // Make all MenuObjects that aren't selected invisible
-                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_15pts")).Visible = true;
+                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_15pts")).Visible = false;
                     ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_30pts")).Visible = false;
+                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_1min")).Visible = false;
                     ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_3min")).Visible = false;
                     ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_5min")).Visible = false;
-
+                    
                     ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_classic")).Visible = false;
+
+                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_ForestDemo")).Visible = false;
+                    ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_MayaDemo")).Visible = false;
+
+                    // In DemoMode just make 1min Button visible
+                    if (((bool)SettingsManager.Instance.get("IsTrialMode")) == true)
+                    {
+                        ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_1min")).Visible = true;
+                    }
+                    // In FullVersion 15pts Button
+                    else
+                    {
+                        ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_15pts")).Visible = true;
+                    }
 
 
                 }
@@ -1660,6 +1727,10 @@ namespace ManhattanMorning.Misc
         private void selectLevelPreview(int levelIndex)
         {
 
+            // First make all DemoMode Previews invisible
+            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_ForestDemo")).Visible = false;
+            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_MayaDemo")).Visible = false;
+
             for (int i = 0; i < levels.LevelPreviews.Count; i++)
             {
                 // Is selected level
@@ -1672,6 +1743,15 @@ namespace ManhattanMorning.Misc
 
                     ((MenuButtonObject)levels.LevelPreviews[i]).FadingAnimation =
                         new FadingAnimation(false, false, 0, true, 500);
+                    
+                    // When in TrialMode, show stamps on previews
+                    if ((bool)SettingsManager.Instance.get("IsTrialMode"))
+                    {
+                        if (levelName == "Forest")
+                            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_ForestDemo")).Visible = true;
+                        if (levelName == "Maya")
+                            ((MenuObject)menuObjectList.GetObjectByName("SelectLevel_MayaDemo")).Visible = true;
+                    }
                 }
                 // Every other level
                 else
