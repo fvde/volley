@@ -125,6 +125,7 @@ namespace ManhattanMorning
             graphicsDeviceManager.PreferredBackBufferHeight = 720;
             Window.AllowUserResizing = true;
             Window.Title = "Volley";
+            Components.Add(new GamerServicesComponent(this)); 
 
             videoPlayer = new VideoPlayer();
 
@@ -155,10 +156,10 @@ namespace ManhattanMorning
                 playVideo(video);
 
             // Enable/Disable trial mode
-            if (Guide.IsTrialMode)
-                SettingsManager.Instance.set("IsTrialMode", false);
-            else
-                SettingsManager.Instance.set("IsTrialMode", false);
+            
+                SettingsManager.Instance.set("IsTrialMode", Guide.IsTrialMode);
+            
+            
 
         }
 
@@ -197,6 +198,7 @@ namespace ManhattanMorning
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && VideoPlaying)
             {
@@ -271,10 +273,9 @@ namespace ManhattanMorning
                     for (int i = 0; i < reader.BaseStream.Length; i++)
                     {
                         FirstTimePlaying = reader.ReadBoolean();
-                        Console.WriteLine("reading " + FirstTimePlaying);
 
                     }
-                    Console.WriteLine("notreading " + FirstTimePlaying);
+  
                 }
 
 
