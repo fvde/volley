@@ -66,7 +66,7 @@ namespace ManhattanMorning.Misc.Levels
 
             // Size of net (pixel) is always 28x280 px
             Vector2 screenResolution = (Vector2)SettingsManager.Instance.get("screenResolution");
-            levelObjectsList.Add(new Net("net", new Vector2(((28 / screenResolution.X) * levelSize.X), ((280 / screenResolution.Y) * levelSize.Y))));
+            levelObjectsList.Add(new Net("net", new Vector2(((30 / screenResolution.X) * levelSize.X), ((288 / screenResolution.Y) * levelSize.Y))));
 
             #endregion
 

@@ -57,6 +57,7 @@ namespace Torrero.Model
         /// </summary>
         public Tile NearestCrossing
         {
+            set { nearestCrossing = value; }
             get { return nearestCrossing; }
         }
 
@@ -345,7 +346,6 @@ namespace Torrero.Model
         public void discardLowestRow()
         {
             tiles.Dequeue();
-            GameLogic.Instance.checkForNextCrossing(true);
         }
 
         public Tile findNextPathTile(Tile currentTile, Tile lastTile)
@@ -366,45 +366,49 @@ namespace Torrero.Model
         /// <summary>
         /// Finds the next crossing.
         /// </summary>
-        /// <param name="x">X value of the Tile you want to check.</param>
-        /// <param name="y">Y value of the Tile you want to check.</param>
-        /// <param name="direction">Search direction. 0 = right, 1 = left, 2 = top, 3 = bottom. This is necessary to avoid infinite loops.</param>
-        public void findNearestCrossing(int x, int y, int direction)
+        /// <param name="current">Starting tile</param>
+        /// <param name="checkDirection">First tile in search direction</param>
+        public void findNearestCrossing(Tile current, Tile checkDirection)
         {
-            if (!isStreet(x, y)) return;
+            LinkedList<Tile> search = new LinkedList<Tile>();
+            search.AddLast(current);
+            search.AddLast(checkDirection);
 
-            //check if there are 3 streets around the current tile => current tile is a crossing
-            if (isCrossing(x, y))
+            int count = 1;
+            while (count < search.Count)
             {
-                nearestCrossing = getTile(x, y);
-                return;
-            }
-            else
-            {
-                //check tile left, right top and bottom
-                switch (direction)
+                //get all surrounding tiles
+                Tile temp = search.ElementAt(count);
+                Tile[] neighbours = new Tile[4];
+                neighbours[0] = getNeighborLeft(temp.X, temp.Y);
+                neighbours[1] = getNeighborRight(temp.X, temp.Y);
+                neighbours[2] = getNeighborAbove(temp.X, temp.Y);
+                neighbours[3] = getNeighborBelow(temp.X, temp.Y);
+
+                int adjacent = 0;
+                for (int i = 0; i < 4; i++)
                 {
-                    case 0:
-                        findNearestCrossing(x, y + 1, 2);
-                        findNearestCrossing(x, y - 1, 3);
-                        findNearestCrossing(x + 1, y, 0);                        
-                        break;
-                    case 1:
-                        findNearestCrossing(x, y + 1, 2);
-                        findNearestCrossing(x, y - 1, 3);
-                        findNearestCrossing(x - 1, y, 1);
-                        break;
-                    case 2:
-                        findNearestCrossing(x, y + 1, 2);
-                        findNearestCrossing(x + 1, y, 0);
-                        findNearestCrossing(x - 1, y, 1);
-                        break;
-                    case 3:
-                        findNearestCrossing(x, y - 1, 3);
-                        findNearestCrossing(x + 1, y, 0);
-                        findNearestCrossing(x - 1, y, 1);
-                        break;
+                    if (neighbours[i] is Street) adjacent++;
+                    else if (neighbours[i] == null)
+                    {
+                        nearestCrossing = null;
+                        return;
+                    }
                 }
+                //found crossing
+                if (adjacent >= 3)
+                {
+                    nearestCrossing = temp;
+                    return;
+                }
+
+                //add tile to list and check in next step
+                for (int i = 0; i < 4; i++)
+                {
+                    if (neighbours[i] is Street && !search.Contains(neighbours[i]))
+                        search.AddLast(neighbours[i]);
+                }
+                count++;
             }
         }
 
