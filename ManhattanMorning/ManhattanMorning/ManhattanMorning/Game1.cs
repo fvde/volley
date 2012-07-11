@@ -125,6 +125,8 @@ namespace ManhattanMorning
             graphicsDeviceManager.PreferredBackBufferHeight = 720;
             Window.AllowUserResizing = true;
             Window.Title = "Volley";
+
+            //Add component which is needed for interaction with the gamer profile (marketplace, trialmode, purchase etc)
             Components.Add(new GamerServicesComponent(this)); 
 
             videoPlayer = new VideoPlayer();
@@ -141,6 +143,7 @@ namespace ManhattanMorning
         /// </summary>
         protected override void Initialize()
         {
+            Guide.SimulateTrialMode = true;
             // Set instance so that every class can get it by calling
             // Game1.Instance
             instance = this;
@@ -155,9 +158,7 @@ namespace ManhattanMorning
             if((bool)SettingsManager.Instance.get("IntroVideo"))
                 playVideo(video);
 
-            // Enable/Disable trial mode
             
-                SettingsManager.Instance.set("IsTrialMode", Guide.IsTrialMode);
             
             
 
@@ -198,7 +199,9 @@ namespace ManhattanMorning
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            
+            // Enable/Disable trial mode
+
+            SettingsManager.Instance.set("IsTrialMode", Guide.IsTrialMode);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && VideoPlaying)
             {

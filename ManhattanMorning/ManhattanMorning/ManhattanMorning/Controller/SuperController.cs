@@ -868,7 +868,7 @@ namespace ManhattanMorning.Controller
             }
             catch (Exception e)
             {
-
+                Logger.Instance.log(Sender.SuperController, "exception: you know what i mean ;)", PriorityLevel.Priority_5);
             }
         }
 
