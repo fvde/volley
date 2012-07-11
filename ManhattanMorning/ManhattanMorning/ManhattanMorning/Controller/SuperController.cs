@@ -864,12 +864,31 @@ namespace ManhattanMorning.Controller
         {
             try
             {
+                if(CanBuyGame(playerIndex))
                 Guide.ShowMarketplace(playerIndex);
             }
             catch (Exception e)
             {
-                Logger.Instance.log(Sender.SuperController, "exception: you know what i mean ;)", PriorityLevel.Priority_5);
+                //just in case...
             }
+        }
+
+        /// <summary>
+        /// Tests if a gamer is allowd to purchase content
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public static bool CanBuyGame(PlayerIndex player)
+        {
+            SignedInGamer gamer = Gamer.SignedInGamers[player];
+
+            if (gamer == null)
+                return false;
+
+            if (!gamer.IsSignedInToLive)
+                return false;
+
+            return gamer.Privileges.AllowPurchaseContent;
         }
 
         #endregion
