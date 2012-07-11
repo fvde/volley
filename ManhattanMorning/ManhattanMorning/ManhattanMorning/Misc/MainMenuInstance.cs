@@ -260,7 +260,10 @@ namespace ManhattanMorning.Misc
                 for (int j = 0; j < menuStructure.GetLength(1); j++)
                     if (menuStructure[i, j] != null)
                         foreach (LayerInterface menuObject in menuStructure[i, j])
+                        {
                             ((DrawableObject)menuObject).Visible = false;
+                            ((DrawableObject)menuObject).FadingAnimation = null;
+                        }
 
             for (int i = 0; i < levels.LevelPreviews.Count; i++)
             {
