@@ -156,7 +156,7 @@ namespace ManhattanMorning
 
             // Enable/Disable trial mode
             if (Guide.IsTrialMode)
-                SettingsManager.Instance.set("IsTrialMode", true);
+                SettingsManager.Instance.set("IsTrialMode", false);
             else
                 SettingsManager.Instance.set("IsTrialMode", false);
 
