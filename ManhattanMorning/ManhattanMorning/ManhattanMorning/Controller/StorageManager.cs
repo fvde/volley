@@ -1243,7 +1243,7 @@ namespace ManhattanMorning.Controller
                 Texture_IngameMenu_Winner_Team2, null, new Vector2(446f / 1280f, 392f / 720f), new Vector2(443f / 1280f, 180f / 720f), 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(WinnerScreen_Winner_Team2);
             MenuObject FeatureScreen = new MenuObject("FeatureScreen", false,
-                Texture_IngameMenu_Winner_Team2, null, new Vector2(1280f / 1280f, 720f / 720f), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
+                Texture_IngameMenu_FeatureScreen, null, new Vector2(1280f / 1280f, 720f / 720f), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
             objectList.Add(FeatureScreen);
 
 
