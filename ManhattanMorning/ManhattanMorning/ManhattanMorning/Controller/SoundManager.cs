@@ -417,6 +417,9 @@ namespace ManhattanMorning.Controller
         public void update(GameTime gameTime)
         {
 
+            // Workaraound to wait with the sound until the Tutorialvideo is over
+            pause(false);
+
             getTasks();
 
             // Update the times for every sound so that it can be played again
