@@ -163,7 +163,7 @@ namespace ManhattanMorning
             Logger.Instance.log(Sender.Game1, "Initialize() done successfully",PriorityLevel.Priority_2);
             base.Initialize();
 
-            Guide.SimulateTrialMode = true;
+            Guide.SimulateTrialMode = false;
             //play IntroVideo on game start
             if(((bool)SettingsManager.Instance.get("IntroVideo")) && Guide.IsTrialMode)
                 playVideo(video);
