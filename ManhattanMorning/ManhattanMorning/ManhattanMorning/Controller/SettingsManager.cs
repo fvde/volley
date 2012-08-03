@@ -47,7 +47,7 @@ namespace ManhattanMorning.Controller
             /// <summary>
             /// Play intro video?
             /// </summary>
-            settings.Add("IntroVideo", new object[] { false, false, true });
+            settings.Add("IntroVideo", new object[] { false, true, true });
 
             /// <summary>
             /// Play level video?
