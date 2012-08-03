@@ -1298,7 +1298,7 @@ namespace ManhattanMorning.Controller
         public Video loadTutorialVideo()
         {
 
-            return Game1.Instance.Content.Load<Video>(@"Videos\beach");
+            return Game1.Instance.Content.Load<Video>(@"Videos\Tutorial Video");
 
         }
 

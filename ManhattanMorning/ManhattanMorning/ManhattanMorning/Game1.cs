@@ -183,7 +183,7 @@ namespace ManhattanMorning
         protected override void LoadContent()
         {
 
-            video = Content.Load<Video>(@"Videos\beach");
+            video = Content.Load<Video>(@"Videos\Tutorial Video");
 
             Logger.Instance.log(Sender.Game1, "LoadContent() done successfully",PriorityLevel.Priority_2);
         }
