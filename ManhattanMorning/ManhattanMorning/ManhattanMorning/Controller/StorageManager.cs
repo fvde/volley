@@ -872,6 +872,7 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_ReallyQuit_Yes_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_Yes_s");
             Texture2D Texture_ReallyQuit_No = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_No");
             Texture2D Texture_ReallyQuit_No_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_No_s");
+            Texture2D Texture_ReallyQuit_FeatureScreen = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\ReallyQuit_FeatureScreen");
 
             Texture2D Texture_MainScreen_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_select");
             Texture2D Texture_ReallyQuit_Overlay = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Overlay_choose_select_back");
@@ -1118,6 +1119,10 @@ namespace ManhattanMorning.Controller
             MenuObject Passive_MainMenu_ReallyQuit_Frame2 = new MenuObject("ReallyQuit_Frame2", false,
                 Texture_ReallyQuit_Frame2, null, new Vector2(1f, 1f), Vector2.Zero, 94, MeasurementUnit.PercentOfScreen);
             objectList.Add(Passive_MainMenu_ReallyQuit_Frame2);
+
+            MenuObject Passive_MainMenu_ReallyQuit_FeatureScreen = new MenuObject("ReallyQuit_FeatureScreen", false,
+                Texture_ReallyQuit_FeatureScreen, null, new Vector2(1f, 1f), Vector2.Zero, 94, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_ReallyQuit_FeatureScreen);
 
 
             // Overlays

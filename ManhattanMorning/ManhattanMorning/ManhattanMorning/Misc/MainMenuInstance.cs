@@ -637,6 +637,10 @@ namespace ManhattanMorning.Misc
             else if (menuState == 4)
             {
 
+                // In Demo feature screen nothing happens
+                if (selectedItem == 3)
+                    return;
+
                 if (selectedItem < 2)
                     SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
 
@@ -764,6 +768,10 @@ namespace ManhattanMorning.Misc
             // When in really quit
             else if (menuState == 4)
             {
+
+                // In Demo feature screen nothing happens
+                if (selectedItem == 3)
+                    return;
 
                 if (selectedItem > 1)
                     SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Switch);
@@ -1124,15 +1132,32 @@ namespace ManhattanMorning.Misc
                 // If yes is selected
                 if (selectedItem == 1)
                 {
-                    // Quit game
-                    Game1.Instance.QuitGame();
-                    SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
+                    // Quit game if it's not the demo
+                    if ((bool)SettingsManager.Instance.get("IsTrialMode"))
+                    {
+                        // Show feature screen if it's the demo
+                        selectedItem = 3;
+                        ((MenuObject)menuObjectList.GetObjectByName("ReallyQuit_FeatureScreen")).Visible = true;
+                        ((MenuObject)menuObjectList.GetObjectByName("ReallyQuit_Frame")).Visible = false;
+                        ((MenuObject)menuObjectList.GetObjectByName("ReallyQuit_Frame2")).Visible = false;
+                    }
+                    else
+                    {
+                        Game1.Instance.QuitGame();
+                        SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
+                    }
                 }
-                else
+                // If no is selected
+                else if (selectedItem == 2)
                 {
                     // Go back to main screen
                     switchMenuState(0);
                     SoundManager.Instance.playMenuSoundEffect((int)MenuSound.Select);
+                }
+                // If the Demo Feature screen is shown
+                else
+                {
+                    Game1.Instance.QuitGame();
                 }
 
                 timeSinceLastInput = 0;
@@ -1226,6 +1251,11 @@ namespace ManhattanMorning.Misc
             // When in really quit
             else if (menuState == 4)
             {
+
+                // In Demo feature screen nothing happens
+                if (selectedItem == 3)
+                    return;
+
                 SoundManager.Instance.playMenuSoundEffect((int)MenuSound.SelectBack);
 
                 // Go back to main screen
