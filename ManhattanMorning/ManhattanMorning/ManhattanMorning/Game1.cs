@@ -52,7 +52,7 @@ namespace ManhattanMorning
         /// <summary>
         /// True if the tutorial Video should be displayed
         /// </summary>
-        public static bool playTutorialVideo = true;
+        public static bool PlayTutorialVideo = true;
 
         /// <summary>
         /// Necessary for accessing XNA's Graphics Interface
@@ -297,11 +297,11 @@ namespace ManhattanMorning
                 //set bool to play tutorial video if game is started the less than numberGameStars time
                 if (counter <= 10)
                 {
-                    playTutorialVideo = true;
+                    PlayTutorialVideo = true;
                 }
                 else
                 {
-                    playTutorialVideo = false;
+                    PlayTutorialVideo = false;
                 }
 
                 counter++;
