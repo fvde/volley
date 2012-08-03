@@ -131,6 +131,7 @@ namespace ManhattanMorning
 
             videoPlayer = new VideoPlayer();
 
+            
         }
 
 
@@ -154,8 +155,9 @@ namespace ManhattanMorning
             Logger.Instance.log(Sender.Game1, "Initialize() done successfully",PriorityLevel.Priority_2);
             base.Initialize();
 
+            Guide.SimulateTrialMode = true;
             //play IntroVideo on game start
-            if((bool)SettingsManager.Instance.get("IntroVideo"))
+            if(((bool)SettingsManager.Instance.get("IntroVideo")) && Guide.IsTrialMode)
                 playVideo(video);
 
             
@@ -171,7 +173,10 @@ namespace ManhattanMorning
         /// all of your content.
         /// </summary>
         protected override void LoadContent()
-        {          
+        {
+
+            video = Content.Load<Video>(@"Videos\beach");
+
             Logger.Instance.log(Sender.Game1, "LoadContent() done successfully",PriorityLevel.Priority_2);
         }
 
