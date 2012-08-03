@@ -1770,6 +1770,7 @@ namespace ManhattanMorning.Misc
 
             // Play sound
             SoundManager.Instance.playMusic(MusicState.Intro);
+            SoundManager.Instance.pause(true);
         }
 
         /// <summary>
