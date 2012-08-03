@@ -1,0 +1,586 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>Fonts\Console.spritefont</Source>
+      <Name>Fonts\Console</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Fonts\Console.xnb</Output>
+      <Time>2011-04-21T14:06:15.3672983+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\Menu.spritefont</Source>
+      <Name>Fonts\Menu</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Fonts\Menu.xnb</Output>
+      <Time>2011-04-14T15:59:35.4753407+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\Score.spritefont</Source>
+      <Name>Fonts\Score</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Fonts\Score.xnb</Output>
+      <Time>2011-04-30T20:46:37.0239538+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\Game\ball.png</Source>
+      <Name>Graphics\Game\ball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\Game\ball.xnb</Output>
+      <Time>2011-04-15T10:32:25.8902129+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\Game\hand.png</Source>
+      <Name>Graphics\Game\hand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\Game\hand.xnb</Output>
+      <Time>2011-04-15T10:32:25.9002129+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\Game\net.png</Source>
+      <Name>Graphics\Game\net</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\Game\net.xnb</Output>
+      <Time>2011-04-15T10:32:25.9002129+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\Game\player.png</Source>
+      <Name>Graphics\Game\player</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\Game\player.xnb</Output>
+      <Time>2011-04-15T10:32:25.9102129+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\Quickplay\quickplay_background.png</Source>
+      <Name>Graphics\Quickplay\quickplay_background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\Quickplay\quickplay_background.xnb</Output>
+      <Time>2011-04-15T15:09:24.4317561+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_Options.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_Options</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_Options.xnb</Output>
+      <Time>2011-04-16T21:57:47.0733841+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_Quickplay.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_Quickplay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_Quickplay.xnb</Output>
+      <Time>2011-04-16T21:57:47.0793844+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_Quit.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_Quit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_Quit.xnb</Output>
+      <Time>2011-04-16T21:57:47.0823846+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_Story.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_Story</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_Story.xnb</Output>
+      <Time>2011-04-16T21:57:47.0853848+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_1vs1.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_1vs1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_1vs1.xnb</Output>
+      <Time>2011-04-16T22:08:39.2786881+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_2vs2.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_2vs2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_2vs2.xnb</Output>
+      <Time>2011-04-16T22:08:39.31269+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_ContinueStory.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_ContinueStory</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_ContinueStory.xnb</Output>
+      <Time>2011-04-16T22:08:39.3156902+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_Gamepad.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_Gamepad</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_Gamepad.xnb</Output>
+      <Time>2011-04-16T22:08:39.3186904+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_Graphics.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_Graphics</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_Graphics.xnb</Output>
+      <Time>2011-04-16T22:08:39.3216905+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_NewStory.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_NewStory</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_NewStory.xnb</Output>
+      <Time>2011-04-16T22:08:39.3286909+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_No.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_No</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_No.xnb</Output>
+      <Time>2011-04-16T22:08:39.3316911+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_Sound.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_Sound</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_Sound.xnb</Output>
+      <Time>2011-04-16T22:08:39.3346913+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Button_Yes.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Button_Yes</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Button_Yes.xnb</Output>
+      <Time>2011-04-16T22:08:39.3376915+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Headline_Options.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Headline_Options</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Headline_Options.xnb</Output>
+      <Time>2011-04-17T17:44:46.9661918+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Headline_QuickPlay.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Headline_QuickPlay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Headline_QuickPlay.xnb</Output>
+      <Time>2011-04-17T17:44:46.970192+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Headline_Quit.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Headline_Quit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Headline_Quit.xnb</Output>
+      <Time>2011-04-17T17:44:46.9711921+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Headline_Story.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Headline_Story</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Headline_Story.xnb</Output>
+      <Time>2011-04-17T17:44:46.9741922+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Headline_Volley.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Headline_Volley</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Headline_Volley.xnb</Output>
+      <Time>2011-04-17T17:44:46.9751923+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Background.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Background.xnb</Output>
+      <Time>2011-04-17T18:12:43.8931065+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Background2.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Background2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Background2.xnb</Output>
+      <Time>2011-04-27T11:49:50.1259095+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\MainMenu\mainMenu_Background3.png</Source>
+      <Name>Graphics\MainMenu\mainMenu_Background3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\MainMenu\mainMenu_Background3.xnb</Output>
+      <Time>2011-04-27T11:49:50.1359095+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\ButtonInstruction.spritefont</Source>
+      <Name>Fonts\ButtonInstruction</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Fonts\ButtonInstruction.xnb</Output>
+      <Time>2011-05-05T11:02:19.7651247+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\scoreBoard.png</Source>
+      <Name>Graphics\UI\scoreBoard</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\scoreBoard.xnb</Output>
+      <Time>2011-04-30T21:51:13.2360478+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\SafeArea\pixelTexture.png</Source>
+      <Name>Graphics\UI\SafeArea\pixelTexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\SafeArea\pixelTexture.xnb</Output>
+      <Time>2011-05-04T12:12:55.4095081+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\OptionsMenu\Controller.png</Source>
+      <Name>Graphics\OptionsMenu\Controller</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\OptionsMenu\Controller.xnb</Output>
+      <Time>2011-05-04T15:17:17.0292177+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\OptionsMenu\optionsMenu_Background2.png</Source>
+      <Name>Graphics\OptionsMenu\optionsMenu_Background2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\OptionsMenu\optionsMenu_Background2.xnb</Output>
+      <Time>2011-05-04T20:43:12.961733+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\OptionsMenu\optionsMenu_Background.png</Source>
+      <Name>Graphics\OptionsMenu\optionsMenu_Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\OptionsMenu\optionsMenu_Background.xnb</Output>
+      <Time>2011-05-04T21:17:55.6258546+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Bumper_Left.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Bumper_Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Bumper_Left.xnb</Output>
+      <Time>2011-05-05T11:06:00.5927553+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Bumper_Right.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Bumper_Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Bumper_Right.xnb</Output>
+      <Time>2011-05-05T11:06:00.6267573+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Button_A.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Button_A</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Button_A.xnb</Output>
+      <Time>2011-05-05T11:06:00.6307575+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Button_B.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Button_B</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Button_B.xnb</Output>
+      <Time>2011-05-05T11:06:00.6357578+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Button_Back.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Button_Back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Button_Back.xnb</Output>
+      <Time>2011-05-05T11:06:00.6407581+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Button_Start.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Button_Start</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Button_Start.xnb</Output>
+      <Time>2011-05-05T11:06:00.6497586+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Button_X.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Button_X</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Button_X.xnb</Output>
+      <Time>2011-05-05T11:06:00.6577591+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Button_Y.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Button_Y</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Button_Y.xnb</Output>
+      <Time>2011-05-05T11:06:00.6637594+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Dpad_All.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Dpad_All</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Dpad_All.xnb</Output>
+      <Time>2011-05-05T11:06:00.6677596+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Dpad_Down.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Dpad_Down</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Dpad_Down.xnb</Output>
+      <Time>2011-05-05T11:06:00.67376+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Dpad_Left.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Dpad_Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Dpad_Left.xnb</Output>
+      <Time>2011-05-05T11:06:00.6777602+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Dpad_Right.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Dpad_Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Dpad_Right.xnb</Output>
+      <Time>2011-05-05T11:06:00.6837605+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Dpad_Up.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Dpad_Up</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Dpad_Up.xnb</Output>
+      <Time>2011-05-05T11:06:00.6887608+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Stick_Left.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Stick_Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Stick_Left.xnb</Output>
+      <Time>2011-05-05T11:06:00.6927611+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Stick_Right.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Stick_Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Stick_Right.xnb</Output>
+      <Time>2011-05-05T11:06:00.7057618+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Trigger_Left.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Trigger_Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Trigger_Left.xnb</Output>
+      <Time>2011-05-05T11:06:00.709762+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Xbox360_Trigger_Right.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Xbox360_Trigger_Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Xbox360_Trigger_Right.xnb</Output>
+      <Time>2011-05-05T11:06:00.7197626+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\SafeArea\arrow_down.png</Source>
+      <Name>Graphics\UI\SafeArea\arrow_down</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\SafeArea\arrow_down.xnb</Output>
+      <Time>2011-05-05T12:13:16.674606+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\SafeArea\arrow_left.png</Source>
+      <Name>Graphics\UI\SafeArea\arrow_left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\SafeArea\arrow_left.xnb</Output>
+      <Time>2011-05-05T12:13:16.6796063+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\SafeArea\arrow_right.png</Source>
+      <Name>Graphics\UI\SafeArea\arrow_right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\SafeArea\arrow_right.xnb</Output>
+      <Time>2011-05-05T12:13:16.6866067+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\SafeArea\arrow_up.png</Source>
+      <Name>Graphics\UI\SafeArea\arrow_up</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\SafeArea\arrow_up.xnb</Output>
+      <Time>2011-05-05T12:13:16.6886068+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Controller_player1.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Controller_player1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Controller_player1.xnb</Output>
+      <Time>2011-05-09T21:09:55.4710245+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Controller_player2.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Controller_player2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Controller_player2.xnb</Output>
+      <Time>2011-05-09T21:09:55.4870254+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Controller_player3.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Controller_player3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Controller_player3.xnb</Output>
+      <Time>2011-05-09T21:09:55.497026+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\UI\ControllerGraphics\Controller_player4.png</Source>
+      <Name>Graphics\UI\ControllerGraphics\Controller_player4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\Graphics\UI\ControllerGraphics\Controller_player4.xnb</Output>
+      <Time>2011-05-09T21:09:55.5000261+02:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Xbox360</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>true</CompressContent>
+      <RootDirectory>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2Content\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2Content\obj\Xbox 360\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\JojoSchmidt\Documents\My Dropbox\Projekte\C#\xboxGames\Volley2\Volley2\Volley2\bin\Xbox 360\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2010-10-12T09:40:04.3035241+02:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>
