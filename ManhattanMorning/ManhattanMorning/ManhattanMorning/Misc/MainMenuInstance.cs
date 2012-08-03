@@ -917,13 +917,13 @@ namespace ManhattanMorning.Misc
                         ((MenuObject)menuObjectList.GetObjectByName("Help_Box4")).Visible = true;
                         break;
                     case 5:
-                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox1")).Visible = true;
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_TutorialVideo")).Visible = true;
                         break;
                     case 6:
-                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox2")).Visible = true;
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox1")).Visible = true;
                         break;
                     case 7:
-                        ((MenuObject)menuObjectList.GetObjectByName("Help_TutorialVideo")).Visible = true;
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox2")).Visible = true;
                         break;
                 }
 
@@ -1042,13 +1042,13 @@ namespace ManhattanMorning.Misc
                         ((MenuObject)menuObjectList.GetObjectByName("Help_Box4")).Visible = true;
                         break;
                     case 5:
-                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox1")).Visible = true;
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_TutorialVideo")).Visible = true;
                         break;
                     case 6:
-                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox2")).Visible = true;
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox1")).Visible = true;
                         break;
                     case 7:
-                        ((MenuObject)menuObjectList.GetObjectByName("Help_TutorialVideo")).Visible = true;
+                        ((MenuObject)menuObjectList.GetObjectByName("Help_CreditsBox2")).Visible = true;
                         break;
                 }
 
@@ -1127,7 +1127,7 @@ namespace ManhattanMorning.Misc
             {
 
                 // Play the Tutorialvideo
-                if (selectedItem == 7)
+                if (selectedItem == 5)
                     Game1.playVideo(tutorialVideo);
 
                 timeSinceLastInput = 0;
