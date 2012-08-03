@@ -1069,6 +1069,11 @@ namespace ManhattanMorning.Controller
                         SuperController.Instance.IngameMenuInstance.revancheButtonPressed();
                     }
 
+                    // "X" pressed
+                    if ((gamepad.CurrentGamePadState.Buttons.X == ButtonState.Pressed) &&
+                        (gamepad.PreviousGamePadState.Buttons.X != ButtonState.Pressed))
+                        SuperController.Instance.IngameMenuInstance.buyGameButtonPressed(gamepad.Index);
+
                 }
 
             }
