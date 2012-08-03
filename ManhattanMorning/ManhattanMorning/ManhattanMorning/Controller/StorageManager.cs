@@ -826,6 +826,7 @@ namespace ManhattanMorning.Controller
             Texture2D Texture_MainScreen_Help_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\MainScreen_Help_s");
             Texture2D Texture_MainScreen_Exit = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\MainScreen_Exit");
             Texture2D Texture_MainScreen_Exit_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\MainScreen_Exit_s");
+            Texture2D Texture_MainScreen_Trialtext = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\MainScreen_Trialtext");
 
             Texture2D Texture_SelectLevel_left = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_Left");
             Texture2D Texture_SelectLevel_left_s = Game1.Instance.Content.Load<Texture2D>(@"Textures\Menu\MainMenu\Level_Left_s");
@@ -915,20 +916,24 @@ namespace ManhattanMorning.Controller
             objectList.Add(Passive_MainMenu_Background_Ball);
 
             MenuButtonObject Button_MainMenu_MainScreen_1vs1 = new MenuButtonObject("MainScreen_1vs1", true, Texture_MainScreen_1vs1,
-                Texture_MainScreen_1vs1_s, null, new Vector2(504f/1280f, 702f/720f), new Vector2(2f/1280f, -10f/720f), 92, MeasurementUnit.PercentOfScreen);//2 - -10
+                Texture_MainScreen_1vs1_s, null, new Vector2(504f/1280f, 702f/720f), new Vector2(2f/1280f, -10f/720f), 93, MeasurementUnit.PercentOfScreen);//2 - -10
             objectList.Add(Button_MainMenu_MainScreen_1vs1);
 
             MenuButtonObject Button_MainMenu_MainScreen_2vs2 = new MenuButtonObject("MainScreen_2vs2", true, Texture_MainScreen_2vs2,
-                Texture_MainScreen_2vs2_s, null, new Vector2(481f/1280f, 693f/720f), new Vector2(783f/1280f, 31f/720f), 92, MeasurementUnit.PercentOfScreen);// 783 - 17
+                Texture_MainScreen_2vs2_s, null, new Vector2(481f/1280f, 693f/720f), new Vector2(783f/1280f, 31f/720f), 93, MeasurementUnit.PercentOfScreen);// 783 - 17
             objectList.Add(Button_MainMenu_MainScreen_2vs2);
 
             MenuButtonObject Button_MainMenu_MainScreen_Help = new MenuButtonObject("MainScreen_Help", true, Texture_MainScreen_Help,
-                Texture_MainScreen_Help_s, null, new Vector2(405f/1280f, 161f/720f), new Vector2(435/1280f, 47f/720f), 92, MeasurementUnit.PercentOfScreen);
+                Texture_MainScreen_Help_s, null, new Vector2(405f/1280f, 161f/720f), new Vector2(435/1280f, 47f/720f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_MainScreen_Help);
 
             MenuButtonObject Button_MainMenu_MainScreen_Exit = new MenuButtonObject("MainScreen_Exit", true, Texture_MainScreen_Exit,
-                Texture_MainScreen_Exit_s, null, new Vector2(405f / 1280f, 161f / 720f), new Vector2(435/1280f, 507f / 720f), 92, MeasurementUnit.PercentOfScreen);
+                Texture_MainScreen_Exit_s, null, new Vector2(405f / 1280f, 161f / 720f), new Vector2(435/1280f, 507f / 720f), 93, MeasurementUnit.PercentOfScreen);
             objectList.Add(Button_MainMenu_MainScreen_Exit);
+
+            MenuObject Passive_MainMenu_Trialtext = new MenuObject("MainScreen_Trialtext", true,
+                Texture_MainScreen_Trialtext, null, new Vector2(1, 1), Vector2.Zero, 92, MeasurementUnit.PercentOfScreen);
+            objectList.Add(Passive_MainMenu_Trialtext);
 
 
             // Select Level

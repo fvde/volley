@@ -45,11 +45,6 @@ namespace ManhattanMorning.Controller
             settings.Add("ResizeFactor2vs2Game", new object[] { 0.1f, 1.2f, 4.0f });
 
             /// <summary>
-            /// Play intro video?
-            /// </summary>
-            settings.Add("IntroVideo", new object[] { false, true, true });
-
-            /// <summary>
             /// Play level video?
             /// </summary>
             settings.Add("LevelVideo", new object[] { false, true, true });

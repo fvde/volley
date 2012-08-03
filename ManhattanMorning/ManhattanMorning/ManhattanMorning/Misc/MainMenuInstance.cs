@@ -335,10 +335,17 @@ namespace ManhattanMorning.Misc
                     switchMenuState(0);
             }
 
+            // Update team menu
             if ((menuState == 1) || (menuState == 2))
             {
                 updateTeamMenu();
             }
+
+            // Check if trialtext should be shown in MainMenu
+            if ((menuState == 0) && ((bool)SettingsManager.Instance.get("IsTrialMode")))
+                ((MenuObject)menuObjectList.GetObjectByName("MainScreen_Trialtext")).Visible = true;
+            else
+                ((MenuObject)menuObjectList.GetObjectByName("MainScreen_Trialtext")).Visible = false;
 
             manageOverlays(gameTime);
 
