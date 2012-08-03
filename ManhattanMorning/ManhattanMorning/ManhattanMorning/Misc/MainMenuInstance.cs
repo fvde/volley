@@ -189,6 +189,9 @@ namespace ManhattanMorning.Misc
         /// </summary>
         private int introTimeCounter = 6300;
 
+
+        private Video tutorialVideo;
+
         #endregion
 
 
@@ -234,6 +237,8 @@ namespace ManhattanMorning.Misc
             previousMainScreenSelectedItem = 0;
 
             levelName = "";
+
+            tutorialVideo = StorageManager.Instance.loadTutorialVideo();
 
             // Check if the first help has to be shown
             if (Game1.FirstTimePlaying)
@@ -1106,8 +1111,9 @@ namespace ManhattanMorning.Misc
             else if (menuState == 3)
             {
 
-                // Select the next item:
-                rightButtonPressed(InputDevice.Gamepad, PlayerIndex.One);
+                // Play the Tutorialvideo
+                if (selectedItem == 7)
+                    Game1.playVideo(tutorialVideo);
 
                 timeSinceLastInput = 0;
             }
