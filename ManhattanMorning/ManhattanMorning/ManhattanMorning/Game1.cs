@@ -50,6 +50,11 @@ namespace ManhattanMorning
         public static bool FirstTimePlaying = true;
 
         /// <summary>
+        /// True if the tutorial Video should be displayed
+        /// </summary>
+        public static bool playTutorialVideo = true;
+
+        /// <summary>
         /// Necessary for accessing XNA's Graphics Interface
         /// </summary>
         public GraphicsDeviceManager GraphicsDeviceManager { get { return graphicsDeviceManager; } set { graphicsDeviceManager = value; } }
@@ -148,6 +153,9 @@ namespace ManhattanMorning
             // Set instance so that every class can get it by calling
             // Game1.Instance
             instance = this;
+            
+            //int param for how many game starts the vid should be displayed
+            determineTutorialVidDisplay(10);
 
             determineIfFirstTimePlaying();
             SuperController.Instance.initialize();
@@ -258,6 +266,60 @@ namespace ManhattanMorning
             Logger.Instance.log(Sender.Game1, "Game exited properly",PriorityLevel.Priority_2);
             this.Exit();
         }
+
+
+        /// <summary>
+        /// determins if the tutorial video should be viewed at game start
+        /// </summary>
+        /// <param name="numberGameStarts">number of game-starts the vid should be displayed</param>
+        private void determineTutorialVidDisplay(int numberGameStarts)
+        {
+#if WINDOWS
+
+            IsolatedStorageFile file = IsolatedStorageFile.GetUserStoreForAssembly();
+#else
+            IsolatedStorageFile file = IsolatedStorageFile.GetUserStoreForApplication();
+#endif
+
+            int counter = 1;
+
+            {
+                using (BinaryReader reader = new BinaryReader(file.OpenFile("saveStarts", FileMode.OpenOrCreate)))
+                {
+                    for (int i = 0; i < reader.BaseStream.Length; i += 4)
+                    {
+                        counter = reader.ReadInt32();
+
+                    }
+
+                }
+
+                //set bool to play tutorial video if game is started the less than numberGameStars time
+                if (counter <= 10)
+                {
+                    playTutorialVideo = true;
+                }
+                else
+                {
+                    playTutorialVideo = false;
+                }
+
+                counter++;
+
+                if (true)
+                {
+                    using (BinaryWriter writer = new BinaryWriter(file.CreateFile("saveStarts")))
+                    {
+                        writer.Write(counter);
+                    }
+                }
+
+                Console.WriteLine("started the " + counter + " time");
+
+            }
+
+        }
+
 
         /// <summary>
         /// Determines whether a player is starting the game for the first time or not.
