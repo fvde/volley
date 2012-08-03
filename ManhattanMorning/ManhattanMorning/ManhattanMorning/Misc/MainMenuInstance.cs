@@ -1950,7 +1950,6 @@ namespace ManhattanMorning.Misc
                     possibleIndexes.Remove(index);
                 }
             }
-            winCondition = new TimeLimit_WinCondition(new TimeSpan(0, 0, 5));
             // Start game
             SuperController.Instance.switchFromMainMenuToIngame(levelName, winCondition, leftPlayers, rightPlayers);
 

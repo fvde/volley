@@ -321,6 +321,19 @@ namespace ManhattanMorning.Misc
         }
 
         /// <summary>
+        /// When in trialMode the method opens the Xbox Marketplace dialogue
+        /// </summary>
+        /// <param name="playerIndex">The index of the gamepad that pressed the button</param>
+        public void buyGameButtonPressed(PlayerIndex playerIndex)
+        {
+            // If it's the trialMode
+            if (((bool)SettingsManager.Instance.get("IsTrialMode")) == true)
+            {
+                SuperController.Instance.open_MarketplaceWindow(playerIndex);
+            }
+        }
+
+        /// <summary>
         /// Triggers all necessary actions when the back button is pressed
         /// </summary>
         public void backButtonPressed()
