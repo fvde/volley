@@ -1186,11 +1186,15 @@ namespace ManhattanMorning.View
         /// <param name="fadeBack">True if you want to fade from start to end and back.</param>
         public void fadeColor(Color startColor, Color endColor, int fadeTime, bool fadeBack)
         {
-            this.startColor = startColor;
-            this.endColor = endColor;
-            this.fadeTime = fadeTime;
-            this.fadeTimeStart = gameTime.TotalGameTime.TotalMilliseconds;
-            this.fadeBack = fadeBack;
+            if (!(gameTime == null))
+            {
+
+                this.startColor = startColor;
+                this.endColor = endColor;
+                this.fadeTime = fadeTime;
+                this.fadeTimeStart = gameTime.TotalGameTime.TotalMilliseconds;
+                this.fadeBack = fadeBack;
+            }
         }
 
         /// <summary>
