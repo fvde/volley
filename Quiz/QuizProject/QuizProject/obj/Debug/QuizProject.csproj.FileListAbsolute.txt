@@ -1,0 +1,13 @@
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\Bin\Debug\ApplicationIcon.png
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\Bin\Debug\Background.png
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\Bin\Debug\QuizProject.dll
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\Bin\Debug\QuizProject.pdb
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\Bin\Debug\AppManifest.xaml
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\Bin\Debug\QuizProject.xap
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\obj\Debug\ResolveAssemblyReference.cache
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\obj\Debug\App.g.i.cs
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\obj\Debug\MainPage.g.i.cs
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\obj\Debug\QuizProject.g.resources
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\obj\Debug\QuizProject.dll
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\obj\Debug\QuizProject.pdb
+C:\Daten\ManhattanMorning\SVN\Quiz\QuizProject\QuizProject\obj\Debug\XapCacheFile.xml
