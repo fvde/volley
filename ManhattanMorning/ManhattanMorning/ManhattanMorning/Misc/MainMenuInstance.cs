@@ -1140,6 +1140,7 @@ namespace ManhattanMorning.Misc
                         ((MenuObject)menuObjectList.GetObjectByName("ReallyQuit_FeatureScreen")).Visible = true;
                         ((MenuObject)menuObjectList.GetObjectByName("ReallyQuit_Frame")).Visible = false;
                         ((MenuObject)menuObjectList.GetObjectByName("ReallyQuit_Frame2")).Visible = false;
+                        overlayObject = null;
                     }
                     else
                     {
