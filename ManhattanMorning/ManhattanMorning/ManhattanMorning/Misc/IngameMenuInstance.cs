@@ -150,12 +150,16 @@ namespace ManhattanMorning.Misc
 
                 menuState = 1;
 
+                // When in DemoMode show FeatureScreen
+                if ((bool)SettingsManager.Instance.get("IsTrialMode"))
+                    menuState = 3;
+
                 // Make all necessary menu objects visible
                 for (int i = 0; i < menuStructure.GetLength(1); i++)
                 {
                     if (menuStructure[1, i] != null)
                     {
-                        foreach (LayerInterface menuObject in menuStructure[1, i])
+                        foreach (LayerInterface menuObject in menuStructure[menuState, i])
                         {
                             ((DrawableObject)menuObject).Visible = true;
                         }
@@ -170,17 +174,22 @@ namespace ManhattanMorning.Misc
 
                 menuState = 2;
 
+                // When in DemoMode show FeatureScreen
+                if ((bool)SettingsManager.Instance.get("IsTrialMode"))
+                    menuState = 3;
+
                 // Make all necessary menu objects visible
                 for (int i = 0; i < menuStructure.GetLength(1); i++)
                 {
                     if (menuStructure[2, i] != null)
                     {
-                        foreach (LayerInterface menuObject in menuStructure[2, i])
+                        foreach (LayerInterface menuObject in menuStructure[menuState, i])
                         {
                             ((DrawableObject)menuObject).Visible = true;
                         }
                     }
                 }
+
 
             }
 
@@ -349,7 +358,7 @@ namespace ManhattanMorning.Misc
             // 1.Index: Menu state
             // 2.Index: 0: List of Menu_PassiveObjects which are always shown/never highlighted (e.g. background)
             //          all other indexes: List of Menu_Buttons which belong to a single selectable item
-            menuStructure = new List<LayerInterface>[3, 4];
+            menuStructure = new List<LayerInterface>[4, 4];
 
             // Normal ingame menu
             menuStructure[0, 0] = new List<LayerInterface>();
@@ -379,6 +388,14 @@ namespace ManhattanMorning.Misc
             menuStructure[2, 1].Add(menuObjectList.GetObjectByName("WinnerScreen_Winner_Team2"));
             menuStructure[2, 2] = new List<LayerInterface>();
             menuStructure[2, 3] = new List<LayerInterface>();
+
+            // Demo Feature Screen
+            menuStructure[3, 0] = new List<LayerInterface>();
+            menuStructure[3, 0].Add(menuObjectList.GetObjectByName("FeatureScreen"));
+            menuStructure[3, 1] = new List<LayerInterface>();
+            menuStructure[3, 0].Add(menuObjectList.GetObjectByName("FeatureScreen"));
+            menuStructure[3, 2] = new List<LayerInterface>();
+            menuStructure[3, 3] = new List<LayerInterface>();
 
         }
 
