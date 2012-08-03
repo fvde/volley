@@ -1282,7 +1282,16 @@ namespace ManhattanMorning.Controller
             return;
         }
 
+        /// <summary>
+        /// Loads the tutorial video for replay in MainMenu
+        /// </summary>
+        /// <returns>The video</returns>
+        public Video loadTutorialVideo()
+        {
 
+            return Game1.Instance.Content.Load<Video>(@"Videos\beach");
+
+        }
 
 
 
