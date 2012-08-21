@@ -61,7 +61,6 @@ namespace ManhattanMorning.Misc
         /// 4: really quit
         /// 5: select level
         /// 6: intro
-        /// 7: help first start (is just shown when the game starts for the first time)
         /// </summary>
         private int menuState;
 
@@ -240,12 +239,6 @@ namespace ManhattanMorning.Misc
 
             tutorialVideo = StorageManager.Instance.loadTutorialVideo();
 
-            // Check if the first help has to be shown
-            if (Game1.FirstTimePlaying)
-                menuState = 7;
-            else
-                menuState = 6;
-
             activateMenu(true);
         }
 
@@ -279,22 +272,19 @@ namespace ManhattanMorning.Misc
 
             selectedItem = 0;
 
-            // If it's not the first start
-            if (menuState != 7)
+            // If it's the launch of the game, show help/intro otherwise show mainscreen (when coming back from ingame)
+            if (isGameStart)
             {
-                // If it's the launch of the game, show help/intro otherwise show mainscreen (when coming back from ingame)
-                if (isGameStart)
-                {
-                    menuState = 6;
-                    overlayObject = (MenuObject)menuObjectList.GetObjectByName("Intro_Overlay");
-                    animateIntro();
-                }
-                else
-                {
-                    menuState = 0;
-                    overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
-                }
+                menuState = 6;
+                overlayObject = (MenuObject)menuObjectList.GetObjectByName("Intro_Overlay");
+                animateIntro();
             }
+            else
+            {
+                menuState = 0;
+                overlayObject = (MenuObject)menuObjectList.GetObjectByName("MainScreen_Overlay");
+            }
+
             // Make all necessary menu objects visible
             for (int i = 0; i < menuStructure.GetLength(1); i++)
             {
@@ -311,7 +301,7 @@ namespace ManhattanMorning.Misc
             }
 
 
-            if (isGameStart && (menuState != 7))
+            if (isGameStart)
                 animateIntro();
         }
 
@@ -1204,14 +1194,6 @@ namespace ManhattanMorning.Misc
                 // Do nothing
 
             }
-            // When in first start help
-            else if (menuState == 7)
-            {
-
-                menuState = 6;
-                activateMenu(true);
-
-            }
 
         }
 
@@ -1288,14 +1270,7 @@ namespace ManhattanMorning.Misc
                 // Do nothing
 
             }
-            // When in first start help
-            else if (menuState == 7)
-            {
 
-                menuState = 6;
-                activateMenu(true);
-
-            }
 
         }
 
