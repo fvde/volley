@@ -163,7 +163,7 @@ namespace ManhattanMorning
             Logger.Instance.log(Sender.Game1, "Initialize() done successfully",PriorityLevel.Priority_2);
             base.Initialize();
 
-            Guide.SimulateTrialMode = true;
+            //Guide.SimulateTrialMode = true;
             //play IntroVideo on game start
             if(PlayTutorialVideo)
                 playVideo(video);
@@ -296,7 +296,7 @@ namespace ManhattanMorning
                 }
 
                 //set bool to play tutorial video if game is started the less than numberGameStars time
-                if (counter <= 10)
+                if (counter <= 5)
                 {
                     PlayTutorialVideo = true;
                 }

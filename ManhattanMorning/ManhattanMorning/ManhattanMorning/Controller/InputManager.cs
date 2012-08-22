@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using ManhattanMorning.Misc;
 using ManhattanMorning.Misc.Logic;
 using ManhattanMorning.Model.GameObject;
+using Microsoft.Xna.Framework.GamerServices;
 
 namespace ManhattanMorning.Controller
 {
@@ -429,8 +430,8 @@ namespace ManhattanMorning.Controller
                         #region Gamepad
 
                         // Open ingame menu
-                        if ((player.InputDevice.CurrentGamePadState.Buttons.Start == ButtonState.Pressed) &&
-                            (player.InputDevice.PreviousGamePadState.Buttons.Start != ButtonState.Pressed))
+                        if (((player.InputDevice.CurrentGamePadState.Buttons.Start == ButtonState.Pressed) &&
+                            (player.InputDevice.PreviousGamePadState.Buttons.Start != ButtonState.Pressed)) || Guide.IsVisible)
                             SuperController.Instance.switchFromIngameToIngameMenu(-1);
 
 
